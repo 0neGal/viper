@@ -1,7 +1,7 @@
 {
 	"name": "viper",
 	"version": "1.0.0",
-	"description": "Making your TF|2 life modding life easier",
+	"description": "Making your TF|2 modding life easier",
 	"main": "src/index.js",
 	"scripts": {
 		"start": "node_modules/.bin/electron src/index.js"
