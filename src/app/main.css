@@ -1,0 +1,36 @@
+:root {
+	--background: #4C515B;
+	--foreground: #DDE2EB;
+}
+
+body, button, input {
+	font-size: 18px;
+	font-weight: 700;
+	overflow: hidden;
+	color: var(--foreground);
+	text-transform: uppercase;
+	background: var(--background);
+	font-family: "Roboto Mono", monospace;
+}
+
+.line {
+	display: flex;
+	margin-top: 15px;
+}
+
+.buttons {
+	margin-left: auto;
+	margin-right: 7px;
+}
+
+button, .text {
+	border: none;
+	outline: none;
+	padding: 5px 15px;
+	border-radius: 50px;
+}
+
+#update {background: #81A1C1}
+#setpath {background: #5E81AC}
+#vanilla {background: #656E7F}
+#northstar {background: #C7777F}
