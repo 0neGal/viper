@@ -1,0 +1,22 @@
+{
+	"name": "viper",
+	"version": "1.0.0",
+	"description": "Making your TF|2 life modding life easier",
+	"main": "src/index.js",
+	"scripts": {
+		"start": "node_modules/.bin/electron src/index.js"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/0neGal/viper.git"
+	},
+	"author": "0neGal",
+	"license": "GPL-3.0-or-later",
+	"bugs": {
+		"url": "https://github.com/0neGal/viper/issues"
+	},
+	"homepage": "https://github.com/0neGal/viper#readme",
+	"dependencies": {
+		"electron": "^16.0.5"
+	}
+}
