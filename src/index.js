@@ -19,6 +19,7 @@ function start() {
 }
 
 app.on("ready", () => {
+	process.chdir(app.getPath("appData"));
 	app.setPath("userData", path.join(app.getPath("cache"), app.name));
 	start();
 })

@@ -17,6 +17,9 @@
 	},
 	"homepage": "https://github.com/0neGal/viper#readme",
 	"dependencies": {
-		"electron": "^16.0.5"
+		"electron": "^16.0.5",
+		"follow-redirects": "^1.14.6",
+		"request": "^2.88.2",
+		"unzipper": "^0.10.11"
 	}
 }
