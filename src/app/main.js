@@ -2,7 +2,7 @@ const fs = require("fs");
 const path = require("path");
 const unzip = require("unzipper");
 const request = require("request");
-const { dialog } = require("electron");
+const { ipcRenderer } = require("electron");
 const { https } = require("follow-redirects");
 
 var settings = {
@@ -14,6 +14,9 @@ var settings = {
 if (fs.existsSync(settings.file)) {
 	settings.gamepath = JSON.parse(fs.readFileSync(settings.file, "utf8")).path;
 	settings.zip = path.join(settings.gamepath + "/northstar.zip");
+} else {
+	alert("Game path is not set! Please select the path!");
+	setpath();
 }
 
 function update() {
@@ -36,3 +39,11 @@ function update() {
 		})
 	})
 }
+
+function setpath() {
+	ipcRenderer.send("setpath");
+}
+
+ipcRenderer.on("newpath", (event, newpath) => {
+	settings.gamepath = newpath;
+})
