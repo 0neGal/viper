@@ -27,8 +27,11 @@ function start() {
 	ipcMain.on("setpath", (event) => {utils.setpath(win)})
 }
 
-ipcMain.on("setpathcli", (event) => {utils.setpath()})
+ipcMain.on("launch", (event) => {utils.launch()})
+ipcMain.on("launchVanilla", (event) => {utils.launch("vanilla")})
+
 ipcMain.on("update", (event) => {utils.update()})
+ipcMain.on("setpathcli", (event) => {utils.setpath()})
 
 process.chdir(app.getPath("appData"));
 

@@ -9,6 +9,7 @@ const cli = require("./cli");
 
 const unzip = require("unzipper");
 const request = require("request");
+const exec = require("child_process").spawn;
 const { https } = require("follow-redirects");
 
 process.chdir(app.getPath("appData"));
@@ -65,7 +66,26 @@ function update() {
 	})
 }
 
+function launch(version) {
+	if (process.platform == "linux") {
+		console.error("error: Launching the game is not currently supported on Linux")
+		cli.exit(1);
+	}
+
+	switch(version) {
+		case "vanilla":
+			console.log("Launching Vanilla...")
+			exec(path.join(settings.gamepath + "/Titanfall2.exe"))
+			break;
+		default:
+			console.log("Launching Northstar...")
+			exec(path.join(settings.gamepath + "/NorthstarLauncher.exe"))
+			break;
+	}
+}
+
 module.exports = {
+	launch,
 	update,
 	setpath,
 	settings,

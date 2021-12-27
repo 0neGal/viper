@@ -10,6 +10,7 @@ function hasArgs() {
 	if (cli.hasSwitch("cli") ||
 		cli.hasSwitch("help") ||
 		cli.hasSwitch("update") ||
+		cli.hasSwitch("launch") ||
 		cli.hasSwitch("setpath") ||
 		cli.hasSwitch("gamepath")) {
 		return true;
@@ -42,6 +43,17 @@ async function init() {
 			ipcMain.emit("setpathcli", cli.getSwitchValue("setpath"));
 		} else {
 			console.error("error: No argumment provided for --setpath");
+		}
+	}
+
+	if (cli.hasSwitch("launch")) {
+		switch(cli.getSwitchValue("launch")) {
+			case "vanilla":
+				ipcMain.emit("launchVanilla");
+				break;
+			default:
+				ipcMain.emit("launch");
+				break;
 		}
 	}
 }

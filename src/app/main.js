@@ -19,6 +19,9 @@ if (fs.existsSync(settings.file)) {
 function update() {ipcRenderer.send("update")}
 function setpath() {ipcRenderer.send("setpath")}
 
+function launch() {ipcRenderer.send("launch")}
+function launchVanilla() {ipcRenderer.send("launchVanilla")}
+
 ipcRenderer.on("newpath", (event, newpath) => {
 	settings.gamepath = newpath;
 })
