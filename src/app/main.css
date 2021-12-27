@@ -3,6 +3,11 @@
 	--foreground: #DDE2EB;
 }
 
+@font-face {
+	font-family: "Roboto Mono";
+	src: url("roboto.ttf");
+}
+
 body, button, input {
 	font-size: 18px;
 	font-weight: 700;
