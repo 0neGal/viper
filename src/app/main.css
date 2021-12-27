@@ -1,6 +1,15 @@
 :root {
 	--background: #4C515B;
 	--foreground: #DDE2EB;
+	--btnforeground: var(--foreground);
+}
+
+@media (prefers-color-scheme: light) {
+	:root {
+		--background: #FFFFFF;
+		--foreground: #4C566A;
+		--btnforeground: var(--background);
+	}
 }
 
 @font-face {
@@ -37,7 +46,10 @@ button, .text {
 	transition: 0.2s ease-in-out;
 }
 
-button {-webkit-app-region: no-drag;}
+button {
+	color: var(--btnforeground);
+	-webkit-app-region: no-drag;
+}
 
 button:hover {opacity: 0.9}
 button:active {
