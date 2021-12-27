@@ -3,8 +3,10 @@
 	"version": "1.0.0",
 	"description": "Making your TF|2 modding life easier",
 	"main": "src/index.js",
+	"build": {"appId": "com.0negal.viper",
 	"scripts": {
-		"start": "node_modules/.bin/electron src/index.js"
+		"start": "node_modules/.bin/electron src/index.js",
+		"build": "node_modules/.bin/electron-builder --win nsis --linux appimage"
 	},
 	"repository": {
 		"type": "git",
@@ -12,14 +14,15 @@
 	},
 	"author": "0neGal",
 	"license": "GPL-3.0-or-later",
-	"bugs": {
-		"url": "https://github.com/0neGal/viper/issues"
-	},
+	"bugs": {"url": "https://github.com/0neGal/viper/issues"},
 	"homepage": "https://github.com/0neGal/viper#readme",
 	"dependencies": {
-		"electron": "^16.0.5",
 		"follow-redirects": "^1.14.6",
 		"request": "^2.88.2",
 		"unzipper": "^0.10.11"
+	},
+	"devDependencies": {
+		"electron": "^16.0.5",
+		"electron-builder": "^22.14.5"
 	}
 }

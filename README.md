@@ -8,7 +8,7 @@ Viper is a launcher and updater for [Northstar](https://github.com/R2Northstar/N
 
 ## How to?
 
-Currently Viper isn't in a state where I dont have release builds ready for people to download, instead if you really do wanna play with it, you can run it with Node... Simply do as follows:
+Currently Viper is in a state where I dont have release builds ready for people to download, instead if you really do wanna play with it, you can run it with Node... Simply do as follows:
 
 ```sh
 $ git clone https://github.com/0neGal/viper
