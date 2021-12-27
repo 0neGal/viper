@@ -16,6 +16,7 @@ if (fs.existsSync(settings.file)) {
 	setpath();
 }
 
+function exit() {ipcRenderer.send("exit")}
 function update() {ipcRenderer.send("update")}
 function setpath() {ipcRenderer.send("setpath")}
 

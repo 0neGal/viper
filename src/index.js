@@ -10,10 +10,12 @@ const cli = require("./cli");
 
 function start() {
 	win = new BrowserWindow({
-		width: 500,
+		width: 600,
 		height: 115,
 		show: false,
 		title: "Viper",
+		resizable: false,
+		titleBarStyle: "hidden",
 		webPreferences: {
 			nodeIntegration: true,
 			contextIsolation: false,
@@ -25,6 +27,7 @@ function start() {
 	win.webContents.once("dom-ready", () => {win.show()});
 
 	ipcMain.on("setpath", (event) => {utils.setpath(win)})
+	ipcMain.on("exit", (event) => {process.exit(0)})
 }
 
 ipcMain.on("launch", (event) => {utils.launch()})

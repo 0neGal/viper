@@ -7,6 +7,7 @@ body, button, input {
 	font-size: 18px;
 	font-weight: 700;
 	overflow: hidden;
+	-webkit-app-region: drag;
 	color: var(--foreground);
 	text-transform: uppercase;
 	background: var(--background);
@@ -31,6 +32,8 @@ button, .text {
 	transition: 0.2s ease-in-out;
 }
 
+button {-webkit-app-region: no-drag;}
+
 button:hover {opacity: 0.9}
 button:active {
 	opacity: 0.7;
@@ -39,5 +42,5 @@ button:active {
 
 #update {background: #81A1C1}
 #setpath {background: #5E81AC}
-#vanilla {background: #656E7F}
 #northstar {background: #C7777F}
+#vanilla, #exit {background: #656E7F}
