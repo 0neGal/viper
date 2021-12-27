@@ -20,7 +20,7 @@ var settings = {
 }
 
 if (fs.existsSync(settings.file)) {
-	settings.gamepath = JSON.parse(fs.readFileSync(settings.file, "utf8")).path;
+	settings = {...settings, ...JSON.parse(fs.readFileSync(settings.file, "utf8"))};
 	settings.zip = path.join(settings.gamepath + "/northstar.zip");
 } else {
 	console.log("Game path is not set! Please select the path.");
@@ -29,17 +29,16 @@ if (fs.existsSync(settings.file)) {
 
 function setpath(win) {
 	if (! win) {
-		fs.writeFileSync(app.getPath("appData") + "/viper.json", JSON.stringify({path: cli.param("setpath")}));
 		settings.gamepath = cli.param("setpath");
-		cli.exit();
 	} else {
 		dialog.showOpenDialog({properties: ["openDirectory"]}).then(res => {
-			fs.writeFileSync(app.getPath("appData") + "/viper.json", JSON.stringify({path: res.filePaths[0]}));
-
 			win.webContents.send("newpath", res.filePaths[0]);
 			settings.gamepath = res.filePaths[0];
 		}).catch(err => {console.error(err)})
 	}
+
+	fs.writeFileSync(app.getPath("appData") + "/viper.json", JSON.stringify({...settings}));
+	cli.exit();
 }
 
 function update() {

@@ -9,7 +9,7 @@ var settings = {
 }
 
 if (fs.existsSync(settings.file)) {
-	settings.gamepath = JSON.parse(fs.readFileSync(settings.file, "utf8")).path;
+	settings.gamepath = {...settings, ...JSON.parse(fs.readFileSync(settings.file, "utf8"))};
 	settings.zip = path.join(settings.gamepath + "/northstar.zip");
 } else {
 	alert("Game path is not set! Please select the path!");
