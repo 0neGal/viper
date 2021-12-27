@@ -20,7 +20,9 @@ function start() {
 			nodeIntegration: true,
 			contextIsolation: false,
 		},
-	}); win.openDevTools()
+	}); 
+
+	if (cli.hasParam("debug")) {win.openDevTools()}
 
 	win.removeMenu();
 	win.loadFile(__dirname + "/app/index.html");

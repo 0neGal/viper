@@ -25,6 +25,7 @@ async function init() {
 	if (cli.hasSwitch("help")) {
 	console.log(`options:
   --help     shows this help message
+  --debug    opens the dev/debug tools
 
   --cli      forces the CLI to enable
   --update   updates Northstar from your set game path
@@ -61,7 +62,10 @@ async function init() {
 module.exports = {
 	hasArgs,
 	init, exit, 
+	hasParam: (arg) => {
+		return cli.hasSwitch(arg);
+	},
 	param: (arg) => {
-		return cli.getSwitchValue(arg)
+		return cli.getSwitchValue(arg);
 	}
 }
