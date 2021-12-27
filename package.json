@@ -1,7 +1,8 @@
 {
 	"name": "viper",
+	"productName": "Viper",
 	"version": "1.0.0",
-	"description": "Making your TF|2 modding life easier",
+	"description": "Launcher+Updater for TF|2 Northstar",
 	"main": "src/index.js",
 	"build": {"appId": "com.0negal.viper",
 	"scripts": {
