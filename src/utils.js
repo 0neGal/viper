@@ -72,6 +72,7 @@ function launch(version) {
 		cli.exit(1);
 	}
 
+	process.chdir(settings.gamepath);
 	switch(version) {
 		case "vanilla":
 			console.log("Launching Vanilla...")
