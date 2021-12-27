@@ -2,7 +2,11 @@ const fs = require("fs");
 const path = require("path");
 const { app, dialog, ipcMain, BrowserWindow } = require("electron");
 
-const utils = require("./utils")
+const Emitter = require("events");
+const events = new Emitter();
+
+const utils = require("./utils");
+const cli = require("./cli");
 
 function start() {
 	win = new BrowserWindow({
@@ -20,12 +24,19 @@ function start() {
 	win.loadFile(__dirname + "/app/index.html");
 	win.webContents.once("dom-ready", () => {win.show()});
 
-	ipcMain.on("update", (event) => {utils.update(win)})
 	ipcMain.on("setpath", (event) => {utils.setpath(win)})
 }
 
-app.on("ready", () => {
-	process.chdir(app.getPath("appData"));
-	app.setPath("userData", path.join(app.getPath("cache"), app.name));
-	start();
-})
+ipcMain.on("setpathcli", (event) => {utils.setpath()})
+ipcMain.on("update", (event) => {utils.update()})
+
+process.chdir(app.getPath("appData"));
+
+if (cli.hasArgs()) {
+	cli.init();
+} else {
+	app.on("ready", () => {
+		app.setPath("userData", path.join(app.getPath("cache"), app.name));
+		start();
+	})
+}
