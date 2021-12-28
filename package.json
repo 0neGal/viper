@@ -12,6 +12,7 @@
 	},
 	"scripts": {
 		"start": "npx electron src/index.js",
+		"debug": "npx electron src/index.js --debug",
 		"build": "npx electron-builder --win nsis --linux appimage"
 	},
 	"repository": {
