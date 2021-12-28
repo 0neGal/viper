@@ -48,6 +48,10 @@ function setpath(win) {
 	cli.exit();
 }
 
+function saveSettings() {
+	fs.writeFileSync(app.getPath("appData") + "/viper.json", JSON.stringify({...settings}));
+}
+
 function getNorthstarInstalledVersion() {
 	const configFilePath = app.getPath("appData") + "/viper.json";
 	return JSON.parse(fs.readFileSync(configFilePath, "utf8"))['northstarVersion'];
@@ -64,7 +68,7 @@ function update() {
 	console.log("Downloading...");
 	const version = getNorthstarInstalledVersion();
 	console.log(version);
-	
+
 	request({
 		json: true,
 		headers: {"User-Agent": "Viper"},
@@ -82,6 +86,8 @@ function update() {
 				fs.createReadStream(settings.zip).pipe(unzip.Extract({path: settings.gamepath}))
 				.on("finish", () => {
 					console.log("Installation/Update finished!");
+					settings.northstarVersion = tag;
+					saveSettings();
 					events.emit("updated");
 
 					for (let i = 0; i < settings.excludes.length; i++) {
