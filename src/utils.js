@@ -17,7 +17,6 @@ process.chdir(app.getPath("appData"));
 var settings = {
 	gamepath: "",
 	zip: "/northstar.zip",
-	northstar_version: "unknown",
 	excludes: [
 		"ns_startup_args.txt",
 		"ns_startup_args_dedi.txt"
@@ -49,13 +48,21 @@ function setpath(win) {
 }
 
 function saveSettings() {
-	fs.writeFileSync(app.getPath("appData") + "/viper.json", JSON.stringify({...settings}));
+	fs.writeFileSync(app.getPath("appData") + "/viper.json", JSON.stringify(settings));
 }
 
 function getInstalledVersion() {
-	return JSON.parse(
-		fs.readFileSync(app.getPath("appData") + "/viper.json", "utf8")
-	)['northstarVersion'];
+	const versionFilePath = path.join(settings.gamepath, 'ns_version.txt');
+
+	if (fs.existsSync(versionFilePath)) {
+		return fs.readFileSync(versionFilePath, "utf8");
+	} else {
+		fs.writeFileSync(versionFilePath, 'unknown');
+		return 'unknown';
+	}
+}
+function updateInstalledVersion(newTag) {
+	fs.writeFileSync(path.join(settings.gamepath, 'ns_version.txt'), newTag);
 }
 
 function update() {
@@ -93,8 +100,9 @@ function update() {
 				fs.createReadStream(settings.zip).pipe(unzip.Extract({path: settings.gamepath}))
 				.on("finish", () => {
 					console.log("Installation/Update finished!");
-					settings.northstar_version = tag;
-					saveSettings();
+
+					updateInstalledVersion(tag);
+
 					events.emit("updated");
 
 					for (let i = 0; i < settings.excludes.length; i++) {
