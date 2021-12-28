@@ -38,13 +38,28 @@ function setpath(win) {
 		dialog.showOpenDialog({properties: ["openDirectory"]}).then(res => {
 			settings.gamepath = res.filePaths[0];
 			settings.zip = path.join(settings.gamepath + "/northstar.zip");
-
+			saveSettings();
 			win.webContents.send("newpath", settings.gamepath);
 		}).catch(err => {console.error(err)})
 	}
 
-	fs.writeFileSync(app.getPath("appData") + "/viper.json", JSON.stringify({...settings}));
+	fs.writeFileSync(app.getPath("appData") + "/viper.json", JSON.stringify(settings));
 	cli.exit();
+}
+
+function saveSettings() {
+	fs.writeFileSync(app.getPath("appData") + "/viper.json", JSON.stringify(settings));
+}
+
+function getInstalledVersion() {
+	const versionFilePath = path.join(settings.gamepath, "ns_version.txt");
+
+	if (fs.existsSync(versionFilePath)) {
+		return fs.readFileSync(versionFilePath, "utf8");
+	} else {
+		fs.writeFileSync(versionFilePath, "unknown");
+		return "unknown";
+	}
 }
 
 function update() {
@@ -55,12 +70,25 @@ function update() {
 		}
 	}
 
-	console.log("Downloading...");
+	console.log("Checking for updates...");
+	const version = getInstalledVersion();
+
 	request({
 		json: true,
 		headers: {"User-Agent": "Viper"},
 		url: "https://api.github.com/repos/R2Northstar/Northstar/releases/latest",
 	}, (error, response, body) => {
+		var tag = body["tag_name"];
+
+		if (version === tag) {
+			console.log(`Latest version (${version}) is already installed, skipping update.`);
+			return;
+		} else {
+			if (version != "unknown") {
+				console.log("Current version:", version);
+			}; console.log("Downloading:", tag);
+		}
+
 		https.get(body.assets[0].browser_download_url, (res) => {
 			let stream = fs.createWriteStream(settings.zip);
 			res.pipe(stream);
@@ -70,6 +98,9 @@ function update() {
 				fs.createReadStream(settings.zip).pipe(unzip.Extract({path: settings.gamepath}))
 				.on("finish", () => {
 					console.log("Installation/Update finished!");
+
+					fs.writeFileSync(path.join(settings.gamepath, "ns_version.txt"), tag);
+
 					events.emit("updated");
 
 					for (let i = 0; i < settings.excludes.length; i++) {
