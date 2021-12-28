@@ -4,7 +4,12 @@
 	"version": "1.0.0",
 	"description": "Launcher+Updater for TF|2 Northstar",
 	"main": "src/index.js",
-	"build": {"appId": "com.0negal.viper"},
+	"build": {
+		"appId": "com.0negal.viper",
+		"directories": {
+			"buildResources": "src/assets/icons"
+		}
+	},
 	"scripts": {
 		"start": "npx electron src/index.js",
 		"build": "npx electron-builder --win nsis --linux appimage"
