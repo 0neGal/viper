@@ -16,6 +16,7 @@ process.chdir(app.getPath("appData"));
 
 var settings = {
 	gamepath: "",
+	lang: "en-US",
 	zip: "/northstar.zip",
 	excludes: [
 		"ns_startup_args.txt",
@@ -29,7 +30,6 @@ if (fs.existsSync("viper.json")) {
 } else {
 	console.log("Game path is not set! Please select the path.");
 }
-
 
 function setpath(win) {
 	if (! win) {
@@ -110,4 +110,8 @@ module.exports = {
 	update,
 	setpath,
 	settings,
+	setlang: (lang) => {
+		settings.lang = lang;
+		saveSettings();
+	},
 }

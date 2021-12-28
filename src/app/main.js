@@ -7,11 +7,14 @@ const lang = require("../lang");
 var settings = {
 	gamepath: "",
 	zip: "/northstar.zip",
+	lang: navigator.language,
 	excludes: [
 		"ns_startup_args.txt",
 		"ns_startup_args_dedi.txt"
 	]
 }
+
+ipcRenderer.send("setlang", settings.lang);
 
 if (fs.existsSync("viper.json")) {
 	settings = {...settings, ...JSON.parse(fs.readFileSync("viper.json", "utf8"))};
