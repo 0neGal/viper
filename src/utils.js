@@ -61,9 +61,6 @@ function getInstalledVersion() {
 		return "unknown";
 	}
 }
-function updateInstalledVersion(newTag) {
-	fs.writeFileSync(path.join(settings.gamepath, "ns_version.txt"), newTag);
-}
 
 function update() {
 	for (let i = 0; i < settings.excludes.length; i++) {
@@ -81,7 +78,7 @@ function update() {
 		headers: {"User-Agent": "Viper"},
 		url: "https://api.github.com/repos/R2Northstar/Northstar/releases/latest",
 	}, (error, response, body) => {
-		const tag = body["tag_name"];
+		var tag = body["tag_name"];
 
 		console.log("current version:", version);
 		console.log("remote version:", tag);
@@ -101,7 +98,7 @@ function update() {
 				.on("finish", () => {
 					console.log("Installation/Update finished!");
 
-					updateInstalledVersion(tag);
+					fs.writeFileSync(path.join(settings.gamepath, "ns_version.txt"), tag);
 
 					events.emit("updated");
 
