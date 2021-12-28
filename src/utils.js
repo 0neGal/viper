@@ -17,7 +17,7 @@ process.chdir(app.getPath("appData"));
 var settings = {
 	gamepath: "",
 	zip: "/northstar.zip",
-	northstarVersion: "unknown",
+	northstar_version: "unknown",
 	excludes: [
 		"ns_startup_args.txt",
 		"ns_startup_args_dedi.txt"
@@ -92,7 +92,7 @@ function update() {
 				fs.createReadStream(settings.zip).pipe(unzip.Extract({path: settings.gamepath}))
 				.on("finish", () => {
 					console.log("Installation/Update finished!");
-					settings.northstarVersion = tag;
+					settings.northstar_version = tag;
 					saveSettings();
 					events.emit("updated");
 
