@@ -2,20 +2,25 @@ const fs = require("fs");
 const path = require("path");
 const { ipcRenderer } = require("electron");
 
+const lang = require("../lang");
+
 var settings = {
 	gamepath: "",
 	zip: "/northstar.zip",
+	lang: navigator.language,
 	excludes: [
 		"ns_startup_args.txt",
 		"ns_startup_args_dedi.txt"
 	]
 }
 
+ipcRenderer.send("setlang", settings.lang);
+
 if (fs.existsSync("viper.json")) {
 	settings = {...settings, ...JSON.parse(fs.readFileSync("viper.json", "utf8"))};
 	settings.zip = path.join(settings.gamepath + "/northstar.zip");
 } else {
-	alert("Game path is not set! Please select the path!");
+	alert(lang("gui.missinggamepath"));
 	setpath();
 }
 

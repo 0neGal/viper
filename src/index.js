@@ -33,6 +33,7 @@ function start() {
 }
 
 ipcMain.on("launch", (event) => {utils.launch()})
+ipcMain.on("setlang", (event, lang) => {utils.setlang(lang)})
 ipcMain.on("launchVanilla", (event) => {utils.launch("vanilla")})
 
 ipcMain.on("update", (event) => {utils.update()})

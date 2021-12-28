@@ -5,6 +5,7 @@ const Emitter = require("events");
 const events = new Emitter();
 
 const cli = app.commandLine;
+const lang = require("./lang");
 
 function hasArgs() {
 	if (cli.hasSwitch("cli") ||
@@ -24,12 +25,12 @@ function exit(code) {
 async function init() {
 	if (cli.hasSwitch("help")) {
 	console.log(`options:
-  --help     shows this help message
-  --debug    opens the dev/debug tools
+  --help     ${lang("cli.help.help")}
+  --debug    ${lang("cli.help.debug")}
 
-  --cli      forces the CLI to enable
-  --update   updates Northstar from your set game path
-  --setpath  sets your game path`)
+  --cli      ${lang("cli.help.cli")}
+  --update   ${lang("cli.help.update")}
+  --setpath  ${lang("cli.help.setpath")}`)
 		// In the future --setpath should be able to understand
 		// relative paths, instead of just absolute ones.
 		exit();
@@ -43,7 +44,8 @@ async function init() {
 		if (cli.getSwitchValue("setpath") != "") {
 			ipcMain.emit("setpathcli", cli.getSwitchValue("setpath"));
 		} else {
-			console.error("error: No argumment provided for --setpath");
+			console.error(`error: ${lang("cli.setpath.noarg")}`);
+			exit(1);
 		}
 	}
 
