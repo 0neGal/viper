@@ -6,8 +6,8 @@
 	"main": "src/index.js",
 	"build": {"appId": "com.0negal.viper"},
 	"scripts": {
-		"start": "node_modules/.bin/electron src/index.js",
-		"build": "node_modules/.bin/electron-builder --win nsis --linux appimage"
+		"start": "npx electron src/index.js",
+		"build": "npx electron-builder --win nsis --linux appimage"
 	},
 	"repository": {
 		"type": "git",
