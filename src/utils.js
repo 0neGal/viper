@@ -65,9 +65,8 @@ function update() {
 		}
 	}
 
-	console.log("Downloading...");
+	console.log("Checking for updates...");
 	const version = getNorthstarInstalledVersion();
-	console.log(version);
 
 	request({
 		json: true,
@@ -75,7 +74,14 @@ function update() {
 		url: "https://api.github.com/repos/R2Northstar/Northstar/releases/latest",
 	}, (error, response, body) => {
 		const tag = body['tag_name'];
-		console.log(tag);
+
+		console.log('current version:', version);
+		console.log('remote version:', tag);
+
+		if (version === tag) {
+			console.log('Latest version is already installed, skipping update.');
+			return;
+		}
 
 		https.get(body.assets[0].browser_download_url, (res) => {
 			let stream = fs.createWriteStream(settings.zip);
