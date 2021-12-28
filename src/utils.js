@@ -43,7 +43,7 @@ function setpath(win) {
 		}).catch(err => {console.error(err)})
 	}
 
-	fs.writeFileSync(app.getPath("appData") + "/viper.json", JSON.stringify({...settings}));
+	fs.writeFileSync(app.getPath("appData") + "/viper.json", JSON.stringify(settings));
 	cli.exit();
 }
 
