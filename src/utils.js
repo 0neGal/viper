@@ -61,6 +61,9 @@ function update() {
 		headers: {"User-Agent": "Viper"},
 		url: "https://api.github.com/repos/R2Northstar/Northstar/releases/latest",
 	}, (error, response, body) => {
+		const tag = body['tag_name'];
+		console.log(tag);
+
 		https.get(body.assets[0].browser_download_url, (res) => {
 			let stream = fs.createWriteStream(settings.zip);
 			res.pipe(stream);
