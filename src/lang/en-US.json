@@ -1,0 +1,21 @@
+{
+	"cli.help.help": "shows this help message",
+	"cli.help.debug": "opens the dev/debug tools",
+	"cli.help.cli": "forces the CLI to enable",
+	"cli.help.update": "updates Northstar from your set game path",
+	"cli.help.setpath": "sets your game path",
+
+	"cli.setpath.noarg": "No argument provided for --setpath",
+
+
+	"gui.welcome": "Welcome to Viper!",
+	"gui.exit": "Exit",
+	"gui.update": "Update",
+	"gui.setpath": "Game Path",
+
+	"gui.launch": "Launch",
+	"gui.launchvanilla": "Vanilla",
+	"gui.launchnorthstar": "Northstar",
+
+	"gui.missinggamepath": "Game path is not set! Please select the path!"
+}
