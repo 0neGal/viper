@@ -4,7 +4,6 @@ const { ipcRenderer } = require("electron");
 
 var settings = {
 	gamepath: "",
-	file: "viper.json",
 	zip: "/northstar.zip",
 	excludes: [
 		"ns_startup_args.txt",
@@ -12,8 +11,8 @@ var settings = {
 	]
 }
 
-if (fs.existsSync(settings.file)) {
-	settings = {...settings, ...JSON.parse(fs.readFileSync(settings.file, "utf8"))};
+if (fs.existsSync("viper.json")) {
+	settings = {...settings, ...JSON.parse(fs.readFileSync("viper.json", "utf8"))};
 	settings.zip = path.join(settings.gamepath + "/northstar.zip");
 } else {
 	alert("Game path is not set! Please select the path!");
