@@ -17,6 +17,7 @@ process.chdir(app.getPath("appData"));
 var settings = {
 	gamepath: "",
 	zip: "/northstar.zip",
+	northstarVersion: "unknown",
 	excludes: [
 		"ns_startup_args.txt",
 		"ns_startup_args_dedi.txt"
@@ -47,6 +48,11 @@ function setpath(win) {
 	cli.exit();
 }
 
+function getNorthstarInstalledVersion() {
+	const configFilePath = app.getPath("appData") + "/viper.json";
+	return JSON.parse(fs.readFileSync(configFilePath, "utf8"))['northstarVersion'];
+}
+
 function update() {
 	for (let i = 0; i < settings.excludes.length; i++) {
 		let exclude = path.join(settings.gamepath + "/" + settings.excludes[i]);
@@ -56,6 +62,9 @@ function update() {
 	}
 
 	console.log("Downloading...");
+	const version = getNorthstarInstalledVersion();
+	console.log(version);
+	
 	request({
 		json: true,
 		headers: {"User-Agent": "Viper"},
