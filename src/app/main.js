@@ -6,6 +6,10 @@ var settings = {
 	gamepath: "",
 	file: "viper.json",
 	zip: "/northstar.zip",
+	excludes: [
+		"ns_startup_args.txt",
+		"ns_startup_args_dedi.txt"
+	]
 }
 
 if (fs.existsSync(settings.file)) {

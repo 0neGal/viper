@@ -18,6 +18,10 @@ var settings = {
 	gamepath: "",
 	file: "viper.json",
 	zip: "/northstar.zip",
+	excludes: [
+		"ns_startup_args.txt",
+		"ns_startup_args_dedi.txt"
+	]
 }
 
 if (fs.existsSync(settings.file)) {
@@ -45,6 +49,13 @@ function setpath(win) {
 }
 
 function update() {
+	for (let i = 0; i < settings.excludes.length; i++) {
+		let exclude = path.join(settings.gamepath + "/" + settings.excludes[i]);
+		if (fs.existsSync(exclude)) {
+			fs.renameSync(exclude, exclude + ".excluded")
+		}
+	}
+
 	console.log("Downloading...");
 	request({
 		json: true,
@@ -61,6 +72,14 @@ function update() {
 				.on("finish", () => {
 					console.log("Installation/Update finished!");
 					events.emit("updated");
+
+					for (let i = 0; i < settings.excludes.length; i++) {
+						let exclude = path.join(settings.gamepath + "/" + settings.excludes[i]);
+						if (fs.existsSync(exclude + ".excluded")) {
+							fs.renameSync(exclude + ".excluded", exclude)
+						}
+					}
+
 					cli.exit();
 				});
 			})
