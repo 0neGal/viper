@@ -16,6 +16,7 @@ function start() {
 		title: "Viper",
 		resizable: false,
 		titleBarStyle: "hidden",
+		icon: path.join(__dirname, 'assets/icons/northstarCN_icon.png'),
 		webPreferences: {
 			nodeIntegration: true,
 			contextIsolation: false,
