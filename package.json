@@ -8,6 +8,11 @@
 		"appId": "com.0negal.viper",
 		"directories": {
 			"buildResources": "src/assets/icons"
+		},
+		"nsis": {
+			"installerIcon": "icon.ico",
+			"uninstallerIcon": "icon.ico",
+			"installerHeaderIcon": "icon.ico"
 		}
 	},
 	"scripts": {
