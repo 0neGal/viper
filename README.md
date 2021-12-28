@@ -17,10 +17,10 @@ $ cd viper
 
 $ npm i
 
-$ node_modules/.bin/electron src/index.js
+$ npm run start
 ```
 
-This'll launch it with the Electron build installed by `npm`. You can also use `npm start` on Linux, for some reason this is broken on Windows, I don't know why.
+This'll launch it with the Electron build installed by `npm`.
 
 ## What can it do specifically?
 
