@@ -1,10 +1,15 @@
 const fs = require("fs");
 
-var lang = "en-US";
+var lang = "en";
 if (fs.existsSync("viper.json")) {
 	lang = JSON.parse(fs.readFileSync("viper.json", "utf8")).lang;
+	if (! lang) {lang = "en"}
 	if (! fs.existsSync(__dirname + `/lang/${lang}.json`)) {
-		lang = "en-US";
+		if (fs.existsSync(__dirname + `/lang/${lang.replace(/-.*$/, "")}.json`)) {
+			lang = lang.replace(/-.*$/, "");
+		} else {
+			lang = "en";
+		}
 	}
 }
 
