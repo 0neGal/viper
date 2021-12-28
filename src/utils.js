@@ -52,9 +52,10 @@ function saveSettings() {
 	fs.writeFileSync(app.getPath("appData") + "/viper.json", JSON.stringify({...settings}));
 }
 
-function getNorthstarInstalledVersion() {
-	const configFilePath = app.getPath("appData") + "/viper.json";
-	return JSON.parse(fs.readFileSync(configFilePath, "utf8"))['northstarVersion'];
+function getInstalledVersion() {
+	return JSON.parse(
+		fs.readFileSync(app.getPath("appData") + "/viper.json", "utf8")
+	)['northstarVersion'];
 }
 
 function update() {
@@ -66,7 +67,7 @@ function update() {
 	}
 
 	console.log("Checking for updates...");
-	const version = getNorthstarInstalledVersion();
+	const version = getInstalledVersion();
 
 	request({
 		json: true,
