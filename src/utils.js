@@ -80,12 +80,13 @@ function update() {
 	}, (error, response, body) => {
 		var tag = body["tag_name"];
 
-		console.log("current version:", version);
-		console.log("remote version:", tag);
-
 		if (version === tag) {
-			console.log("Latest version is already installed, skipping update.");
+			console.log(`Latest version (${version}) is already installed, skipping update.`);
 			return;
+		} else {
+			if (version != "unknown") {
+				console.log("Current version:", version);
+			}; console.log("Downloading:", tag);
 		}
 
 		https.get(body.assets[0].browser_download_url, (res) => {
