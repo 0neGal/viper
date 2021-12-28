@@ -33,8 +33,10 @@ function setpath(win) {
 		settings.gamepath = cli.param("setpath");
 	} else {
 		dialog.showOpenDialog({properties: ["openDirectory"]}).then(res => {
-			win.webContents.send("newpath", res.filePaths[0]);
 			settings.gamepath = res.filePaths[0];
+			settings.zip = path.join(settings.gamepath + "/northstar.zip");
+
+			win.webContents.send("newpath", settings.gamepath);
 		}).catch(err => {console.error(err)})
 	}
 
