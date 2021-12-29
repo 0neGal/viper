@@ -11,7 +11,7 @@ const cli = require("./cli");
 function start() {
 	win = new BrowserWindow({
 		width: 600,
-		height: 115,
+		height: 130,
 		show: false,
 		title: "Viper",
 		resizable: false,
