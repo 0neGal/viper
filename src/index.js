@@ -9,10 +9,10 @@ const utils = require("./utils");
 const cli = require("./cli");
 
 function start() {
-	let width = 115;
+	let width = 600;
 	win = new BrowserWindow({
-		width: 600,
-		height: width,
+		width: width,
+		height: 115,
 		show: false,
 		title: "Viper",
 		resizable: false,
