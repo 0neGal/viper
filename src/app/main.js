@@ -34,3 +34,8 @@ function launchVanilla() {ipcRenderer.send("launchVanilla")}
 ipcRenderer.on("newpath", (event, newpath) => {
 	settings.gamepath = newpath;
 })
+
+setlang();
+setInterval(() => {
+	ipcRenderer.send("setsize", document.querySelector(".lines").offsetHeight + 25);
+}, 150)

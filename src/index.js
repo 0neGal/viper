@@ -9,9 +9,10 @@ const utils = require("./utils");
 const cli = require("./cli");
 
 function start() {
+	let width = 115;
 	win = new BrowserWindow({
 		width: 600,
-		height: 115,
+		height: width,
 		show: false,
 		title: "Viper",
 		resizable: false,
@@ -26,10 +27,15 @@ function start() {
 
 	win.removeMenu();
 	win.loadFile(__dirname + "/app/index.html");
-	win.webContents.once("dom-ready", () => {win.show()});
 
-	ipcMain.on("setpath", (event) => {utils.setpath(win)})
 	ipcMain.on("exit", (event) => {process.exit(0)})
+	ipcMain.on("setpath", (event) => {utils.setpath(win)})
+	ipcMain.on("setsize", (event, height) => {
+		win.setSize(width, height);
+		if (! win.isVisible()) {
+			win.show();
+		}
+	})
 }
 
 ipcMain.on("launch", (event) => {utils.launch()})
