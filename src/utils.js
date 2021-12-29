@@ -146,4 +146,5 @@ module.exports = {
 		settings.lang = lang;
 		saveSettings();
 	},
+	getInstalledVersion
 }
