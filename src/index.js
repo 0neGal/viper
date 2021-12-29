@@ -17,7 +17,7 @@ function start() {
 		title: "Viper",
 		resizable: false,
 		titleBarStyle: "hidden",
-		icon: path.join(__dirname, 'assets/icons/512x512.png'),
+		icon: path.join(__dirname, "assets/icons/512x512.png"),
 		webPreferences: {
 			nodeIntegration: true,
 			contextIsolation: false,
@@ -46,10 +46,10 @@ ipcMain.on("launchVanilla", (event) => {utils.launch("vanilla")})
 ipcMain.on("update", (event) => {utils.update()})
 ipcMain.on("setpathcli", (event) => {utils.setpath()});
 
-ipcMain.on('getVersionInfo', () => {
-	win.webContents.send('versionInfo', {
+ipcMain.on("getversion", () => {
+	win.webContents.send("version", {
 		ns: utils.getInstalledVersion(),
-		vp: 'v' + require('../package.json').version
+		vp: "v" + require("../package.json").version
 	});
 });
 
