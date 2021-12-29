@@ -6,6 +6,7 @@ const Emitter = require("events");
 const events = new Emitter();
 
 const cli = require("./cli");
+const lang = require("./lang");
 
 const unzip = require("unzipper");
 const request = require("request");
@@ -28,7 +29,7 @@ if (fs.existsSync("viper.json")) {
 	settings = {...settings, ...JSON.parse(fs.readFileSync("viper.json", "utf8"))};
 	settings.zip = path.join(settings.gamepath + "/northstar.zip");
 } else {
-	console.log("Game path is not set! Please select the path.");
+	console.log(lang("gui.missinggamepath"));
 }
 
 function setpath(win) {
@@ -70,7 +71,7 @@ function update() {
 		}
 	}
 
-	console.log("Checking for updates...");
+	console.log(lang("cli.update.checking"));
 	const version = getInstalledVersion();
 
 	request({
@@ -81,12 +82,12 @@ function update() {
 		var tag = body["tag_name"];
 
 		if (version === tag) {
-			console.log(`Latest version (${version}) is already installed, skipping update.`);
+			console.log(lang("cli.update.uptodate"), version);
 			return;
 		} else {
 			if (version != "unknown") {
-				console.log("Current version:", version);
-			}; console.log("Downloading:", tag);
+				console.log(lang("cli.update.current"), version);
+			}; console.log(lang("cli.update.downloading"), tag);
 		}
 
 		https.get(body.assets[0].browser_download_url, (res) => {
@@ -94,10 +95,10 @@ function update() {
 			res.pipe(stream);
 			stream.on("finish", () => {
 				stream.close();
-				console.log("Download done! Extracting...");
+				console.log(lang("cli.update.downloaddone"));
 				fs.createReadStream(settings.zip).pipe(unzip.Extract({path: settings.gamepath}))
 				.on("finish", () => {
-					console.log("Installation/Update finished!");
+					console.log(lang("cli.update.finished"));
 
 					fs.writeFileSync(path.join(settings.gamepath, "ns_version.txt"), tag);
 
@@ -119,18 +120,18 @@ function update() {
 
 function launch(version) {
 	if (process.platform == "linux") {
-		console.error("error: Launching the game is not currently supported on Linux")
+		console.error("error:", lang("cli.launch.linuxerror"))
 		cli.exit(1);
 	}
 
 	process.chdir(settings.gamepath);
 	switch(version) {
 		case "vanilla":
-			console.log("Launching Vanilla...")
+			console.log(lang("general.launching"), "Vanilla...")
 			exec(path.join(settings.gamepath + "/Titanfall2.exe"))
 			break;
 		default:
-			console.log("Launching Northstar...")
+			console.log(lang("general.launching"), "Northstar...")
 			exec(path.join(settings.gamepath + "/NorthstarLauncher.exe"))
 			break;
 	}

@@ -7,6 +7,14 @@
 
 	"cli.setpath.noarg": "No argument provided for --setpath",
 
+	"cli.update.current": "Current version:",
+	"cli.update.downloading": "Downloading:",
+	"cli.update.checking": "Checking for updates...",
+	"cli.update.downloaddone": "Download done! Extracting...",
+	"cli.update.finished": "Installation/Update finished!",
+	"cli.update.uptodate": "Latest version (%s) is already installed, skipping update.",
+
+	"cli.launch.linuxerror": "Launching the game is not currently supported on Linux",
 
 	"gui.welcome": "Welcome to Viper!",
 	"gui.exit": "Exit",
@@ -17,5 +25,10 @@
 	"gui.launchvanilla": "Vanilla",
 	"gui.launchnorthstar": "Northstar",
 
-	"gui.missinggamepath": "Game path is not set! Please select the path!"
+	"gui.selectpath": "Please select the path!",
+	"gui.missinggamepath": "Game path is not set!",
+
+
+	"general.launching": "Launching",
+	"general.missingpath": "Game path is not set!"
 }
