@@ -6,6 +6,7 @@ const Emitter = require("events");
 const events = new Emitter();
 
 const cli = require("./cli");
+const lang = require("./lang");
 
 const unzip = require("unzipper");
 const request = require("request");
@@ -16,17 +17,20 @@ process.chdir(app.getPath("appData"));
 
 var settings = {
 	gamepath: "",
-	file: "viper.json",
+	lang: "en-US",
 	zip: "/northstar.zip",
+	excludes: [
+		"ns_startup_args.txt",
+		"ns_startup_args_dedi.txt"
+	]
 }
 
-if (fs.existsSync(settings.file)) {
-	settings = {...settings, ...JSON.parse(fs.readFileSync(settings.file, "utf8"))};
+if (fs.existsSync("viper.json")) {
+	settings = {...settings, ...JSON.parse(fs.readFileSync("viper.json", "utf8"))};
 	settings.zip = path.join(settings.gamepath + "/northstar.zip");
 } else {
-	console.log("Game path is not set! Please select the path.");
+	console.log(lang("gui.missinggamepath"));
 }
-
 
 function setpath(win) {
 	if (! win) {
@@ -35,32 +39,78 @@ function setpath(win) {
 		dialog.showOpenDialog({properties: ["openDirectory"]}).then(res => {
 			settings.gamepath = res.filePaths[0];
 			settings.zip = path.join(settings.gamepath + "/northstar.zip");
-
+			saveSettings();
 			win.webContents.send("newpath", settings.gamepath);
 		}).catch(err => {console.error(err)})
 	}
 
-	fs.writeFileSync(app.getPath("appData") + "/viper.json", JSON.stringify({...settings}));
+	fs.writeFileSync(app.getPath("appData") + "/viper.json", JSON.stringify(settings));
 	cli.exit();
 }
 
+function saveSettings() {
+	fs.writeFileSync(app.getPath("appData") + "/viper.json", JSON.stringify(settings));
+}
+
+function getInstalledVersion() {
+	const versionFilePath = path.join(settings.gamepath, "ns_version.txt");
+
+	if (fs.existsSync(versionFilePath)) {
+		return fs.readFileSync(versionFilePath, "utf8");
+	} else {
+		fs.writeFileSync(versionFilePath, "unknown");
+		return "unknown";
+	}
+}
+
 function update() {
-	console.log("Downloading...");
+	for (let i = 0; i < settings.excludes.length; i++) {
+		let exclude = path.join(settings.gamepath + "/" + settings.excludes[i]);
+		if (fs.existsSync(exclude)) {
+			fs.renameSync(exclude, exclude + ".excluded")
+		}
+	}
+
+	console.log(lang("cli.update.checking"));
+	const version = getInstalledVersion();
+
 	request({
 		json: true,
 		headers: {"User-Agent": "Viper"},
 		url: "https://api.github.com/repos/R2Northstar/Northstar/releases/latest",
 	}, (error, response, body) => {
+		var tag = body["tag_name"];
+
+		if (version === tag) {
+			console.log(lang("cli.update.uptodate"), version);
+			return;
+		} else {
+			if (version != "unknown") {
+				console.log(lang("cli.update.current"), version);
+			}; console.log(lang("cli.update.downloading"), tag);
+		}
+
 		https.get(body.assets[0].browser_download_url, (res) => {
 			let stream = fs.createWriteStream(settings.zip);
 			res.pipe(stream);
 			stream.on("finish", () => {
 				stream.close();
-				console.log("Download done! Extracting...");
+				console.log(lang("cli.update.downloaddone"));
 				fs.createReadStream(settings.zip).pipe(unzip.Extract({path: settings.gamepath}))
 				.on("finish", () => {
-					console.log("Installation/Update finished!");
+					console.log(lang("cli.update.finished"));
+
+					fs.writeFileSync(path.join(settings.gamepath, "ns_version.txt"), tag);
+
 					events.emit("updated");
+
+					for (let i = 0; i < settings.excludes.length; i++) {
+						let exclude = path.join(settings.gamepath + "/" + settings.excludes[i]);
+						if (fs.existsSync(exclude + ".excluded")) {
+							fs.renameSync(exclude + ".excluded", exclude)
+						}
+					}
+
 					cli.exit();
 				});
 			})
@@ -70,18 +120,18 @@ function update() {
 
 function launch(version) {
 	if (process.platform == "linux") {
-		console.error("error: Launching the game is not currently supported on Linux")
+		console.error("error:", lang("cli.launch.linuxerror"))
 		cli.exit(1);
 	}
 
 	process.chdir(settings.gamepath);
 	switch(version) {
 		case "vanilla":
-			console.log("Launching Vanilla...")
+			console.log(lang("general.launching"), "Vanilla...")
 			exec(path.join(settings.gamepath + "/Titanfall2.exe"))
 			break;
 		default:
-			console.log("Launching Northstar...")
+			console.log(lang("general.launching"), "Northstar...")
 			exec(path.join(settings.gamepath + "/NorthstarLauncher.exe"))
 			break;
 	}
@@ -92,4 +142,9 @@ module.exports = {
 	update,
 	setpath,
 	settings,
+	setlang: (lang) => {
+		settings.lang = lang;
+		saveSettings();
+	},
+	getInstalledVersion
 }
