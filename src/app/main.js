@@ -34,3 +34,8 @@ function launchVanilla() {ipcRenderer.send("launchVanilla")}
 ipcRenderer.on("newpath", (event, newpath) => {
 	settings.gamepath = newpath;
 })
+
+ipcRenderer.on('versionInfo', (_, payload) => {
+	document.getElementById('nsVersion').innerText = `Northstar version: ${payload.ns}`
+});
+ipcRenderer.send('getVersionInfo');

@@ -1,6 +1,6 @@
 const fs = require("fs");
 const path = require("path");
-const { app, dialog, ipcMain, BrowserWindow } = require("electron");
+const { app, dialog, ipcMain, BrowserWindow, ipcRenderer } = require("electron");
 
 const Emitter = require("events");
 const events = new Emitter();
@@ -37,7 +37,13 @@ ipcMain.on("setlang", (event, lang) => {utils.setlang(lang)})
 ipcMain.on("launchVanilla", (event) => {utils.launch("vanilla")})
 
 ipcMain.on("update", (event) => {utils.update()})
-ipcMain.on("setpathcli", (event) => {utils.setpath()})
+ipcMain.on("setpathcli", (event) => {utils.setpath()});
+
+ipcMain.on('getVersionInfo', () => {
+	win.webContents.send('versionInfo', {
+		ns: utils.getInstalledVersion()
+	});
+});
 
 process.chdir(app.getPath("appData"));
 
