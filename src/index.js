@@ -17,6 +17,7 @@ function start() {
 		title: "Viper",
 		resizable: false,
 		titleBarStyle: "hidden",
+		icon: path.join(__dirname, 'assets/icons/512x512.png'),
 		webPreferences: {
 			nodeIntegration: true,
 			contextIsolation: false,

@@ -31,3 +31,7 @@ Currently Viper is capable of:
  * Be pretty!
 
 Besides this I've been considering adding some easy to use VPK modding tools so everybody can have fun with VPK modding even if you don't know how to do it the traditional way. However that is not at the top of the todo list right now.
+
+## Credits
+
+All credits for logos go to Imply#9781.
