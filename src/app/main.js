@@ -36,6 +36,7 @@ ipcRenderer.on("newpath", (event, newpath) => {
 })
 
 ipcRenderer.on('versionInfo', (_, payload) => {
-	document.getElementById('nsVersion').innerText = `Northstar version: ${payload.ns}`
+	document.getElementById('vpVersion').innerText = `Viper version: ${payload.vp}`;
+	document.getElementById('nsVersion').innerText = `Northstar version: ${payload.ns}`;
 });
 ipcRenderer.send('getVersionInfo');
