@@ -40,3 +40,8 @@ ipcRenderer.on('versionInfo', (_, payload) => {
 	document.getElementById('nsVersion').innerText = `Northstar version: ${payload.ns}`;
 });
 ipcRenderer.send('getVersionInfo');
+
+setlang();
+setInterval(() => {
+	ipcRenderer.send("setsize", document.querySelector(".lines").offsetHeight + 20);
+}, 150);

@@ -28,15 +28,21 @@ body, button, input {
 	font-family: "Roboto Mono", monospace;
 }
 
+nobr {white-space: nowrap}
+
 .line {
 	display: flex;
 	margin-top: 15px;
 }
 
 .buttons {
+	text-align: right;
 	margin-left: auto;
 	margin-right: 7px;
 }
+
+.text {max-width: 38vw}
+.buttons {max-width: 55vw}
 
 button, .text {
 	border: none;
@@ -47,6 +53,7 @@ button, .text {
 }
 
 button {
+	margin-bottom: 10px;
 	color: var(--btnforeground);
 	-webkit-app-region: no-drag;
 }
