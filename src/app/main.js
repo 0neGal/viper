@@ -37,5 +37,5 @@ ipcRenderer.on("newpath", (event, newpath) => {
 
 setlang();
 setInterval(() => {
-	ipcRenderer.send("setsize", document.querySelector(".lines").offsetHeight + 25);
+	ipcRenderer.send("setsize", document.querySelector(".lines").offsetHeight + 20);
 }, 150)
