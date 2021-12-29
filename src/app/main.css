@@ -28,6 +28,8 @@ body, button, input {
 	font-family: "Roboto Mono", monospace;
 }
 
+nobr {white-space: nowrap}
+
 .line {
 	display: flex;
 	margin-top: 15px;
