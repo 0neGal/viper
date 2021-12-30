@@ -1,4 +1,5 @@
 :root {
+	--disabled: #656E7F;
 	--background: #4C515B;
 	--foreground: #DDE2EB;
 	--btnforeground: var(--foreground);
@@ -64,7 +65,9 @@ button:active {
 	transform: scale(0.95);
 }
 
+
 #update {background: #81A1C1}
 #setpath {background: #5E81AC}
 #northstar {background: #C7777F}
 #vanilla, #exit {background: #656E7F}
+button:disabled {background: var(--disabled) !important; opacity: 0.5}

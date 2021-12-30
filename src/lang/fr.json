@@ -8,7 +8,7 @@
 	"cli.setpath.noarg": "Aucun argument donné à --setpath",
 
 	"cli.update.current": "Version actuelle :",
-	"cli.update.downloading": "Téléchargement en cours :",
+	"cli.update.downloading": "Téléchargement en cours ",
 	"cli.update.checking": "Vérification des mises à jour ...",
 	"cli.update.downloaddone": "Téléchargement terminé ! Extraction des fichiers...",
 	"cli.update.finished": "Mise à jour terminée !",
@@ -26,7 +26,6 @@
 	"gui.launchnorthstar": "Northstar",
 
 	"gui.selectpath": "Veuillez sélectionner le dossier où se trouve le client Titanfall 2.",
-	"gui.missinggamepath": "Le chemin du client n'est pas défini !",
 
 
 	"general.launching": "Lancement",

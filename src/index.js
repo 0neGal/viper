@@ -29,14 +29,18 @@ function start() {
 	win.removeMenu();
 	win.loadFile(__dirname + "/app/index.html");
 
-	ipcMain.on("exit", (event) => {process.exit(0)})
-	ipcMain.on("setpath", (event) => {utils.setpath(win)})
+	ipcMain.on("exit", () => {process.exit(0)})
+	ipcMain.on("setpath", () => {utils.setpath(win)})
 	ipcMain.on("setsize", (event, height) => {
 		win.setSize(width, height);
 		if (! win.isVisible()) {
 			win.show();
 		}
 	})
+
+	ipcMain.on("ns-updated", () => {win.webContents.send("ns-updated")})
+	ipcMain.on("ns-updating", () => {win.webContents.send("ns-updating")})
+	ipcMain.on("winLog", (event, ...args) => {win.webContents.send("log", ...args)})
 }
 
 ipcMain.on("launch", (event) => {utils.launch()})

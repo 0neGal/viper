@@ -9,7 +9,7 @@
 	"cli.setpath.noarg": "No argument provided for --setpath",
 
 	"cli.update.current": "Current version:",
-	"cli.update.downloading": "Downloading:",
+	"cli.update.downloading": "Downloading",
 	"cli.update.checking": "Checking for updates...",
 	"cli.update.downloaddone": "Download done! Extracting...",
 	"cli.update.finished": "Installation/Update finished!",
@@ -22,12 +22,16 @@
 	"gui.update": "Update",
 	"gui.setpath": "Game Path",
 
+	"gui.update.downloading": "Downloading...",
+	"gui.update.extracting": "Extracting update...",
+	"gui.update.finished": "Done! Ready to play!",
+	"gui.update.uptodate": "Already up to date!",
+
 	"gui.launch": "Launch",
 	"gui.launchvanilla": "Vanilla",
 	"gui.launchnorthstar": "Northstar",
 
 	"gui.selectpath": "Please select the path!",
-	"gui.missinggamepath": "Game path is not set!",
 
 
 	"general.launching": "Launching",
