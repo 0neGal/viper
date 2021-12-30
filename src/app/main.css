@@ -48,6 +48,7 @@ nobr {white-space: nowrap}
 .buttons {
 	text-align: right;
 	margin-left: auto;
+	user-select: none;
 	margin-right: calc(var(--padding) / 1.9);
 }
 
@@ -57,6 +58,7 @@ nobr {white-space: nowrap}
 button, .text, .mod {
 	border: none;
 	outline: none;
+	user-select: none;
 	border-radius: 50px;
 	transition: 0.2s ease-in-out;
 	padding: calc(var(--padding) / 3) var(--padding);
