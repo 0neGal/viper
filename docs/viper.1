@@ -1,0 +1,58 @@
+.TH "VIPER" "1" "December 2021" "" ""
+.SH "NAME"
+\fBviper\fR \- update and manage northstar
+.SH SYNOPSIS
+.P
+\fBviper\fP [<optional>\|\.\.\.]
+.SH DESCRIPTION
+.P
+Viper is a program made to make updating and launching Northstar a lot easier\. It has both a CLI and GUI tool, specifying no command line arguments opens the latter\.
+.SH OPTIONS
+.P
+\fB\-\-help\fP
+   Shows a brief message of all the options and what they do\.
+.P
+\fB\-\-version\fP
+   Various versions numbers for Node, Electron, Viper and so on\.
+.P
+\fB\-\-cli\fP
+   Forces the CLI to activate, meaning the GUI will never run\. 
+   What purpose this has I frankly do not know\.
+.P
+\fB\-\-update\fP
+   Updates Northstar, this uses your \fBviper\.json\fP to determine the location, it also won't try to update if the installed version of Northstar is already the newest, if you must re\-install Northstar you can delete the \fBns_version\.txt\fP file in the game path\.
+.P
+\fB\-\-launch\fP=<version>
+   Launches Northstar, this is currently only supported on Windows\.
+   If you must launch Vanilla you can run \fB\-\-launch=vanilla\fP
+.P
+\fB\-\-setpath\fP=<absolute\-path>
+   Sets the game path, this'll change the \fBgamepath\fP variable in your \fBviper\.json\fP, note that it only takes in absolute paths and not relative ones\.
+.SH CONFIGURATION
+.P
+All configuration takes place in your \fBviper\.json\fP file, this file may be in various locations depending on your platform, for Linux you're likely to find it at:
+.RS 0
+.IP \(bu 2
+\fB$XDG_CONFIG_HOME/viper\.json\fP
+.IP \(bu 2
+\fB~/\.config/viper\.json\fP
+
+.RE
+.P
+On Windows it's likely to be in \fB%APPDATA%\\viper\.json\fP
+.P
+All configuration is done by Viper itself, the locale is auto set when the GUI launches through your systems locale, the gamepath is selected with \fB\-\-setpath\fP or in the GUI\.
+.SH BUGS
+.P
+Report bugs on the GitHub issues page, and feel free to make a pull request if you also have the fix to the bug\.
+.SH AUTHORS
+.P
+Main contributors/maintainers to the project:
+.RS 0
+.IP \(bu 2
+0neGal mail@0negal\.com
+.IP \(bu 2
+Rémy Raes contact@remyraes\.com
+
+.RE
+
