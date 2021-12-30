@@ -17,6 +17,8 @@
 	"cli.launch.linuxerror": "Launching the game is not currently supported on Linux",
 
 	"gui.welcome": "Welcome to Viper!",
+	"gui.versions.viper": "Viper version",
+	"gui.versions.northstar": "Northstar version",
 	"gui.exit": "Exit",
 	"gui.update": "Update",
 	"gui.setpath": "Game Path",

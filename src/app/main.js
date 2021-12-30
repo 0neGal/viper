@@ -35,9 +35,9 @@ ipcRenderer.on("newpath", (event, newpath) => {
 	settings.gamepath = newpath;
 })
 
-ipcRenderer.on("version", (_, payload) => {
-	document.getElementById("vpVersion").innerText = "Viper version:" + payload.vp;
-	document.getElementById("nsVersion").innerText = "Northstar version: " + payload.ns;
+ipcRenderer.on("version", (event, versions) => {
+	vpversion.innerText = lang("gui.versions.viper") + ": " + versions.vp;
+	nsversion.innerText = lang("gui.versions.northstar") + ": " + versions.ns;
 });
 ipcRenderer.send("getversion");
 

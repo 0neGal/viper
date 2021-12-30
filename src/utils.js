@@ -52,8 +52,8 @@ function saveSettings() {
 	fs.writeFileSync(app.getPath("appData") + "/viper.json", JSON.stringify(settings));
 }
 
-function getInstalledVersion() {
-	const versionFilePath = path.join(settings.gamepath, "ns_version.txt");
+function getNSVersion() {
+	var versionFilePath = path.join(settings.gamepath, "ns_version.txt");
 
 	if (fs.existsSync(versionFilePath)) {
 		return fs.readFileSync(versionFilePath, "utf8");
@@ -72,7 +72,7 @@ function update() {
 	}
 
 	console.log(lang("cli.update.checking"));
-	const version = getInstalledVersion();
+	var version = getNSVersion();
 
 	request({
 		json: true,
@@ -101,8 +101,7 @@ function update() {
 					console.log(lang("cli.update.finished"));
 
 					fs.writeFileSync(path.join(settings.gamepath, "ns_version.txt"), tag);
-
-					events.emit("updated");
+					ipcMain.emit("getversion");
 
 					for (let i = 0; i < settings.excludes.length; i++) {
 						let exclude = path.join(settings.gamepath + "/" + settings.excludes[i]);
@@ -142,9 +141,9 @@ module.exports = {
 	update,
 	setpath,
 	settings,
+	getNSVersion,
 	setlang: (lang) => {
 		settings.lang = lang;
 		saveSettings();
 	},
-	getInstalledVersion
 }

@@ -1,6 +1,7 @@
 :root {
 	--background: #4C515B;
 	--foreground: #DDE2EB;
+	--subforeground: #AFAFAF;
 	--btnforeground: var(--foreground);
 }
 
@@ -72,5 +73,5 @@ button:active {
 .versions {
 	height: 15px;
 	font-size: 12px;
-	color: #afafaf;
+	color: var(--subforeground);
 }

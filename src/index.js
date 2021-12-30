@@ -48,7 +48,7 @@ ipcMain.on("setpathcli", (event) => {utils.setpath()});
 
 ipcMain.on("getversion", () => {
 	win.webContents.send("version", {
-		ns: utils.getInstalledVersion(),
+		ns: utils.getNSVersion(),
 		vp: "v" + require("../package.json").version
 	});
 });
