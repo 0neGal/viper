@@ -53,6 +53,14 @@ ipcMain.on("getversion", () => {
 	});
 });
 
+ipcMain.on("versioncli", () => {
+	console.log("Viper: v" + require("../package.json").version);
+	console.log("Northstar: " + utils.getNSVersion());
+	console.log("Node: " + process.version);
+	console.log("Electron: v" + process.versions.electron);
+	cli.exit();
+})
+
 process.chdir(app.getPath("appData"));
 
 if (cli.hasArgs()) {
