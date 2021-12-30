@@ -147,7 +147,27 @@ function winLog(msg) {
 	ipcMain.emit("winLog", msg, msg);
 }
 
+const mods = {
+	list: () => {
+		let mods = [];
+		let modpath = path.join(settings.gamepath, "R2Northstar/mods");
+
+		files = fs.readdirSync(modpath)
+		files.forEach((file) => {
+			if (fs.statSync(path.join(modpath, file)).isDirectory()) {
+				if (fs.existsSync(path.join(modpath, file, "mod.json"))) {
+					mods.push(require(path.join(modpath, file, "mod.json")))
+				}
+			}
+		})
+
+		return mods;
+	},
+}
+
 module.exports = {
+	mods,
+	lang,
 	winLog,
 	launch,
 	update,

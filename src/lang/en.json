@@ -22,6 +22,12 @@
 	"gui.update": "Update",
 	"gui.setpath": "Game Path",
 
+	"gui.mods": "Mods",
+	"gui.mods.count": "Mods Installed:",
+	"gui.mods.install": "Install Mod",
+	"gui.mods.removemod": "Remove Mod",
+	"gui.mods.removeall": "Remove All",
+
 	"gui.update.downloading": "Downloading...",
 	"gui.update.extracting": "Extracting update...",
 	"gui.update.finished": "Done! Ready to play!",
@@ -35,5 +41,6 @@
 
 
 	"general.launching": "Launching",
+	"general.mods.installed": "Installed mods:",
 	"general.missingpath": "Game path is not set!"
 }

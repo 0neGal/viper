@@ -10,6 +10,7 @@ const lang = require("./lang");
 function hasArgs() {
 	if (cli.hasSwitch("cli") ||
 		cli.hasSwitch("help") ||
+		cli.hasSwitch("mods") ||
 		cli.hasSwitch("update") ||
 		cli.hasSwitch("launch") ||
 		cli.hasSwitch("setpath") ||
@@ -65,6 +66,8 @@ async function init() {
 				break;
 		}
 	}
+
+	if (cli.hasSwitch("mods")) {ipcMain.emit("getmods")}
 }
 
 module.exports = {

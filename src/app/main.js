@@ -53,6 +53,14 @@ ipcRenderer.on("newpath", (event, newpath) => {
 
 ipcRenderer.on("log", (event, msg) => {log(msg)})
 
+ipcRenderer.on("mods", (event, mods) => {
+	modcount.innerHTML = `${lang("gui.mods.count")} ${mods.length}`;
+	modsdiv.innerHTML = "";
+	for (let i = 0; i < mods.length; i++) {
+		modsdiv.innerHTML += `<div class="mod">${mods[i].Name}</div>`;
+	}
+})
+
 setlang();
 setInterval(() => {
 	ipcRenderer.send("setsize", document.querySelector(".lines").offsetHeight + 20);
