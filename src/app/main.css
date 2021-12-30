@@ -39,6 +39,7 @@ nobr {white-space: nowrap}
 .buttons {
 	text-align: right;
 	margin-left: auto;
+	user-select: none;
 	margin-right: 7px;
 }
 
@@ -49,6 +50,7 @@ button, .text {
 	border: none;
 	outline: none;
 	padding: 5px 15px;
+	user-select: none;
 	border-radius: 50px;
 	transition: 0.2s ease-in-out;
 }
