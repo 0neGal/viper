@@ -13,6 +13,7 @@ function hasArgs() {
 		cli.hasSwitch("update") ||
 		cli.hasSwitch("launch") ||
 		cli.hasSwitch("setpath") ||
+		cli.hasSwitch("version") ||
 		cli.hasSwitch("gamepath")) {
 		return true;
 	} else {return false}
@@ -27,6 +28,7 @@ async function init() {
 	console.log(`options:
   --help     ${lang("cli.help.help")}
   --debug    ${lang("cli.help.debug")}
+  --version  ${lang("cli.help.version")}
 
   --cli      ${lang("cli.help.cli")}
   --update   ${lang("cli.help.update")}
@@ -36,8 +38,12 @@ async function init() {
 		exit();
 	}
 
-	if (cli.hasSwitch("update")) {
-		ipcMain.emit("update");
+	if (cli.hasSwitch("update")) {ipcMain.emit("update")}
+	if (cli.hasSwitch("version")) {
+		console.log("Viper: v" + require("../package.json").version);
+		console.log("Node: " + process.version);
+		console.log("Electron: v" + process.versions.electron);
+		exit();
 	}
 
 	if (cli.hasSwitch("setpath")) {

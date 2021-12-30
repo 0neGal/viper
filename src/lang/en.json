@@ -1,6 +1,7 @@
 {
 	"cli.help.help": "shows this help message",
 	"cli.help.debug": "opens the dev/debug tools",
+	"cli.help.version": "outputs version info",
 	"cli.help.cli": "forces the CLI to enable",
 	"cli.help.update": "updates Northstar from your set game path",
 	"cli.help.setpath": "sets your game path",
