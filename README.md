@@ -22,6 +22,8 @@ $ npm run start
 
 This'll launch it with the Electron build installed by `npm`.
 
+Additionally, if you really want to, you can build Viper with `npm run build` and it'll then build the Windows installer and AppImage, however the whole build process and everything related to it is still being worked on which is why we don't have official releases yet.
+
 ## What can it do specifically?
 
 Currently Viper is capable of:

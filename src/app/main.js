@@ -20,7 +20,7 @@ if (fs.existsSync("viper.json")) {
 	settings = {...settings, ...JSON.parse(fs.readFileSync("viper.json", "utf8"))};
 	settings.zip = path.join(settings.gamepath + "/northstar.zip");
 } else {
-	alert(lang("gui.missinggamepath"));
+	alert(lang("general.missinggamepath"));
 	setpath();
 }
 
@@ -31,15 +31,32 @@ function setpath() {ipcRenderer.send("setpath")}
 function launch() {ipcRenderer.send("launch")}
 function launchVanilla() {ipcRenderer.send("launchVanilla")}
 
+function log(msg) {
+	console.log(msg);
+	welcome.innerHTML = msg;
+}
+
+function setButtons(state) {
+	let buttons = document.querySelectorAll("button");
+
+	for (let i = 0; i < buttons.length; i++) {
+		buttons[i].disabled = !state;
+	}
+}
+
+ipcRenderer.on("ns-updated", () => {setButtons(true)})
+ipcRenderer.on("ns-updating", () => {setButtons(false)})
+
 ipcRenderer.on("newpath", (event, newpath) => {
 	settings.gamepath = newpath;
 })
 
+ipcRenderer.on("log", (event, msg) => {log(msg)})
+
 ipcRenderer.on("version", (event, versions) => {
 	vpversion.innerText = lang("gui.versions.viper") + ": " + versions.vp;
 	nsversion.innerText = lang("gui.versions.northstar") + ": " + versions.ns;
-});
-ipcRenderer.send("getversion");
+}); ipcRenderer.send("getversion");
 
 setlang();
 setInterval(() => {

@@ -29,7 +29,7 @@ if (fs.existsSync("viper.json")) {
 	settings = {...settings, ...JSON.parse(fs.readFileSync("viper.json", "utf8"))};
 	settings.zip = path.join(settings.gamepath + "/northstar.zip");
 } else {
-	console.log(lang("gui.missinggamepath"));
+	console.log(lang("general.missinggamepath"));
 }
 
 function setpath(win) {
@@ -71,6 +71,7 @@ function update() {
 		}
 	}
 
+	ipcMain.emit("ns-updating");
 	console.log(lang("cli.update.checking"));
 	var version = getNSVersion();
 
@@ -82,12 +83,17 @@ function update() {
 		var tag = body["tag_name"];
 
 		if (version === tag) {
+			ipcMain.emit("ns-updated");
 			console.log(lang("cli.update.uptodate"), version);
+
+			winLog(lang("gui.update.uptodate"));
 			return;
 		} else {
 			if (version != "unknown") {
 				console.log(lang("cli.update.current"), version);
-			}; console.log(lang("cli.update.downloading"), tag);
+			}; console.log(lang("cli.update.downloading") + ":", tag);
+
+			winLog(lang("gui.update.downloading"));
 		}
 
 		https.get(body.assets[0].browser_download_url, (res) => {
@@ -95,11 +101,10 @@ function update() {
 			res.pipe(stream);
 			stream.on("finish", () => {
 				stream.close();
+				winLog(lang("gui.update.extracting"));
 				console.log(lang("cli.update.downloaddone"));
 				fs.createReadStream(settings.zip).pipe(unzip.Extract({path: settings.gamepath}))
 				.on("finish", () => {
-					console.log(lang("cli.update.finished"));
-
 					fs.writeFileSync(path.join(settings.gamepath, "ns_version.txt"), tag);
 					ipcMain.emit("getversion");
 
@@ -110,6 +115,9 @@ function update() {
 						}
 					}
 
+					ipcMain.emit("ns-updated");
+					winLog(lang("gui.update.finished"));
+					console.log(lang("cli.update.finished"));
 					cli.exit();
 				});
 			})
@@ -136,7 +144,12 @@ function launch(version) {
 	}
 }
 
+function winLog(msg) {
+	ipcMain.emit("winLog", msg, msg);
+}
+
 module.exports = {
+	winLog,
 	launch,
 	update,
 	setpath,
