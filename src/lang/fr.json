@@ -1,6 +1,7 @@
 {
 	"cli.help.help": "affiche ce message d'aide",
 	"cli.help.debug": "affiche les outils de développement",
+	"cli.help.version": "retourne des informations sur la version du logiciel",
 	"cli.help.cli": "force l'activation de la CLI",
 	"cli.help.update": "met à jour Northstar sur le chemin du jeu précisé",
 	"cli.help.setpath": "enregistre le chemin du client de jeu",
@@ -17,9 +18,16 @@
 	"cli.launch.linuxerror": "Le support du jeu sur Linux n'est pas encore implémenté.",
 
 	"gui.welcome": "Bienvenue sur Viper !",
+	"gui.versions.viper": "Version de Viper",
+	"gui.versions.northstar": "Version de Northstar",
 	"gui.exit": "Fermer",
 	"gui.update": "Mise à jour",
 	"gui.setpath": "Chemin du jeu",
+
+	"gui.update.downloading": "Téléchargement de la mise à jour...",
+	"gui.update.extracting": "Extraction des fichiers...",
+	"gui.update.finished": "Terminé, vous pouvez jouer !",
+	"gui.update.uptodate": "Déjà à jour !",
 
 	"gui.launch": "Jouer",
 	"gui.launchvanilla": "Vanilla",
