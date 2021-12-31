@@ -6,6 +6,8 @@ body {
     height: 100%;
     width: 10%;
     float: left;
+    display: flex;
+    flex-direction: column;
     background-color: brown;
 }
 
@@ -14,4 +16,31 @@ body {
     width: 90%;
     display: inline-block;
     background-color: yellow;
+}
+
+
+/* nav bar buttons */
+.gamesContainer button {
+    margin: 20px;
+    min-height: 114px;
+
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 90%;
+
+    border: none;
+    background-color: transparent;
+}
+
+#vpBtn {
+    background-image: url(../assets/icons/512x512.png);
+}
+
+#nsBtn {
+    background-image: url(../assets/icons/northstar.png);
+}
+
+#ttfBtn {
+    background-image: url(../assets/icons/titanfall2.png);
+    background-size: 69%;
 }
