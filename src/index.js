@@ -1,6 +1,6 @@
 const fs = require("fs");
 const path = require("path");
-const { app, dialog, ipcMain, BrowserWindow } = require("electron");
+const { app, dialog, ipcMain, BrowserWindow, ipcRenderer } = require("electron");
 
 const Emitter = require("events");
 const events = new Emitter();
@@ -17,7 +17,7 @@ function start() {
 		title: "Viper",
 		resizable: false,
 		titleBarStyle: "hidden",
-		icon: path.join(__dirname, 'assets/icons/512x512.png'),
+		icon: path.join(__dirname, "assets/icons/512x512.png"),
 		webPreferences: {
 			nodeIntegration: true,
 			contextIsolation: false,
@@ -48,7 +48,22 @@ ipcMain.on("setlang", (event, lang) => {utils.setlang(lang)})
 ipcMain.on("launchVanilla", (event) => {utils.launch("vanilla")})
 
 ipcMain.on("update", (event) => {utils.update()})
-ipcMain.on("setpathcli", (event) => {utils.setpath()})
+ipcMain.on("setpathcli", (event) => {utils.setpath()});
+
+ipcMain.on("getversion", () => {
+	win.webContents.send("version", {
+		ns: utils.getNSVersion(),
+		vp: "v" + require("../package.json").version
+	});
+});
+
+ipcMain.on("versioncli", () => {
+	console.log("Viper: v" + require("../package.json").version);
+	console.log("Northstar: " + utils.getNSVersion());
+	console.log("Node: " + process.version);
+	console.log("Electron: v" + process.versions.electron);
+	cli.exit();
+})
 
 process.chdir(app.getPath("appData"));
 
