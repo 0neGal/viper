@@ -59,6 +59,3 @@ ipcRenderer.on("version", (event, versions) => {
 }); ipcRenderer.send("getversion");
 
 setlang();
-setInterval(() => {
-	ipcRenderer.send("setsize", document.querySelector(".lines").offsetHeight + 20);
-}, 150);
