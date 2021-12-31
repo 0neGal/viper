@@ -36,7 +36,7 @@
 	},
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/Alystrasz/viper"
+		"url": "git+https://github.com/0neGal/viper"
 	},
 	"author": "0neGal <mail@0negal.com>",
 	"license": "GPL-3.0-or-later",
