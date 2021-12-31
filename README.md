@@ -24,6 +24,26 @@ This'll launch it with the Electron build installed by `npm`.
 
 Additionally, if you really want to, you can build Viper with `npm run build` and it'll then build the Windows installer and AppImage, however the whole build process and everything related to it is still being worked on which is why we don't have official releases yet.
 
+## Install
+
+(this will be relevant once we start to publish releases)
+
+Downloads are available on the [releases page](https://github.com/0neGal/viper/releases). 
+
+Please note that some versions will update themselves automatically when a new release is available (just like Origin or Steam) and some will NOT, so choose it accordingly.
+
+Here is a list of all files:
+
+* Windows:
+  * `Viper Setup [x.y.z].exe` (recommanded) will install Viper on your computer; Viper will update itself automatically 
+  * `Viper [x.y.z].exe` is a stand-alone version of the software that does not need installation to be run; it will NOT update itself automatically
+* Linux:
+  * `.AppImage` benefits from auto-updating, unlike other Linux formats
+  * `.snap`
+  * `.tar.gz`
+  * `.deb`
+  * `.rpm`
+
 ## What can it do specifically?
 
 Currently Viper is capable of:
