@@ -4,6 +4,9 @@ body {
 
 .gamesContainer {
     width: 10%;
+    min-width: 95px;
+    max-width: 120px;
+
     float: left;
     display: flex;
     flex-wrap: wrap;
@@ -11,8 +14,8 @@ body {
 
 .mainContainer {
     height: 100%;
-    width: 90%;
-    display: inline-block;
+    flex-grow: 1;
+    display: flex;
     background-color: yellow;
 }
 
