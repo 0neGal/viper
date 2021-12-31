@@ -1,5 +1,16 @@
 body {
     margin: 0;
+    overflow: hidden;
+}
+
+#bgHolder {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: url('../assets/bg/ttf2.jpg') center no-repeat;
+    background-size: cover;
+    filter: brightness(0.4) blur(2px);
+    transform: scale(1.1);
 }
 
 .gamesContainer {
@@ -16,7 +27,6 @@ body {
     height: 100%;
     flex-grow: 1;
     display: flex;
-    background-color: yellow;
 }
 
 
