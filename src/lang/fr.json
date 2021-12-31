@@ -1,0 +1,41 @@
+{
+	"cli.help.help": "affiche ce message d'aide",
+	"cli.help.debug": "affiche les outils de développement",
+	"cli.help.version": "retourne des informations sur la version du logiciel",
+	"cli.help.cli": "force l'activation de la CLI",
+	"cli.help.update": "met à jour Northstar sur le chemin du jeu précisé",
+	"cli.help.setpath": "enregistre le chemin du client de jeu",
+
+	"cli.setpath.noarg": "Aucun argument donné à --setpath",
+
+	"cli.update.current": "Version actuelle :",
+	"cli.update.downloading": "Téléchargement en cours ",
+	"cli.update.checking": "Vérification des mises à jour ...",
+	"cli.update.downloaddone": "Téléchargement terminé ! Extraction des fichiers...",
+	"cli.update.finished": "Mise à jour terminée !",
+	"cli.update.uptodate": "La dernière version (%s) est déjà installée.",
+
+	"cli.launch.linuxerror": "Le support du jeu sur Linux n'est pas encore implémenté.",
+
+	"gui.welcome": "Bienvenue sur Viper !",
+	"gui.versions.viper": "Version de Viper",
+	"gui.versions.northstar": "Version de Northstar",
+	"gui.exit": "Fermer",
+	"gui.update": "Mise à jour",
+	"gui.setpath": "Chemin du jeu",
+
+	"gui.update.downloading": "Téléchargement de la mise à jour...",
+	"gui.update.extracting": "Extraction des fichiers...",
+	"gui.update.finished": "Terminé, vous pouvez jouer !",
+	"gui.update.uptodate": "Déjà à jour !",
+
+	"gui.launch": "Jouer",
+	"gui.launchvanilla": "Vanilla",
+	"gui.launchnorthstar": "Northstar",
+
+	"gui.selectpath": "Veuillez sélectionner le dossier où se trouve le client Titanfall 2.",
+
+
+	"general.launching": "Lancement",
+	"general.missingpath": "Le chemin du client n'est pas défini !"
+}
