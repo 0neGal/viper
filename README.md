@@ -30,6 +30,8 @@ Currently Viper is capable of:
 
  * Updating/Installing Northstar
  * Launching Vanilla and or Northstar
+ * Manage Mods (Soon, see **mod-support** branch)
+ * Auto-Update itself (Soon, see **auto-updater** branch)
  * Be pretty!
 
 Besides this I've been considering adding some easy to use VPK modding tools so everybody can have fun with VPK modding even if you don't know how to do it the traditional way. However that is not at the top of the todo list right now.
