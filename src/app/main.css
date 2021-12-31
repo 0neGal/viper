@@ -4,6 +4,7 @@
 	--foreground: #DDE2EB;
 	--background: #4C515B;
 	--boxbackground: #666E7F;
+	--subforeground: #AFAFAF;
 	--btnforeground: var(--foreground);
 }
 
@@ -34,6 +35,12 @@ body, button, input {
 
 nobr {white-space: nowrap}
 
+.versions {
+	height: 15px;
+	font-size: 12px;
+	color: var(--subforeground);
+}
+
 .line {
 	display: flex;
 	margin-top: var(--padding);
@@ -63,6 +70,8 @@ button, .text, .mod {
 	transition: 0.2s ease-in-out;
 	padding: calc(var(--padding) / 3) var(--padding);
 }
+
+#welcome {padding: 0px}
 
 button {
 	color: var(--btnforeground);

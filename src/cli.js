@@ -40,12 +40,7 @@ async function init() {
 	}
 
 	if (cli.hasSwitch("update")) {ipcMain.emit("update")}
-	if (cli.hasSwitch("version")) {
-		console.log("Viper: v" + require("../package.json").version);
-		console.log("Node: " + process.version);
-		console.log("Electron: v" + process.versions.electron);
-		exit();
-	}
+	if (cli.hasSwitch("version")) {ipcMain.emit("versioncli")}
 
 	if (cli.hasSwitch("setpath")) {
 		if (cli.getSwitchValue("setpath") != "") {

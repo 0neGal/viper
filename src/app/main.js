@@ -61,7 +61,12 @@ ipcRenderer.on("mods", (event, mods) => {
 	}
 })
 
+ipcRenderer.on("version", (event, versions) => {
+	vpversion.innerText = lang("gui.versions.viper") + ": " + versions.vp;
+	nsversion.innerText = lang("gui.versions.northstar") + ": " + versions.ns;
+}); ipcRenderer.send("getversion");
+
 setlang();
 setInterval(() => {
 	ipcRenderer.send("setsize", document.querySelector(".lines").offsetHeight + 20);
-}, 150)
+}, 150);
