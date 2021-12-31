@@ -3,12 +3,10 @@ body {
 }
 
 .gamesContainer {
-    height: 100%;
     width: 10%;
     float: left;
     display: flex;
-    flex-direction: column;
-    background-color: brown;
+    flex-wrap: wrap;
 }
 
 .mainContainer {
@@ -21,19 +19,37 @@ body {
 
 /* nav bar buttons */
 .gamesContainer button {
-    margin: 20px;
-    min-height: 114px;
-
     background-position: center;
     background-repeat: no-repeat;
     background-size: 90%;
 
     border: none;
     background-color: transparent;
+
+
+    position: relative;
+    flex-basis: calc(100% - 10px);
+    margin: 20px 20px 0;
+    box-sizing: border-box;
 }
+
+  
+.gamesContainer button::before {
+    content: '';
+    display: block;
+    padding-top: 100%;
+  }
+  
+  .gamesContainer button .content {
+    position: absolute;
+    top: 0; left: 0;
+    height: 100%;
+    width: 100%;
+  }
 
 #vpBtn {
     background-image: url(../assets/icons/512x512.png);
+    margin-bottom: 30px;
 }
 
 #nsBtn {
