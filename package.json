@@ -13,19 +13,32 @@
 			"installerIcon": "icon.ico",
 			"uninstallerIcon": "icon.ico",
 			"installerHeaderIcon": "icon.ico"
+		},
+		"linux": {
+			"icon": "512x512.png",
+			"category": "Game",
+			"target": [
+				"AppImage",
+				"snap",
+				"deb",
+				"rpm",
+				"tar.gz"
+			]
 		}
 	},
 	"scripts": {
 		"start": "npx electron src/index.js",
 		"debug": "npx electron src/index.js --debug",
 		"man": "npx marked-man docs/viper.1.md > docs/viper.1",
-		"build": "npx electron-builder --win nsis --linux appimage"
+		"build": "npx electron-builder --win nsis --win portable --linux",
+		"build:windows": "npx electron-builder --win nsis --win portable",
+		"build:linux": "npx electron-builder --linux"
 	},
 	"repository": {
 		"type": "git",
 		"url": "git+https://github.com/0neGal/viper.git"
 	},
-	"author": "0neGal",
+	"author": "0neGal <mail@0negal.com>",
 	"license": "GPL-3.0-or-later",
 	"bugs": {
 		"url": "https://github.com/0neGal/viper/issues"
