@@ -13,6 +13,9 @@
 			"installerIcon": "icon.ico",
 			"uninstallerIcon": "icon.ico",
 			"installerHeaderIcon": "icon.ico"
+		},
+		"linux": {
+			"icon": "512x512.png"
 		}
 	},
 	"scripts": {
@@ -20,7 +23,8 @@
 		"debug": "npx electron src/index.js --debug",
 		"man": "npx marked-man docs/viper.1.md > docs/viper.1",
 		"build": "npx electron-builder --win nsis --win portable --linux appimage",
-		"build:windows": "npx electron-builder --win nsis --win portable"
+		"build:windows": "npx electron-builder --win nsis --win portable",
+		"build:linux": "npx electron-builder --linux appimage"
 	},
 	"repository": {
 		"type": "git",
