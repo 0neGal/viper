@@ -1,7 +1,7 @@
 {
 	"name": "viper",
 	"productName": "Viper",
-	"version": "1.0.0",
+	"version": "0.8.0",
 	"description": "Launcher+Updater for TF|2 Northstar",
 	"main": "src/index.js",
 	"build": {
