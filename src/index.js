@@ -75,3 +75,11 @@ if (cli.hasArgs()) {
 		start();
 	})
 }
+
+// activate auto-updating
+const { autoUpdater } = require('electron-updater');
+autoUpdater.on("update-downloaded", (info) => {
+	console.info("update-downloaded", info);
+	autoUpdater.quitAndInstall();
+});
+autoUpdater.checkForUpdatesAndNotify();
