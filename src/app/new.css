@@ -1,0 +1,17 @@
+body {
+    margin: 0;
+}
+
+.gamesContainer {
+    height: 100%;
+    width: 10%;
+    float: left;
+    background-color: brown;
+}
+
+.mainContainer {
+    height: 100%;
+    width: 90%;
+    display: inline-block;
+    background-color: yellow;
+}

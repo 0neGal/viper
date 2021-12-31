@@ -2,31 +2,36 @@
 	<head>
 		<meta name="viewport" content="width=device-width,initial-scale=1.0">
 		<link rel="stylesheet" href="main.css">
+		<link rel="stylesheet" href="new.css">
 	</head>
 	<body>
-		<div class="lines">
-			<div class="line">
-				<div class="text">
-					<div class="text" id="welcome">%%gui.welcome%%</div>
-					<div class="versions">
-						<div id="vpversion"></div>
-						<div id="nsversion"></div>
+		<nav class="gamesContainer"></nav>
+		<div class="mainContainer"></div>
+		<!--
+			<div class="lines">
+				<div class="line">
+					<div class="text">
+						<div class="text" id="welcome">%%gui.welcome%%</div>
+						<div class="versions">
+							<div id="vpversion"></div>
+							<div id="nsversion"></div>
+						</div>
+					</div>
+					<div class="buttons">
+						<button id="exit" onclick="exit()">%%gui.exit%%</button>
+						<button id="update"	onclick="update()">%%gui.update%%</button>
+						<button id="setpath" onclick="setpath()">%%gui.setpath%%</button>
 					</div>
 				</div>
-				<div class="buttons">
-					<button id="exit" onclick="exit()">%%gui.exit%%</button>
-					<button id="update"	onclick="update()">%%gui.update%%</button>
-					<button id="setpath" onclick="setpath()">%%gui.setpath%%</button>
+				<div class="line">
+					<div class="text">%%gui.launch%%:</div>
+					<div class="buttons">
+						<button id="vanilla" onclick="launchVanilla()">%%gui.launchvanilla%%</button>
+						<button id="northstar" onclick="launch()">%%gui.launchnorthstar%%</button>
+					</div>
 				</div>
 			</div>
-			<div class="line">
-				<div class="text">%%gui.launch%%:</div>
-				<div class="buttons">
-					<button id="vanilla" onclick="launchVanilla()">%%gui.launchvanilla%%</button>
-					<button id="northstar" onclick="launch()">%%gui.launchnorthstar%%</button>
-				</div>
-			</div>
-		</div>
+		-->
 
 		<script src="lang.js"></script>
 		<script src="main.js"></script>
