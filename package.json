@@ -32,7 +32,8 @@
 		"man": "npx marked-man docs/viper.1.md > docs/viper.1",
 		"build": "npx electron-builder --win nsis --win portable --linux",
 		"build:windows": "npx electron-builder --win nsis --win portable",
-		"build:linux": "npx electron-builder --linux"
+		"build:linux": "npx electron-builder --linux",
+		"publish:windows": "npx electron-builder --win nsis --win portable -p always"
 	},
 	"repository": {
 		"type": "git",
