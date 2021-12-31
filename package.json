@@ -33,7 +33,8 @@
 		"build": "npx electron-builder --win nsis --win portable --linux",
 		"build:windows": "npx electron-builder --win nsis --win portable",
 		"build:linux": "npx electron-builder --linux",
-		"publish:windows": "npx electron-builder --win nsis --win portable -p always"
+		"publish:windows": "npx electron-builder --win nsis --win portable -p always",
+		"publish:linux": "npx electron-builder --linux -p always"
 	},
 	"repository": {
 		"type": "git",
