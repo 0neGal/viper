@@ -6,3 +6,4 @@
 4. Ensure application builds correctly with `npm run build:[windows/linux]`
 5. Expose `GH_TOKEN` environment var with your Github token
 6. Build and publish with `npm run publish:[windows/linux]`
+7. Edit the draft release message and publish the new release!
