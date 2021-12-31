@@ -77,8 +77,9 @@ button:active {
 }
 
 
-#update, #installmod {background: #81A1C1}
 #setpath {background: #5E81AC}
 #vanilla, #exit {background: #656E7F}
+#update, #installmod {background: #81A1C1}
+#togglemod, #toggleall {background: #ECD19A}
 #northstar, #removeall, #removemod {background: #C7777F}
 button:disabled {background: var(--disabled) !important; opacity: 0.5}
