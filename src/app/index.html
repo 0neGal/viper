@@ -8,9 +8,9 @@
 		<div id="bgHolder"></div>
 		
 		<nav class="gamesContainer">
-			<button id="vpBtn" onclick="displayVp()"></button>
-			<button id="nsBtn" onclick="displayNs()"></button>
-			<button id="ttfBtn" onclick="displayTtf()"></button>
+			<button id="vpBtn" onclick="displayContent('vp')"></button>
+			<button id="nsBtn" onclick="displayContent('ns')"></button>
+			<button id="ttfBtn" onclick="displayContent('ttf')"></button>
 		</nav>
 
 		<div class="mainContainer">
@@ -18,6 +18,20 @@
 				<ul class="contentMenu">
 					<li>Release notes</li>
 					<li>Information</li>
+				</ul>
+			</div>
+
+			<div id="nsContent" class="contentContainer">
+				<ul class="contentMenu">
+					<li>Northstar</li>
+					<li>Mods</li>
+					<li>Release notes</li>
+				</ul>
+			</div>
+
+			<div id="ttfContent" class="contentContainer">
+				<ul class="contentMenu">
+					<li>Titanfall 2</li>
 				</ul>
 			</div>
 		</div>

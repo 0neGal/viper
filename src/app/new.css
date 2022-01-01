@@ -97,3 +97,7 @@ body {
 .contentMenu li {
     margin: 0 26px;
 }
+
+#nsContent, #ttfContent {
+    display: none;
+}
