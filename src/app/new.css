@@ -18,12 +18,14 @@ body {
 
 .gamesContainer {
     width: 10%;
+    height: 100%;
     min-width: 95px;
     max-width: 120px;
 
     float: left;
     display: flex;
     flex-wrap: wrap;
+    align-content: center;
 }
 
 .mainContainer {
