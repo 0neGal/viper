@@ -7,7 +7,7 @@ viper(1) -- update and manage northstar
 
 ## DESCRIPTION
 
-Viper is a program made to make updating and launching Northstar a lot easier. It has both a CLI and GUI tool, specifying no command line arguments opens the latter.
+Viper is a program made to make updating and launching Northstar a lot easier. It has both a CLI and GUI tool, specifying no command line arguments opens the latter. Viper also is able to update itself, that is if you've the AppImage or NSIS version.
 
 ## OPTIONS
 
@@ -23,6 +23,9 @@ Viper is a program made to make updating and launching Northstar a lot easier. I
 
 `--update`
    Updates Northstar, this uses your `viper.json` to determine the location, it also won't try to update if the installed version of Northstar is already the newest, if you must re-install Northstar you can delete the `ns_version.txt` file in the game path.
+
+`--updatevp`
+   Updates Viper itself, by default CLI does not have auto updates, as a server owner may not want this, so use this option to update.
 
 `--launch`=<version>
    Launches Northstar, this is currently only supported on Windows.

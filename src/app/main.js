@@ -6,6 +6,7 @@ const lang = require("../lang");
 
 var settings = {
 	gamepath: "",
+	autoupdate: true,
 	zip: "/northstar.zip",
 	lang: navigator.language,
 	excludes: [
@@ -57,6 +58,12 @@ ipcRenderer.on("version", (event, versions) => {
 	vpversion.innerText = lang("gui.versions.viper") + ": " + versions.vp;
 	nsversion.innerText = lang("gui.versions.northstar") + ": " + versions.ns;
 }); ipcRenderer.send("getversion");
+
+ipcRenderer.on("updateavailable", () => {
+	if (confirm(lang("gui.update.available"))) {
+		ipcRenderer.send("updatenow");
+	}
+})
 
 setlang();
 setInterval(() => {

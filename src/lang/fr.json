@@ -5,6 +5,7 @@
 	"cli.help.cli": "force l'activation de la CLI",
 	"cli.help.update": "met à jour Northstar sur le chemin du jeu précisé",
 	"cli.help.setpath": "enregistre le chemin du client de jeu",
+	"cli.help.updatevp": "met à jour le client Viper, si le format actuel le permet.",
 
 	"cli.setpath.noarg": "Aucun argument donné à --setpath",
 
@@ -28,6 +29,7 @@
 	"gui.update.extracting": "Extraction des fichiers...",
 	"gui.update.finished": "Terminé, vous pouvez jouer !",
 	"gui.update.uptodate": "Déjà à jour !",
+	"gui.update.available": "Une mise à jour pour Viper est disponible, voulez-vous l'installer maintenant ?",
 
 	"gui.launch": "Jouer",
 	"gui.launchvanilla": "Vanilla",
