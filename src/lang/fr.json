@@ -5,6 +5,7 @@
 	"cli.help.cli": "force l'activation de la CLI",
 	"cli.help.update": "met à jour Northstar sur le chemin du jeu précisé",
 	"cli.help.setpath": "enregistre le chemin du client de jeu",
+	"cli.help.updatevp": "met à jour le client Viper, si le format actuel le permet.",
 
 	"cli.setpath.noarg": "Aucun argument donné à --setpath",
 
