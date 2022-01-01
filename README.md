@@ -30,7 +30,7 @@ Additionally, if you really want to, you can build Viper with `npm run build` an
 
 Downloads are available on the [releases page](https://github.com/0neGal/viper/releases/latest). 
 
-Please note that some versions will (*[soon™](https://github.com/0neGal/viper/tree/auto-updates)*) update themselves automatically when a new release is available (just like Origin or Steam) and some will NOT, so choose it accordingly. Only the AppImage and Windows Setup/Installer can auto-update.
+Please note that some versions will update themselves automatically when a new release is available (just like Origin or Steam) and some will NOT, so choose it accordingly. Only the AppImage and Windows Setup/Installer can auto-update.
 
 **Windows:** `Viper Setup [x.y.z].exe` (auto-updates, and is recommanded), `Viper [x.y.z].exe` (single executable, no fuss)
 
@@ -43,7 +43,7 @@ Currently Viper is capable of:
  * Updating/Installing Northstar
  * Launching Vanilla and or Northstar
  * Manage Mods (Soon, see [**mod-support**](https://github.com/0neGal/viper/tree/mod-support) branch)
- * Auto-Update itself (Soon, see [**auto-updater**](https://github.com/0neGal/viper/tree/auto-updates) branch)
+ * Auto-Update itself 
  * Be pretty!
 
 Besides this I've been considering adding some easy to use VPK modding tools so everybody can have fun with VPK modding even if you don't know how to do it the traditional way. However that is not at the top of the todo list right now.
