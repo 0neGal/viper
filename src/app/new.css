@@ -104,3 +104,7 @@ body {
 #nsContent, #ttfContent {
     display: none;
 }
+
+.contentBody img {
+    max-width: 100%;;
+}
