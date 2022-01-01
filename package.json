@@ -1,7 +1,7 @@
 {
 	"name": "viper",
 	"productName": "Viper",
-	"version": "1.0.0",
+	"version": "0.9.0",
 	"description": "Launcher+Updater for TF|2 Northstar",
 	"main": "src/index.js",
 	"build": {
@@ -13,25 +13,43 @@
 			"installerIcon": "icon.ico",
 			"uninstallerIcon": "icon.ico",
 			"installerHeaderIcon": "icon.ico"
+		},
+		"linux": {
+			"icon": "512x512.png",
+			"category": "Game",
+			"target": [
+				"AppImage",
+				"tar.gz",
+				"deb",
+				"rpm"
+			]
 		}
 	},
 	"scripts": {
 		"start": "npx electron src/index.js",
 		"debug": "npx electron src/index.js --debug",
 		"man": "npx marked-man docs/viper.1.md > docs/viper.1",
-		"build": "npx electron-builder --win nsis --linux appimage"
+
+		"build": "npx electron-builder --win nsis --win portable --linux",
+		"build:windows": "npx electron-builder --win nsis --win portable",
+		"build:linux": "npx electron-builder --linux",
+
+		"publish": "npx electron-builder --win nsis --win portable --linux -p always",
+		"publish:windows": "npx electron-builder --win nsis --win portable -p always",
+		"publish:linux": "npx electron-builder --linux -p always"
 	},
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/0neGal/viper.git"
+		"url": "git+https://github.com/0neGal/viper"
 	},
-	"author": "0neGal",
+	"author": "0neGal <mail@0negal.com>",
 	"license": "GPL-3.0-or-later",
 	"bugs": {
 		"url": "https://github.com/0neGal/viper/issues"
 	},
 	"homepage": "https://github.com/0neGal/viper#readme",
 	"dependencies": {
+		"electron-updater": "^4.6.1",
 		"follow-redirects": "^1.14.6",
 		"marked-man": "^0.7.0",
 		"request": "^2.88.2",

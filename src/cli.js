@@ -15,6 +15,7 @@ function hasArgs() {
 		cli.hasSwitch("launch") ||
 		cli.hasSwitch("setpath") ||
 		cli.hasSwitch("version") ||
+		cli.hasSwitch("updatevp") ||
 		cli.hasSwitch("gamepath")) {
 		return true;
 	} else {return false}
@@ -33,6 +34,7 @@ async function init() {
 
   --cli      ${lang("cli.help.cli")}
   --update   ${lang("cli.help.update")}
+  --updatevp ${lang("cli.help.updatevp")}
   --setpath  ${lang("cli.help.setpath")}`)
 		// In the future --setpath should be able to understand
 		// relative paths, instead of just absolute ones.
