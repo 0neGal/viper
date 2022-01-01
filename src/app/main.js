@@ -59,6 +59,12 @@ ipcRenderer.on("version", (event, versions) => {
 	nsversion.innerText = lang("gui.versions.northstar") + ": " + versions.ns;
 }); ipcRenderer.send("getversion");
 
+ipcRenderer.on("updateavailable", () => {
+	if (confirm(lang("gui.update.available"))) {
+		ipcRenderer.send("updatenow");
+	}
+})
+
 setlang();
 setInterval(() => {
 	ipcRenderer.send("setsize", document.querySelector(".lines").offsetHeight + 20);

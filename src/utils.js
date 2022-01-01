@@ -126,12 +126,14 @@ function update() {
 	})
 }
 
-function updatevp() {
+function updatevp(autoinstall) {
 	const { autoUpdater } = require("electron-updater");
-	autoUpdater.on("update-downloaded", (info) => {
-		console.info("update-downloaded", info);
-		autoUpdater.quitAndInstall();
-	});
+
+	if (autoinstall) {
+		autoUpdater.on("update-downloaded", (info) => {
+			autoUpdater.quitAndInstall();
+		});
+	}
 
 	autoUpdater.on("error", (info) => {cli.exit(1)});
 	autoUpdater.on("update-not-available", (info) => {cli.exit()});
