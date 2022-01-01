@@ -2,6 +2,7 @@ const vpContent = document.getElementById('vpContent');
 const nsContent = document.getElementById('nsContent');
 const ttfContent = document.getElementById('ttfContent');
 const bgHolder = document.getElementById('bgHolder');
+const vpReleaseNotes = document.getElementById('vpReleaseNotes');
 
 function displayContent (gameId) {
     if (!['ttf', 'ns', 'vp'].includes(gameId)) throw new Error('wrong game id called');
@@ -26,3 +27,13 @@ function displayContent (gameId) {
             break;
     }
 }
+
+async function getNsReleasesText() {
+    const response = await (await fetch('https://api.github.com/repos/0negal/viper/releases')).json();
+
+    for (const release of response) {
+        vpReleaseNotes.innerText += '#' + release.tag_name + '\n\n' + release.body;
+    }
+}
+
+getNsReleasesText();
