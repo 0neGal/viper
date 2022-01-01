@@ -18,6 +18,7 @@ process.chdir(app.getPath("appData"));
 var settings = {
 	gamepath: "",
 	lang: "en-US",
+	autoupdate: true,
 	zip: "/northstar.zip",
 	excludes: [
 		"ns_startup_args.txt",
@@ -125,6 +126,19 @@ function update() {
 	})
 }
 
+function updatevp() {
+	const { autoUpdater } = require("electron-updater");
+	autoUpdater.on("update-downloaded", (info) => {
+		console.info("update-downloaded", info);
+		autoUpdater.quitAndInstall();
+	});
+
+	autoUpdater.on("error", (info) => {cli.exit(1)});
+	autoUpdater.on("update-not-available", (info) => {cli.exit()});
+
+	autoUpdater.checkForUpdatesAndNotify();
+}
+
 function launch(version) {
 	if (process.platform == "linux") {
 		console.error("error:", lang("cli.launch.linuxerror"))
@@ -153,6 +167,7 @@ module.exports = {
 	launch,
 	update,
 	setpath,
+	updatevp,
 	settings,
 	getNSVersion,
 	setlang: (lang) => {

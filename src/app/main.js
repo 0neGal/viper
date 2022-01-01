@@ -6,6 +6,7 @@ const lang = require("../lang");
 
 var settings = {
 	gamepath: "",
+	autoupdate: true,
 	zip: "/northstar.zip",
 	lang: navigator.language,
 	excludes: [

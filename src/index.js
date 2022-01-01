@@ -68,18 +68,16 @@ ipcMain.on("versioncli", () => {
 process.chdir(app.getPath("appData"));
 
 if (cli.hasArgs()) {
-	cli.init();
+	if (cli.hasParam("updatevp")) {
+		utils.updatevp();
+	} else {
+		cli.init();
+	}
 } else {
 	app.on("ready", () => {
 		app.setPath("userData", path.join(app.getPath("cache"), app.name));
 		start();
 	})
-}
 
-// activate auto-updating
-const { autoUpdater } = require('electron-updater');
-autoUpdater.on("update-downloaded", (info) => {
-	console.info("update-downloaded", info);
-	autoUpdater.quitAndInstall();
-});
-autoUpdater.checkForUpdatesAndNotify();
+	if (utils.settings.autoupdate) {utils.updatevp()}
+}
