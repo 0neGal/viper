@@ -29,6 +29,7 @@
 	"gui.update.extracting": "Extraction des fichiers...",
 	"gui.update.finished": "Terminé, vous pouvez jouer !",
 	"gui.update.uptodate": "Déjà à jour !",
+	"gui.update.available": "Une mise à jour pour Viper est disponible, voulez-vous l'installer maintenant ?",
 
 	"gui.launch": "Jouer",
 	"gui.launchvanilla": "Vanilla",
