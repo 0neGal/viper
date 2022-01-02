@@ -116,7 +116,7 @@ body {
     font-size: 30px;
 }
 
-#nsContent, #ttfContent, #vpCredits, #vpReleaseNotes {
+#nsContent, #ttfContent, #vpCredits, #vpReleaseNotes, #vpInfo {
     display: none;
 }
 

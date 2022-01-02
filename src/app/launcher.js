@@ -45,6 +45,7 @@ const vpCreditsBtn = document.getElementById('vpCreditsBtn');
 
 const vpMainSection = document.getElementById('vpMain');
 const vpReleaseNotes = document.getElementById('vpReleaseNotes');
+const vpInfo = document.getElementById('vpInfo');
 const vpCredits = document.getElementById('vpCredits');
 
 function showVpSection(section) {
@@ -57,6 +58,7 @@ function showVpSection(section) {
     vpMainSection.style.display = 'none';
     vpReleaseNotes.style.display = 'none';
     vpCredits.style.display = 'none';
+    vpInfo.style.display = 'none';
 
     switch(section) {
         case 'main':
@@ -69,6 +71,7 @@ function showVpSection(section) {
             break;
         case 'info':
             vpInfoBtn.setAttribute('active', '');
+            vpInfo.style.display = 'block';
             break;
         case 'credits':
             vpCreditsBtn.setAttribute('active', '');
