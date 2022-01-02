@@ -6,6 +6,10 @@
 	--boxbackground: #666E7F;
 	--subforeground: #AFAFAF;
 	--btnforeground: var(--foreground);
+
+	--red: #C7777F;
+	--blue: #81A1C1;
+	--yellow: #ECD19A;
 }
 
 @media (prefers-color-scheme: light) {
@@ -60,6 +64,12 @@ nobr {white-space: nowrap}
 
 .mod.selected {background: var(--background)}
 
+.mod .disabled {
+    color: var(--red);
+    position: absolute;
+    right: calc(var(--padding) * 2.5);
+}
+
 .buttons {
 	text-align: right;
 	margin-left: auto;
@@ -96,7 +106,7 @@ button:active {
 
 #setpath {background: #5E81AC}
 #vanilla, #exit {background: #656E7F}
-#update, #installmod {background: #81A1C1}
-#togglemod, #toggleall {background: #ECD19A}
-#northstar, #removeall, #removemod {background: #C7777F}
+#update, #installmod {background: var(--blue)}
+#togglemod, #toggleall {background: var(--yellow)}
+#northstar, #removeall, #removemod {background: var(--red)}
 button:disabled {background: var(--disabled) !important; opacity: 0.5}

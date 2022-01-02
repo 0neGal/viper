@@ -47,7 +47,7 @@ function setButtons(state) {
 
 let lastselected = "";
 function select(entry) {
-	let entries = document.querySelectorAll("#modsdiv .mod span");
+	let entries = document.querySelectorAll("#modsdiv .mod .modtext");
 
 	for (let i = 0; i < entries.length; i++) {
 		if (entries[i].innerHTML == entry) {
@@ -64,7 +64,7 @@ function selected(all) {
 	if (all) {
 		selected = "allmods"
 	} else {
-		selected = document.querySelector(".mod.selected span");
+		selected = document.querySelector(".mod.selected .modtext");
 		if (selected != null) {
 			selected = selected.innerHTML;
 		} else {
@@ -110,9 +110,14 @@ ipcRenderer.on("mods", (event, mods) => {
 	modcount.innerHTML = `${lang("gui.mods.count")} ${mods.all.length}`;
 	modsdiv.innerHTML = "";
 	
-	let newmod = (name, extra) => {
-		if (! extra) {extra = ""}
-		modsdiv.innerHTML += `<div onclick="select('${name}')" class="mod"><span>${name}</span>${extra}</div>`;
+	let newmod = (name, disabled) => {
+		if (disabled) {
+			disabled  = `<span class="disabled">${lang("gui.mods.disabledtag")}</span>`
+		} else {
+			disabled  = ""
+		}
+
+		modsdiv.innerHTML += `<div onclick="select('${name}')" class="mod"><span class="modtext">${name}</span>${disabled}</div>`;
 	}
 
 	for (let i = 0; i < mods.enabled.length; i++) {newmod(mods.enabled[i].Name)}
