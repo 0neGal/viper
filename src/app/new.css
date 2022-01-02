@@ -101,6 +101,15 @@ body {
     margin: 0 26px;
 }
 
+.contentMenu li[active]::after {
+    content: '•';
+    color: red;
+    position: relative;
+    display: block;
+    left: 40%;
+    font-size: 30px;
+}
+
 #nsContent, #ttfContent {
     display: none;
 }
