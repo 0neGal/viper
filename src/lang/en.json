@@ -18,6 +18,9 @@
 
 	"cli.launch.linuxerror": "Launching the game is not currently supported on Linux",
 
+	"cli.mods.notamod": "Selected folder/file is not a mod",
+	"cli.mods.improperjson": "%s's mod.json has formatting errors",
+
 	"gui.welcome": "Welcome to Viper!",
 	"gui.versions.viper": "Viper version",
 	"gui.versions.northstar": "Northstar version",
@@ -47,6 +50,8 @@
 
 
 	"general.launching": "Launching",
+	"general.mods.enabled": "Enabled mods:",
+	"general.mods.disabled": "Disabled mods:",
 	"general.mods.installed": "Installed mods:",
 	"general.missingpath": "Game path is not set!"
 }

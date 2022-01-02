@@ -29,11 +29,9 @@
 		"start": "npx electron src/index.js",
 		"debug": "npx electron src/index.js --debug",
 		"man": "npx marked-man docs/viper.1.md > docs/viper.1",
-
 		"build": "npx electron-builder --win nsis --win portable --linux",
 		"build:windows": "npx electron-builder --win nsis --win portable",
 		"build:linux": "npx electron-builder --linux",
-
 		"publish": "npx electron-builder --win nsis --win portable --linux -p always",
 		"publish:windows": "npx electron-builder --win nsis --win portable -p always",
 		"publish:linux": "npx electron-builder --linux -p always"
@@ -49,6 +47,7 @@
 	},
 	"homepage": "https://github.com/0neGal/viper#readme",
 	"dependencies": {
+		"copy-dir": "^1.3.0",
 		"electron-updater": "^4.6.1",
 		"follow-redirects": "^1.14.6",
 		"marked-man": "^0.7.0",

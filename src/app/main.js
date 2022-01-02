@@ -45,6 +45,18 @@ function setButtons(state) {
 	}
 }
 
+function select(entry) {
+	let entries = document.querySelectorAll("#modsdiv .mod");
+
+	for (let i = 0; i < entries.length; i++) {
+		if (entries[i].innerHTML == entry) {
+			entries[i].classList.add("selected");
+		} else {
+			entries[i].classList.remove("selected");
+		}
+	}
+}
+
 ipcRenderer.on("ns-updated", () => {setButtons(true)})
 ipcRenderer.on("ns-updating", () => {setButtons(false)})
 
@@ -55,10 +67,14 @@ ipcRenderer.on("newpath", (event, newpath) => {
 ipcRenderer.on("log", (event, msg) => {log(msg)})
 
 ipcRenderer.on("mods", (event, mods) => {
-	modcount.innerHTML = `${lang("gui.mods.count")} ${mods.length}`;
+	modcount.innerHTML = `${lang("gui.mods.count")} ${mods.all.length}`;
 	modsdiv.innerHTML = "";
-	for (let i = 0; i < mods.length; i++) {
-		modsdiv.innerHTML += `<div class="mod">${mods[i].Name}</div>`;
+	for (let i = 0; i < mods.enabled.length; i++) {
+		modsdiv.innerHTML += `<div onclick="select('${mods.enabled[i].Name}')" class="mod">${mods.enabled[i].Name}</div>`;
+	}
+
+	for (let i = 0; i < mods.disabled.length; i++) {
+		modsdiv.innerHTML += `<div onclick="select('${mods.disabled[i].Name} - Disabled')" class="mod">${mods.disabled[i].Name} - Disabled</div>`;
 	}
 })
 

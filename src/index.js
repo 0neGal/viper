@@ -83,10 +83,18 @@ ipcMain.on("versioncli", () => {
 
 ipcMain.on("getmods", (event) => {
 	let mods = utils.mods.list();
-	if (mods.length > 0) {
-		console.log(`${utils.lang("general.mods.installed")} ${mods.length}`)
-		for (let i = 0; i < mods.length; i++) {
-			console.log(`  ${mods[i].Name} ${mods[i].Version}`)
+	if (mods.all.length > 0) {
+		console.log(`${utils.lang("general.mods.installed")} ${mods.all.length}`)
+		console.log(`${utils.lang("general.mods.enabled")} ${mods.enabled.length}`)
+		for (let i = 0; i < mods.enabled.length; i++) {
+			console.log(`  ${mods.enabled[i].Name} ${mods.enabled[i].Version}`)
+		}
+
+		if (mods.disabled.length > 0) {
+			console.log(`${utils.lang("general.mods.disabled")} ${mods.disabled.length}`)
+			for (let i = 0; i < mods.disabled.length; i++) {
+				console.log(`  ${mods.disabled[i].Name} ${mods.disabled[i].Version}`)
+			}
 		}
 		cli.exit(0);
 	} else {

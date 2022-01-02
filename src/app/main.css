@@ -47,10 +47,18 @@ nobr {white-space: nowrap}
 }
 
 #modsdiv {
+	padding: 1px;
 	border-radius: var(--padding);
 	background: var(--boxbackground);
 	margin: calc(var(--padding) / 3) var(--padding);
 }
+
+.mod {
+	margin: calc(var(--padding) / 3);
+	border-radius: calc(var(--padding) / 2) !important;
+}
+
+.mod.selected {background: var(--background)}
 
 .buttons {
 	text-align: right;

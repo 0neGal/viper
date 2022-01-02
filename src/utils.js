@@ -1,5 +1,6 @@
-const fs = require("fs");
 const path = require("path");
+const fs = require("fs-extra");
+const copy = require("copy-dir");
 const { app, dialog, ipcMain } = require("electron");
 
 const Emitter = require("events");
@@ -164,23 +165,111 @@ function winLog(msg) {
 	ipcMain.emit("winLog", msg, msg);
 }
 
+let modpath = path.join(settings.gamepath, "R2Northstar/mods");
 const mods = {
 	list: () => {
 		let mods = [];
-		let modpath = path.join(settings.gamepath, "R2Northstar/mods");
+		let disabled = [];
 
 		files = fs.readdirSync(modpath)
 		files.forEach((file) => {
 			if (fs.statSync(path.join(modpath, file)).isDirectory()) {
 				if (fs.existsSync(path.join(modpath, file, "mod.json"))) {
-					mods.push(require(path.join(modpath, file, "mod.json")))
+					try {
+						mods.push({...require(path.join(modpath, file, "mod.json")), FolderName: file, Disabled: false})
+					}catch(err) {
+						console.log("error: " + lang("cli.mods.improperjson"), file)
+						mods.push({Name: file, FolderName: file, Version: "unknown", Disabled: false})
+					}
 				}
 			}
 		})
 
-		return mods;
+		let disabledPath = path.join(modpath, "disabled")
+		files = fs.readdirSync(disabledPath)
+		files.forEach((file) => {
+			if (fs.statSync(path.join(disabledPath, file)).isDirectory()) {
+				if (fs.existsSync(path.join(disabledPath, file, "mod.json"))) {
+					try {
+						disabled.push({...require(path.join(disabledPath, file, "mod.json")), FolderName: file, Disabled: true})
+					}catch(err) {
+						console.log("error: " + lang("cli.mods.improperjson"), file)
+						disabled.push({Name: file, FolderName: file, Version: "unknown", Disabled: false})
+					}
+				}
+			}
+		})
+
+		return {
+			enabled: mods,
+			disabled: disabled,
+			all: [...mods, ...disabled]
+		};
 	},
-}
+	get: (mod) => {
+		let list = mods.list().all;
+
+		for (let i = 0; i < list.length; i++) {
+			if (list[i].Name == mod) {
+				return list[i];
+			} else {continue}
+		}
+
+		return false;
+	},
+	install: (mod) => {
+		if (fs.statSync(mod).isDirectory()) {
+			if (fs.statSync(path.join(mod, "mod.json"))) {
+				copy(mod, path.join(modpath, mod.replace(/^.*(\\|\/|\:)/, "")), {
+					mode: true,
+					cover: true,
+					utimes: true,
+				}, (err) => {
+					if(err) {console.log("error:", err)};
+					console.log();
+				});
+				cli.exit();
+				return
+			} else {
+				console.log("error: " + lang("cli.mods.notamod"))
+				cli.exit(1);
+				return;
+			}
+		}
+
+		fs.createReadStream(mod).pipe(unzip.Extract({path: modpath}))
+		.on("finish", () => {
+			cli.exit();
+		});
+	},
+	remove: (mod) => {
+		let modName = mods.get(mod).FolderName;
+		let modPath = path.join(modpath, modName);
+		if (fs.statSync(modPath).isDirectory()) {
+			fs.rmSync(modPath, {recursive: true});
+			cli.exit();
+		} else {
+			cli.exit(1);
+		}
+	},
+	toggle: (mod) => {
+		let disabled = path.join(modpath, "disabled");
+		if (! fs.existsSync(disabled)) {
+			fs.mkdirSync(disabled)
+		}
+
+		let modName = mods.get(mod).FolderName;
+		let modPath = path.join(modpath, modName);
+		let dest = path.join(disabled, modName);
+
+		if (mods.get(mod).Disabled) {
+			modPath = path.join(disabled, modName);
+			dest = path.join(modpath, modName);
+		}
+
+		fs.moveSync(modPath, dest)
+	}
+};
 
 module.exports = {
 	mods,
