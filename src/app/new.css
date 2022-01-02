@@ -150,3 +150,11 @@ a {
 a:hover {
     color: #c10000;
 }
+
+#nsContent .contentMenu {
+    margin-bottom: 0;
+}
+
+#nsContent .contentBody img {
+    transform: scale(0.85);
+}
