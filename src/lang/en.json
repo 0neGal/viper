@@ -35,6 +35,8 @@
 	"gui.mods.toggleall": "Toggle All",
 	"gui.mods.remove": "Remove Mod",
 	"gui.mods.removeall": "Remove All",
+	"gui.mods.nothingselected": "You've not selected a mod.",
+	"gui.mods.removeall.confirm": "Removing all mods will usually require you to reinstall Northstar, are you sure?",
 
 	"gui.update.downloading": "Downloading...",
 	"gui.update.extracting": "Extracting update...",

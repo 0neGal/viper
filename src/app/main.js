@@ -45,16 +45,55 @@ function setButtons(state) {
 	}
 }
 
+let lastselected = "";
 function select(entry) {
-	let entries = document.querySelectorAll("#modsdiv .mod");
+	let entries = document.querySelectorAll("#modsdiv .mod span");
 
 	for (let i = 0; i < entries.length; i++) {
 		if (entries[i].innerHTML == entry) {
-			entries[i].classList.add("selected");
+			lastselected = entry;
+			entries[i].parentElement.classList.add("selected");
 		} else {
-			entries[i].classList.remove("selected");
+			entries[i].parentElement.classList.remove("selected");
 		}
 	}
+}
+
+function selected(all) {
+	let selected = "";
+	if (all) {
+		selected = "allmods"
+	} else {
+		selected = document.querySelector(".mod.selected span");
+		if (selected != null) {
+			selected = selected.innerHTML;
+		} else {
+			alert(lang("gui.mods.nothingselected"));
+			return {
+				remove: () => {},
+				toggle: () => {},
+			}
+		}
+	}
+
+	return {
+		remove: () => {
+			if (selected == "allmods") {
+				if (! confirm(lang("gui.mods.removeall.confirm"))) {
+					return;
+				}
+			}
+
+			ipcRenderer.send("removemod", selected)
+		},
+		toggle: () => {
+			ipcRenderer.send("togglemod", selected)
+		}
+	}
+}
+
+function installmod() {
+	ipcRenderer.send("installmod")
 }
 
 ipcRenderer.on("ns-updated", () => {setButtons(true)})
@@ -67,15 +106,19 @@ ipcRenderer.on("newpath", (event, newpath) => {
 ipcRenderer.on("log", (event, msg) => {log(msg)})
 
 ipcRenderer.on("mods", (event, mods) => {
+	console.log("refreshed mods")
 	modcount.innerHTML = `${lang("gui.mods.count")} ${mods.all.length}`;
 	modsdiv.innerHTML = "";
-	for (let i = 0; i < mods.enabled.length; i++) {
-		modsdiv.innerHTML += `<div onclick="select('${mods.enabled[i].Name}')" class="mod">${mods.enabled[i].Name}</div>`;
+	
+	let newmod = (name, extra) => {
+		if (! extra) {extra = ""}
+		modsdiv.innerHTML += `<div onclick="select('${name}')" class="mod"><span>${name}</span>${extra}</div>`;
 	}
 
-	for (let i = 0; i < mods.disabled.length; i++) {
-		modsdiv.innerHTML += `<div onclick="select('${mods.disabled[i].Name} - Disabled')" class="mod">${mods.disabled[i].Name} - Disabled</div>`;
-	}
+	for (let i = 0; i < mods.enabled.length; i++) {newmod(mods.enabled[i].Name)}
+	for (let i = 0; i < mods.disabled.length; i++) {newmod(mods.disabled[i].Name, " - Disabled")}
+
+	select(lastselected);
 })
 
 ipcRenderer.on("version", (event, versions) => {

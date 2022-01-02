@@ -117,6 +117,7 @@ function update() {
 						}
 					}
 
+					ipcMain.emit("guigetmods");
 					ipcMain.emit("ns-updated");
 					winLog(lang("gui.update.finished"));
 					console.log(lang("cli.update.finished"));
@@ -194,7 +195,7 @@ const mods = {
 						disabled.push({...require(path.join(disabledPath, file, "mod.json")), FolderName: file, Disabled: true})
 					}catch(err) {
 						console.log("error: " + lang("cli.mods.improperjson"), file)
-						disabled.push({Name: file, FolderName: file, Version: "unknown", Disabled: false})
+						disabled.push({Name: file, FolderName: file, Version: "unknown", Disabled: true})
 					}
 				}
 			}
@@ -220,15 +221,13 @@ const mods = {
 	install: (mod) => {
 		if (fs.statSync(mod).isDirectory()) {
 			if (fs.statSync(path.join(mod, "mod.json"))) {
-				copy(mod, path.join(modpath, mod.replace(/^.*(\\|\/|\:)/, "")), {
+				copy.sync(mod, path.join(modpath, mod.replace(/^.*(\\|\/|\:)/, "")), {
 					mode: true,
 					cover: true,
 					utimes: true,
-				}, (err) => {
-					if(err) {console.log("error:", err)};
-					console.log();
 				});
 				cli.exit();
+				ipcMain.emit("guigetmods");
 				return
 			} else {
 				console.log("error: " + lang("cli.mods.notamod"))
@@ -240,19 +239,47 @@ const mods = {
 		fs.createReadStream(mod).pipe(unzip.Extract({path: modpath}))
 		.on("finish", () => {
 			cli.exit();
+			ipcMain.emit("guigetmods");
 		});
 	},
 	remove: (mod) => {
+		if (mod == "allmods") {
+			let modlist = mods.list().all;
+			for (let i = 0; i < modlist.length; i++) {
+				mods.remove(modlist[i].Name)
+			}
+			return
+		}
+
+		let disabled = path.join(modpath, "disabled");
+		if (! fs.existsSync(disabled)) {
+			fs.mkdirSync(disabled)
+		}
+
 		let modName = mods.get(mod).FolderName;
 		let modPath = path.join(modpath, modName);
+
+		if (mods.get(mod).Disabled) {
+			modPath = path.join(disabled, modName);
+		}
+
 		if (fs.statSync(modPath).isDirectory()) {
 			fs.rmSync(modPath, {recursive: true});
 			cli.exit();
+			ipcMain.emit("guigetmods");
 		} else {
 			cli.exit(1);
 		}
 	},
 	toggle: (mod) => {
+		if (mod == "allmods") {
+			let modlist = mods.list().all;
+			for (let i = 0; i < modlist.length; i++) {
+				mods.toggle(modlist[i].Name)
+			}
+			return
+		}
+
 		let disabled = path.join(modpath, "disabled");
 		if (! fs.existsSync(disabled)) {
 			fs.mkdirSync(disabled)
@@ -268,6 +295,7 @@ const mods = {
 		}
 
 		fs.moveSync(modPath, dest)
+		ipcMain.emit("guigetmods");
 	}
 };
 

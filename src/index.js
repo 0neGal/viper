@@ -57,6 +57,14 @@ function start() {
 	ipcMain.on("updatenow", () => {
 		autoUpdater.quitAndInstall();
 	})
+
+	ipcMain.on("removemod", (event, mod) => {utils.mods.remove(mod)})
+	ipcMain.on("togglemod", (event, mod) => {utils.mods.toggle(mod)})
+	ipcMain.on("installmod", () => {
+		dialog.showOpenDialog({properties: ["openDirectory"]}).then(res => {
+			utils.mods.install(res.filePaths[0]);
+		}).catch(err => {console.error(err)})
+	})
 }
 
 ipcMain.on("launch", (event) => {utils.launch()})

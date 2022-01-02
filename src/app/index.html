@@ -31,11 +31,11 @@
 			<div class="line">
 				<div class="text" id="modcount">%%gui.mods%%</div>
 				<div class="buttons">
-					<button id="removemod">%%gui.mods.remove%%</button>
-					<button id="removeall">%%gui.mods.removeall%%</button>
-					<button id="togglemod">%%gui.mods.toggle%%</button>
-					<button id="toggleall">%%gui.mods.toggleall%%</button>
-					<button id="installmod">%%gui.mods.install%%</button>
+					<button id="removemod" onclick="selected().remove()">%%gui.mods.remove%%</button>
+					<button id="removeall" onclick="selected(true).remove()">%%gui.mods.removeall%%</button>
+					<button id="togglemod" onclick="selected().toggle()">%%gui.mods.toggle%%</button>
+					<button id="toggleall" onclick="selected(true).toggle(true)">%%gui.mods.toggleall%%</button>
+					<button id="installmod" onclick="installmod()">%%gui.mods.install%%</button>
 				</div>
 			</div>
 		</div>
