@@ -99,6 +99,12 @@ body {
 
 .contentMenu li {
     margin: 0 26px;
+    height: fit-content;
+    cursor: pointer;
+}
+
+.contentMenu li[active] {
+    pointer-events: none;
 }
 
 .contentMenu li[active]::after {
