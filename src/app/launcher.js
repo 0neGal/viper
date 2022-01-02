@@ -2,7 +2,6 @@ const vpContent = document.getElementById('vpContent');
 const nsContent = document.getElementById('nsContent');
 const ttfContent = document.getElementById('ttfContent');
 const bgHolder = document.getElementById('bgHolder');
-const vpReleaseNotes = document.getElementById('vpReleaseNotes');
 
 function displayContent (gameId) {
     if (!['ttf', 'ns', 'vp'].includes(gameId)) throw new Error('wrong game id called');
@@ -37,3 +36,43 @@ async function getNsReleasesText() {
 }
 
 getNsReleasesText();
+
+
+const vpMainBtn = document.getElementById('vpMainBtn');
+const vpReleaseBtn = document.getElementById('vpReleaseBtn');
+const vpInfoBtn = document.getElementById('vpInfoBtn');
+const vpCreditsBtn = document.getElementById('vpCreditsBtn');
+
+const vpMainSection = document.getElementById('vpMain');
+const vpReleaseNotes = document.getElementById('vpReleaseNotes');
+const vpCredits = document.getElementById('vpCredits');
+
+function showVpSection(section) {
+    if (!['main', 'release', 'info', 'credits'].includes(section)) throw new Error('unknown vp section');
+    vpMainBtn.removeAttribute('active');
+    vpReleaseBtn.removeAttribute('active');
+    vpInfoBtn.removeAttribute('active');
+    vpCreditsBtn.removeAttribute('active');
+
+    vpMainSection.style.display = 'none';
+    vpReleaseNotes.style.display = 'none';
+    vpCredits.style.display = 'none';
+
+    switch(section) {
+        case 'main':
+            vpMainBtn.setAttribute('active', '');
+            vpMainSection.style.display = 'block';
+            break;
+        case 'release':
+            vpReleaseBtn.setAttribute('active', '');
+            vpReleaseNotes.style.display = 'block';
+            break;
+        case 'info':
+            vpInfoBtn.setAttribute('active', '');
+            break;
+        case 'credits':
+            vpCreditsBtn.setAttribute('active', '');
+            vpCredits.style.display = 'block';
+            break;
+    }
+}
