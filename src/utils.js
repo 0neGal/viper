@@ -18,6 +18,7 @@ process.chdir(app.getPath("appData"));
 var settings = {
 	gamepath: "",
 	lang: "en-US",
+	autoupdate: true,
 	zip: "/northstar.zip",
 	excludes: [
 		"ns_startup_args.txt",
@@ -29,7 +30,7 @@ if (fs.existsSync("viper.json")) {
 	settings = {...settings, ...JSON.parse(fs.readFileSync("viper.json", "utf8"))};
 	settings.zip = path.join(settings.gamepath + "/northstar.zip");
 } else {
-	console.log(lang("general.missinggamepath"));
+	console.log(lang("general.missingpath"));
 }
 
 function setpath(win) {
@@ -99,6 +100,13 @@ function update() {
 		https.get(body.assets[0].browser_download_url, (res) => {
 			let stream = fs.createWriteStream(settings.zip);
 			res.pipe(stream);
+
+			let received = 0;
+			res.on("data", (chunk) => {
+				received += chunk.length;
+				winLog(lang("gui.update.downloading") + " " + (received / 1024 / 1024).toFixed(1) + "mb");
+			})
+
 			stream.on("finish", () => {
 				stream.close();
 				winLog(lang("gui.update.extracting"));
@@ -123,6 +131,21 @@ function update() {
 			})
 		})
 	})
+}
+
+function updatevp(autoinstall) {
+	const { autoUpdater } = require("electron-updater");
+
+	if (autoinstall) {
+		autoUpdater.on("update-downloaded", (info) => {
+			autoUpdater.quitAndInstall();
+		});
+	}
+
+	autoUpdater.on("error", (info) => {cli.exit(1)});
+	autoUpdater.on("update-not-available", (info) => {cli.exit()});
+
+	autoUpdater.checkForUpdatesAndNotify();
 }
 
 function launch(version) {
@@ -153,6 +176,7 @@ module.exports = {
 	launch,
 	update,
 	setpath,
+	updatevp,
 	settings,
 	getNSVersion,
 	setlang: (lang) => {

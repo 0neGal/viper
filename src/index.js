@@ -1,5 +1,6 @@
 const fs = require("fs");
 const path = require("path");
+const { autoUpdater } = require("electron-updater");
 const { app, dialog, ipcMain, BrowserWindow, ipcRenderer } = require("electron");
 
 const Emitter = require("events");
@@ -37,6 +38,17 @@ function start() {
 	ipcMain.on("ns-updated", () => {win.webContents.send("ns-updated")})
 	ipcMain.on("ns-updating", () => {win.webContents.send("ns-updating")})
 	ipcMain.on("winLog", (event, ...args) => {win.webContents.send("log", ...args)})
+
+	if (utils.settings.autoupdate) {utils.updatevp(false)}
+
+	autoUpdater.on("update-downloaded", () => {
+		win.webContents.send("updateavailable")
+	});
+
+	ipcMain.on("updatenow", () => {
+		autoUpdater.quitAndInstall();
+	})
+
 }
 
 ipcMain.on("launch", (event) => {utils.launch()})
@@ -64,7 +76,11 @@ ipcMain.on("versioncli", () => {
 process.chdir(app.getPath("appData"));
 
 if (cli.hasArgs()) {
-	cli.init();
+	if (cli.hasParam("updatevp")) {
+		utils.updatevp(true);
+	} else {
+		cli.init();
+	}
 } else {
 	app.on("ready", () => {
 		app.setPath("userData", path.join(app.getPath("cache"), app.name));

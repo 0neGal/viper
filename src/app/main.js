@@ -6,6 +6,7 @@ const lang = require("../lang");
 
 var settings = {
 	gamepath: "",
+	autoupdate: true,
 	zip: "/northstar.zip",
 	lang: navigator.language,
 	excludes: [
@@ -20,7 +21,7 @@ if (fs.existsSync("viper.json")) {
 	settings = {...settings, ...JSON.parse(fs.readFileSync("viper.json", "utf8"))};
 	settings.zip = path.join(settings.gamepath + "/northstar.zip");
 } else {
-	alert(lang("general.missinggamepath"));
+	alert(lang("general.missingpath"));
 	setpath();
 }
 
@@ -56,5 +57,11 @@ ipcRenderer.on("version", (event, versions) => {
 	document.getElementById('vpversion').innerText = versions.vp;
 	document.getElementById('nsversion').innerText = versions.ns;
 }); ipcRenderer.send("getversion");
+
+ipcRenderer.on("updateavailable", () => {
+	if (confirm(lang("gui.update.available"))) {
+		ipcRenderer.send("updatenow");
+	}
+})
 
 setlang();

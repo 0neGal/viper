@@ -5,6 +5,7 @@
 	"cli.help.cli": "forces the CLI to enable",
 	"cli.help.update": "updates Northstar from your set game path",
 	"cli.help.setpath": "sets your game path",
+	"cli.help.updatevp": "updates Viper itself, if supported.",
 
 	"cli.setpath.noarg": "No argument provided for --setpath",
 
@@ -28,6 +29,7 @@
 	"gui.update.extracting": "Extracting update...",
 	"gui.update.finished": "Done! Ready to play!",
 	"gui.update.uptodate": "Already up to date!",
+	"gui.update.available": "A new update for Viper is available, do you want to restart and apply it?",
 
 	"gui.launch": "Launch",
 	"gui.launchvanilla": "Vanilla",
