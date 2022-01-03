@@ -85,6 +85,7 @@ function update() {
 
 		if (version === tag) {
 			ipcMain.emit("ns-updated");
+			ipcMain.emit("ns-update-event", 'cli.update.uptodate.short');
 			console.log(lang("cli.update.uptodate"), version);
 
 			winLog(lang("gui.update.uptodate"));

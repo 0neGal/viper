@@ -34,7 +34,7 @@ function launchVanilla() {ipcRenderer.send("launchVanilla")}
 
 function log(msg) {
 	console.log(msg);
-	welcome.innerHTML = msg;
+	// welcome.innerHTML = msg;
 }
 
 function setButtons(state) {
@@ -47,6 +47,9 @@ function setButtons(state) {
 
 ipcRenderer.on("ns-updated", () => {setButtons(true)})
 ipcRenderer.on("ns-updating", () => {setButtons(false)})
+ipcRenderer.on('ns-update-event', (_, key) => {
+	document.getElementById('update').innerText = `(${lang(key)})`;
+});
 
 ipcRenderer.on("newpath", (event, newpath) => {
 	settings.gamepath = newpath;

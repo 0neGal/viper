@@ -15,6 +15,7 @@
 	"cli.update.downloaddone": "Download done! Extracting...",
 	"cli.update.finished": "Installation/Update finished!",
 	"cli.update.uptodate": "Latest version (%s) is already installed, skipping update.",
+	"cli.update.uptodate.short": "Up-to-date",
 
 	"cli.launch.linuxerror": "Launching the game is not currently supported on Linux",
 
