@@ -104,9 +104,9 @@ ipcRenderer.on("newpath", (event, newpath) => {
 })
 
 ipcRenderer.on("log", (event, msg) => {log(msg)})
+ipcRenderer.on("alert", (event, msg) => {alert(msg)})
 
 ipcRenderer.on("mods", (event, mods) => {
-	console.log("refreshed mods")
 	modcount.innerHTML = `${lang("gui.mods.count")} ${mods.all.length}`;
 	modsdiv.innerHTML = "";
 	

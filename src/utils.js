@@ -166,6 +166,10 @@ function winLog(msg) {
 	ipcMain.emit("winLog", msg, msg);
 }
 
+function winAlert(msg) {
+	ipcMain.emit("winAlert", msg, msg);
+}
+
 let modpath = path.join(settings.gamepath, "R2Northstar/mods");
 const mods = {
 	list: () => {
@@ -220,7 +224,9 @@ const mods = {
 	},
 	install: (mod) => {
 		if (fs.statSync(mod).isDirectory()) {
-			if (fs.statSync(path.join(mod, "mod.json"))) {
+			if (fs.existsSync(path.join(mod, "mod.json")) && 
+				fs.statSync(path.join(mod, "mod.json")).isFile()) {
+
 				copy.sync(mod, path.join(modpath, mod.replace(/^.*(\\|\/|\:)/, "")), {
 					mode: true,
 					cover: true,
@@ -228,11 +234,23 @@ const mods = {
 				});
 				cli.exit();
 				ipcMain.emit("guigetmods");
-				return
+				return true;
 			} else {
+				files = fs.readdirSync(mod);
+
+				for (let i = 0; i < files.length; i++) {
+					if (fs.statSync(path.join(mod, files[i])).isDirectory()) {
+						if (fs.existsSync(path.join(mod, files[i], "mod.json")) &&
+							fs.statSync(path.join(mod, files[i], "mod.json")).isFile()) {
+
+							if (mods.install(path.join(mod, files[i]))) {return};
+						}
+					}
+				}
+				winAlert(lang("cli.mods.notamod"))
 				console.log("error: " + lang("cli.mods.notamod"))
 				cli.exit(1);
-				return;
+				return false;
 			}
 		}
 

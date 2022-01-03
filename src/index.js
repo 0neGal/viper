@@ -42,6 +42,7 @@ function start() {
 	ipcMain.on("ns-updated", () => {win.webContents.send("ns-updated")})
 	ipcMain.on("ns-updating", () => {win.webContents.send("ns-updating")})
 	ipcMain.on("winLog", (event, ...args) => {win.webContents.send("log", ...args)})
+	ipcMain.on("winAlert", (event, ...args) => {win.webContents.send("alert", ...args)})
 	ipcMain.on("guigetmods", (event, ...args) => {win.webContents.send("mods", utils.mods.list())})
 
 	win.webContents.once("dom-ready", () => {
