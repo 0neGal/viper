@@ -37,6 +37,17 @@ async function getNsReleasesText() {
 
 getNsReleasesText();
 
+async function loadNsReleasesText() {
+    const response = await (await fetch('https://api.github.com/repos/R2Northstar/Northstar/releases')).json();
+
+    for (const release of response) {
+        nsRelease.innerHTML += '<article><h1># ' + release.tag_name + '</h1>'
+            + release.body.replaceAll('\r\n', '<br>') + '</article>';
+    }
+}
+
+loadNsReleasesText();
+
 
 const vpMainBtn = document.getElementById('vpMainBtn');
 const vpReleaseBtn = document.getElementById('vpReleaseBtn');
