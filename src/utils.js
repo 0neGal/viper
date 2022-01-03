@@ -30,7 +30,7 @@ if (fs.existsSync("viper.json")) {
 	settings = {...settings, ...JSON.parse(fs.readFileSync("viper.json", "utf8"))};
 	settings.zip = path.join(settings.gamepath + "/northstar.zip");
 } else {
-	console.log(lang("general.missinggamepath"));
+	console.log(lang("general.missingpath"));
 }
 
 function setpath(win) {
