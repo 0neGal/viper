@@ -198,6 +198,10 @@ const mods = {
 		})
 
 		let disabledPath = path.join(modpath, "disabled")
+		if (! fs.existsSync(disabledPath)) {
+			fs.mkdirSync(disabledPath)
+		}
+
 		files = fs.readdirSync(disabledPath)
 		files.forEach((file) => {
 			if (fs.statSync(path.join(disabledPath, file)).isDirectory()) {
