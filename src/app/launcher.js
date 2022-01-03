@@ -27,7 +27,7 @@ function displayContent (gameId) {
     }
 }
 
-async function getNsReleasesText() {
+async function loadVpReleasesText() {
     const response = await (await fetch('https://api.github.com/repos/0negal/viper/releases')).json();
 
     for (const release of response) {
@@ -35,7 +35,7 @@ async function getNsReleasesText() {
     }
 }
 
-getNsReleasesText();
+loadVpReleasesText();
 
 async function loadNsReleasesText() {
     const response = await (await fetch('https://api.github.com/repos/R2Northstar/Northstar/releases')).json();
