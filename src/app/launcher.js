@@ -79,3 +79,38 @@ function showVpSection(section) {
             break;
     }
 }
+
+
+const nsMainBtn = document.getElementById('nsMainBtn');
+const nsModsBtn = document.getElementById('nsModsBtn');
+const nsReleaseBtn = document.getElementById('nsReleaseBtn');
+
+const nsMods = document.getElementById('nsMods');
+const nsMain = document.getElementById('nsMain');
+const nsRelease = document.getElementById('nsRelease');
+
+function showNsSection(section) {
+    if (!['main', 'release', 'mods'].includes(section)) throw new Error('unknown ns section');
+    nsMainBtn.removeAttribute('active');
+    nsModsBtn.removeAttribute('active');
+    nsReleaseBtn.removeAttribute('active');
+
+    nsMods.style.display = 'none';
+    nsMain.style.display = 'none';
+    nsRelease.style.display = 'none';
+
+    switch(section) {
+        case 'main':
+            nsMainBtn.setAttribute('active', '');
+            nsMain.style.display = 'block';
+            break;
+        case 'release':
+            nsReleaseBtn.setAttribute('active', '');
+            nsRelease.style.display = 'block';
+            break;
+        case 'mods':
+            nsModsBtn.setAttribute('active', '');
+            nsMods.style.display = 'block';
+            break;
+    }
+}

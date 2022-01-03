@@ -117,7 +117,7 @@ body {
 }
 
 /* these sections are hidden at start */
-#nsContent, #ttfContent, #vpCredits, #vpReleaseNotes, #vpInfo {
+#nsContent, #ttfContent, #vpCredits, #vpReleaseNotes, #vpInfo, #nsMods, #nsRelease {
     display: none;
 }
 

@@ -47,12 +47,20 @@
 
 			<div id="nsContent" class="contentContainer">
 				<ul class="contentMenu">
-					<li active>Northstar launcher</li>
-					<li>Mods</li>
-					<li>Release notes</li>
+					<li id="nsMainBtn" active onclick="showNsSection('main')">Northstar launcher</li>
+					<li id="nsModsBtn" onclick="showNsSection('mods')">Mods</li>
+					<li id="nsReleaseBtn" onclick="showNsSection('release')">Release notes</li>
 				</ul>
 				<div class="contentBody">
-					<img src="../assets/ttf2+ns.png"/>
+					<div id="nsMain">
+						<img src="../assets/ttf2+ns.png"/>
+						<div class="playBtnContainer">
+							<button class="playBtn">Play</button>
+							<div>todo version</div>
+						</div>
+					</div>
+					<div id="nsMods">mods</div>
+					<div id="nsRelease">release</div>
 				</div>
 			</div>
 
