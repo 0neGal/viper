@@ -174,3 +174,7 @@ a:hover {
     height: 80%;
     overflow-y: auto;
 }
+
+.inline * {
+    display: inline-block;
+}
