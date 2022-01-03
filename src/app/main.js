@@ -129,6 +129,14 @@ ipcRenderer.on("mods", (event, mods) => {
 ipcRenderer.on("version", (event, versions) => {
 	vpversion.innerText = lang("gui.versions.viper") + ": " + versions.vp;
 	nsversion.innerText = lang("gui.versions.northstar") + ": " + versions.ns;
+
+	if (versions.ns == "unknown") {
+		let buttons = document.querySelectorAll(".modbtns button");
+
+		for (let i = 0; i < buttons.length; i++) {
+			buttons[i].disabled = true;
+		}
+	}
 }); ipcRenderer.send("getversion");
 
 ipcRenderer.on("updateavailable", () => {
