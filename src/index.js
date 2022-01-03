@@ -62,7 +62,7 @@ function start() {
 	ipcMain.on("removemod", (event, mod) => {utils.mods.remove(mod)})
 	ipcMain.on("togglemod", (event, mod) => {utils.mods.toggle(mod)})
 	ipcMain.on("installmod", () => {
-		dialog.showOpenDialog({properties: ["openDirectory"]}).then(res => {
+		dialog.showOpenDialog({properties: ["openFile"]}).then(res => {
 			utils.mods.install(res.filePaths[0]);
 		}).catch(err => {console.error(err)})
 	})

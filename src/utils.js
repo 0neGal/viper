@@ -223,7 +223,20 @@ const mods = {
 		return false;
 	},
 	install: (mod) => {
+		let notamod = () => {
+			winLog(lang("gui.mods.notamod"))
+			console.log("error: " + lang("cli.mods.notamod"))
+			cli.exit(1);
+		}
+
+		let installed = () => {
+			cli.exit();
+			winLog(lang("gui.mods.installedmod"))
+			ipcMain.emit("guigetmods");
+		}
+
 		if (fs.statSync(mod).isDirectory()) {
+			winLog(lang("gui.mods.installing"))
 			if (fs.existsSync(path.join(mod, "mod.json")) && 
 				fs.statSync(path.join(mod, "mod.json")).isFile()) {
 
@@ -232,8 +245,8 @@ const mods = {
 					cover: true,
 					utimes: true,
 				});
-				cli.exit();
-				ipcMain.emit("guigetmods");
+
+				installed();
 				return true;
 			} else {
 				files = fs.readdirSync(mod);
@@ -243,22 +256,33 @@ const mods = {
 						if (fs.existsSync(path.join(mod, files[i], "mod.json")) &&
 							fs.statSync(path.join(mod, files[i], "mod.json")).isFile()) {
 
-							if (mods.install(path.join(mod, files[i]))) {return};
+							if (mods.install(path.join(mod, files[i]))) {return true};
 						}
 					}
 				}
-				winAlert(lang("cli.mods.notamod"))
-				console.log("error: " + lang("cli.mods.notamod"))
-				cli.exit(1);
+
+				notamod();
 				return false;
 			}
-		}
+		} else {
+			winLog(lang("gui.mods.extracting"))
+			let cache = path.join(app.getPath("userData"), "Archives");
+			if (fs.existsSync(cache)) {
+				fs.rmSync(cache, {recursive: true});
+				fs.mkdirSync(cache);
+			} else {
+				fs.mkdirSync(cache);
+			}
 
-		fs.createReadStream(mod).pipe(unzip.Extract({path: modpath}))
-		.on("finish", () => {
-			cli.exit();
-			ipcMain.emit("guigetmods");
-		});
+			try {
+				fs.createReadStream(mod).pipe(unzip.Extract({path: cache}))
+				.on("finish", () => {
+					if (mods.install(cache)) {
+						installed();
+					} else {notamod();return false}
+				});
+			}catch(err) {notamod();return false}
+		}
 	},
 	remove: (mod) => {
 		if (mod == "allmods") {

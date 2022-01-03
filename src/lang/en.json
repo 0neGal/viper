@@ -38,6 +38,10 @@
 	"gui.mods.removeall": "Remove All",
 	"gui.mods.nothingselected": "You've not selected a mod.",
 	"gui.mods.removeall.confirm": "Removing all mods will usually require you to reinstall Northstar, are you sure?",
+	"gui.mods.notamod": "Not a mod!",
+	"gui.mods.extracting": "Extracting mod...",
+	"gui.mods.installing": "Installing mod...",
+	"gui.mods.installedmod": "Installed mod!",
 
 	"gui.update.downloading": "Downloading...",
 	"gui.update.extracting": "Extracting update...",
