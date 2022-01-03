@@ -158,3 +158,9 @@ a:hover {
 #nsContent .contentBody img {
     transform: scale(0.85);
 }
+
+#nsRelease, #vpReleaseNotes {
+    flex-direction: column;
+    height: 80%;
+    overflow-y: auto;
+}
