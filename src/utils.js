@@ -100,6 +100,13 @@ function update() {
 		https.get(body.assets[0].browser_download_url, (res) => {
 			let stream = fs.createWriteStream(settings.zip);
 			res.pipe(stream);
+
+			let received = 0;
+			res.on("data", (chunk) => {
+				received += chunk.length;
+				winLog(lang("gui.update.downloading") + " " + (received / 1024 / 1024).toFixed(1) + "mb");
+			})
+
 			stream.on("finish", () => {
 				stream.close();
 				winLog(lang("gui.update.extracting"));
