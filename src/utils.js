@@ -73,6 +73,7 @@ function update() {
 	}
 
 	ipcMain.emit("ns-updating");
+	ipcMain.emit("ns-update-event", 'cli.update.checking');
 	console.log(lang("cli.update.checking"));
 	var version = getNSVersion();
 
@@ -96,6 +97,7 @@ function update() {
 			}; console.log(lang("cli.update.downloading") + ":", tag);
 
 			winLog(lang("gui.update.downloading"));
+			ipcMain.emit("ns-update-event", 'gui.update.downloading');
 		}
 
 		https.get(body.assets[0].browser_download_url, (res) => {
@@ -111,6 +113,7 @@ function update() {
 			stream.on("finish", () => {
 				stream.close();
 				winLog(lang("gui.update.extracting"));
+				ipcMain.emit("ns-update-event", 'gui.update.extracting');
 				console.log(lang("cli.update.downloaddone"));
 				fs.createReadStream(settings.zip).pipe(unzip.Extract({path: settings.gamepath}))
 				.on("finish", () => {
@@ -125,6 +128,7 @@ function update() {
 					}
 
 					ipcMain.emit("ns-updated");
+					ipcMain.emit("ns-update-event", 'cli.update.uptodate.short');
 					winLog(lang("gui.update.finished"));
 					console.log(lang("cli.update.finished"));
 					cli.exit();

@@ -15,7 +15,7 @@
 	"cli.update.downloaddone": "Téléchargement terminé ! Extraction des fichiers...",
 	"cli.update.finished": "Mise à jour terminée !",
 	"cli.update.uptodate": "La dernière version (%s) est déjà installée.",
-	"cli.update.uptodate.short": "Dernière version disponible",
+	"cli.update.uptodate.short": "Votre client est à jour",
 
 	"cli.launch.linuxerror": "Le support du jeu sur Linux n'est pas encore implémenté.",
 
