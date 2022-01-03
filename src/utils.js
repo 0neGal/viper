@@ -72,7 +72,6 @@ function update() {
 		}
 	}
 
-	ipcMain.emit("ns-updating");
 	ipcMain.emit("ns-update-event", 'cli.update.checking');
 	console.log(lang("cli.update.checking"));
 	var version = getNSVersion();
@@ -85,7 +84,6 @@ function update() {
 		var tag = body["tag_name"];
 
 		if (version === tag) {
-			ipcMain.emit("ns-updated");
 			ipcMain.emit("ns-update-event", 'cli.update.uptodate.short');
 			console.log(lang("cli.update.uptodate"), version);
 
@@ -127,7 +125,6 @@ function update() {
 						}
 					}
 
-					ipcMain.emit("ns-updated");
 					ipcMain.emit("ns-update-event", 'cli.update.uptodate.short');
 					winLog(lang("gui.update.finished"));
 					console.log(lang("cli.update.finished"));

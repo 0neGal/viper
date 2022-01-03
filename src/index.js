@@ -35,9 +35,7 @@ function start() {
 
 	ipcMain.on("exit", () => {process.exit(0)})
 	ipcMain.on("setpath", () => {utils.setpath(win)})
-	ipcMain.on("ns-updated", () => {win.webContents.send("ns-updated")})
 	ipcMain.on("ns-update-event", (e) => win.webContents.send('ns-update-event', e));
-	ipcMain.on("ns-updating", () => {win.webContents.send("ns-updating")})
 	ipcMain.on("winLog", (event, ...args) => {win.webContents.send("log", ...args)})
 
 	if (utils.settings.autoupdate) {utils.updatevp(false)}

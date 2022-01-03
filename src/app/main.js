@@ -45,10 +45,17 @@ function setButtons(state) {
 	}
 }
 
-ipcRenderer.on("ns-updated", () => {setButtons(true)})
-ipcRenderer.on("ns-updating", () => {setButtons(false)})
 ipcRenderer.on('ns-update-event', (_, key) => {
 	document.getElementById('update').innerText = `(${lang(key)})`;
+	console.log(key);
+	switch(key) {
+		case 'cli.update.uptodate.short':
+			setButtons(true);
+			break;
+		default:
+			setButtons(false);
+			break;
+	}
 });
 
 ipcRenderer.on("newpath", (event, newpath) => {
