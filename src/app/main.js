@@ -52,10 +52,9 @@ ipcRenderer.on("newpath", (event, newpath) => {
 })
 
 ipcRenderer.on("log", (event, msg) => {log(msg)})
-
 ipcRenderer.on("version", (event, versions) => {
-	vpversion.innerText = lang("gui.versions.viper") + ": " + versions.vp;
-	nsversion.innerText = lang("gui.versions.northstar") + ": " + versions.ns;
+	document.getElementById('vpversion').innerText = versions.vp;
+	document.getElementById('nsversion').innerText = versions.ns;
 }); ipcRenderer.send("getversion");
 
 setlang();
