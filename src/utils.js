@@ -39,14 +39,14 @@ function setpath(win) {
 	} else {
 		dialog.showOpenDialog({properties: ["openDirectory"]}).then(res => {
 			if (res.canceled) {
-				ipcMain.emit('newpath', null, false);
+				ipcMain.emit("newpath", null, false);
 				return;
 			}
 			settings.gamepath = res.filePaths[0];
 			settings.zip = path.join(settings.gamepath + "/northstar.zip");
 			saveSettings();
 			win.webContents.send("newpath", settings.gamepath);
-			ipcMain.emit('newpath', null, settings.gamepath);
+			ipcMain.emit("newpath", null, settings.gamepath);
 		}).catch(err => {console.error(err)})
 	}
 

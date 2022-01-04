@@ -79,7 +79,7 @@ ipcRenderer.on("updateavailable", () => {
 	}
 })
 
-ipcRenderer.on('nopathselected', () => {
+ipcRenderer.on("nopathselected", () => {
 	alert(lang("gui.gamepath.must"));
 	exit();
 });

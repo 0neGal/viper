@@ -33,9 +33,6 @@ function start() {
 	ipcMain.on("exit", () => {process.exit(0)})
 	ipcMain.on("setsize", (event, height) => {
 		win.setSize(width, height);
-		// if (! win.isVisible()) {
-		// 	win.show();
-		// }
 	})
 
 	ipcMain.on("ns-updated", () => {win.webContents.send("ns-updated")})
@@ -60,18 +57,20 @@ ipcMain.on("launchVanilla", (event) => {utils.launch("vanilla")})
 
 ipcMain.on("update", (event) => {utils.update()})
 ipcMain.on("setpathcli", (event) => {utils.setpath()});
-ipcMain.on("setpath", (_, value) => {
-	if (!value)
+ipcMain.on("setpath", (event, value) => {
+	if (!value) {
 		utils.setpath(win)
-	else if (!win.isVisible())
+	} else if (!win.isVisible()) {
 		win.show();
+	}
 });
-ipcMain.on("newpath", (_, newpath) => {
+ipcMain.on("newpath", (event, newpath) => {
 	if (newpath === false && !win.isVisible()) {
-		win.webContents.send('nopathselected');
+		win.webContents.send("nopathselected");
 	} else {
-		if (!win.isVisible())
+		if (!win.isVisible()) {
 			win.show();
+		}
 	}
 });
 
