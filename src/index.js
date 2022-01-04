@@ -31,7 +31,6 @@ function start() {
 	win.loadFile(__dirname + "/app/index.html");
 
 	ipcMain.on("exit", () => {process.exit(0)})
-	ipcMain.on("setpath", () => {utils.setpath(win)})
 	ipcMain.on("setsize", (event, height) => {
 		win.setSize(width, height);
 		if (! win.isVisible()) {
@@ -61,6 +60,7 @@ ipcMain.on("launchVanilla", (event) => {utils.launch("vanilla")})
 
 ipcMain.on("update", (event) => {utils.update()})
 ipcMain.on("setpathcli", (event) => {utils.setpath()});
+ipcMain.on("setpath", () => {utils.setpath(win)});
 
 ipcMain.on("getversion", () => {
 	win.webContents.send("version", {
