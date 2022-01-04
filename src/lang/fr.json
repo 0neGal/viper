@@ -26,6 +26,7 @@
 	"gui.update": "Mise à jour",
 	"gui.setpath": "Chemin du jeu",
 
+	"gui.update.check": "Vérifier les mises à jour",
 	"gui.update.downloading": "Téléchargement de la mise à jour...",
 	"gui.update.extracting": "Extraction des fichiers...",
 	"gui.update.finished": "Terminé, vous pouvez jouer !",

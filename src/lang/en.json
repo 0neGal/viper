@@ -26,6 +26,7 @@
 	"gui.update": "Update",
 	"gui.setpath": "Game Path",
 
+	"gui.update.check": "Check for updates",
 	"gui.update.downloading": "Downloading...",
 	"gui.update.extracting": "Extracting update...",
 	"gui.update.finished": "Done! Ready to play!",
