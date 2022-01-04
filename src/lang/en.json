@@ -36,6 +36,7 @@
 	"gui.launchnorthstar": "Northstar",
 
 	"gui.selectpath": "Please select the path!",
+	"gui.gamepath.must": "Titanfall2 folder path must be set to start Viper.",
 
 
 	"general.launching": "Launching",

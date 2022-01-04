@@ -80,7 +80,7 @@ ipcRenderer.on("updateavailable", () => {
 })
 
 ipcRenderer.on('nopathselected', () => {
-	alert('wtf just select a path bro');
+	alert(lang("gui.gamepath.must"));
 	exit();
 });
 
