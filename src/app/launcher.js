@@ -2,6 +2,7 @@ const vpContent = document.getElementById('vpContent');
 const nsContent = document.getElementById('nsContent');
 const ttfContent = document.getElementById('ttfContent');
 const bgHolder = document.getElementById('bgHolder');
+const markdownConverter = new Markdown.Converter();
 
 function displayContent (gameId) {
     if (!['ttf', 'ns', 'vp'].includes(gameId)) throw new Error('wrong game id called');
@@ -29,12 +30,14 @@ function displayContent (gameId) {
 
 async function loadVpReleasesText() {
     const response = await (await fetch('https://api.github.com/repos/0negal/viper/releases')).json();
+    let content = '';
 
     for (const release of response) {
-        vpReleaseNotes.innerHTML += '<article><h1># ' + release.tag_name + '</h1>'
-            + release.body.replaceAll('\r\n', '<br>') + '</article>';
+        content += '# ' + release.tag_name + '\n\n'
+            + release.body.replaceAll('\r\n', '\n') + '\n\n\n';
     }
 
+    vpReleaseNotes.innerHTML = markdownConverter.makeHtml(content);
     new SimpleBar(vpReleaseNotes);
 }
 
@@ -42,12 +45,14 @@ loadVpReleasesText();
 
 async function loadNsReleasesText() {
     const response = await (await fetch('https://api.github.com/repos/R2Northstar/Northstar/releases')).json();
+    let content = '';
 
     for (const release of response) {
-        nsRelease.innerHTML += '<article><h1># ' + release.tag_name + '</h1>'
-            + release.body.replaceAll('\r\n', '<br>') + '</article>';
+        content += '# ' + release.tag_name + '\n\n'
+            + release.body.replaceAll('\r\n', '<br>') + '\n\n\n';
     }
 
+    nsRelease.innerHTML = markdownConverter.makeHtml(content);
     new SimpleBar(nsRelease);
 }
 
