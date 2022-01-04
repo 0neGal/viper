@@ -1,6 +1,6 @@
 const fs = require("fs");
 const path = require("path");
-const { ipcRenderer } = require("electron");
+const { ipcRenderer, shell } = require("electron");
 
 const lang = require("../lang");
 
@@ -95,3 +95,10 @@ ipcRenderer.on("nopathselected", () => {
 });
 
 setlang();
+
+document.body.addEventListener('click', event => {
+	if (event.target.tagName.toLowerCase() === 'a' && event.target.protocol != 'file:') {
+	  event.preventDefault();
+	  shell.openExternal(event.target.href);
+	}
+  });
