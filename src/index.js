@@ -64,6 +64,15 @@ ipcMain.on("setpath", (_, value) => {
 	if (!value)
 		utils.setpath(win)
 });
+ipcMain.on("newpath", (_, newpath) => {
+	if (newpath === false) {
+
+	} else {
+		// TODO show window
+		if (!win.isVisible())
+			win.show();
+	}
+});
 
 ipcMain.on("getversion", () => {
 	win.webContents.send("version", {
