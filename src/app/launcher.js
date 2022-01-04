@@ -34,6 +34,8 @@ async function loadVpReleasesText() {
         vpReleaseNotes.innerHTML += '<article><h1># ' + release.tag_name + '</h1>'
             + release.body.replaceAll('\r\n', '<br>') + '</article>';
     }
+
+    new SimpleBar(vpReleaseNotes);
 }
 
 loadVpReleasesText();
@@ -45,6 +47,8 @@ async function loadNsReleasesText() {
         nsRelease.innerHTML += '<article><h1># ' + release.tag_name + '</h1>'
             + release.body.replaceAll('\r\n', '<br>') + '</article>';
     }
+
+    new SimpleBar(nsRelease);
 }
 
 loadNsReleasesText();
