@@ -33,9 +33,9 @@ function start() {
 	ipcMain.on("exit", () => {process.exit(0)})
 	ipcMain.on("setsize", (event, height) => {
 		win.setSize(width, height);
-		if (! win.isVisible()) {
-			win.show();
-		}
+		// if (! win.isVisible()) {
+		// 	win.show();
+		// }
 	})
 
 	ipcMain.on("ns-updated", () => {win.webContents.send("ns-updated")})
@@ -63,12 +63,13 @@ ipcMain.on("setpathcli", (event) => {utils.setpath()});
 ipcMain.on("setpath", (_, value) => {
 	if (!value)
 		utils.setpath(win)
+	else if (!win.isVisible())
+		win.show();
 });
 ipcMain.on("newpath", (_, newpath) => {
 	if (newpath === false) {
-
+		
 	} else {
-		// TODO show window
 		if (!win.isVisible())
 			win.show();
 	}
