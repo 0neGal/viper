@@ -38,6 +38,7 @@
 	"gui.launchnorthstar": "Northstar",
 
 	"gui.selectpath": "Please select the path!",
+	"gui.gamepath.must": "The game path must be set to start Viper.",
 
 
 	"general.launching": "Launching",
