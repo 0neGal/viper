@@ -36,6 +36,7 @@
 	"gui.launchnorthstar": "Northstar",
 
 	"gui.selectpath": "Veuillez sélectionner le dossier où se trouve le client Titanfall 2.",
+	"gui.gamepath.must": "Vous devez sélectionner le chemin du dossier du jeu Titanfall 2 pour pouvoir lancer Viper.",
 
 
 	"general.launching": "Lancement",

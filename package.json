@@ -1,7 +1,7 @@
 {
 	"name": "viper",
 	"productName": "Viper",
-	"version": "0.9.0",
+	"version": "0.9.1",
 	"description": "Launcher+Updater for TF|2 Northstar",
 	"main": "src/index.js",
 	"build": {
@@ -26,6 +26,7 @@
 		}
 	},
 	"scripts": {
+		"langs": "node build/langs.js",
 		"start": "npx electron src/index.js",
 		"debug": "npx electron src/index.js --debug",
 		"man": "npx marked-man docs/viper.1.md > docs/viper.1",
