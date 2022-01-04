@@ -31,7 +31,9 @@ async function loadVpReleasesText() {
     const response = await (await fetch('https://api.github.com/repos/0negal/viper/releases')).json();
 
     for (const release of response) {
-        vpReleaseNotes.innerText += '#' + release.tag_name + '\n\n' + release.body;
+        vpReleaseNotes.innerHTML += '<article><h1># ' + release.tag_name + '</h1>'
+            + release.body.replaceAll('\r\n', '<br>') + '</article>';
+        // vpReleaseNotes.innerText += '#' + release.tag_name + '\n\n' + release.body;
     }
 }
 
