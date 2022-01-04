@@ -1,7 +1,7 @@
 const fs = require("fs");
 const path = require("path");
 const { autoUpdater } = require("electron-updater");
-const { app, dialog, ipcMain, BrowserWindow, ipcRenderer } = require("electron");
+const { app, ipcMain, BrowserWindow } = require("electron");
 
 const Emitter = require("events");
 const events = new Emitter();
@@ -31,12 +31,8 @@ function start() {
 	win.loadFile(__dirname + "/app/index.html");
 
 	ipcMain.on("exit", () => {process.exit(0)})
-	ipcMain.on("setpath", () => {utils.setpath(win)})
 	ipcMain.on("setsize", (event, height) => {
 		win.setSize(width, height);
-		if (! win.isVisible()) {
-			win.show();
-		}
 	})
 
 	ipcMain.on("ns-updated", () => {win.webContents.send("ns-updated")})
@@ -61,6 +57,22 @@ ipcMain.on("launchVanilla", (event) => {utils.launch("vanilla")})
 
 ipcMain.on("update", (event) => {utils.update()})
 ipcMain.on("setpathcli", (event) => {utils.setpath()});
+ipcMain.on("setpath", (event, value) => {
+	if (!value) {
+		utils.setpath(win)
+	} else if (!win.isVisible()) {
+		win.show();
+	}
+});
+ipcMain.on("newpath", (event, newpath) => {
+	if (newpath === false && !win.isVisible()) {
+		win.webContents.send("nopathselected");
+	} else {
+		if (!win.isVisible()) {
+			win.show();
+		}
+	}
+});
 
 ipcMain.on("getversion", () => {
 	win.webContents.send("version", {
