@@ -69,6 +69,20 @@ function getNSVersion() {
 	}
 }
 
+/**
+ * Loads up Titanfall|2 version from gameversion.txt file.
+ * TODO This file is present on Origin install, should check if it's present with 
+ * Steam install as well.
+ */
+function getTtf2Version() {
+	var versionFilePath = path.join(settings.gamepath, "gameversion.txt");
+	if (fs.existsSync(versionFilePath)) {
+		return fs.readFileSync(versionFilePath, "utf8");
+	} else {
+		return "unknown";
+	}
+}
+
 function update() {
 	for (let i = 0; i < settings.excludes.length; i++) {
 		let exclude = path.join(settings.gamepath + "/" + settings.excludes[i]);
@@ -186,6 +200,7 @@ module.exports = {
 	updatevp,
 	settings,
 	getNSVersion,
+	getTtf2Version,
 	setlang: (lang) => {
 		settings.lang = lang;
 		saveSettings();

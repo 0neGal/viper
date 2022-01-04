@@ -78,8 +78,10 @@ ipcRenderer.on("newpath", (event, newpath) => {
 
 ipcRenderer.on("log", (event, msg) => {log(msg)})
 ipcRenderer.on("version", (event, versions) => {
+	console.log(versions);
 	document.getElementById('vpversion').innerText = versions.vp;
 	document.getElementById('nsversion').innerText = versions.ns;
+	document.getElementById('ttf2Version').innerText = versions.ttf2;
 }); ipcRenderer.send("getversion");
 
 ipcRenderer.on("updateavailable", () => {
