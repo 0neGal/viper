@@ -20,7 +20,13 @@ ipcRenderer.send("setlang", settings.lang);
 if (fs.existsSync("viper.json")) {
 	settings = {...settings, ...JSON.parse(fs.readFileSync("viper.json", "utf8"))};
 	settings.zip = path.join(settings.gamepath + "/northstar.zip");
-	setpath(true);
+
+	if (settings.gamepath.length === 0) {
+		alert(lang("general.missingpath"));
+		setpath(false);
+	} else {
+		setpath(true);
+	}
 } else {
 	alert(lang("general.missingpath"));
 	setpath();
