@@ -60,7 +60,10 @@ ipcMain.on("launchVanilla", (event) => {utils.launch("vanilla")})
 
 ipcMain.on("update", (event) => {utils.update()})
 ipcMain.on("setpathcli", (event) => {utils.setpath()});
-ipcMain.on("setpath", () => {utils.setpath(win)});
+ipcMain.on("setpath", (_, value) => {
+	if (!value)
+		utils.setpath(win)
+});
 
 ipcMain.on("getversion", () => {
 	win.webContents.send("version", {

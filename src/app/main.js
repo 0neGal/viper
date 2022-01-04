@@ -20,6 +20,7 @@ ipcRenderer.send("setlang", settings.lang);
 if (fs.existsSync("viper.json")) {
 	settings = {...settings, ...JSON.parse(fs.readFileSync("viper.json", "utf8"))};
 	settings.zip = path.join(settings.gamepath + "/northstar.zip");
+	setpath(true);
 } else {
 	alert(lang("general.missingpath"));
 	setpath();
@@ -27,7 +28,14 @@ if (fs.existsSync("viper.json")) {
 
 function exit() {ipcRenderer.send("exit")}
 function update() {ipcRenderer.send("update")}
-function setpath() {ipcRenderer.send("setpath")}
+
+/**
+ * Reports to the main thread about game path status.
+ * @param {boolean} value is game path loaded
+ */
+function setpath(value = false) {
+	ipcRenderer.send("setpath", value);
+}
 
 function launch() {ipcRenderer.send("launch")}
 function launchVanilla() {ipcRenderer.send("launchVanilla")}
