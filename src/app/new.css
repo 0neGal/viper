@@ -178,3 +178,16 @@ a:hover {
 .inline * {
     display: inline-block;
 }
+
+#vpMain {
+    text-align: center;
+    margin-top: 140px;
+}
+
+#vpMain img {
+    width: 20%;
+}
+
+#vpVersion {
+    font-size: 16px;
+}
