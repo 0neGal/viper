@@ -29,12 +29,8 @@ function start() {
 
 	win.removeMenu();
 	win.loadFile(__dirname + "/app/index.html");
-	// win.webContents.on('did-finish-load', function() {
-	// 	win.show();
-	// });
 
 	ipcMain.on("exit", () => {process.exit(0)})
-	// ipcMain.on("setpath", () => {utils.setpath(win)})
 	ipcMain.on("ns-update-event", (e) => win.webContents.send('ns-update-event', e));
 	ipcMain.on("winLog", (event, ...args) => {win.webContents.send("log", ...args)})
 

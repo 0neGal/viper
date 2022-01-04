@@ -33,7 +33,6 @@ async function loadVpReleasesText() {
     for (const release of response) {
         vpReleaseNotes.innerHTML += '<article><h1># ' + release.tag_name + '</h1>'
             + release.body.replaceAll('\r\n', '<br>') + '</article>';
-        // vpReleaseNotes.innerText += '#' + release.tag_name + '\n\n' + release.body;
     }
 }
 
