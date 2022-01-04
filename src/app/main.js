@@ -73,6 +73,11 @@ ipcRenderer.on("updateavailable", () => {
 	}
 })
 
+ipcRenderer.on('nopathselected', () => {
+	alert('wtf just select a path bro');
+	exit();
+});
+
 setlang();
 setInterval(() => {
 	ipcRenderer.send("setsize", document.querySelector(".lines").offsetHeight + 20);

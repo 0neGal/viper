@@ -1,7 +1,7 @@
 const fs = require("fs");
 const path = require("path");
 const { autoUpdater } = require("electron-updater");
-const { app, dialog, ipcMain, BrowserWindow, ipcRenderer } = require("electron");
+const { app, ipcMain, BrowserWindow } = require("electron");
 
 const Emitter = require("events");
 const events = new Emitter();
@@ -67,8 +67,8 @@ ipcMain.on("setpath", (_, value) => {
 		win.show();
 });
 ipcMain.on("newpath", (_, newpath) => {
-	if (newpath === false) {
-		
+	if (newpath === false && !win.isVisible()) {
+		win.webContents.send('nopathselected');
 	} else {
 		if (!win.isVisible())
 			win.show();
