@@ -42,5 +42,17 @@
 
 
 	"general.launching": "Launching",
-	"general.missingpath": "Game path is not set!"
+	"general.missingpath": "Game path is not set!",
+
+	"viper.menu.main": "Viper",
+	"viper.menu.release": "Release notes",
+	"viper.menu.info": "Information",
+	"viper.menu.credits": "Credits",
+
+	"viper.info.discord": "Join Discord:",
+	"viper.info.issues": "Report issues with Viper:",
+
+	"ns.menu.main": "Northstar launcher",
+	"ns.menu.mods": "Mods",
+	"ns.menu.release": "Release notes"
 }

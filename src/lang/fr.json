@@ -42,5 +42,17 @@
 
 
 	"general.launching": "Lancement",
-	"general.missingpath": "Le chemin du client n'est pas défini !"
+	"general.missingpath": "Le chemin du client n'est pas défini !",
+
+	"viper.menu.main": "Viper",
+	"viper.menu.release": "Notes de mises à jour",
+	"viper.menu.info": "Informations",
+	"viper.menu.credits": "Remerciements",
+
+	"viper.info.discord": "Rejoingnez le serveur Discord :",
+	"viper.info.issues": "Un problème avec Viper ? Créez un ticket ici :",
+
+	"ns.menu.main": "Lanceur Northstar",
+	"ns.menu.mods": "Mods",
+	"ns.menu.release": "Notes de mises à jour"
 }
