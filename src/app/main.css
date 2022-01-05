@@ -1,8 +1,3 @@
-@font-face {
-	font-family: "Roboto Mono";
-	src: url("roboto.ttf");
-}
-
 :root {
 	--red: #C7777F;
 	--blue: #81A1C1;
@@ -30,7 +25,7 @@ body {
 	margin: 0;
 	overflow: hidden;
 	user-select: none;
-	font-family: "Roboto Mono", monospace
+	font-family: "Roboto", sans-serif;
 }
 
 img {
@@ -38,9 +33,9 @@ img {
 }
 
 #bgHolder {
-	position: absolute;
 	width: 100%;
 	height: 100%;
+	position: absolute;
 	transform: scale(1.1);
 	background-size: cover;
 	background-position: center;
@@ -139,6 +134,7 @@ img {
 	opacity: 0.6;
 	margin: 0 26px;
 	cursor: pointer;
+	font-weight: 700;
 	height: fit-content;
 	transition: opacity 0.3s ease-in-out;
 }
