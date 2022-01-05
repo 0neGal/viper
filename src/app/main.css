@@ -1,84 +1,217 @@
-:root {
-	--disabled: #656E7F;
-	--background: #4C515B;
-	--foreground: #DDE2EB;
-	--subforeground: #AFAFAF;
-	--btnforeground: var(--foreground);
-}
-
-@media (prefers-color-scheme: light) {
-	:root {
-		--background: #FFFFFF;
-		--foreground: #4C566A;
-		--btnforeground: var(--background);
-	}
-}
-
 @font-face {
 	font-family: "Roboto Mono";
 	src: url("roboto.ttf");
 }
 
-body, button, input {
-	font-size: 18px;
-	font-weight: 700;
-	overflow: hidden;
-	-webkit-app-region: drag;
-	color: var(--foreground);
-	text-transform: uppercase;
-	background: var(--background);
-	font-family: "Roboto Mono", monospace;
+:root {
+	--red: #C7777F;
+	--blue: #81A1C1;
 }
 
-nobr {white-space: nowrap}
-
-.versions {
-	height: 15px;
-	font-size: 12px;
-	color: var(--subforeground);
+body {
+    margin: 0;
+    overflow: hidden;
+    user-select: none;
+	font-family: "Roboto Mono", monospace
 }
 
-.line {
-	display: flex;
-	margin-top: 15px;
+img {
+    pointer-events: none;
 }
 
-.buttons {
-	text-align: right;
-	margin-left: auto;
-	user-select: none;
-	margin-right: 7px;
+#bgHolder {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image: url('../assets/bg/viper.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    transition: background-image 0.5s ease-in-out;
+    filter: brightness(0.4) blur(2px) grayscale(0.6);
+    transform: scale(1.1);
 }
 
-.text {max-width: 38vw}
-.buttons {max-width: 55vw}
+.gamesContainer {
+    width: 10%;
+    height: 100%;
+    min-width: 95px;
+    max-width: 120px;
 
-button, .text {
-	border: none;
-	outline: none;
-	padding: 5px 15px;
-	user-select: none;
-	border-radius: 50px;
-	transition: 0.2s ease-in-out;
+    float: left;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: center;
 }
 
-#welcome {padding: 0px}
-
-button {
-	margin-bottom: 10px;
-	color: var(--btnforeground);
-	-webkit-app-region: no-drag;
-}
-
-button:hover {opacity: 0.9}
-button:active {
-	opacity: 0.7;
-	transform: scale(0.95);
+.mainContainer {
+    height: 100%;
+    flex-grow: 1;
+    display: flex;
 }
 
 
-#update {background: #81A1C1}
-#setpath {background: #5E81AC}
-#northstar {background: #C7777F}
-#vanilla, #exit {background: #656E7F}
-button:disabled {background: var(--disabled) !important; opacity: 0.5}
+/* nav bar buttons */
+.gamesContainer button {
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 90%;
+
+    border: none;
+    background-color: transparent;
+
+
+    position: relative;
+    flex-basis: calc(100% - 10px);
+    margin: 20px 20px 0;
+    box-sizing: border-box;
+}
+
+  
+.gamesContainer button::before {
+    content: '';
+    display: block;
+    padding-top: 100%;
+  }
+  
+  .gamesContainer button .content {
+    position: absolute;
+    top: 0; left: 0;
+    height: 100%;
+    width: 100%;
+  }
+
+#vpBtn {
+    background-image: url(../assets/icons/512x512.png);
+    margin-bottom: 30px;
+}
+
+#nsBtn {
+    background-image: url(../assets/icons/northstar.png);
+}
+
+#ttfBtn {
+    background-image: url(../assets/icons/titanfall2.png);
+    background-size: 69%;
+}
+
+.contentContainer {
+    position: relative;
+    display: block;
+    padding: 0 10%;
+    flex-grow: 1;
+    color: white;
+}
+
+.contentMenu {
+    list-style: none;
+    display: flex;
+    flex-grow: 1;
+    justify-content: center;
+    padding: 0;
+    margin-top: 25px;
+    margin-bottom: 0;
+    font-size: 20px;
+}
+
+.contentBody > div {
+    margin-top: 50px;
+}
+
+/* some sections do not need space between them and menu */
+#nsMain, #nsRelease, #vpReleaseNotes, .playBtnContainer {
+    margin-top: 0 !important;
+}
+
+.contentMenu li {
+    margin: 0 26px;
+    height: fit-content;
+    cursor: pointer;
+}
+
+.contentMenu li[active] {
+    pointer-events: none;
+}
+
+.contentMenu li[active]::after {
+    content: '•';
+    color: var(--red);
+    position: relative;
+    display: block;
+    text-align: center;
+    font-size: 30px;
+}
+
+/* these sections are hidden at start */
+#nsContent, #ttfContent, #vpCredits, #vpReleaseNotes, #vpInfo, #nsMods, #nsRelease {
+    display: none;
+}
+
+.contentBody img {
+    max-width: 100%;;
+}
+
+.contentContainer .playBtnContainer {
+    text-align: center;
+}
+
+.contentContainer .playBtn {
+    width: 27%;
+    height: 11%;
+    border: none;
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+    margin-top: 100px;
+    margin-bottom: 10px;
+    background-color: var(--red);
+}
+
+.contentContainer #nsMain .playBtn {
+    background-color: var(--blue);
+}
+
+a {
+    color: var(--red);
+    text-decoration: none;
+    transition: color 0.2s ease-in;
+}
+
+a:hover {
+    color: #c10000;
+}
+
+#nsContent .contentMenu {
+    margin-bottom: 0;
+}
+
+#nsContent .contentBody img {
+    transform: scale(0.85);
+}
+
+#nsRelease, #vpReleaseNotes {
+    flex-direction: column;
+    height: 80%;
+    overflow-y: auto;
+}
+
+.inline * {
+    display: inline-block;
+}
+
+#vpMain {
+    text-align: center;
+    margin-top: 140px;
+}
+
+#vpMain img {
+    width: 20%;
+}
+
+#vpVersion {
+    font-size: 16px;
+}
+
+.simplebar-scrollbar:before {
+    background: var(--red) !important;
+}
