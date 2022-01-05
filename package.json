@@ -26,6 +26,7 @@
 		}
 	},
 	"scripts": {
+		"langs": "node build/langs.js",
 		"start": "npx electron src/index.js",
 		"debug": "npx electron src/index.js --debug",
 		"man": "npx marked-man docs/viper.1.md > docs/viper.1",
