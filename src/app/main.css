@@ -136,12 +136,15 @@ img {
 }
 
 .contentMenu li {
+	opacity: 0.6;
 	margin: 0 26px;
-	height: fit-content;
 	cursor: pointer;
+	height: fit-content;
+	transition: opacity 0.3s ease-in-out;
 }
 
 .contentMenu li[active] {
+	opacity: 1.0;
 	pointer-events: none;
 }
 
