@@ -75,10 +75,10 @@ img {
     background-color: transparent;
 
 
+    margin: 20px;
     position: relative;
-    flex-basis: calc(100% - 10px);
-    margin: 20px 20px 0;
     box-sizing: border-box;
+    flex-basis: calc(100% - 10px);
 }
 
   
@@ -95,18 +95,11 @@ img {
     width: 100%;
   }
 
-#vpBtn {
-    background-image: url(../assets/icons/512x512.png);
-    margin-bottom: 30px;
-}
-
-#nsBtn {
-    background-image: url(../assets/icons/northstar.png);
-}
-
+#vpBtn {background-image: url(../assets/icons/512x512.png)}
+#nsBtn {background-image: url(../assets/icons/northstar.png)}
 #ttfBtn {
     background-image: url(../assets/icons/titanfall2.png);
-    background-size: 69%;
+    background-size: 69%; /* nice */
 }
 
 .contentContainer {
