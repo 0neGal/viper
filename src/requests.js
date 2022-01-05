@@ -39,8 +39,10 @@ async function getLatestNsVersion() {
     }
 }
 
+// should always be called after getLatestNsVersion
 function getLatestNsVersionLink() {
-    return '';
+    const cache = _getRequestsCache();
+    return cache['nsLatest']['body'].assets[0].browser_download_url;
 }
 
 
