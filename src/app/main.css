@@ -1,6 +1,7 @@
 :root {
 	--red: #C7777F;
 	--blue: #81A1C1;
+	--padding: 25px;
 }
 
 ::-webkit-scrollbar {
@@ -17,9 +18,24 @@
 	background: var(--red);
 }
 
-.playBtn, .gamesContainer button {
+.playBtn, .gamesContainer button, #close {
 	cursor: pointer;
 }
+
+#close {
+	width: 25px;
+	opacity: 0.6;
+	height: 25px;
+	position: fixed;
+	top: var(--padding);
+	right: var(--padding);
+	background-size: contain;
+	transition: 0.25s ease-in-out;
+	background-image: url('../assets/icons/close.png');
+}
+
+#close:hover {opacity: 1.0}
+#close:active {transform: scale(0.98)}
 
 body {
 	margin: 0;
@@ -125,14 +141,14 @@ img {
 }
 
 .contentMenu {
-	list-style: none;
-	display: flex;
-	flex-grow: 1;
-	justify-content: center;
 	padding: 0;
-	margin-top: 25px;
-	margin-bottom: 0;
+	flex-grow: 1;
+	display: flex;
 	font-size: 20px;
+	list-style: none;
+	margin-bottom: 0;
+	justify-content: center;
+	margin-top: var(--padding);
 }
 
 .contentBody > div {
@@ -152,6 +168,8 @@ img {
 	height: fit-content;
 	transition: opacity 0.3s ease-in-out;
 }
+
+.contentMenu li:hover {opacity: 0.7}
 
 .contentMenu li[active] {
 	opacity: 1.0;
