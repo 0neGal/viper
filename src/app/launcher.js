@@ -68,7 +68,7 @@ function showVpSection(section) {
     switch(section) {
         case "main":
             vpMainBtn.setAttribute("active", "");
-            vpMainSection.style.display = "block";
+            vpMain.style.display = "block";
             break;
         case "release":
             vpReleaseBtn.setAttribute("active", "");
