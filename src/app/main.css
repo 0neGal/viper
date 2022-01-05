@@ -133,13 +133,24 @@ img {
     pointer-events: none;
 }
 
-.contentMenu li[active]::after {
-    content: '•';
-    color: var(--red);
-    position: relative;
+.contentMenu li::after {
+	top: 10px;
+	width: 30px;
+	height: 5px;
+	opacity: 0.0;
+	content: " ";
     display: block;
     text-align: center;
-    font-size: 30px;
+    position: relative;
+	border-radius: 50px;
+    background: var(--red);
+	left: calc(50% - 15px);
+	transition: 0.3s ease-in-out;
+}
+
+.contentMenu li[active]::after {
+	top: 5px;
+	opacity: 1.0;
 }
 
 /* these sections are hidden at start */
@@ -174,11 +185,11 @@ img {
 a {
     color: var(--red);
     text-decoration: none;
-    transition: color 0.2s ease-in;
+    transition: filter 0.2s ease-in;
 }
 
 a:hover {
-    color: #c10000;
+	filter: brightness(80%);
 }
 
 #nsContent .contentMenu {
