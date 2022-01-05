@@ -24,7 +24,7 @@ function _getRequestsCache() {
 async function getLatestNsVersion() {
     let cache = _getRequestsCache();
     
-    if (cache['nsLatest'] && (Date.now() - cache['nsLatest']['time']) > 5 * 60 * 1000) {
+    if (cache['nsLatest'] && (Date.now() - cache['nsLatest']['time']) < 5 * 60 * 1000) {
         console.log('returning nsLatest data from cache')
         return cache['nsLatest']['body']['tag_name'];
     } else {
