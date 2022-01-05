@@ -9,9 +9,9 @@
 		<div id="bgHolder"></div>
 		
 		<nav class="gamesContainer">
-			<button id="vpBtn" onclick="displayContent('vp')"></button>
-			<button id="nsBtn" onclick="displayContent('ns')"></button>
-			<button id="ttfBtn" onclick="displayContent('ttf')"></button>
+			<button id="vpBtn" onclick="page(0)"></button>
+			<button id="nsBtn" onclick="page(1)"></button>
+			<button id="ttfBtn" onclick="page(2)"></button>
 		</nav>
 
 		<div class="mainContainer">
@@ -55,7 +55,7 @@
 				</ul>
 				<div class="contentBody">
 					<div id="nsMain">
-						<img src="../assets/ttf2+ns.png"/>
+						<img src="../assets/ns.png"/>
 						<div class="playBtnContainer">
 							<button class="playBtn" onclick="launch()">%%gui.launch%%</button>
 							<div class="inline">
@@ -70,8 +70,9 @@
 			</div>
 
 			<div id="ttfContent" class="contentContainer">
+				<ul class="contentMenu"><li style="opacity:0.0">filler</li></ul>
 				<div class="contentBody">
-					<img src="../assets/Titanfall_2_Logo.svg"/>
+					<img src="../assets/vanilla.png"/>
 					<div class="playBtnContainer">
 						<button class="playBtn" onclick="launchVanilla()">%%gui.launch%%</button>
 						<div id="ttf2Version"></div>

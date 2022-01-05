@@ -33,17 +33,22 @@ img {
 }
 
 #bgHolder {
-	width: 100%;
-	height: 100%;
-	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	position: fixed;
 	transform: scale(1.1);
 	background-size: cover;
 	background-position: center;
 	background-repeat: no-repeat;
 	transition: background-image 0.5s ease-in-out;
-	background-image: url("../assets/bg/viper.jpg");
 	filter: brightness(0.4) blur(2px) grayscale(0.6);
 }
+
+#bgHolder[bg="0"] {background-image: url("../assets/bg/viper.jpg")}
+#bgHolder[bg="1"] {background-image: url("../assets/bg/northstar.jpeg")}
+#bgHolder[bg="2"] {background-image: url("../assets/bg/ttf2.jpg")}
 
 .gamesContainer {
 	width: 10%;
@@ -103,11 +108,20 @@ img {
 }
 
 .contentContainer {
-	position: relative;
-	display: block;
-	padding: 0 10%;
-	flex-grow: 1;
+	--width: 700px;
+
 	color: white;
+	flex-grow: 1;
+	opacity: 1.0;
+	position: fixed;
+	width: var(--width);
+	transition: 0.15s ease-in-out;
+	left: calc(50% - calc(var(--width) / 2));
+}
+
+.contentContainer.hidden {
+	opacity: 0.0;
+	pointer-events: none;
 }
 
 .contentMenu {
@@ -165,7 +179,7 @@ img {
 }
 
 /* these sections are hidden at start */
-#nsContent, #ttfContent, #vpCredits, #vpReleaseNotes, #vpInfo, #nsMods, #nsRelease {
+#vpCredits, #vpReleaseNotes, #vpInfo, #nsMods, #nsRelease {
 	display: none;
 }
 
@@ -184,6 +198,7 @@ img {
 	color: white;
 	font-size: 24px;
 	font-weight: bold;
+	padding: 20px;
 	margin-top: 100px;
 	margin-bottom: 10px;
 	border-radius: 10px;
@@ -217,14 +232,17 @@ a:hover {
 	margin-bottom: 0;
 }
 
-#nsContent .contentBody img {
+.contentBody img {
 	transform: scale(0.85);
 }
 
 #nsRelease, #vpReleaseNotes {
+	top: 75px;
+	height: 80vh;
+	position: fixed;
+	margin-right: 45px;
+	overflow-y: scroll;
 	flex-direction: column;
-	height: 80%;
-	overflow-y: auto;
 }
 
 .inline * {

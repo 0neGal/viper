@@ -1,30 +1,17 @@
 const markdownConverter = new Markdown.Converter();
 
-function displayContent (gameId) {
-	if (!["ttf", "ns", "vp"].includes(gameId)) throw new Error("wrong game id called");
-	switch(gameId) {
-		case "vp":
-			vpContent.style.display = "block";
-			nsContent.style.display = "none";
-			ttfContent.style.display = "none";
-			bgHolder.style.backgroundImage = "url('../assets/bg/viper.jpg')";
-			break;
-		case "ns":
-			vpContent.style.display = "none";
-			nsContent.style.display = "block";
-			ttfContent.style.display = "none";
-			bgHolder.style.backgroundImage = "url('../assets/bg/northstar.jpeg')";
-			break;
-		case "ttf":
-			vpContent.style.display = "none";
-			nsContent.style.display = "none";
-			ttfContent.style.display = "block";
-			bgHolder.style.backgroundImage = "url('../assets/bg/ttf2.jpg')";
-			break;
-	}
-}
+function page(page) {
+	let pages = document.querySelectorAll(".mainContainer .contentContainer")
 
-async function loadVpReleasesText() {
+	for (let i = 0; i < pages.length; i++) {
+		pages[i].classList.add("hidden");
+	}
+
+	pages[page].classList.remove("hidden")
+	bgHolder.setAttribute("bg", page);
+}; page(0)
+
+async function loadVpReleases() {
 	const response = await (await fetch("https://api.github.com/repos/0negal/viper/releases")).json();
 	let content = "";
 
@@ -34,11 +21,9 @@ async function loadVpReleasesText() {
 	}
 
 	vpReleaseNotes.innerHTML = markdownConverter.makeHtml(content);
-}
+}; loadVpReleases();
 
-loadVpReleasesText();
-
-async function loadNsReleasesText() {
+async function loadNsReleases() {
 	const response = await (await fetch("https://api.github.com/repos/R2Northstar/Northstar/releases")).json();
 	let content = "";
 
@@ -48,9 +33,7 @@ async function loadNsReleasesText() {
 	}
 
 	nsRelease.innerHTML = markdownConverter.makeHtml(content);
-}
-
-loadNsReleasesText();
+}; loadNsReleases();
 
 
 function showVpSection(section) {
