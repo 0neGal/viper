@@ -31,7 +31,7 @@
 	right: var(--padding);
 	background-size: contain;
 	transition: 0.25s ease-in-out;
-	background-image: url('../assets/icons/close.png');
+	background-image: url("icons/close.png");
 }
 
 #close:hover {opacity: 1.0}
@@ -116,10 +116,10 @@ img {
 	width: 100%;
   }
 
-#vpBtn {background-image: url(../assets/icons/512x512.png)}
-#nsBtn {background-image: url(../assets/icons/northstar.png)}
+#vpBtn {background-image: url("icons/viper.png")}
+#nsBtn {background-image: url("icons/northstar.png")}
 #ttfBtn {
-	background-image: url(../assets/icons/titanfall2.png);
+	background-image: url("icons/titanfall2.png");
 	background-size: 69%; /* nice */
 }
 
