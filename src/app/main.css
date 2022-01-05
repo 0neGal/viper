@@ -182,8 +182,13 @@ img {
 	font-weight: bold;
 	margin-top: 100px;
 	margin-bottom: 10px;
+	border-radius: 10px;
+	transition: 0.3s ease-in-out;
 	background-color: var(--red);
 }
+
+.contentContainer .playBtn:active {opacity: 0.7}
+.contentContainer .playBtn:hover {transform: scale(1.02)}
 
 .contentContainer #nsMain .playBtn {
 	background-color: var(--blue);
