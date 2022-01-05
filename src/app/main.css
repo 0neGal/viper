@@ -9,135 +9,135 @@
 }
 
 ::-webkit-scrollbar {
-    width: 8px;
+	width: 8px;
 }
  
 ::-webkit-scrollbar-track {
-    border-radius: 10px;
+	border-radius: 10px;
 	background: transparent;
 }
  
 ::-webkit-scrollbar-thumb {
-    border-radius: 10px;
+	border-radius: 10px;
 	background: var(--red);
 }
 
 body {
-    margin: 0;
-    overflow: hidden;
-    user-select: none;
+	margin: 0;
+	overflow: hidden;
+	user-select: none;
 	font-family: "Roboto Mono", monospace
 }
 
 img {
-    pointer-events: none;
+	pointer-events: none;
 }
 
 #bgHolder {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background-image: url('../assets/bg/viper.jpg');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    transition: background-image 0.5s ease-in-out;
-    filter: brightness(0.4) blur(2px) grayscale(0.6);
-    transform: scale(1.1);
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	transform: scale(1.1);
+	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;
+	transition: background-image 0.5s ease-in-out;
+	background-image: url("../assets/bg/viper.jpg");
+	filter: brightness(0.4) blur(2px) grayscale(0.6);
 }
 
 .gamesContainer {
-    width: 10%;
-    height: 100%;
-    min-width: 95px;
-    max-width: 120px;
+	width: 10%;
+	height: 100%;
+	min-width: 95px;
+	max-width: 120px;
 
-    float: left;
-    display: flex;
-    flex-wrap: wrap;
-    align-content: center;
+	float: left;
+	display: flex;
+	flex-wrap: wrap;
+	align-content: center;
 }
 
 .mainContainer {
-    height: 100%;
-    flex-grow: 1;
-    display: flex;
+	height: 100%;
+	flex-grow: 1;
+	display: flex;
 }
 
 
 /* nav bar buttons */
 .gamesContainer button {
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: 90%;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: 90%;
 
-    border: none;
-    background-color: transparent;
+	border: none;
+	background-color: transparent;
 
 
-    margin: 20px;
-    position: relative;
-    box-sizing: border-box;
-    flex-basis: calc(100% - 10px);
+	margin: 20px;
+	position: relative;
+	box-sizing: border-box;
+	flex-basis: calc(100% - 10px);
 }
 
   
 .gamesContainer button::before {
-    content: '';
-    display: block;
-    padding-top: 100%;
+	content: "";
+	display: block;
+	padding-top: 100%;
   }
   
   .gamesContainer button .content {
-    position: absolute;
-    top: 0; left: 0;
-    height: 100%;
-    width: 100%;
+	position: absolute;
+	top: 0; left: 0;
+	height: 100%;
+	width: 100%;
   }
 
 #vpBtn {background-image: url(../assets/icons/512x512.png)}
 #nsBtn {background-image: url(../assets/icons/northstar.png)}
 #ttfBtn {
-    background-image: url(../assets/icons/titanfall2.png);
-    background-size: 69%; /* nice */
+	background-image: url(../assets/icons/titanfall2.png);
+	background-size: 69%; /* nice */
 }
 
 .contentContainer {
-    position: relative;
-    display: block;
-    padding: 0 10%;
-    flex-grow: 1;
-    color: white;
+	position: relative;
+	display: block;
+	padding: 0 10%;
+	flex-grow: 1;
+	color: white;
 }
 
 .contentMenu {
-    list-style: none;
-    display: flex;
-    flex-grow: 1;
-    justify-content: center;
-    padding: 0;
-    margin-top: 25px;
-    margin-bottom: 0;
-    font-size: 20px;
+	list-style: none;
+	display: flex;
+	flex-grow: 1;
+	justify-content: center;
+	padding: 0;
+	margin-top: 25px;
+	margin-bottom: 0;
+	font-size: 20px;
 }
 
 .contentBody > div {
-    margin-top: 50px;
+	margin-top: 50px;
 }
 
 /* some sections do not need space between them and menu */
 #nsMain, #nsRelease, #vpReleaseNotes, .playBtnContainer {
-    margin-top: 0 !important;
+	margin-top: 0 !important;
 }
 
 .contentMenu li {
-    margin: 0 26px;
-    height: fit-content;
-    cursor: pointer;
+	margin: 0 26px;
+	height: fit-content;
+	cursor: pointer;
 }
 
 .contentMenu li[active] {
-    pointer-events: none;
+	pointer-events: none;
 }
 
 .contentMenu li::after {
@@ -146,11 +146,11 @@ img {
 	height: 5px;
 	opacity: 0.0;
 	content: " ";
-    display: block;
-    text-align: center;
-    position: relative;
+	display: block;
+	text-align: center;
+	position: relative;
 	border-radius: 50px;
-    background: var(--red);
+	background: var(--red);
 	left: calc(50% - 15px);
 	transition: 0.3s ease-in-out;
 }
@@ -162,37 +162,37 @@ img {
 
 /* these sections are hidden at start */
 #nsContent, #ttfContent, #vpCredits, #vpReleaseNotes, #vpInfo, #nsMods, #nsRelease {
-    display: none;
+	display: none;
 }
 
 .contentBody img {
-    max-width: 100%;;
+	max-width: 100%;;
 }
 
 .contentContainer .playBtnContainer {
-    text-align: center;
+	text-align: center;
 }
 
 .contentContainer .playBtn {
-    width: 27%;
-    height: 11%;
-    border: none;
-    color: white;
-    font-size: 24px;
-    font-weight: bold;
-    margin-top: 100px;
-    margin-bottom: 10px;
-    background-color: var(--red);
+	width: 27%;
+	height: 11%;
+	border: none;
+	color: white;
+	font-size: 24px;
+	font-weight: bold;
+	margin-top: 100px;
+	margin-bottom: 10px;
+	background-color: var(--red);
 }
 
 .contentContainer #nsMain .playBtn {
-    background-color: var(--blue);
+	background-color: var(--blue);
 }
 
 a {
-    color: var(--red);
-    text-decoration: none;
-    transition: filter 0.2s ease-in;
+	color: var(--red);
+	text-decoration: none;
+	transition: filter 0.2s ease-in;
 }
 
 a:hover {
@@ -200,36 +200,36 @@ a:hover {
 }
 
 #nsContent .contentMenu {
-    margin-bottom: 0;
+	margin-bottom: 0;
 }
 
 #nsContent .contentBody img {
-    transform: scale(0.85);
+	transform: scale(0.85);
 }
 
 #nsRelease, #vpReleaseNotes {
-    flex-direction: column;
-    height: 80%;
-    overflow-y: auto;
+	flex-direction: column;
+	height: 80%;
+	overflow-y: auto;
 }
 
 .inline * {
-    display: inline-block;
+	display: inline-block;
 }
 
 #vpMain {
-    text-align: center;
-    margin-top: 140px;
+	text-align: center;
+	margin-top: 140px;
 }
 
 #vpMain img {
-    width: 20%;
+	width: 20%;
 }
 
 #vpVersion {
-    font-size: 16px;
+	font-size: 16px;
 }
 
 .simplebar-scrollbar:before {
-    background: var(--red) !important;
+	background: var(--red) !important;
 }

@@ -35,10 +35,9 @@ if (fs.existsSync("viper.json")) {
 function exit() {ipcRenderer.send("exit")}
 function update() {ipcRenderer.send("update")}
 
-/**
- * Reports to the main thread about game path status.
- * @param {boolean} value is game path loaded
- */
+// Reports to the main process about game path status.
+// @param {boolean} value is game path loaded
+
 function setpath(value = false) {
 	ipcRenderer.send("setpath", value);
 }
@@ -60,10 +59,10 @@ function setButtons(state) {
 }
 
 ipcRenderer.on('ns-update-event', (_, key) => {
-	document.getElementById('update').innerText = `(${lang(key)})`;
+	document.getElementById("update").innerText = `(${lang(key)})`;
 	console.log(key);
 	switch(key) {
-		case 'cli.update.uptodate.short':
+		case "cli.update.uptodate.short":
 			setButtons(true);
 			break;
 		default:
@@ -78,9 +77,9 @@ ipcRenderer.on("newpath", (event, newpath) => {
 
 ipcRenderer.on("log", (event, msg) => {log(msg)})
 ipcRenderer.on("version", (event, versions) => {
-	document.getElementById('vpversion').innerText = versions.vp;
-	document.getElementById('nsversion').innerText = versions.ns;
-	document.getElementById('ttf2Version').innerText = versions.ttf2;
+	document.getElementById("vpversion").innerText = versions.vp;
+	document.getElementById("nsversion").innerText = versions.ns;
+	document.getElementById("ttf2Version").innerText = versions.ttf2;
 }); ipcRenderer.send("getversion");
 
 ipcRenderer.on("updateavailable", () => {
@@ -96,9 +95,9 @@ ipcRenderer.on("nopathselected", () => {
 
 setlang();
 
-document.body.addEventListener('click', event => {
-	if (event.target.tagName.toLowerCase() === 'a' && event.target.protocol != 'file:') {
-	  event.preventDefault();
-	  shell.openExternal(event.target.href);
+document.body.addEventListener("click", event => {
+	if (event.target.tagName.toLowerCase() === "a" && event.target.protocol != "file:") {
+		event.preventDefault();
+		shell.openExternal(event.target.href);
 	}
-  });
+});
