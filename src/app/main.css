@@ -149,6 +149,7 @@ img {
 	margin-bottom: 0;
 	justify-content: center;
 	margin-top: var(--padding);
+	align-items: center;
 }
 
 .contentBody > div {
@@ -161,6 +162,7 @@ img {
 }
 
 .contentMenu li {
+	text-align: center;
 	opacity: 0.6;
 	margin: 0 26px;
 	cursor: pointer;
