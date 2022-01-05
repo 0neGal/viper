@@ -21,6 +21,11 @@ function _getRequestsCache() {
     }
 }
 
+/**
+ * Returns latest Northstar version available from GitHub releases.
+ * If there's no cache result for this request, or if cache exists but is old, refreshes
+ * cache with new data.
+ */
 async function getLatestNsVersion() {
     let cache = _getRequestsCache();
     
@@ -39,7 +44,11 @@ async function getLatestNsVersion() {
     }
 }
 
-// should always be called after getLatestNsVersion
+/**
+ * Returns the download link to latest Northstar version.
+ * Should always be called after getLatestNsVersion, as it refreshes 
+ * cache data (if needed).
+ */
 function getLatestNsVersionLink() {
     const cache = _getRequestsCache();
     return cache['nsLatest']['body'].assets[0].browser_download_url;
