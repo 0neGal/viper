@@ -93,12 +93,12 @@ async function update() {
 	} else {
 		if (version != "unknown") {
 			console.log(lang("cli.update.current"), version);
-		}; console.log(lang("cli.update.downloading") + ":", tag);
+		}; console.log(lang("cli.update.downloading") + ":", latestAvailableVersion);
 
 		winLog(lang("gui.update.downloading"));
 	}
 
-	https.get(body.assets[0].browser_download_url, (res) => {
+	https.get(requests.getLatestNsVersionLink(), (res) => {
 		let stream = fs.createWriteStream(settings.zip);
 		res.pipe(stream);
 
@@ -114,7 +114,7 @@ async function update() {
 			console.log(lang("cli.update.downloaddone"));
 			fs.createReadStream(settings.zip).pipe(unzip.Extract({path: settings.gamepath}))
 			.on("finish", () => {
-				fs.writeFileSync(path.join(settings.gamepath, "ns_version.txt"), tag);
+				fs.writeFileSync(path.join(settings.gamepath, "ns_version.txt"), latestAvailableVersion);
 				ipcMain.emit("getversion");
 
 				for (let i = 0; i < settings.excludes.length; i++) {
