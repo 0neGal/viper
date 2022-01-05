@@ -1,7 +1,3 @@
-const vpContent = document.getElementById("vpContent");
-const nsContent = document.getElementById("nsContent");
-const ttfContent = document.getElementById("ttfContent");
-const bgHolder = document.getElementById("bgHolder");
 const markdownConverter = new Markdown.Converter();
 
 function displayContent (gameId) {
@@ -57,16 +53,6 @@ async function loadNsReleasesText() {
 loadNsReleasesText();
 
 
-const vpMainBtn = document.getElementById("vpMainBtn");
-const vpReleaseBtn = document.getElementById("vpReleaseBtn");
-const vpInfoBtn = document.getElementById("vpInfoBtn");
-const vpCreditsBtn = document.getElementById("vpCreditsBtn");
-
-const vpMainSection = document.getElementById("vpMain");
-const vpReleaseNotes = document.getElementById("vpReleaseNotes");
-const vpInfo = document.getElementById("vpInfo");
-const vpCredits = document.getElementById("vpCredits");
-
 function showVpSection(section) {
     if (!["main", "release", "info", "credits"].includes(section)) throw new Error("unknown vp section");
     vpMainBtn.removeAttribute("active");
@@ -74,7 +60,7 @@ function showVpSection(section) {
     vpInfoBtn.removeAttribute("active");
     vpCreditsBtn.removeAttribute("active");
 
-    vpMainSection.style.display = "none";
+    vpMain.style.display = "none";
     vpReleaseNotes.style.display = "none";
     vpCredits.style.display = "none";
     vpInfo.style.display = "none";
@@ -98,15 +84,6 @@ function showVpSection(section) {
             break;
     }
 }
-
-
-const nsMainBtn = document.getElementById("nsMainBtn");
-const nsModsBtn = document.getElementById("nsModsBtn");
-const nsReleaseBtn = document.getElementById("nsReleaseBtn");
-
-const nsMods = document.getElementById("nsMods");
-const nsMain = document.getElementById("nsMain");
-const nsRelease = document.getElementById("nsRelease");
 
 function showNsSection(section) {
     if (!["main", "release", "mods"].includes(section)) throw new Error("unknown ns section");
