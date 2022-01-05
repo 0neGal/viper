@@ -45,7 +45,7 @@
 	"general.missingpath": "Le chemin du client n'est pas défini !",
 
 	"viper.menu.main": "Viper",
-	"viper.menu.release": "Notes de mises à jour",
+	"viper.menu.release": "Notes de<br>mises à jour",
 	"viper.menu.info": "Informations",
 	"viper.menu.credits": "Remerciements",
 
