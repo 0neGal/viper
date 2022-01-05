@@ -8,6 +8,20 @@
 	--blue: #81A1C1;
 }
 
+::-webkit-scrollbar {
+    width: 8px;
+}
+ 
+::-webkit-scrollbar-track {
+    border-radius: 10px;
+	background: transparent;
+}
+ 
+::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+	background: var(--red);
+}
+
 body {
     margin: 0;
     overflow: hidden;
