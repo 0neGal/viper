@@ -29,7 +29,7 @@ async function loadVpReleasesText() {
     let content = "";
 
     for (const release of response) {
-        content += "# " + release.tag_name + "\n\n"
+        content += "# " + release.name + "\n\n"
             + release.body.replaceAll("\r\n", "\n") + "\n\n\n";
     }
 
@@ -42,8 +42,8 @@ async function loadNsReleasesText() {
     const response = await (await fetch("https://api.github.com/repos/R2Northstar/Northstar/releases")).json();
     let content = "";
 
-    for (const release of response) {
-        content += "# " + release.tag_name + "\n\n"
+    for (let release of response) {
+        content += "# " + release.name + "\n\n"
             + release.body.replaceAll("\r\n", "<br>") + "\n\n\n";
     }
 
