@@ -22,6 +22,10 @@
 	background: var(--red);
 }
 
+.playBtn, .gamesContainer button {
+	cursor: pointer;
+}
+
 body {
 	margin: 0;
 	overflow: hidden;
@@ -67,11 +71,12 @@ img {
 
 /* nav bar buttons */
 .gamesContainer button {
+	background-size: 90%;
 	background-position: center;
 	background-repeat: no-repeat;
-	background-size: 90%;
 
 	border: none;
+	transition: 0.3s ease-in-out;
 	background-color: transparent;
 
 
@@ -187,8 +192,13 @@ img {
 	background-color: var(--red);
 }
 
-.contentContainer .playBtn:active {opacity: 0.7}
-.contentContainer .playBtn:hover {transform: scale(1.02)}
+.contentContainer .playBtn:hover, .gamesContainer button:hover {
+	transform: scale(1.02)
+}
+
+.contentContainer .playBtn:active, .gamesContainer button:active {
+	opacity: 0.7;transform: scale(0.98);
+}
 
 .contentContainer #nsMain .playBtn {
 	background-color: var(--blue);
