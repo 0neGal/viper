@@ -10,7 +10,6 @@ const lang = require("./lang");
 const requests = require('./requests');
 
 const unzip = require("unzipper");
-const request = require("request");
 const exec = require("child_process").spawn;
 const { https } = require("follow-redirects");
 
