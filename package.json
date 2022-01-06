@@ -48,7 +48,6 @@
 	},
 	"homepage": "https://github.com/0neGal/viper#readme",
 	"dependencies": {
-		"electron-fetch": "^1.7.4",
 		"electron-updater": "^4.6.1",
 		"follow-redirects": "^1.14.6",
 		"marked-man": "^0.7.0",
