@@ -2,6 +2,7 @@ const { app } = require("electron");
 const path = require("path");
 const fs = require("fs");
 const fetch = require('electron-fetch').default
+const { https } = require("follow-redirects");
 
 
 // all requests results are stored in this file
@@ -28,21 +29,40 @@ function _getRequestsCache() {
  * cache with new data.
  */
 async function getLatestNsVersion() {
-    let cache = _getRequestsCache();
+    return new Promise((resolve, reject) => {
+        let cache = _getRequestsCache();
     
-    if (cache[NORTHSTAR_LATEST_RELEASE_KEY] && (Date.now() - cache[NORTHSTAR_LATEST_RELEASE_KEY]['time']) < 5 * 60 * 1000) {
-        console.log(`returning ${NORTHSTAR_LATEST_RELEASE_KEY} data from cache`);
-        return cache[NORTHSTAR_LATEST_RELEASE_KEY]['body']['tag_name'];
-    } else {
-        const response = await fetch("https://api.github.com/repos/R2Northstar/Northstar/releases/latest");
+        if (cache[NORTHSTAR_LATEST_RELEASE_KEY] && (Date.now() - cache[NORTHSTAR_LATEST_RELEASE_KEY]['time']) < 5 * 60 * 1000) {
+            console.log(`returning ${NORTHSTAR_LATEST_RELEASE_KEY} data from cache`);
+            resolve( cache[NORTHSTAR_LATEST_RELEASE_KEY]['body']['tag_name'] );
+        } else {
+            https.get({
+                host: 'api.github.com',
+                port: 443,
+                path: '/repos/R2Northstar/Northstar/releases/latest',
+                method: 'GET',
+                headers: { 'User-Agent': "viper" }
+            }, 
+            
+            response => {
+                response.setEncoding('utf8');
+                let responseData = '';
 
-        cache[NORTHSTAR_LATEST_RELEASE_KEY] = {
-            'time': Date.now(),
-            'body': await response.json()
-        };
-        _saveCache(cache);
-        return cache[NORTHSTAR_LATEST_RELEASE_KEY]['body']['tag_name'];
-    }
+                response.on('data', data => {
+                    responseData += data;
+                });
+
+                response.on('end', _ => {                    
+                    cache[NORTHSTAR_LATEST_RELEASE_KEY] = {
+                        'time': Date.now(),
+                        'body': JSON.parse(responseData)
+                    };
+                    _saveCache(cache);
+                    resolve( cache[NORTHSTAR_LATEST_RELEASE_KEY]['body']['tag_name'] );
+                });
+            });
+        }
+    });
 }
 
 /**
