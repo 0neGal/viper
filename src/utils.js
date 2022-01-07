@@ -7,7 +7,7 @@ const events = new Emitter();
 
 const cli = require("./cli");
 const lang = require("./lang");
-const requests = require('./requests');
+const requests = require("./requests");
 
 const unzip = require("unzipper");
 const exec = require("child_process").spawn;
