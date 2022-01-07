@@ -93,6 +93,11 @@ ipcRenderer.on("nopathselected", () => {
 	exit();
 });
 
+ipcRenderer.on("wrongpath", () => {
+	alert(lang("gui.gamepath.wrong"));
+	setpath(false);
+});
+
 setlang();
 
 document.body.addEventListener("click", event => {
