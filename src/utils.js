@@ -7,9 +7,9 @@ const events = new Emitter();
 
 const cli = require("./cli");
 const lang = require("./lang");
+const requests = require("./requests");
 
 const unzip = require("unzipper");
-const request = require("request");
 const exec = require("child_process").spawn;
 const { https } = require("follow-redirects");
 
@@ -77,7 +77,7 @@ function getNSVersion() {
 	}
 }
 
-function update() {
+async function update() {
 	for (let i = 0; i < settings.excludes.length; i++) {
 		let exclude = path.join(settings.gamepath + "/" + settings.excludes[i]);
 		if (fs.existsSync(exclude)) {
@@ -89,59 +89,53 @@ function update() {
 	console.log(lang("cli.update.checking"));
 	var version = getNSVersion();
 
-	request({
-		json: true,
-		headers: {"User-Agent": "Viper"},
-		url: "https://api.github.com/repos/R2Northstar/Northstar/releases/latest",
-	}, (error, response, body) => {
-		var tag = body["tag_name"];
+	const latestAvailableVersion = await requests.getLatestNsVersion();
 
-		if (version === tag) {
-			ipcMain.emit("ns-updated");
-			console.log(lang("cli.update.uptodate"), version);
+	if (version === latestAvailableVersion) {
+		ipcMain.emit("ns-updated");
+		console.log(lang("cli.update.uptodate"), version);
 
-			winLog(lang("gui.update.uptodate"));
-			return;
-		} else {
-			if (version != "unknown") {
-				console.log(lang("cli.update.current"), version);
-			}; console.log(lang("cli.update.downloading") + ":", tag);
+		winLog(lang("gui.update.uptodate"));
+		return;
+	} else {
+		if (version != "unknown") {
+			console.log(lang("cli.update.current"), version);
+		}; console.log(lang("cli.update.downloading") + ":", latestAvailableVersion);
 
-			winLog(lang("gui.update.downloading"));
-		}
+		winLog(lang("gui.update.downloading"));
+	}
 
-		https.get(body.assets[0].browser_download_url, (res) => {
-			let stream = fs.createWriteStream(settings.zip);
-			res.pipe(stream);
+	https.get(requests.getLatestNsVersionLink(), (res) => {
+		let stream = fs.createWriteStream(settings.zip);
+		res.pipe(stream);
 
-			let received = 0;
-			res.on("data", (chunk) => {
-				received += chunk.length;
-				winLog(lang("gui.update.downloading") + " " + (received / 1024 / 1024).toFixed(1) + "mb");
-			})
+		let received = 0;
+		res.on("data", (chunk) => {
+			received += chunk.length;
+			winLog(lang("gui.update.downloading") + " " + (received / 1024 / 1024).toFixed(1) + "mb");
+		})
 
-			stream.on("finish", () => {
-				stream.close();
-				winLog(lang("gui.update.extracting"));
-				console.log(lang("cli.update.downloaddone"));
-				fs.createReadStream(settings.zip).pipe(unzip.Extract({path: settings.gamepath}))
-				.on("finish", () => {
-					fs.writeFileSync(path.join(settings.gamepath, "ns_version.txt"), tag);
-					ipcMain.emit("getversion");
+		stream.on("finish", () => {
+			stream.close();
+			winLog(lang("gui.update.extracting"));
+			console.log(lang("cli.update.downloaddone"));
+			fs.createReadStream(settings.zip).pipe(unzip.Extract({path: settings.gamepath}))
+			.on("finish", () => {
+				fs.writeFileSync(path.join(settings.gamepath, "ns_version.txt"), latestAvailableVersion);
+				ipcMain.emit("getversion");
 
-					for (let i = 0; i < settings.excludes.length; i++) {
-						let exclude = path.join(settings.gamepath + "/" + settings.excludes[i]);
-						if (fs.existsSync(exclude + ".excluded")) {
-							fs.renameSync(exclude + ".excluded", exclude)
-						}
+				for (let i = 0; i < settings.excludes.length; i++) {
+					let exclude = path.join(settings.gamepath + "/" + settings.excludes[i]);
+					if (fs.existsSync(exclude + ".excluded")) {
+						fs.renameSync(exclude + ".excluded", exclude)
 					}
+				}
 
-					ipcMain.emit("ns-updated");
-					winLog(lang("gui.update.finished"));
-					console.log(lang("cli.update.finished"));
-					cli.exit();
-				});
-			})
+				ipcMain.emit("ns-updated");
+				winLog(lang("gui.update.finished"));
+				console.log(lang("cli.update.finished"));
+				cli.exit();
+			});
 		})
 	})
 }
