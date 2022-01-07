@@ -37,6 +37,7 @@
 
 	"gui.selectpath": "Please select the path!",
 	"gui.gamepath.must": "The game path must be set to start Viper.",
+	"gui.gamepath.wrong": "This folder is not a valid game path.",
 
 
 	"general.launching": "Launching",

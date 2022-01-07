@@ -42,6 +42,11 @@ function setpath(win) {
 				ipcMain.emit("newpath", null, false);
 				return;
 			}
+			if (! fs.existsSync(path.join(res.filePaths[0], "Titanfall2.exe"))) {
+				ipcMain.emit("wrongpath");
+				return;
+			}
+
 			settings.gamepath = res.filePaths[0];
 			settings.zip = path.join(settings.gamepath + "/northstar.zip");
 			saveSettings();
