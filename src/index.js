@@ -104,3 +104,6 @@ if (cli.hasArgs()) {
 ipcMain.on("get_ns_notes", async _ => {
 	win.webContents.send("ns_notes", await requests.getNsReleaseNotes());
 });
+ipcMain.on("get_vp_notes", async _ => {
+	win.webContents.send("vp_notes", await requests.getVpReleaseNotes());
+});

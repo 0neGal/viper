@@ -11,8 +11,8 @@ function page(page) {
 	bgHolder.setAttribute("bg", page);
 }; page(0)
 
-async function loadVpReleases() {
-	const response = await (await fetch("https://api.github.com/repos/0negal/viper/releases")).json();
+
+ipcRenderer.on("vp_notes", (event, response) => {
 	let content = "";
 
 	for (const release of response) {
@@ -21,6 +21,9 @@ async function loadVpReleases() {
 	}
 
 	vpReleaseNotes.innerHTML = markdownConverter.makeHtml(content);
+});
+async function loadVpReleases() {
+	ipcRenderer.send("get_vp_notes");	
 }; loadVpReleases();
 
 
