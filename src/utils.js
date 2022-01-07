@@ -58,8 +58,11 @@ function setpath(win) {
 	cli.exit();
 }
 
+/**
+ * A game path is valid if it contains "Titanfall2.exe" file.
+ */
 function checkGamePath(gamepath) {
-	return false;
+	return fs.existsSync(path.join(gamepath, "Titanfall2.exe"));
 }
 
 function saveSettings() {
