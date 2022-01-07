@@ -5,7 +5,7 @@ const { https } = require("follow-redirects");
 
 
 // all requests results are stored in this file
-const cachePath = path.join(app.getPath("appData"), "requests.json");
+const cachePath = path.join(app.getPath("cache"), "requests.json");
 const NORTHSTAR_LATEST_RELEASE_KEY = "nsLatestRelease";
 
 
