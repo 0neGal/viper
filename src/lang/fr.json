@@ -37,6 +37,7 @@
 
 	"gui.selectpath": "Veuillez sélectionner le dossier où se trouve le client Titanfall 2.",
 	"gui.gamepath.must": "Vous devez sélectionner le chemin du dossier du jeu Titanfall 2 pour pouvoir lancer Viper.",
+	"gui.gamepath.wrong": "Ce dossier ne contient pas le jeu Titanfall 2, et n'est donc pas valide.",
 
 
 	"general.launching": "Lancement",

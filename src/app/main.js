@@ -84,7 +84,7 @@ ipcRenderer.on("nopathselected", () => {
 	exit();
 });
 ipcRenderer.on("wrongpath", () => {
-	alert("wrong path bro");
+	alert(lang("gui.gamepath.wrong"));
 });
 
 setlang();
