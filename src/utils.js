@@ -42,6 +42,10 @@ function setpath(win) {
 				ipcMain.emit("newpath", null, false);
 				return;
 			}
+			if (!checkGamePath(res.filePaths[0])) {
+				ipcMain.emit("wrongpath");
+				return;
+			}
 			settings.gamepath = res.filePaths[0];
 			settings.zip = path.join(settings.gamepath + "/northstar.zip");
 			saveSettings();
@@ -52,6 +56,10 @@ function setpath(win) {
 
 	fs.writeFileSync(app.getPath("appData") + "/viper.json", JSON.stringify(settings));
 	cli.exit();
+}
+
+function checkGamePath(gamepath) {
+	return false;
 }
 
 function saveSettings() {

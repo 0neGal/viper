@@ -73,6 +73,7 @@ ipcMain.on("newpath", (event, newpath) => {
 		}
 	}
 });
+ipcMain.on("wrongpath", _ => win.webContents.send("wrongpath"));
 
 ipcMain.on("getversion", () => {
 	win.webContents.send("version", {
