@@ -7,6 +7,7 @@ const { https } = require("follow-redirects");
 // all requests results are stored in this file
 const cachePath = path.join(app.getPath("cache"), "requests.json");
 const NORTHSTAR_LATEST_RELEASE_KEY = "nsLatestRelease";
+const NORTHSTAR_RELEASE_NOTES_KEY = "nsReleaseNotes";
 
 
 function _saveCache(data) {
@@ -70,8 +71,45 @@ function getLatestNsVersionLink() {
     return cache[NORTHSTAR_LATEST_RELEASE_KEY]["body"].assets[0].browser_download_url;
 }
 
+async function getNsReleaseNotes() {
+    return new Promise(resolve => {
+        let cache = _getRequestsCache();
+
+        if (cache[NORTHSTAR_RELEASE_NOTES_KEY] && (Date.now() - cache[NORTHSTAR_RELEASE_NOTES_KEY]["time"]) < 5 * 60 * 1000) {
+            console.log(`returning ${NORTHSTAR_RELEASE_NOTES_KEY} data from cache`);
+            resolve( cache[NORTHSTAR_RELEASE_NOTES_KEY]["body"] );
+        } else {
+            https.get({
+                host: "api.github.com",
+                port: 443,
+                path: "/repos/R2Northstar/Northstar/releases",
+                method: "GET",
+                headers: { "User-Agent": "viper" }
+            }, 
+            
+            response => {
+                response.setEncoding("utf8");
+                let responseData = "";
+
+                response.on("data", data => {
+                    responseData += data;
+                });
+
+                response.on("end", _ => {                    
+                    cache[NORTHSTAR_RELEASE_NOTES_KEY] = {
+                        "time": Date.now(),
+                        "body": JSON.parse(responseData)
+                    };
+                    _saveCache(cache);
+                    resolve( cache[NORTHSTAR_RELEASE_NOTES_KEY]["body"] );
+                });
+            });
+        }
+    });
+}
 
 module.exports = {
     getLatestNsVersion, 
-    getLatestNsVersionLink
+    getLatestNsVersionLink,
+    getNsReleaseNotes
 };

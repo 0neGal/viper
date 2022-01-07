@@ -23,8 +23,8 @@ async function loadVpReleases() {
 	vpReleaseNotes.innerHTML = markdownConverter.makeHtml(content);
 }; loadVpReleases();
 
-async function loadNsReleases() {
-	const response = await (await fetch("https://api.github.com/repos/R2Northstar/Northstar/releases")).json();
+
+ipcRenderer.on("ns_notes", (event, response) => {
 	let content = "";
 
 	for (let release of response) {
@@ -33,6 +33,10 @@ async function loadNsReleases() {
 	}
 
 	nsRelease.innerHTML = markdownConverter.makeHtml(content);
+});
+
+async function loadNsReleases() {
+	ipcRenderer.send("get_ns_notes");
 }; loadNsReleases();
 
 

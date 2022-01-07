@@ -8,6 +8,7 @@ const events = new Emitter();
 
 const utils = require("./utils");
 const cli = require("./cli");
+const requests = require("./requests");
 
 function start() {
 	win = new BrowserWindow({
@@ -99,3 +100,7 @@ if (cli.hasArgs()) {
 		start();
 	})
 }
+
+ipcMain.on("get_ns_notes", async _ => {
+	win.webContents.send("ns_notes", await requests.getNsReleaseNotes());
+});
