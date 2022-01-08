@@ -59,7 +59,7 @@ ipcMain.on("update", (event) => {utils.update()})
 ipcMain.on("setpathcli", (event) => {utils.setpath()});
 ipcMain.on("setpath", (event, value) => {
 	if (!value) {
-		utils.setpath(win)
+		utils.setpath(win);
 	} else if (!win.isVisible()) {
 		win.show();
 	}
@@ -68,6 +68,7 @@ ipcMain.on("newpath", (event, newpath) => {
 	if (newpath === false && !win.isVisible()) {
 		win.webContents.send("nopathselected");
 	} else {
+		_sendVersionsInfo();
 		if (!win.isVisible()) {
 			win.show();
 		}
@@ -76,12 +77,14 @@ ipcMain.on("newpath", (event, newpath) => {
 	win.webContents.send("wrongpath");
 });
 
-ipcMain.on("getversion", () => {
+function _sendVersionsInfo() {
 	win.webContents.send("version", {
 		ns: utils.getNSVersion(),
 		vp: "v" + require("../package.json").version
 	});
-});
+}
+
+ipcMain.on("getversion", () => _sendVersionsInfo());
 
 ipcMain.on("versioncli", () => {
 	console.log("Viper: v" + require("../package.json").version);
