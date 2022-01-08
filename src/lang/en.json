@@ -6,6 +6,9 @@
 	"cli.help.update": "updates Northstar from your set game path",
 	"cli.help.setpath": "sets your game path",
 	"cli.help.updatevp": "updates Viper itself, if supported.",
+	"cli.help.installmod": "installs a mod, folder or zip",
+	"cli.help.removemod": "removes a mod",
+	"cli.help.togglemod": "toggles a mod",
 
 	"cli.setpath.noarg": "No argument provided for --setpath",
 
@@ -18,12 +21,36 @@
 
 	"cli.launch.linuxerror": "Launching the game is not currently supported on Linux",
 
+	"cli.mods.failed": "Failed to install mod!",
+	"cli.mods.removed": "Successfully removed mod!",
+	"cli.mods.toggled": "Successfully toggled mod",
+	"cli.mods.installed": "Successfully installed mod!",
+	"cli.mods.cantfind": "Can't find a mod with that name!",
+	"cli.mods.notamod": "Selected folder/file is not a mod",
+	"cli.mods.toggledall": "Successfully toggled all mods",
+	"cli.mods.improperjson": "%s's mod.json has formatting errors",
+
 	"gui.welcome": "Welcome to Viper!",
 	"gui.versions.viper": "Viper version",
 	"gui.versions.northstar": "Northstar version",
 	"gui.exit": "Exit",
 	"gui.update": "Update",
 	"gui.setpath": "Game Path",
+
+	"gui.mods": "Mods",
+	"gui.mods.count": "Mods Installed:",
+	"gui.mods.disabledtag": "Disabled",
+	"gui.mods.install": "Install Mod",
+	"gui.mods.toggle": "Toggle Mod",
+	"gui.mods.toggleall": "Toggle All",
+	"gui.mods.remove": "Remove Mod",
+	"gui.mods.removeall": "Remove All",
+	"gui.mods.nothingselected": "You've not selected a mod.",
+	"gui.mods.removeall.confirm": "Removing all mods will usually require you to reinstall Northstar, are you sure?",
+	"gui.mods.notamod": "Not a mod!",
+	"gui.mods.extracting": "Extracting mod...",
+	"gui.mods.installing": "Installing mod...",
+	"gui.mods.installedmod": "Installed mod!",
 
 	"gui.update.downloading": "Downloading...",
 	"gui.update.extracting": "Extracting update...",
@@ -41,5 +68,9 @@
 
 
 	"general.launching": "Launching",
-	"general.missingpath": "Game path is not set!"
+	"general.mods.enabled": "Enabled mods:",
+	"general.mods.disabled": "Disabled mods:",
+	"general.mods.installed": "Installed mods:",
+	"general.missingpath": "Game path is not set!",
+	"general.notinstalled": "Northstar is not installed!"
 }
