@@ -242,6 +242,7 @@ const mods = {
 			winLog(lang("gui.mods.notamod"))
 			console.log("error: " + lang("cli.mods.notamod"))
 			cli.exit(1);
+			return false;
 		}
 
 		let installed = () => {
@@ -250,7 +251,10 @@ const mods = {
 
 			winLog(lang("gui.mods.installedmod"))
 			ipcMain.emit("guigetmods");
+			return true;
 		}
+
+		if (! fs.existsSync(mod)) {return notamod()}
 
 		if (fs.statSync(mod).isDirectory()) {
 			winLog(lang("gui.mods.installing"))
@@ -263,8 +267,7 @@ const mods = {
 					utimes: true,
 				});
 
-				installed();
-				return true;
+				return installed();
 			} else {
 				files = fs.readdirSync(mod);
 
@@ -296,9 +299,9 @@ const mods = {
 				.on("finish", () => {
 					if (mods.install(cache)) {
 						installed();
-					} else {notamod();return false}
+					} else {return notamod()}
 				});
-			}catch(err) {notamod();return false}
+			}catch(err) {return notamod()}
 		}
 	},
 	remove: (mod) => {
