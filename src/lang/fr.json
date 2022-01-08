@@ -18,12 +18,30 @@
 
 	"cli.launch.linuxerror": "Le support du jeu sur Linux n'est pas encore implémenté.",
 
+	"cli.mods.notamod": "Le fichier/dossier sélectionné n'est pas un mod.",
+	"cli.mods.improperjson": "Le mod.json de %s présente des erreurs de formatage.",
+
 	"gui.welcome": "Bienvenue sur Viper !",
 	"gui.versions.viper": "Version de Viper",
 	"gui.versions.northstar": "Version de Northstar",
 	"gui.exit": "Fermer",
 	"gui.update": "Mise à jour",
 	"gui.setpath": "Chemin du jeu",
+
+	"gui.mods": "Mods",
+	"gui.mods.count": "Mods installés :",
+	"gui.mods.disabledtag": "Désactivés",
+	"gui.mods.install": "Installer le mod",
+	"gui.mods.toggle": "Activer/désactiver le mod",
+	"gui.mods.toggleall": "Activer/désactiver tous les mods",
+	"gui.mods.remove": "Supprimer le mod",
+	"gui.mods.removeall": "Tout supprimer",
+	"gui.mods.nothingselected": "Aucun mod n'est sélectionné.",
+	"gui.mods.removeall.confirm": "Supprimer tous les mods vous forcera à réinstaller Northstar, souhaitez-vous faire cela ?",
+	"gui.mods.notamod": "Ceci n'est pas un mod !",
+	"gui.mods.extracting": "Extraction du mod...",
+	"gui.mods.installing": "Installation du mod...",
+	"gui.mods.installedmod": "Mod installé !",
 
 	"gui.update.downloading": "Téléchargement de la mise à jour...",
 	"gui.update.extracting": "Extraction des fichiers...",
@@ -41,5 +59,8 @@
 
 
 	"general.launching": "Lancement",
+	"general.mods.enabled": "Mods activés :",
+	"general.mods.disabled": "Mods désactivés :",
+	"general.mods.installed": "Mods installés :",
 	"general.missingpath": "Le chemin du client n'est pas défini !"
 }
