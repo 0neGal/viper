@@ -34,6 +34,24 @@ if (fs.existsSync("viper.json")) {
 	console.log(lang("general.missingpath"));
 }
 
+
+// auto-updates
+{
+	setInterval(async _ => {
+		const localVersion = getNSVersion();
+		const distantVersion = await requests.getLatestNsVersion();
+
+		if (localVersion !== distantVersion) {
+			console.log('Northstar update available');
+			update();
+		}
+	}, 
+	
+	// update checking interval must be bigger than cache validity duration
+	15 * 60 * 1000);
+}
+
+
 function setpath(win) {
 	if (! win) {
 		settings.gamepath = cli.param("setpath");
