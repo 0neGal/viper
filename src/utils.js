@@ -74,7 +74,7 @@ function getNSVersion() {
  * TODO This file is present on Origin install, should check if it's present with 
  * Steam install as well.
  */
-function getTtf2Version() {
+function getTF2Version() {
 	var versionFilePath = path.join(settings.gamepath, "gameversion.txt");
 	if (fs.existsSync(versionFilePath)) {
 		return fs.readFileSync(versionFilePath, "utf8");
@@ -200,7 +200,7 @@ module.exports = {
 	updatevp,
 	settings,
 	getNSVersion,
-	getTtf2Version,
+	getTF2Version,
 	setlang: (lang) => {
 		settings.lang = lang;
 		saveSettings();

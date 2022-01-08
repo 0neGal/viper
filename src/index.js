@@ -72,7 +72,7 @@ ipcMain.on("newpath", (event, newpath) => {
 ipcMain.on("getversion", () => {
 	win.webContents.send("version", {
 		ns: utils.getNSVersion(),
-		ttf2: utils.getTtf2Version(),
+		tf2: utils.getTF2Version(),
 		vp: "v" + require("../package.json").version
 	});
 });

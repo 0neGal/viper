@@ -63,8 +63,8 @@ img {
 }
 
 #bgHolder[bg="0"] {background-image: url("../assets/bg/viper.jpg")}
-#bgHolder[bg="1"] {background-image: url("../assets/bg/northstar.jpeg")}
-#bgHolder[bg="2"] {background-image: url("../assets/bg/ttf2.jpg")}
+#bgHolder[bg="1"] {background-image: url("../assets/bg/northstar.jpg")}
+#bgHolder[bg="2"] {background-image: url("../assets/bg/tf2.jpg")}
 
 .gamesContainer {
 	width: 10%;
@@ -118,7 +118,7 @@ img {
 
 #vpBtn {background-image: url("icons/viper.png")}
 #nsBtn {background-image: url("icons/northstar.png")}
-#ttfBtn {
+#tfBtn {
 	background-image: url("icons/titanfall2.png");
 	background-size: 69%; /* nice */
 }
