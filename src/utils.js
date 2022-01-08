@@ -35,15 +35,19 @@ if (fs.existsSync("viper.json")) {
 }
 
 
-// auto-updates
-{
+northstar_auto_updates: {
+	if (!settings.autoupdate) break northstar_auto_updates;
+
 	setInterval(async _ => {
 		const localVersion = getNSVersion();
 		const distantVersion = await requests.getLatestNsVersion();
+		console.log('Checking for Northstar updates...');
 
 		if (localVersion !== distantVersion) {
-			console.log('Northstar update available');
+			console.log('Northstar update available! Launching update process.');
 			update();
+		} else {
+			console.log('No Northstar update available.')
 		}
 	}, 
 	
