@@ -8,6 +8,7 @@ const events = new Emitter();
 
 const utils = require("./utils");
 const cli = require("./cli");
+const requests = require("./requests");
 
 function start() {
 	win = new BrowserWindow({
@@ -67,6 +68,8 @@ ipcMain.on("newpath", (event, newpath) => {
 			win.show();
 		}
 	}
+}); ipcMain.on("wrongpath", (event) => {
+	win.webContents.send("wrongpath");
 });
 
 ipcMain.on("getversion", () => {
@@ -99,3 +102,10 @@ if (cli.hasArgs()) {
 		start();
 	})
 }
+
+ipcMain.on("get_ns_notes", async _ => {
+	win.webContents.send("ns_notes", await requests.getNsReleaseNotes());
+});
+ipcMain.on("get_vp_notes", async _ => {
+	win.webContents.send("vp_notes", await requests.getVpReleaseNotes());
+});
