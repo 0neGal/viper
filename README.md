@@ -1,7 +1,7 @@
 <p align="center">
 	<img src="src/assets/icons/512x512.png" width="200px"><br><br>
 	<a href="https://github.com/0neGal/viper/projects/1">Overview</a> | 
-	<a href="https://github.com/0neGal/viper/issues">Releases</a>
+	<a href="https://github.com/0neGal/viper/releases">Releases</a>
 </p><br><br>
 
 ## What is Viper?
