@@ -134,8 +134,7 @@ async function update() {
 					winLog(lang("gui.update.finished"));
 					console.log(lang("cli.update.finished"));
 					cli.exit();
-				});
-			});
+			})
 		})
 	})
 }
