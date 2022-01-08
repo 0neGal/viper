@@ -6,6 +6,9 @@
 	"cli.help.update": "updates Northstar from your set game path",
 	"cli.help.setpath": "sets your game path",
 	"cli.help.updatevp": "updates Viper itself, if supported.",
+	"cli.help.installmod": "installs a mod, folder or zip",
+	"cli.help.removemod": "removes a mod",
+	"cli.help.togglemod": "toggles a mod",
 
 	"cli.setpath.noarg": "No argument provided for --setpath",
 
@@ -18,7 +21,13 @@
 
 	"cli.launch.linuxerror": "Launching the game is not currently supported on Linux",
 
+	"cli.mods.failed": "Failed to install mod!",
+	"cli.mods.removed": "Successfully removed mod!",
+	"cli.mods.toggled": "Successfully toggled mod",
+	"cli.mods.installed": "Successfully installed mod!",
+	"cli.mods.cantfind": "Can't find a mod with that name!",
 	"cli.mods.notamod": "Selected folder/file is not a mod",
+	"cli.mods.toggledall": "Successfully toggled all mods",
 	"cli.mods.improperjson": "%s's mod.json has formatting errors",
 
 	"gui.welcome": "Welcome to Viper!",

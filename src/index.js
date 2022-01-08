@@ -54,15 +54,20 @@ function start() {
 	ipcMain.on("updatenow", () => {
 		autoUpdater.quitAndInstall();
 	})
+}
 
-	ipcMain.on("removemod", (event, mod) => {utils.mods.remove(mod)})
-	ipcMain.on("togglemod", (event, mod) => {utils.mods.toggle(mod)})
-	ipcMain.on("installmod", () => {
+ipcMain.on("installmod", () => {
+	if (cli.hasArgs()) {
+		utils.mods.install(cli.param("installmod"))
+	} else {
 		dialog.showOpenDialog({properties: ["openFile"]}).then(res => {
 			utils.mods.install(res.filePaths[0]);
 		}).catch(err => {console.error(err)})
-	})
-}
+	}
+})
+
+ipcMain.on("removemod", (event, mod) => {utils.mods.remove(mod)})
+ipcMain.on("togglemod", (event, mod) => {utils.mods.toggle(mod)})
 
 ipcMain.on("launch", (event) => {utils.launch()})
 ipcMain.on("setlang", (event, lang) => {utils.setlang(lang)})
@@ -77,6 +82,7 @@ ipcMain.on("setpath", (event, value) => {
 		win.show();
 	}
 });
+
 ipcMain.on("newpath", (event, newpath) => {
 	if (newpath === false && !win.isVisible()) {
 		win.webContents.send("nopathselected");

@@ -16,7 +16,10 @@ function hasArgs() {
 		cli.hasSwitch("setpath") ||
 		cli.hasSwitch("version") ||
 		cli.hasSwitch("updatevp") ||
-		cli.hasSwitch("gamepath")) {
+		cli.hasSwitch("gamepath") ||
+		cli.hasSwitch("togglemod") ||
+		cli.hasSwitch("removemod") ||
+		cli.hasSwitch("installmod")) {
 		return true;
 	} else {return false}
 }
@@ -28,14 +31,18 @@ function exit(code) {
 async function init() {
 	if (cli.hasSwitch("help")) {
 	console.log(`options:
-  --help     ${lang("cli.help.help")}
-  --debug    ${lang("cli.help.debug")}
-  --version  ${lang("cli.help.version")}
+  --help       ${lang("cli.help.help")}
+  --debug      ${lang("cli.help.debug")}
+  --version    ${lang("cli.help.version")}
 
-  --cli      ${lang("cli.help.cli")}
-  --update   ${lang("cli.help.update")}
-  --updatevp ${lang("cli.help.updatevp")}
-  --setpath  ${lang("cli.help.setpath")}`)
+  --cli        ${lang("cli.help.cli")}
+  --update     ${lang("cli.help.update")}
+  --updatevp   ${lang("cli.help.updatevp")}
+  --setpath    ${lang("cli.help.setpath")}
+
+  --installmod ${lang("cli.help.installmod")}
+  --removemod  ${lang("cli.help.removemod")}
+  --togglemod  ${lang("cli.help.togglemod")}`)
 		// In the future --setpath should be able to understand
 		// relative paths, instead of just absolute ones.
 		exit();
@@ -63,6 +70,10 @@ async function init() {
 				break;
 		}
 	}
+
+	if (cli.hasSwitch("installmod")) {ipcMain.emit("installmod")}
+	if (cli.hasSwitch("removemod")) {ipcMain.emit("removemod", "", cli.getSwitchValue("removemod"))}
+	if (cli.hasSwitch("togglemod")) {ipcMain.emit("togglemod", "", cli.getSwitchValue("togglemod"))}
 
 	if (cli.hasSwitch("mods")) {ipcMain.emit("getmods")}
 }

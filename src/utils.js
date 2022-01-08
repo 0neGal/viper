@@ -245,7 +245,9 @@ const mods = {
 		}
 
 		let installed = () => {
+			console.log(lang("cli.mods.installed"));
 			cli.exit();
+
 			winLog(lang("gui.mods.installedmod"))
 			ipcMain.emit("guigetmods");
 		}
@@ -314,6 +316,12 @@ const mods = {
 		}
 
 		let modName = mods.get(mod).FolderName;
+		if (! modName) {
+			console.log("error: " + lang("cli.mods.cantfind"))
+			cli.exit(1);
+			return;
+		}
+
 		let modPath = path.join(modpath, modName);
 
 		if (mods.get(mod).Disabled) {
@@ -322,18 +330,22 @@ const mods = {
 
 		if (fs.statSync(modPath).isDirectory()) {
 			fs.rmSync(modPath, {recursive: true});
+			console.log(lang("cli.mods.removed"));
 			cli.exit();
 			ipcMain.emit("guigetmods");
 		} else {
 			cli.exit(1);
 		}
 	},
-	toggle: (mod) => {
+	toggle: (mod, fork) => {
 		if (mod == "allmods") {
 			let modlist = mods.list().all;
 			for (let i = 0; i < modlist.length; i++) {
-				mods.toggle(modlist[i].Name)
+				mods.toggle(modlist[i].Name, true)
 			}
+
+			console.log(lang("cli.mods.toggledall"));
+			cli.exit(0);
 			return
 		}
 
@@ -343,6 +355,12 @@ const mods = {
 		}
 
 		let modName = mods.get(mod).FolderName;
+		if (! modName) {
+			console.log("error: " + lang("cli.mods.cantfind"))
+			cli.exit(1);
+			return;
+		}
+
 		let modPath = path.join(modpath, modName);
 		let dest = path.join(disabled, modName);
 
@@ -352,6 +370,10 @@ const mods = {
 		}
 
 		fs.moveSync(modPath, dest)
+		if (! fork) {
+			console.log(lang("cli.mods.toggled"));
+			cli.exit();
+		}
 		ipcMain.emit("guigetmods");
 	}
 };
