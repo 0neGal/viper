@@ -1,7 +1,7 @@
 const fs = require("fs");
 
 const enLang = JSON.parse(fs.readFileSync(__dirname + `/lang/en.json`, "utf8"));
-let lang = "en";
+let lang = "";
 var langObj = {};
 
 
@@ -16,13 +16,16 @@ function _loadTranslation() {
 				lang = "en";
 			}
 		}
+	} else {
+		lang = "en";
 	}
 	langObj = JSON.parse(fs.readFileSync(__dirname + `/lang/${lang}.json`, "utf8"));
 }
 
 
 module.exports = (string) => {
-	_loadTranslation();
+	if (lang === "")
+		_loadTranslation();
 
 	if (langObj[string]) {
 		return langObj[string];
