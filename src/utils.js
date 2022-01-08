@@ -1,7 +1,7 @@
 const path = require("path");
 const fs = require("fs-extra");
 const copy = require("copy-dir");
-const { app, dialog, ipcMain } = require("electron");
+const { BrowserWindow, app, dialog, ipcMain } = require("electron");
 
 const Emitter = require("events");
 const events = new Emitter();
@@ -416,6 +416,17 @@ const mods = {
 	}
 };
 
+function getSysLang() {
+	app.setPath("userData", path.join(app.getPath("cache"), app.name));
+	new BrowserWindow({
+		show: false,
+		webPreferences: {
+			nodeIntegration: true,
+			contextIsolation: false,
+		},
+	}).loadURL("data:text/html;charset=utf-8,<script>require('electron').ipcRenderer.send('initlang', navigator.language);window.close()</script>");
+}
+
 module.exports = {
 	mods,
 	lang,
@@ -426,6 +437,7 @@ module.exports = {
 	updatevp,
 	settings,
 	getNSVersion,
+	getSysLang,
 	setlang: (lang) => {
 		settings.lang = lang;
 		saveSettings();

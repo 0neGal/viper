@@ -137,15 +137,17 @@ ipcMain.on("getmods", (event) => {
 
 process.chdir(app.getPath("appData"));
 
-if (cli.hasArgs()) {
-	if (cli.hasParam("updatevp")) {
-		utils.updatevp(true);
+app.on("ready", () => {
+	app.setPath("userData", path.join(app.getPath("cache"), app.name));
+
+	if (cli.hasArgs()) {
+		if (cli.hasParam("updatevp")) {
+			utils.updatevp(true);
+		} else {
+			cli.init();
+		}
 	} else {
-		cli.init();
-	}
-} else {
-	app.on("ready", () => {
-		app.setPath("userData", path.join(app.getPath("cache"), app.name));
 		start();
-	})
-}
+	}
+})
+
