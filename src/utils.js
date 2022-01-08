@@ -184,6 +184,13 @@ function winAlert(msg) {
 let modpath = path.join(settings.gamepath, "R2Northstar/mods");
 const mods = {
 	list: () => {
+		if (getNSVersion() == "unknown") {
+			winLog(lang("general.notinstalled"))
+			console.log("error: " + lang("general.notinstalled"))
+			cli.exit(1);
+			return false;
+		}
+
 		let mods = [];
 		let disabled = [];
 
@@ -227,6 +234,13 @@ const mods = {
 		};
 	},
 	get: (mod) => {
+		if (getNSVersion() == "unknown") {
+			winLog(lang("general.notinstalled"))
+			console.log("error: " + lang("general.notinstalled"))
+			cli.exit(1);
+			return false;
+		}
+
 		let list = mods.list().all;
 
 		for (let i = 0; i < list.length; i++) {
@@ -238,6 +252,13 @@ const mods = {
 		return false;
 	},
 	install: (mod) => {
+		if (getNSVersion() == "unknown") {
+			winLog(lang("general.notinstalled"))
+			console.log("error: " + lang("general.notinstalled"))
+			cli.exit(1);
+			return false;
+		}
+
 		let notamod = () => {
 			winLog(lang("gui.mods.notamod"))
 			console.log("error: " + lang("cli.mods.notamod"))
@@ -305,6 +326,13 @@ const mods = {
 		}
 	},
 	remove: (mod) => {
+		if (getNSVersion() == "unknown") {
+			winLog(lang("general.notinstalled"))
+			console.log("error: " + lang("general.notinstalled"))
+			cli.exit(1);
+			return false;
+		}
+
 		if (mod == "allmods") {
 			let modlist = mods.list().all;
 			for (let i = 0; i < modlist.length; i++) {
@@ -341,6 +369,13 @@ const mods = {
 		}
 	},
 	toggle: (mod, fork) => {
+		if (getNSVersion() == "unknown") {
+			winLog(lang("general.notinstalled"))
+			console.log("error: " + lang("general.notinstalled"))
+			cli.exit(1);
+			return false;
+		}
+
 		if (mod == "allmods") {
 			let modlist = mods.list().all;
 			for (let i = 0; i < modlist.length; i++) {
