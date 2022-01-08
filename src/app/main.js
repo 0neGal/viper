@@ -59,6 +59,57 @@ function setButtons(state) {
 	}
 }
 
+let lastselected = "";
+function select(entry) {
+	let entries = document.querySelectorAll("#modsdiv .mod .modtext");
+
+	for (let i = 0; i < entries.length; i++) {
+		if (entries[i].innerHTML == entry) {
+			lastselected = entry;
+			entries[i].parentElement.classList.add("selected");
+		} else {
+			entries[i].parentElement.classList.remove("selected");
+		}
+	}
+}
+
+function selected(all) {
+	let selected = "";
+	if (all) {
+		selected = "allmods"
+	} else {
+		selected = document.querySelector(".mod.selected .modtext");
+		if (selected != null) {
+			selected = selected.innerHTML;
+		} else {
+			alert(lang("gui.mods.nothingselected"));
+			return {
+				remove: () => {},
+				toggle: () => {},
+			}
+		}
+	}
+
+	return {
+		remove: () => {
+			if (selected == "allmods") {
+				if (! confirm(lang("gui.mods.removeall.confirm"))) {
+					return;
+				}
+			}
+
+			ipcRenderer.send("removemod", selected)
+		},
+		toggle: () => {
+			ipcRenderer.send("togglemod", selected)
+		}
+	}
+}
+
+function installmod() {
+	ipcRenderer.send("installmod")
+}
+
 ipcRenderer.on("ns-updated", () => {setButtons(true)})
 ipcRenderer.on("ns-updating", () => {setButtons(false)})
 
@@ -67,10 +118,39 @@ ipcRenderer.on("newpath", (event, newpath) => {
 })
 
 ipcRenderer.on("log", (event, msg) => {log(msg)})
+ipcRenderer.on("alert", (event, msg) => {alert(msg)})
+
+ipcRenderer.on("mods", (event, mods) => {
+	modcount.innerHTML = `${lang("gui.mods.count")} ${mods.all.length}`;
+	modsdiv.innerHTML = "";
+	
+	let newmod = (name, disabled) => {
+		if (disabled) {
+			disabled  = `<span class="disabled">${lang("gui.mods.disabledtag")}</span>`
+		} else {
+			disabled  = ""
+		}
+
+		modsdiv.innerHTML += `<div onclick="select('${name}')" class="mod"><span class="modtext">${name}</span>${disabled}</div>`;
+	}
+
+	for (let i = 0; i < mods.enabled.length; i++) {newmod(mods.enabled[i].Name)}
+	for (let i = 0; i < mods.disabled.length; i++) {newmod(mods.disabled[i].Name, " - Disabled")}
+
+	select(lastselected);
+})
 
 ipcRenderer.on("version", (event, versions) => {
 	vpversion.innerText = lang("gui.versions.viper") + ": " + versions.vp;
 	nsversion.innerText = lang("gui.versions.northstar") + ": " + versions.ns;
+
+	if (versions.ns == "unknown") {
+		let buttons = document.querySelectorAll(".modbtns button");
+
+		for (let i = 0; i < buttons.length; i++) {
+			buttons[i].disabled = true;
+		}
+	}
 }); ipcRenderer.send("getversion");
 
 ipcRenderer.on("updateavailable", () => {

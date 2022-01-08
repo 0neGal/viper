@@ -38,6 +38,12 @@ function start() {
 	ipcMain.on("ns-updated", () => {win.webContents.send("ns-updated")})
 	ipcMain.on("ns-updating", () => {win.webContents.send("ns-updating")})
 	ipcMain.on("winLog", (event, ...args) => {win.webContents.send("log", ...args)})
+	ipcMain.on("winAlert", (event, ...args) => {win.webContents.send("alert", ...args)})
+	ipcMain.on("guigetmods", (event, ...args) => {win.webContents.send("mods", utils.mods.list())})
+
+	win.webContents.once("dom-ready", () => {
+		win.webContents.send("mods", utils.mods.list());
+	});
 
 	if (utils.settings.autoupdate) {utils.updatevp(false)}
 
@@ -48,8 +54,20 @@ function start() {
 	ipcMain.on("updatenow", () => {
 		autoUpdater.quitAndInstall();
 	})
-
 }
+
+ipcMain.on("installmod", () => {
+	if (cli.hasArgs()) {
+		utils.mods.install(cli.param("installmod"))
+	} else {
+		dialog.showOpenDialog({properties: ["openFile"]}).then(res => {
+			utils.mods.install(res.filePaths[0]);
+		}).catch(err => {console.error(err)})
+	}
+})
+
+ipcMain.on("removemod", (event, mod) => {utils.mods.remove(mod)})
+ipcMain.on("togglemod", (event, mod) => {utils.mods.toggle(mod)})
 
 ipcMain.on("launch", (event) => {utils.launch()})
 ipcMain.on("setlang", (event, lang) => {utils.setlang(lang)})
@@ -64,6 +82,7 @@ ipcMain.on("setpath", (event, value) => {
 		win.show();
 	}
 });
+
 ipcMain.on("newpath", (event, newpath) => {
 	if (newpath === false && !win.isVisible()) {
 		win.webContents.send("nopathselected");
@@ -89,6 +108,28 @@ ipcMain.on("versioncli", () => {
 	console.log("Node: " + process.version);
 	console.log("Electron: v" + process.versions.electron);
 	cli.exit();
+})
+
+ipcMain.on("getmods", (event) => {
+	let mods = utils.mods.list();
+	if (mods.all.length > 0) {
+		console.log(`${utils.lang("general.mods.installed")} ${mods.all.length}`)
+		console.log(`${utils.lang("general.mods.enabled")} ${mods.enabled.length}`)
+		for (let i = 0; i < mods.enabled.length; i++) {
+			console.log(`  ${mods.enabled[i].Name} ${mods.enabled[i].Version}`)
+		}
+
+		if (mods.disabled.length > 0) {
+			console.log(`${utils.lang("general.mods.disabled")} ${mods.disabled.length}`)
+			for (let i = 0; i < mods.disabled.length; i++) {
+				console.log(`  ${mods.disabled[i].Name} ${mods.disabled[i].Version}`)
+			}
+		}
+		cli.exit(0);
+	} else {
+		console.log("No mods installed");
+		cli.exit(0);
+	}
 })
 
 process.chdir(app.getPath("appData"));

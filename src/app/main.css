@@ -1,15 +1,22 @@
 :root {
+	--padding: 15px;
 	--disabled: #656E7F;
-	--background: #4C515B;
 	--foreground: #DDE2EB;
+	--background: #4C515B;
+	--boxbackground: #666E7F;
 	--subforeground: #AFAFAF;
 	--btnforeground: var(--foreground);
+
+	--red: #C7777F;
+	--blue: #81A1C1;
+	--yellow: #ECD19A;
 }
 
 @media (prefers-color-scheme: light) {
 	:root {
 		--background: #FFFFFF;
 		--foreground: #4C566A;
+		--boxbackground: #EEF0F4;
 		--btnforeground: var(--background);
 	}
 }
@@ -18,6 +25,8 @@
 	font-family: "Roboto Mono";
 	src: url("roboto.ttf");
 }
+
+::-webkit-scrollbar {display: none}
 
 body, button, input {
 	font-size: 18px;
@@ -40,34 +49,56 @@ nobr {white-space: nowrap}
 
 .line {
 	display: flex;
-	margin-top: 15px;
+	margin-top: var(--padding);
+}
+
+#modsdiv {
+	padding: 1px;
+	height: 125px;
+	overflow-y: scroll;
+	border-radius: var(--padding);
+	background: var(--boxbackground);
+	margin: calc(var(--padding) / 3) var(--padding);
+}
+
+.mod {
+	margin: calc(var(--padding) / 3);
+	border-radius: calc(var(--padding) / 2) !important;
+}
+
+.mod.selected {background: var(--background)}
+
+.mod .disabled {
+    color: var(--red);
+    position: relative;
+    left: var(--padding);
 }
 
 .buttons {
 	text-align: right;
 	margin-left: auto;
 	user-select: none;
-	margin-right: 7px;
+	margin-right: calc(var(--padding) / 1.9);
 }
 
 .text {max-width: 38vw}
 .buttons {max-width: 55vw}
 
-button, .text {
+button, .text, .mod {
 	border: none;
 	outline: none;
-	padding: 5px 15px;
 	user-select: none;
 	border-radius: 50px;
 	transition: 0.2s ease-in-out;
+	padding: calc(var(--padding) / 3) var(--padding);
 }
 
 #welcome {padding: 0px}
 
 button {
-	margin-bottom: 10px;
 	color: var(--btnforeground);
 	-webkit-app-region: no-drag;
+	margin-bottom: calc(var(--padding) / 1.5);
 }
 
 button:hover {opacity: 0.9}
@@ -77,8 +108,9 @@ button:active {
 }
 
 
-#update {background: #81A1C1}
 #setpath {background: #5E81AC}
-#northstar {background: #C7777F}
 #vanilla, #exit {background: #656E7F}
+#update, #installmod {background: var(--blue)}
+#togglemod, #toggleall {background: var(--yellow)}
+#northstar, #removeall, #removemod {background: var(--red)}
 button:disabled {background: var(--disabled) !important; opacity: 0.5}
