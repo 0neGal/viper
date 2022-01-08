@@ -52,7 +52,6 @@
 		"electron-updater": "^4.6.1",
 		"follow-redirects": "^1.14.6",
 		"marked-man": "^0.7.0",
-		"request": "^2.88.2",
 		"unzipper": "^0.10.11"
 	},
 	"devDependencies": {

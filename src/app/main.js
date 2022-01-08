@@ -164,6 +164,11 @@ ipcRenderer.on("nopathselected", () => {
 	exit();
 });
 
+ipcRenderer.on("wrongpath", () => {
+	alert(lang("gui.gamepath.wrong"));
+	setpath(false);
+});
+
 setlang();
 setInterval(() => {
 	ipcRenderer.send("setsize", document.querySelector(".lines").offsetHeight + 20);
