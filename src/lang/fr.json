@@ -6,6 +6,9 @@
 	"cli.help.update": "met à jour Northstar sur le chemin du jeu précisé",
 	"cli.help.setpath": "enregistre le chemin du client de jeu",
 	"cli.help.updatevp": "met à jour le client Viper, si le format actuel le permet.",
+	"cli.help.installmod": "Installe un mod, dossier ou zip",
+	"cli.help.removemod": "Supprime un mod",
+	"cli.help.togglemod": "Active/désactive un mod",
 
 	"cli.setpath.noarg": "Aucun argument donné à --setpath",
 
@@ -18,7 +21,13 @@
 
 	"cli.launch.linuxerror": "Le support du jeu sur Linux n'est pas encore implémenté.",
 
+	"cli.mods.failed": "L'installation du mod a échoué.",
+	"cli.mods.removed": "Le mod a bien été supprimé.",
+	"cli.mods.toggled": "Le mod a bien été activé/désactivé.",
+	"cli.mods.installed": "Mod installé !",
+	"cli.mods.cantfind": "Aucun mod avec ce nom n'a pu être trouvé.",
 	"cli.mods.notamod": "Le fichier/dossier sélectionné n'est pas un mod.",
+	"cli.mods.toggledall": "Tous les mods ont bien été activés/désactivés.",
 	"cli.mods.improperjson": "Le mod.json de %s présente des erreurs de formatage.",
 
 	"gui.welcome": "Bienvenue sur Viper !",
@@ -62,5 +71,6 @@
 	"general.mods.enabled": "Mods activés :",
 	"general.mods.disabled": "Mods désactivés :",
 	"general.mods.installed": "Mods installés :",
-	"general.missingpath": "Le chemin du client n'est pas défini !"
+	"general.missingpath": "Le chemin du client n'est pas défini !",
+	"general.notinstalled": "Northstar n'est pas installé !"
 }
