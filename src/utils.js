@@ -1,5 +1,6 @@
-const fs = require("fs");
 const path = require("path");
+const fs = require("fs-extra");
+const copy = require("copy-dir");
 const { app, dialog, ipcMain } = require("electron");
 
 const Emitter = require("events");
@@ -134,7 +135,7 @@ async function update() {
 				console.log(lang("cli.update.downloaddone"));
 				fs.createReadStream(settings.zip).pipe(unzip.Extract({path: settings.gamepath}))
 				.on("finish", () => {
-					fs.writeFileSync(path.join(settings.gamepath, "ns_version.txt"), tag);
+					fs.writeFileSync(path.join(settings.gamepath, "ns_version.txt"), latestAvailableVersion);
 					ipcMain.emit("getversion");
 
 				for (let i = 0; i < settings.excludes.length; i++) {
@@ -144,6 +145,7 @@ async function update() {
 					}
 				}
 
+				ipcMain.emit("guigetmods");
 				ipcMain.emit("ns-update-event", 'cli.update.uptodate.short');
 				winLog(lang("gui.update.finished"));
 				console.log(lang("cli.update.finished"));
@@ -191,7 +193,248 @@ function winLog(msg) {
 	ipcMain.emit("winLog", msg, msg);
 }
 
+function winAlert(msg) {
+	ipcMain.emit("winAlert", msg, msg);
+}
+
+let modpath = path.join(settings.gamepath, "R2Northstar/mods");
+const mods = {
+	list: () => {
+		if (getNSVersion() == "unknown") {
+			winLog(lang("general.notinstalled"))
+			console.log("error: " + lang("general.notinstalled"))
+			cli.exit(1);
+			return false;
+		}
+
+		let mods = [];
+		let disabled = [];
+
+		files = fs.readdirSync(modpath)
+		files.forEach((file) => {
+			if (fs.statSync(path.join(modpath, file)).isDirectory()) {
+				if (fs.existsSync(path.join(modpath, file, "mod.json"))) {
+					try {
+						mods.push({...require(path.join(modpath, file, "mod.json")), FolderName: file, Disabled: false})
+					}catch(err) {
+						console.log("error: " + lang("cli.mods.improperjson"), file)
+						mods.push({Name: file, FolderName: file, Version: "unknown", Disabled: false})
+					}
+				}
+			}
+		})
+
+		let disabledPath = path.join(modpath, "disabled")
+		if (! fs.existsSync(disabledPath)) {
+			fs.mkdirSync(disabledPath)
+		}
+
+		files = fs.readdirSync(disabledPath)
+		files.forEach((file) => {
+			if (fs.statSync(path.join(disabledPath, file)).isDirectory()) {
+				if (fs.existsSync(path.join(disabledPath, file, "mod.json"))) {
+					try {
+						disabled.push({...require(path.join(disabledPath, file, "mod.json")), FolderName: file, Disabled: true})
+					}catch(err) {
+						console.log("error: " + lang("cli.mods.improperjson"), file)
+						disabled.push({Name: file, FolderName: file, Version: "unknown", Disabled: true})
+					}
+				}
+			}
+		})
+
+		return {
+			enabled: mods,
+			disabled: disabled,
+			all: [...mods, ...disabled]
+		};
+	},
+	get: (mod) => {
+		if (getNSVersion() == "unknown") {
+			winLog(lang("general.notinstalled"))
+			console.log("error: " + lang("general.notinstalled"))
+			cli.exit(1);
+			return false;
+		}
+
+		let list = mods.list().all;
+
+		for (let i = 0; i < list.length; i++) {
+			if (list[i].Name == mod) {
+				return list[i];
+			} else {continue}
+		}
+
+		return false;
+	},
+	install: (mod) => {
+		if (getNSVersion() == "unknown") {
+			winLog(lang("general.notinstalled"))
+			console.log("error: " + lang("general.notinstalled"))
+			cli.exit(1);
+			return false;
+		}
+
+		let notamod = () => {
+			winLog(lang("gui.mods.notamod"))
+			console.log("error: " + lang("cli.mods.notamod"))
+			cli.exit(1);
+			return false;
+		}
+
+		let installed = () => {
+			console.log(lang("cli.mods.installed"));
+			cli.exit();
+
+			winLog(lang("gui.mods.installedmod"))
+			ipcMain.emit("guigetmods");
+			return true;
+		}
+
+		if (! fs.existsSync(mod)) {return notamod()}
+
+		if (fs.statSync(mod).isDirectory()) {
+			winLog(lang("gui.mods.installing"))
+			if (fs.existsSync(path.join(mod, "mod.json")) && 
+				fs.statSync(path.join(mod, "mod.json")).isFile()) {
+
+				copy.sync(mod, path.join(modpath, mod.replace(/^.*(\\|\/|\:)/, "")), {
+					mode: true,
+					cover: true,
+					utimes: true,
+				});
+
+				return installed();
+			} else {
+				files = fs.readdirSync(mod);
+
+				for (let i = 0; i < files.length; i++) {
+					if (fs.statSync(path.join(mod, files[i])).isDirectory()) {
+						if (fs.existsSync(path.join(mod, files[i], "mod.json")) &&
+							fs.statSync(path.join(mod, files[i], "mod.json")).isFile()) {
+
+							if (mods.install(path.join(mod, files[i]))) {return true};
+						}
+					}
+				}
+
+				notamod();
+				return false;
+			}
+		} else {
+			winLog(lang("gui.mods.extracting"))
+			let cache = path.join(app.getPath("userData"), "Archives");
+			if (fs.existsSync(cache)) {
+				fs.rmSync(cache, {recursive: true});
+				fs.mkdirSync(cache);
+			} else {
+				fs.mkdirSync(cache);
+			}
+
+			try {
+				fs.createReadStream(mod).pipe(unzip.Extract({path: cache}))
+				.on("finish", () => {
+					if (mods.install(cache)) {
+						installed();
+					} else {return notamod()}
+				});
+			}catch(err) {return notamod()}
+		}
+	},
+	remove: (mod) => {
+		if (getNSVersion() == "unknown") {
+			winLog(lang("general.notinstalled"))
+			console.log("error: " + lang("general.notinstalled"))
+			cli.exit(1);
+			return false;
+		}
+
+		if (mod == "allmods") {
+			let modlist = mods.list().all;
+			for (let i = 0; i < modlist.length; i++) {
+				mods.remove(modlist[i].Name)
+			}
+			return
+		}
+
+		let disabled = path.join(modpath, "disabled");
+		if (! fs.existsSync(disabled)) {
+			fs.mkdirSync(disabled)
+		}
+
+		let modName = mods.get(mod).FolderName;
+		if (! modName) {
+			console.log("error: " + lang("cli.mods.cantfind"))
+			cli.exit(1);
+			return;
+		}
+
+		let modPath = path.join(modpath, modName);
+
+		if (mods.get(mod).Disabled) {
+			modPath = path.join(disabled, modName);
+		}
+
+		if (fs.statSync(modPath).isDirectory()) {
+			fs.rmSync(modPath, {recursive: true});
+			console.log(lang("cli.mods.removed"));
+			cli.exit();
+			ipcMain.emit("guigetmods");
+		} else {
+			cli.exit(1);
+		}
+	},
+	toggle: (mod, fork) => {
+		if (getNSVersion() == "unknown") {
+			winLog(lang("general.notinstalled"))
+			console.log("error: " + lang("general.notinstalled"))
+			cli.exit(1);
+			return false;
+		}
+
+		if (mod == "allmods") {
+			let modlist = mods.list().all;
+			for (let i = 0; i < modlist.length; i++) {
+				mods.toggle(modlist[i].Name, true)
+			}
+
+			console.log(lang("cli.mods.toggledall"));
+			cli.exit(0);
+			return
+		}
+
+		let disabled = path.join(modpath, "disabled");
+		if (! fs.existsSync(disabled)) {
+			fs.mkdirSync(disabled)
+		}
+
+		let modName = mods.get(mod).FolderName;
+		if (! modName) {
+			console.log("error: " + lang("cli.mods.cantfind"))
+			cli.exit(1);
+			return;
+		}
+
+		let modPath = path.join(modpath, modName);
+		let dest = path.join(disabled, modName);
+
+		if (mods.get(mod).Disabled) {
+			modPath = path.join(disabled, modName);
+			dest = path.join(modpath, modName);
+		}
+
+		fs.moveSync(modPath, dest)
+		if (! fork) {
+			console.log(lang("cli.mods.toggled"));
+			cli.exit();
+		}
+		ipcMain.emit("guigetmods");
+	}
+};
+
 module.exports = {
+	mods,
+	lang,
 	winLog,
 	launch,
 	update,

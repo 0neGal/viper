@@ -6,6 +6,9 @@
 	"cli.help.update": "updates Northstar from your set game path",
 	"cli.help.setpath": "sets your game path",
 	"cli.help.updatevp": "updates Viper itself, if supported.",
+	"cli.help.installmod": "installs a mod, folder or zip",
+	"cli.help.removemod": "removes a mod",
+	"cli.help.togglemod": "toggles a mod",
 
 	"cli.setpath.noarg": "No argument provided for --setpath",
 
@@ -19,6 +22,15 @@
 
 	"cli.launch.linuxerror": "Launching the game is not currently supported on Linux",
 
+	"cli.mods.failed": "Failed to install mod!",
+	"cli.mods.removed": "Successfully removed mod!",
+	"cli.mods.toggled": "Successfully toggled mod",
+	"cli.mods.installed": "Successfully installed mod!",
+	"cli.mods.cantfind": "Can't find a mod with that name!",
+	"cli.mods.notamod": "Selected folder/file is not a mod",
+	"cli.mods.toggledall": "Successfully toggled all mods",
+	"cli.mods.improperjson": "%s's mod.json has formatting errors",
+
 	"gui.welcome": "Welcome to Viper!",
 	"gui.versions.viper": "Viper version",
 	"gui.versions.northstar": "Northstar version",
@@ -27,6 +39,21 @@
 	"gui.setpath": "Game Path",
 
 	"gui.update.check": "Check for updates",
+	"gui.mods": "Mods",
+	"gui.mods.count": "Mods Installed:",
+	"gui.mods.disabledtag": "Disabled",
+	"gui.mods.install": "Install Mod",
+	"gui.mods.toggle": "Toggle Mod",
+	"gui.mods.toggleall": "Toggle All",
+	"gui.mods.remove": "Remove Mod",
+	"gui.mods.removeall": "Remove All",
+	"gui.mods.nothingselected": "You've not selected a mod.",
+	"gui.mods.removeall.confirm": "Removing all mods will usually require you to reinstall Northstar, are you sure?",
+	"gui.mods.notamod": "Not a mod!",
+	"gui.mods.extracting": "Extracting mod...",
+	"gui.mods.installing": "Installing mod...",
+	"gui.mods.installedmod": "Installed mod!",
+
 	"gui.update.downloading": "Downloading...",
 	"gui.update.extracting": "Extracting update...",
 	"gui.update.finished": "Done! Ready to play!",
@@ -39,11 +66,7 @@
 
 	"gui.selectpath": "Please select the path!",
 	"gui.gamepath.must": "The game path must be set to start Viper.",
-	"gui.gamepath.wrong": "This folder is not a valid game path.",
-
-
-	"general.launching": "Launching",
-	"general.missingpath": "Game path is not set!",
+	"gui.gamepath.wrong": "This folder is not a valid game path.",	
 
 	"viper.menu.main": "Viper",
 	"viper.menu.release": "Release notes",
@@ -55,5 +78,12 @@
 
 	"ns.menu.main": "Northstar launcher",
 	"ns.menu.mods": "Mods",
-	"ns.menu.release": "Release notes"
+	"ns.menu.release": "Release notes",
+
+	"general.mods.enabled": "Enabled mods:",
+	"general.mods.disabled": "Disabled mods:",
+	"general.mods.installed": "Installed mods:",
+	"general.missingpath": "Game path is not set!",
+	"general.notinstalled": "Northstar is not installed!",
+	"general.launching": "Launching"
 }
