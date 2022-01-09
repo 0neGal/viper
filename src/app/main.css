@@ -209,6 +209,10 @@ img {
 .contentBody img {max-width: 100%}
 .contentBody .image {text-align: center}
 
+.contentBody > div {
+	margin-top: 35px;
+}
+
 .contentContainer .playBtnContainer {
 	text-align: center;
 }
