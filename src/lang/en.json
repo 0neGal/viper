@@ -13,7 +13,7 @@
 	"cli.setpath.noarg": "No argument provided for --setpath",
 
 	"cli.update.current": "Current version:",
-	"cli.update.downloading": "Downloading",
+	"cli.update.downloading": "Downloading...",
 	"cli.update.checking": "Checking for updates...",
 	"cli.update.downloaddone": "Download done! Extracting...",
 	"cli.update.finished": "Installation/Update finished!",

@@ -13,8 +13,8 @@
 	"cli.setpath.noarg": "Aucun argument donné à --setpath",
 
 	"cli.update.current": "Version actuelle :",
-	"cli.update.downloading": "Téléchargement en cours ",
-	"cli.update.checking": "Vérification des mises à jour ...",
+	"cli.update.downloading": "Téléchargement en cours...",
+	"cli.update.checking": "Vérification des mises à jour...",
 	"cli.update.downloaddone": "Téléchargement terminé ! Extraction des fichiers...",
 	"cli.update.finished": "Mise à jour terminée !",
 	"cli.update.uptodate": "La dernière version (%s) est déjà installée.",
