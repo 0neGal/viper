@@ -306,7 +306,7 @@ code {
 #dragbar {
 	position: absolute;
 	width: 100%;
-	height: 50px;
+	height: 26px;
 	-webkit-user-select: none;
   	-webkit-app-region: drag;
 }
