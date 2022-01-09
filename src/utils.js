@@ -113,7 +113,9 @@ async function update() {
 	} else {
 		if (version != "unknown") {
 			console.log(lang("cli.update.current"), version);
-		}; console.log(lang("cli.update.downloading") + ":", latestAvailableVersion);
+		}; 
+		console.log(lang("cli.update.downloading") + ":", latestAvailableVersion);
+		ipcMain.emit("ns-update-event", 'cli.update.downloading');
 
 		winLog(lang("gui.update.downloading"));
 	}
