@@ -285,3 +285,9 @@ a:hover {
 .simplebar-scrollbar:before {
 	background: var(--red) !important;
 }
+
+#vanilla, #exit {background: #656E7F}
+#installmod {background: var(--blue)}
+#togglemod, #toggleall {background: var(--yellow)}
+#northstar, #removeall, #removemod {background: var(--red)}
+button:disabled {background: var(--disabled) !important; opacity: 0.5}

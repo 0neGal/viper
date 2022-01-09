@@ -1,32 +1,14 @@
+<p align="center">
+	<img src="src/assets/icons/512x512.png" width="200px"><br><br>
+	<a href="https://github.com/0neGal/viper/projects/1">Overview</a> | 
+	<a href="https://github.com/0neGal/viper/releases">Releases</a>
+</p><br><br>
+
 ## What is Viper?
 
 Viper is a launcher and updater for [Northstar](https://github.com/R2Northstar/Northstar), and not much more than that.
 
-<p align="center">
-	<img src="assets/preview.png">
-</p>
-
-## How to?
-
-Currently Viper is in a state where I dont have release builds ready for people to download, instead if you really do wanna play with it, you can run it with Node... Simply do as follows:
-
-```sh
-$ git clone https://github.com/0neGal/viper
-
-$ cd viper
-
-$ npm i
-
-$ npm run start
-```
-
-This'll launch it with the Electron build installed by `npm`.
-
-Additionally, if you really want to, you can build Viper with `npm run build` and it'll then build the Windows installer and AppImage, however the whole build process and everything related to it is still being worked on which is why we don't have official releases yet.
-
 ## Install
-
-(this will be relevant once we start to publish releases)
 
 Downloads are available on the [releases page](https://github.com/0neGal/viper/releases/latest). 
 
@@ -68,6 +50,30 @@ Some of the existing launchers are listed below:
  * [Ronin](https://github.com/MindSwipe/ronin) - a CLI only updater
  * [laundmo's updater](https://github.com/laundmo/northstar-updater) - another CLI only updater
  * [Juicy's mod manager](https://github.com/BigSpice/NorthStar-Mod-Manager-Ext-1) - an updater and manager for mods, most feature rich
+
+## Development
+
+If you wanna edit Viper's code and run it and so on, you can simply do something along the lines of the below:
+
+```sh
+$ git clone https://github.com/0neGal/viper
+
+$ cd viper
+
+$ npm i
+
+$ npm run start
+```
+
+This'll launch it with the Electron build installed by `npm`.
+
+Additionally, if you're creating your own fork you easily publish builds and or make builds with either `npm run publish` or `npm run build` respectively, the prior requiring a `$GH_TOKEN` to be set, as it creates the release itself so it needs a token with access to your repo. So you'd do something along the lines of:
+
+```sh
+$ GH_TOKEN="<your very long, private and wonderful token>" npm run publish
+```
+
+Keep in mind building all Linux builds may take a while on some systems as packaging the `tar.gz` release can take a while on many CPU's, at least from my testing. All other builds should be done quickly. When using the `publish` command it also automatically uploads the needed files to deploy auto-updates, keep in mind you'd need to have the `repository` setting changed to your new fork's location, otherwise it'll fetch from the original.
 
 ## Credits
 

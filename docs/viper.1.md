@@ -34,6 +34,18 @@ Viper is a program made to make updating and launching Northstar a lot easier. I
 `--setpath`=<absolute-path>
    Sets the game path, this'll change the `gamepath` variable in your `viper.json`, note that it only takes in absolute paths and not relative ones.
 
+`--mods`
+   Lists out all installed mods, and gives a count on how many are installed, enabled and or disabled.
+
+`--installmod`=<absolute-path>
+   Installs a mod, this supports both Zip files and folders, just that the `mod.json` file is easily found is all that matters.
+
+`--removemod`=<mod name>
+   Removes a mod, the mod name should be taken from `--mods` as it provides accurate names. Putting in `allmods` will remove all mods, no confirmation.
+
+`--togglemod`=<mod name>
+   Toggles a mod, the mod name should be taken from `--mods` as it provides accurate names. Putting in `allmods` will toggle all mods. Keep in mind, if a mod is already disabled and some mods are enabled, the states will be flipped, so 3 enabled and 1 disabled, goes to 1 enabled and 3 disabled.
+
 ## CONFIGURATION
 
 All configuration takes place in your `viper.json` file, this file may be in various locations depending on your platform, for Linux you're likely to find it at:
@@ -44,6 +56,10 @@ All configuration takes place in your `viper.json` file, this file may be in var
 On Windows it's likely to be in `%APPDATA%\viper.json`
 
 All configuration is done by Viper itself, the locale is auto set when the GUI launches through your systems locale, the gamepath is selected with `--setpath` or in the GUI.
+
+## MOD SUPPORT
+
+To toggle mods since Northstar itself has no filter as to what mods it loads, we have to move the mods into a separate folder, that folder being `disabled` inside `R2Northstar/mods`, so you can also just manually move these if you want.
 
 ## BUGS
 

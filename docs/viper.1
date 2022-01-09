@@ -31,6 +31,18 @@ Viper is a program made to make updating and launching Northstar a lot easier\. 
 .P
 \fB\-\-setpath\fP=<absolute\-path>
    Sets the game path, this'll change the \fBgamepath\fP variable in your \fBviper\.json\fP, note that it only takes in absolute paths and not relative ones\.
+.P
+\fB\-\-mods\fP
+   Lists out all installed mods, and gives a count on how many are installed, enabled and or disabled\.
+.P
+\fB\-\-installmod\fP=<absolute\-path>
+   Installs a mod, this supports both Zip files and folders, just that the \fBmod\.json\fP file is easily found is all that matters\.
+.P
+\fB\-\-removemod\fP=<mod name>
+   Removes a mod, the mod name should be taken from \fB\-\-mods\fP as it provides accurate names\. Putting in \fBallmods\fP will remove all mods, no confirmation\.
+.P
+\fB\-\-togglemod\fP=<mod name>
+   Toggles a mod, the mod name should be taken from \fB\-\-mods\fP as it provides accurate names\. Putting in \fBallmods\fP will toggle all mods\. Keep in mind, if a mod is already disabled and some mods are enabled, the states will be flipped, so 3 enabled and 1 disabled, goes to 1 enabled and 3 disabled\.
 .SH CONFIGURATION
 .P
 All configuration takes place in your \fBviper\.json\fP file, this file may be in various locations depending on your platform, for Linux you're likely to find it at:
@@ -45,6 +57,9 @@ All configuration takes place in your \fBviper\.json\fP file, this file may be i
 On Windows it's likely to be in \fB%APPDATA%\\viper\.json\fP
 .P
 All configuration is done by Viper itself, the locale is auto set when the GUI launches through your systems locale, the gamepath is selected with \fB\-\-setpath\fP or in the GUI\.
+.SH MOD SUPPORT
+.P
+To toggle mods since Northstar itself has no filter as to what mods it loads, we have to move the mods into a separate folder, that folder being \fBdisabled\fP inside \fBR2Northstar/mods\fP, so you can also just manually move these if you want\.
 .SH BUGS
 .P
 Report bugs on the GitHub issues page, and feel free to make a pull request if you also have the fix to the bug\.
