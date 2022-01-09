@@ -118,7 +118,10 @@ function installmod() {
 	ipcRenderer.send("installmod")
 }
 
-ipcRenderer.on("ns-updated", () => {setButtons(true)})
+ipcRenderer.on("ns-updated", () => {
+	setButtons(true);
+	northstar.innerText = lang('gui.launchnorthstar');
+})
 ipcRenderer.on("ns-updating", () => {setButtons(false)})
 
 ipcRenderer.on("newpath", (event, newpath) => {
