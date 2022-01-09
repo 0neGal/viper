@@ -294,7 +294,10 @@ a:hover {
 #installmod {background: var(--blue)}
 #togglemod, #toggleall {background: var(--yellow)}
 #northstar, #removeall, #removemod {background: var(--red)}
-button:disabled {background: var(--disabled) !important; opacity: 0.5}
+button:disabled {
+	pointer-events: none;
+	opacity: 0.5;
+}
 
 code {
 	background-color: #00000070;
