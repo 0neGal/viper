@@ -163,7 +163,7 @@ ipcRenderer.on("version", (event, versions) => {
 		}
 
 		// Since Northstar is not installed, we cannot launch it
-		northstar.innerText = 'Install';
+		northstar.innerText = lang('gui.installnorthstar');
 		shouldInstallNorthstar = true;
 	}
 }); ipcRenderer.send("getversion");

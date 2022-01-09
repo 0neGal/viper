@@ -61,6 +61,7 @@
 	"gui.launch": "Launch",
 	"gui.launchvanilla": "Vanilla",
 	"gui.launchnorthstar": "Northstar",
+	"gui.installnorthstar": "Install",
 
 	"gui.selectpath": "Please select the path!",
 	"gui.gamepath.must": "The game path must be set to start Viper.",
