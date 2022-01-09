@@ -32,6 +32,7 @@
 	background-size: contain;
 	transition: 0.25s ease-in-out;
 	background-image: url("icons/close.png");
+	z-index: 1;
 }
 
 #close:hover {opacity: 1.0}
@@ -82,6 +83,7 @@ img {
 	height: 100%;
 	flex-grow: 1;
 	display: flex;
+	position: relative;
 }
 
 
@@ -100,6 +102,10 @@ img {
 	position: relative;
 	box-sizing: border-box;
 	flex-basis: calc(100% - 10px);
+}
+
+.gamesContainer button:last-child {
+	margin-top: 0;
 }
 
   
@@ -124,15 +130,13 @@ img {
 }
 
 .contentContainer {
-	--width: 700px;
-
 	color: white;
 	flex-grow: 1;
 	opacity: 1.0;
-	position: fixed;
-	width: var(--width);
+	position: absolute;
+	width: 90%;
+    margin-left: 5%;
 	transition: 0.15s ease-in-out;
-	left: calc(50% - calc(var(--width) / 2));
 }
 
 .contentContainer.hidden {
@@ -257,12 +261,10 @@ a:hover {
 }
 
 #nsRelease, #vpReleaseNotes {
-	top: 75px;
 	height: 80vh;
-	position: fixed;
-	margin-right: 45px;
 	overflow-y: scroll;
 	flex-direction: column;
+	margin-top: 10px !important;
 }
 
 .inline * {
