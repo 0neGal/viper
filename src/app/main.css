@@ -156,24 +156,23 @@ img {
 	align-items: center;
 }
 
-.contentBody > div {
-	margin-top: 50px;
-}
-
 /* some sections do not need space between them and menu */
 #nsMain, #nsRelease, #vpReleaseNotes, .playBtnContainer {
 	margin-top: 0 !important;
 }
 
 .contentMenu li {
-	text-align: center;
 	opacity: 0.6;
 	margin: 0 26px;
 	cursor: pointer;
 	font-weight: 700;
+	text-align: center;
 	height: fit-content;
 	transition: opacity 0.3s ease-in-out;
 }
+
+.contentMenu li:last-child {margin-right: 0px}
+.contentMenu li:first-child {margin-left: 0px}
 
 .contentMenu li:hover {opacity: 0.7}
 
@@ -207,9 +206,8 @@ img {
 	display: none;
 }
 
-.contentBody img {
-	max-width: 100%;;
-}
+.contentBody img {max-width: 100%}
+.contentBody .image {text-align: center}
 
 .contentContainer .playBtnContainer {
 	text-align: center;
