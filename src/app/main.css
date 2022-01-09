@@ -295,3 +295,10 @@ a:hover {
 #togglemod, #toggleall {background: var(--yellow)}
 #northstar, #removeall, #removemod {background: var(--red)}
 button:disabled {background: var(--disabled) !important; opacity: 0.5}
+
+code {
+	background-color: #00000070;
+    font-size: 16px;
+    border-radius: 3px;
+    padding: 2px 5px;
+}
