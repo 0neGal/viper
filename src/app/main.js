@@ -150,6 +150,9 @@ ipcRenderer.on("version", (event, versions) => {
 		for (let i = 0; i < buttons.length; i++) {
 			buttons[i].disabled = true;
 		}
+
+		// Since Northstar is not installed, we cannot launch it
+		northstar.innerText = 'Install';
 	}
 }); ipcRenderer.send("getversion");
 
