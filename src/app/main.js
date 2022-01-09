@@ -51,11 +51,7 @@ function log(msg) {
 }
 
 function setButtons(state) {
-	let buttons = document.querySelectorAll("button");
-
-	for (let i = 0; i < buttons.length; i++) {
-		buttons[i].disabled = !state;
-	}
+	playNsBtn.disabled = !state;
 }
 
 ipcRenderer.on('ns-update-event', (_, key) => {
