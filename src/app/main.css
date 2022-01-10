@@ -110,7 +110,7 @@ button:active {
 
 #setpath {background: #5E81AC}
 #vanilla, #exit {background: #656E7F}
-#update, #installmod {background: var(--blue)}
+#updateBtn, #installmod {background: var(--blue)}
 #togglemod, #toggleall {background: var(--yellow)}
 #northstar, #removeall, #removemod {background: var(--red)}
 button:disabled {background: var(--disabled) !important; opacity: 0.5}

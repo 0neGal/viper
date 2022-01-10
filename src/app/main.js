@@ -3,6 +3,7 @@ const path = require("path");
 const { ipcRenderer } = require("electron");
 
 const lang = require("../lang");
+let shouldInstallNorthstar = false;
 
 var settings = {
 	gamepath: "",
@@ -43,7 +44,14 @@ function setpath(value = false) {
 	ipcRenderer.send("setpath", value);
 }
 
-function launch() {ipcRenderer.send("launch")}
+function launch() {
+	if (shouldInstallNorthstar) {
+		update();
+		shouldInstallNorthstar = false;
+	} else {
+		ipcRenderer.send("launch");
+	}
+}
 function launchVanilla() {ipcRenderer.send("launchVanilla")}
 
 function log(msg) {
@@ -110,7 +118,11 @@ function installmod() {
 	ipcRenderer.send("installmod")
 }
 
-ipcRenderer.on("ns-updated", () => {setButtons(true)})
+ipcRenderer.on("ns-updated", () => {
+	setButtons(true);
+	northstar.disabled = false;
+	updateBtn.innerText = lang("gui.update");
+})
 ipcRenderer.on("ns-updating", () => {setButtons(false)})
 
 ipcRenderer.on("newpath", (event, newpath) => {
@@ -150,6 +162,11 @@ ipcRenderer.on("version", (event, versions) => {
 		for (let i = 0; i < buttons.length; i++) {
 			buttons[i].disabled = true;
 		}
+
+		// Since Northstar is not installed, we cannot launch it
+		northstar.disabled = true;
+		shouldInstallNorthstar = true;
+		updateBtn.innerText = lang("gui.installnorthstar");
 	}
 }); ipcRenderer.send("getversion");
 
