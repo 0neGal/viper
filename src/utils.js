@@ -36,7 +36,8 @@ if (fs.existsSync("viper.json")) {
 
 
 northstar_auto_updates: {
-	if (!settings.autoupdate || !fs.existsSync("viper.json")) break northstar_auto_updates;
+	if (!settings.autoupdate || !fs.existsSync("viper.json") || settings.gamepath.length === 0) 
+		break northstar_auto_updates;
 
 	async function _checkForUpdates() {
 		const localVersion = getNSVersion();
