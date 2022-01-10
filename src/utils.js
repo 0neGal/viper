@@ -11,7 +11,7 @@ const lang = require("./lang");
 const requests = require("./requests");
 
 const unzip = require("unzipper");
-const exec = require("child_process").spawn;
+const run = require("child_process").spawn;
 const { https } = require("follow-redirects");
 
 process.chdir(app.getPath("appData"));
@@ -191,11 +191,11 @@ function launch(version) {
 	switch(version) {
 		case "vanilla":
 			console.log(lang("general.launching"), "Vanilla...")
-			exec(path.join(settings.gamepath + "/Titanfall2.exe"))
+			run(path.join(settings.gamepath + "/Titanfall2.exe"))
 			break;
 		default:
 			console.log(lang("general.launching"), "Northstar...")
-			exec(path.join(settings.gamepath + "/NorthstarLauncher.exe"))
+			run(path.join(settings.gamepath + "/NorthstarLauncher.exe"))
 			break;
 	}
 }
