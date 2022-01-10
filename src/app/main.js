@@ -120,8 +120,8 @@ function installmod() {
 
 ipcRenderer.on("ns-updated", () => {
 	setButtons(true);
-	updateBtn.innerText = lang('gui.update');
-	northstar.removeAttribute('disabled');
+	northstar.disabled = false;
+	updateBtn.innerText = lang("gui.update");
 })
 ipcRenderer.on("ns-updating", () => {setButtons(false)})
 
@@ -164,9 +164,9 @@ ipcRenderer.on("version", (event, versions) => {
 		}
 
 		// Since Northstar is not installed, we cannot launch it
-		updateBtn.innerText = lang('gui.installnorthstar');
-		northstar.setAttribute('disabled', '');
+		northstar.disabled = true;
 		shouldInstallNorthstar = true;
+		updateBtn.innerText = lang("gui.installnorthstar");
 	}
 }); ipcRenderer.send("getversion");
 
