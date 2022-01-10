@@ -12,6 +12,7 @@ const requests = require("./requests");
 
 const unzip = require("unzipper");
 const run = require("child_process").spawn;
+const exec = require("child_process").exec;
 const { https } = require("follow-redirects");
 
 process.chdir(app.getPath("appData"));
@@ -35,11 +36,36 @@ if (fs.existsSync("viper.json")) {
 }
 
 
+async function _isGameRunning() {
+	return new Promise(resolve => {
+		let procs = ["Titanfall2.exe", "Titanfall2-unpacked.exe", "NorthstarLauncher2.exe"];
+		let cmd = (() => {
+			switch (process.platform) {
+				case "linux": return "ps -A";
+				case "win32": return "tasklist";
+			}
+		})();
+
+		exec(cmd, (err, stdout) => {
+			for (let i = 0; i < procs.length; i++) {
+				if (stdout.includes(procs[i])) {
+					resolve(true);
+					break
+				}
+
+				if (i == procs.length - 1) {resolve(false)}
+			}
+		});
+	});
+}
+
 northstar_auto_updates: {
 	if (!settings.autoupdate || !fs.existsSync("viper.json") || settings.gamepath.length === 0) 
 		break northstar_auto_updates;
 
 	async function _checkForUpdates() {
+		console.log(await _isGameRunning());
+
 		const localVersion = getNSVersion();
 		const distantVersion = await requests.getLatestNsVersion();
 		console.log('Checking for Northstar updates...');
