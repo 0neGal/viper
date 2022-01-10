@@ -38,7 +38,7 @@ if (fs.existsSync("viper.json")) {
 northstar_auto_updates: {
 	if (!settings.autoupdate) break northstar_auto_updates;
 
-	setInterval(async _ => {
+	async function _checkForUpdates() {
 		const localVersion = getNSVersion();
 		const distantVersion = await requests.getLatestNsVersion();
 		console.log('Checking for Northstar updates...');
@@ -49,10 +49,14 @@ northstar_auto_updates: {
 		} else {
 			console.log('No Northstar update available.')
 		}
-	}, 
-	
-	// update checking interval must be bigger than cache validity duration
-	15 * 60 * 1000);
+
+		setTimeout(
+			_checkForUpdates, 
+			15 * 60 * 1000	// update checking interval must be bigger than cache validity duration
+		);
+	}
+
+	_checkForUpdates();
 }
 
 
