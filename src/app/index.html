@@ -22,7 +22,7 @@
 					<li id="vpMainBtn" active onclick="showVpSection('main')">%%viper.menu.main%%</li>
 					<li id="vpReleaseBtn" onclick="showVpSection('release')">%%viper.menu.release%%</li>
 					<li id="vpInfoBtn" onclick="showVpSection('info')">%%viper.menu.info%%</li>
-					<li id="vpCreditsBtn" onclick="showVpSection('credits')">%%viper.menu.credits%%</li>
+					<li style="display:none" id="vpCreditsBtn" onclick="showVpSection('credits')">%%viper.menu.credits%%</li>
 				</ul>
 				<div class="contentBody">
 					<div id="vpMain">
@@ -34,9 +34,15 @@
 					</div>
 					<div id="vpReleaseNotes"></div>
 					<div id="vpInfo">
+						<h2>%%viper.menu.info.links%%</h2>
 						<ul>
 							<li>%%viper.info.discord%% <a href="https://northstar.tf/discord">northstar.tf/discord</a></li>
 							<li>%%viper.info.issues%% <a href="https://github.com/0neGal/viper/issues">github.com/0neGal/viper/issues</a></li>
+						</ul>
+						<h2>%%viper.menu.info.credits%%</h2>
+						<ul>
+							<li>"Titanfall|2 + Northstar" logo: <a href="https://www.steamgriddb.com/logo/47851">Aftonstjarma</a></li>
+							<li>Viper logo: Imply#9781</li>
 						</ul>
 					</div>
 					<div id="vpCredits">

@@ -71,8 +71,9 @@
 
 	"viper.menu.main": "Viper",
 	"viper.menu.release": "Release Notes",
-	"viper.menu.info": "Information",
-	"viper.menu.credits": "Credits",
+	"viper.menu.info": "Extras",
+	"viper.menu.info.links": "Links",
+	"viper.menu.info.credits": "Credits",
 
 	"viper.info.discord": "Join Discord:",
 	"viper.info.issues": "Report issues with Viper:",
