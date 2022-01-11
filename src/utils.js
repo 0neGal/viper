@@ -38,7 +38,7 @@ if (fs.existsSync("viper.json")) {
 
 async function _isGameRunning() {
 	return new Promise(resolve => {
-		let procs = ["Titanfall2.exe", "Titanfall2-unpacked.exe", "NorthstarLauncher2.exe"];
+		let procs = ["Titanfall2.exe", "Titanfall2-unpacked.exe", "NorthstarLauncher.exe"];
 		let cmd = (() => {
 			switch (process.platform) {
 				case "linux": return "ps -A";
