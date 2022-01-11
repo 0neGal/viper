@@ -1,7 +1,7 @@
 const fs = require("fs");
 const path = require("path");
 const { autoUpdater } = require("electron-updater");
-const { app, ipcMain, BrowserWindow } = require("electron");
+const { app, ipcMain, BrowserWindow, dialog } = require("electron");
 
 const Emitter = require("events");
 const events = new Emitter();
@@ -37,7 +37,7 @@ function start() {
 	ipcMain.on("winAlert", (event, ...args) => {win.webContents.send("alert", ...args)})
 	ipcMain.on("guigetmods", (event, ...args) => {win.webContents.send("mods", utils.mods.list())})
 
-	win.webContents.once("dom-ready", () => {
+	win.webContents.on("dom-ready", () => {
 		win.webContents.send("mods", utils.mods.list());
 	});
 
