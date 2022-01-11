@@ -64,15 +64,18 @@ northstar_auto_updates: {
 		break northstar_auto_updates;
 
 	async function _checkForUpdates() {
-		console.log(await _isGameRunning());
-
 		const localVersion = getNSVersion();
 		const distantVersion = await requests.getLatestNsVersion();
 		console.log('Checking for Northstar updates...');
 
 		if (localVersion !== distantVersion) {
-			console.log('Northstar update available! Launching update process.');
-			update();
+			console.log('Northstar update available!');
+			if (await _isGameRunning()) {
+				console.log('Not installing update since game is running.');
+			} else {
+				console.log('Launching update process.');
+				update();
+			}
 		} else {
 			console.log('No Northstar update available.')
 		}
