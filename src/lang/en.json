@@ -19,6 +19,12 @@
 	"cli.update.finished": "Installation/Update finished!",
 	"cli.update.uptodate": "Latest version (%s) is already installed, skipping update.",
 
+	"cli.autoupdates.checking": "Checking for Northstar updates...",
+	"cli.autoupdates.available": "Northstar update available!",
+	"cli.autoupdates.gamerunning": "Game is running, refusing to update Northstar",
+	"cli.autoupdates.updatingns": "Launching update process...",
+	"cli.autoupdates.noupdate": "No Northstar update available.",
+
 	"cli.launch.linuxerror": "Launching the game is not currently supported on Linux",
 
 	"cli.mods.failed": "Failed to install mod!",

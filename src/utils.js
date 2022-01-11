@@ -36,7 +36,7 @@ if (fs.existsSync("viper.json")) {
 }
 
 
-async function _isGameRunning() {
+async function isGameRunning() {
 	return new Promise(resolve => {
 		let procs = ["Titanfall2.exe", "Titanfall2-unpacked.exe", "NorthstarLauncher.exe"];
 		let cmd = (() => {
@@ -60,28 +60,29 @@ async function _isGameRunning() {
 }
 
 northstar_auto_updates: {
-	if (!settings.autoupdate || !fs.existsSync("viper.json") || settings.gamepath.length === 0) 
+	if (!settings.autoupdate || !fs.existsSync("viper.json") || settings.gamepath.length === 0) {
 		break northstar_auto_updates;
+	}
 
 	async function _checkForUpdates() {
-		const localVersion = getNSVersion();
-		const distantVersion = await requests.getLatestNsVersion();
-		console.log('Checking for Northstar updates...');
+		let localVersion = getNSVersion();
+		let distantVersion = await requests.getLatestNsVersion();
+		console.log(lang("cli.autoupdates.checking"));
 
 		if (localVersion !== distantVersion) {
-			console.log('Northstar update available!');
-			if (await _isGameRunning()) {
-				console.log('Not installing update since game is running.');
+			console.log(lang("cli.autoupdates.available"));
+			if (await isGameRunning()) {
+				console.log(lang("cli.autoupdates.gamerunning"));
 				new Notification({
 					title: lang("gui.nsupdate.gaming.title"), 
 					body: lang("gui.nsupdate.gaming.body")
 				}).show();
 			} else {
-				console.log('Launching update process.');
+				console.log(lang("cli.autoupdates.updatingns"));
 				update();
 			}
 		} else {
-			console.log('No Northstar update available.')
+			console.log(lang("cli.autoupdates.noupdate"))
 		}
 
 		setTimeout(
@@ -486,6 +487,7 @@ module.exports = {
 	updatevp,
 	settings,
 	getNSVersion,
+	isGameRunning,
 	setlang: (lang) => {
 		settings.lang = lang;
 		saveSettings();
