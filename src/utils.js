@@ -73,8 +73,8 @@ northstar_auto_updates: {
 			if (await _isGameRunning()) {
 				console.log('Not installing update since game is running.');
 				new Notification({
-					title: "Northstar update available", 
-					body: 'An update for Northstar is available.\nYou can force its installation after closing the game.'
+					title: lang("gui.nsupdate.gaming.title"), 
+					body: lang("gui.nsupdate.gaming.body")
 				}).show();
 			} else {
 				console.log('Launching update process.');

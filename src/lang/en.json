@@ -58,6 +58,9 @@
 	"gui.update.uptodate": "Already up to date!",
 	"gui.update.available": "A new update for Viper is available, do you want to restart and apply it?",
 
+	"gui.nsupdate.gaming.title": "Northstar update available!",
+	"gui.nsupdate.gaming.body": "An update for Northstar is available.\nYou can force its installation after closing the game.",
+
 	"gui.launch": "Launch",
 	"gui.launchvanilla": "Vanilla",
 	"gui.launchnorthstar": "Northstar",
