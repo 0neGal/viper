@@ -19,6 +19,12 @@
 	"cli.update.finished": "Mise à jour terminée !",
 	"cli.update.uptodate": "La dernière version (%s) est déjà installée.",
 
+	"cli.autoupdates.checking": "Vérifications des mises à jour de Northstar...",
+	"cli.autoupdates.available": "Une mise à jour de Northstar est disponible !",
+	"cli.autoupdates.gamerunning": "Le jeu est en cours d'exécution, impossible de lancer la mise à jour.",
+	"cli.autoupdates.updatingns": "Lancement de la mise à jour...",
+	"cli.autoupdates.noupdate": "Pas de mise à jour de Northstar disponible.",
+
 	"cli.launch.linuxerror": "Le support du jeu sur Linux n'est pas encore implémenté.",
 
 	"cli.mods.failed": "L'installation du mod a échoué.",
