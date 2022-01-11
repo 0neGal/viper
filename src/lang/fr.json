@@ -41,7 +41,7 @@
 	"gui.update.check": "Vérifier les mises à jour",
 	"gui.mods": "Mods",
 	"gui.mods.count": "Mods installés :",
-	"gui.mods.disabledtag": "Désactivés",
+	"gui.mods.disabledtag": "Désactivé",
 	"gui.mods.install": "Installer le mod",
 	"gui.mods.toggle": "Activer/désactiver le mod",
 	"gui.mods.toggleall": "Activer/désactiver tous les mods",
