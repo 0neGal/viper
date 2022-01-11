@@ -2,6 +2,10 @@
 	--red: #C7777F;
 	--blue: #81A1C1;
 	--padding: 25px;
+
+	--redbg: linear-gradient(45deg, var(--red), #FA4343);
+	--bluebg: linear-gradient(45deg, var(--blue), #7380ED);
+
 }
 
 ::-webkit-scrollbar {
@@ -45,9 +49,10 @@ body {
 	font-family: "Roboto", sans-serif;
 }
 
-img {
-	pointer-events: none;
-}
+b, strong {font-weight: 700}
+body, input, button {font-weight: 500}
+
+img {pointer-events: none}
 
 #bgHolder {
 	top: 0;
@@ -104,23 +109,19 @@ img {
 	flex-basis: calc(100% - 10px);
 }
 
-.gamesContainer button:last-child {
-	margin-top: 0;
-}
 
-  
 .gamesContainer button::before {
 	content: "";
 	display: block;
 	padding-top: 100%;
-  }
-  
-  .gamesContainer button .content {
-	position: absolute;
-	top: 0; left: 0;
-	height: 100%;
+}
+
+.gamesContainer button .content {
 	width: 100%;
-  }
+	height: 100%;
+	top: 0; left: 0;
+	position: absolute;
+}
 
 #vpBtn {background-image: url("icons/viper.png")}
 #nsBtn {background-image: url("icons/northstar.png")}
@@ -130,12 +131,12 @@ img {
 }
 
 .contentContainer {
+	width: 90%;
 	color: white;
 	flex-grow: 1;
 	opacity: 1.0;
-	position: absolute;
-	width: 90%;
     margin-left: 5%;
+	position: absolute;
 	transition: 0.15s ease-in-out;
 }
 
@@ -151,9 +152,9 @@ img {
 	font-size: 20px;
 	list-style: none;
 	margin-bottom: 0;
+	align-items: center;
 	justify-content: center;
 	margin-top: var(--padding);
-	align-items: center;
 }
 
 /* some sections do not need space between them and menu */
@@ -209,7 +210,7 @@ img {
 .contentBody img {max-width: 100%}
 .contentBody .image {text-align: center}
 
-.contentBody > div {
+.contentBody > :not(.img) {
 	margin-top: 35px;
 }
 
@@ -222,26 +223,29 @@ img {
 	height: 11%;
 	border: none;
 	color: white;
+	padding: 20px;
 	font-size: 24px;
 	font-weight: bold;
-	padding: 20px;
 	margin-top: 100px;
 	margin-bottom: 10px;
 	border-radius: 10px;
+	background: var(--redbg);
 	transition: 0.3s ease-in-out;
-	background-color: var(--red);
+	filter: drop-shadow(0px 8px 5px rgba(0, 0, 0, 0.1));
 }
 
 .contentContainer .playBtn:hover, .gamesContainer button:hover {
-	transform: scale(1.02)
+	transform: scale(1.05);
+	filter: drop-shadow(0px 5px 15px rgba(0, 0, 0, 0.3)) brightness(110%);
 }
 
 .contentContainer .playBtn:active, .gamesContainer button:active {
 	opacity: 0.7;transform: scale(0.98);
+	filter: drop-shadow(0px 5px 10px rgba(0, 0, 0, 0.4));
 }
 
 .contentContainer #nsMain .playBtn {
-	background-color: var(--blue);
+	background: var(--bluebg);
 }
 
 a {
@@ -258,8 +262,13 @@ a:hover {
 	margin-bottom: 0;
 }
 
-.contentBody img {
+.contentBody .img img {
 	transform: scale(0.85);
+}
+
+.contentBody .img {
+	width: 100%;
+	text-align: center;
 }
 
 #nsRelease, #vpReleaseNotes {
@@ -274,8 +283,8 @@ a:hover {
 }
 
 #vpMain {
-	text-align: center;
 	margin-top: 140px;
+	text-align: center;
 }
 
 #vpMain img {
@@ -300,10 +309,10 @@ button:disabled {
 }
 
 code {
-	background-color: #00000070;
     font-size: 16px;
-    border-radius: 3px;
     padding: 2px 5px;
+    border-radius: 3px;
+	background-color: #00000070;
 }
 
 

@@ -70,16 +70,16 @@
 	"gui.gamepath.wrong": "This folder is not a valid game path.",	
 
 	"viper.menu.main": "Viper",
-	"viper.menu.release": "Release notes",
+	"viper.menu.release": "Release Notes",
 	"viper.menu.info": "Information",
 	"viper.menu.credits": "Credits",
 
 	"viper.info.discord": "Join Discord:",
 	"viper.info.issues": "Report issues with Viper:",
 
-	"ns.menu.main": "Northstar launcher",
+	"ns.menu.main": "Northstar Launcher",
 	"ns.menu.mods": "Mods",
-	"ns.menu.release": "Release notes",
+	"ns.menu.release": "Release Notes",
 
 	"general.mods.enabled": "Enabled mods:",
 	"general.mods.disabled": "Disabled mods:",
