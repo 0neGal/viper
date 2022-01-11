@@ -1,7 +1,7 @@
 const path = require("path");
 const fs = require("fs-extra");
 const copy = require("copy-dir");
-const { app, dialog, ipcMain } = require("electron");
+const { app, dialog, ipcMain, Notification } = require("electron");
 
 const Emitter = require("events");
 const events = new Emitter();
@@ -72,6 +72,10 @@ northstar_auto_updates: {
 			console.log('Northstar update available!');
 			if (await _isGameRunning()) {
 				console.log('Not installing update since game is running.');
+				new Notification({
+					title: "Northstar update available", 
+					body: 'An update for Northstar is available.\nYou can force its installation after closing the game.'
+				}).show();
 			} else {
 				console.log('Launching update process.');
 				update();
