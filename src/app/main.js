@@ -110,7 +110,12 @@ function selected(all) {
 
 	return {
 		remove: () => {
-			if (selected == "allmods") {
+
+			if (selected.match(/^Northstar\./)) {
+				if (! confirm(lang("gui.mods.required.confirm"))) {
+					return;
+				}
+			} else if (selected == "allmods") {
 				if (! confirm(lang("gui.mods.removeall.confirm"))) {
 					return;
 				}
@@ -119,6 +124,16 @@ function selected(all) {
 			ipcRenderer.send("removemod", selected)
 		},
 		toggle: () => {
+			if (selected.match(/^Northstar\./)) {
+				if (! confirm(lang("gui.mods.required.confirm"))) {
+					return;
+				}
+			} else if (selected == "allmods") {
+				if (! confirm(lang("gui.mods.toggleall.confirm"))) {
+					return;
+				}
+			}
+
 			ipcRenderer.send("togglemod", selected)
 		}
 	}
