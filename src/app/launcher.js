@@ -1,4 +1,4 @@
-const markdown = require("markdown").markdown.toHTML;
+const markdown = require("marked").parse;
 
 function page(page) {
 	let pages = document.querySelectorAll(".mainContainer .contentContainer")
