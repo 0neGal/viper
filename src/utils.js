@@ -136,6 +136,21 @@ function getNSVersion() {
 	}
 }
 
+
+/**
+ * Loads up Titanfall|2 version from gameversion.txt file.
+ * TODO This file is present on Origin install, should check if it's present with 
+ * Steam install as well.
+ */
+function getTF2Version() {
+	var versionFilePath = path.join(settings.gamepath, "gameversion.txt");
+	if (fs.existsSync(versionFilePath)) {
+		return fs.readFileSync(versionFilePath, "utf8");
+	} else {
+		return "unknown";
+	}
+}
+
 async function update() {
 	for (let i = 0; i < settings.excludes.length; i++) {
 		let exclude = path.join(settings.gamepath + "/" + settings.excludes[i]);
@@ -144,14 +159,14 @@ async function update() {
 		}
 	}
 
-	ipcMain.emit("ns-updating");
+	ipcMain.emit("ns-update-event", "cli.update.checking");
 	console.log(lang("cli.update.checking"));
 	var version = getNSVersion();
 
 	const latestAvailableVersion = await requests.getLatestNsVersion();
 
 	if (version === latestAvailableVersion) {
-		ipcMain.emit("ns-updated");
+		ipcMain.emit("ns-update-event", "cli.update.uptodate.short");
 		console.log(lang("cli.update.uptodate"), version);
 
 		winLog(lang("gui.update.uptodate"));
@@ -159,9 +174,9 @@ async function update() {
 	} else {
 		if (version != "unknown") {
 			console.log(lang("cli.update.current"), version);
-		}; console.log(lang("cli.update.downloading") + ":", latestAvailableVersion);
-
-		winLog(lang("gui.update.downloading"));
+		}; 
+		console.log(lang("cli.update.downloading") + ":", latestAvailableVersion);
+		ipcMain.emit("ns-update-event", "cli.update.downloading");
 	}
 
 	https.get(requests.getLatestNsVersionLink(), (res) => {
@@ -171,17 +186,18 @@ async function update() {
 		let received = 0;
 		res.on("data", (chunk) => {
 			received += chunk.length;
-			winLog(lang("gui.update.downloading") + " " + (received / 1024 / 1024).toFixed(1) + "mb");
+			ipcMain.emit("ns-update-event", lang("gui.update.downloading") + " " + (received / 1024 / 1024).toFixed(1) + "mb");
 		})
 
 		stream.on("finish", () => {
 			stream.close();
 			winLog(lang("gui.update.extracting"));
+			ipcMain.emit("ns-update-event", "gui.update.extracting");
 			console.log(lang("cli.update.downloaddone"));
 			fs.createReadStream(settings.zip).pipe(unzip.Extract({path: settings.gamepath}))
 			.on("finish", () => {
-				fs.writeFileSync(path.join(settings.gamepath, "ns_version.txt"), latestAvailableVersion);
-				ipcMain.emit("getversion");
+					fs.writeFileSync(path.join(settings.gamepath, "ns_version.txt"), latestAvailableVersion);
+					ipcMain.emit("getversion");
 
 				for (let i = 0; i < settings.excludes.length; i++) {
 					let exclude = path.join(settings.gamepath + "/" + settings.excludes[i]);
@@ -190,11 +206,11 @@ async function update() {
 					}
 				}
 
-					ipcMain.emit("guigetmods");
-					ipcMain.emit("ns-updated");
-					winLog(lang("gui.update.finished"));
-					console.log(lang("cli.update.finished"));
-					cli.exit();
+				ipcMain.emit("guigetmods");
+				ipcMain.emit("ns-update-event", "cli.update.uptodate.short");
+				winLog(lang("gui.update.finished"));
+				console.log(lang("cli.update.finished"));
+				cli.exit();
 			})
 		})
 	})
@@ -487,6 +503,7 @@ module.exports = {
 	updatevp,
 	settings,
 	getNSVersion,
+	getTF2Version,
 	isGameRunning,
 	setlang: (lang) => {
 		settings.lang = lang;

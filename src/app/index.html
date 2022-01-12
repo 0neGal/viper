@@ -1,46 +1,103 @@
 <html>
 	<head>
 		<meta name="viewport" content="width=device-width,initial-scale=1.0">
+		<link rel="stylesheet" href="fonts/import.css">
 		<link rel="stylesheet" href="main.css">
+		<meta charset="utf-8">
 	</head>
 	<body>
-		<div class="lines">
-			<div class="line">
-				<div class="text">
-					<div class="text" id="welcome">%%gui.welcome%%</div>
-					<div class="versions">
-						<div id="vpversion"></div>
-						<div id="nsversion"></div>
+		<div id="bgHolder"></div>
+
+		<div id="close" onclick="ipcRenderer.send('exit')"></div>
+		
+		<nav class="gamesContainer">
+			<button id="vpBtn" onclick="page(0)"></button>
+			<button id="nsBtn" onclick="page(1)"></button>
+			<button id="tfBtn" onclick="page(2)"></button>
+		</nav>
+
+		<div class="mainContainer">
+			<div id="vpContent" class="contentContainer">
+				<ul class="contentMenu">
+					<li id="vpMainBtn" active onclick="showVpSection('main')">%%viper.menu.main%%</li>
+					<li id="vpReleaseBtn" onclick="showVpSection('release')">%%viper.menu.release%%</li>
+					<li id="vpInfoBtn" onclick="showVpSection('info')">%%viper.menu.info%%</li>
+				</ul>
+				<div class="contentBody">
+					<div id="vpMain" class="section">
+						<img src="icons/viper.png"/>
+						<div class="inline" style="margin-top: 20px;">
+							<div id="vpversion"></div> |
+							<a id="setpath" href="#" onclick="setpath()">%%gui.setpath%%</a>
+						</div>
+					</div>
+					<div id="vpReleaseNotes" class="hidden section"></div>
+					<div id="vpInfo" class="hidden section">
+						<h2>%%viper.menu.info.links%%</h2>
+						<ul>
+							<li>%%viper.info.discord%% <a href="https://northstar.tf/discord">northstar.tf/discord</a></li>
+							<li>%%viper.info.issues%% <a href="https://github.com/0neGal/viper/issues">github.com/0neGal/viper/issues</a></li>
+						</ul>
+						<h2>%%viper.menu.info.credits%%</h2>
+						<ul>
+							<li>"Titanfall|2 + Northstar" logo: <a href="https://www.steamgriddb.com/logo/47851">Aftonstjarma</a></li>
+							<li>Viper logo: Imply#9781</li>
+						</ul>
 					</div>
 				</div>
-				<div class="buttons">
-					<button id="exit" onclick="exit()">%%gui.exit%%</button>
-					<button id="updateBtn"	onclick="update()">%%gui.update%%</button>
-					<button id="setpath" onclick="setpath()">%%gui.setpath%%</button>
+			</div>
+
+			<div id="nsContent" class="contentContainer">
+				<ul class="contentMenu">
+					<li id="nsMainBtn" active onclick="showNsSection('main')">%%ns.menu.main%%</li>
+					<li id="nsModsBtn" onclick="showNsSection('mods')">%%ns.menu.mods%%</li>
+					<li id="nsReleaseBtn" onclick="showNsSection('release')">%%ns.menu.release%%</li>
+				</ul>
+				<div class="contentBody">
+					<div id="nsMain" class="section">
+						<div class="img"><img src="../assets/ns.png"></div>
+						<div class="playBtnContainer">
+							<button id="playNsBtn" class="playBtn" onclick="launch()">%%gui.launch%%</button>
+							<div class="inline">
+								<div id="nsversion"></div>
+								<a id="update" href="#" onclick="update()">(%%gui.update.check%%)</a>
+							</div>
+						</div>
+					</div>
+					<div id="nsMods" class="hidden section">
+						<div id="modsdiv">
+						</div>
+						<div class="line">
+							<div class="text" id="modcount">%%gui.mods%%</div>
+							<div class="buttons modbtns">
+								<button id="removemod" onclick="selected().remove()">%%gui.mods.remove%%</button>
+								<button id="removeall" onclick="selected(true).remove()">%%gui.mods.removeall%%</button>
+								<button id="togglemod" onclick="selected().toggle()">%%gui.mods.toggle%%</button>
+								<button id="toggleall" onclick="selected(true).toggle(true)">%%gui.mods.toggleall%%</button>
+								<button id="installmod" onclick="installmod()">%%gui.mods.install%%</button>
+							</div>
+						</div>
+					</div>
+					<div id="nsRelease" class="hidden section"></div>
 				</div>
 			</div>
-			<div class="line">
-				<div class="text">%%gui.launch%%:</div>
-				<div class="buttons">
-					<button id="vanilla" onclick="launchVanilla()">%%gui.launchvanilla%%</button>
-					<button id="northstar" onclick="launch()">%%gui.launchnorthstar%%</button>
-				</div>
-			</div>
-			<div id="modsdiv">
-			</div>
-			<div class="line">
-				<div class="text" id="modcount">%%gui.mods%%</div>
-				<div class="buttons modbtns">
-					<button id="removemod" onclick="selected().remove()">%%gui.mods.remove%%</button>
-					<button id="removeall" onclick="selected(true).remove()">%%gui.mods.removeall%%</button>
-					<button id="togglemod" onclick="selected().toggle()">%%gui.mods.toggle%%</button>
-					<button id="toggleall" onclick="selected(true).toggle(true)">%%gui.mods.toggleall%%</button>
-					<button id="installmod" onclick="installmod()">%%gui.mods.install%%</button>
+
+			<div id="tfContent" class="contentContainer">
+				<ul class="contentMenu"><li style="opacity:0.0">filler</li></ul>
+				<div class="contentBody">
+					<div class="section">
+						<div class="img"><img src="../assets/vanilla.png"></div>
+						<div class="playBtnContainer">
+							<button class="playBtn" onclick="launchVanilla()">%%gui.launch%%</button>
+							<div id="tf2Version"></div>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
 
 		<script src="lang.js"></script>
 		<script src="main.js"></script>
+		<script src="launcher.js"></script>
 	</body>
 </html>
