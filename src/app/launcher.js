@@ -1,4 +1,4 @@
-const markdownConverter = new Markdown.Converter();
+const markdown = require("markdown").markdown.toHTML;
 
 function page(page) {
 	let pages = document.querySelectorAll(".mainContainer .contentContainer")
@@ -20,7 +20,7 @@ ipcRenderer.on("vp_notes", (event, response) => {
 			+ release.body.replaceAll("\r\n", "\n") + "\n\n\n";
 	}
 
-	vpReleaseNotes.innerHTML = markdownConverter.makeHtml(content);
+	vpReleaseNotes.innerHTML = markdown(content);
 });
 async function loadVpReleases() {
 	ipcRenderer.send("get_vp_notes");	
@@ -32,10 +32,10 @@ ipcRenderer.on("ns_notes", (event, response) => {
 
 	for (let release of response) {
 		content += "# " + release.name + "\n\n"
-			+ release.body.replaceAll("\r\n", "<br>") + "\n\n\n";
+			+ release.body.replaceAll("\r\n", "\nhtmlbreak") + "\n\n\n";
 	}
 
-	nsRelease.innerHTML = markdownConverter.makeHtml(content);
+	nsRelease.innerHTML = markdown(content).replaceAll("htmlbreak", "<br>");
 });
 
 async function loadNsReleases() {

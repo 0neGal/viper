@@ -237,7 +237,7 @@ img {pointer-events: none}
 .contentBody img {max-width: 100%}
 .contentBody .img {text-align: center}
 
-.contentBody .section > :not(.img) {
+.contentBody .section > :first-child:not(.img) {
 	margin-top: 35px;
 }
 
