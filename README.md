@@ -20,15 +20,19 @@ Please note that some versions will update themselves automatically when a new r
 
 ## What can it do specifically?
 
+<p>
 Currently Viper is capable of:
+
+<img src="assets/preview.png" align="right" width="50%">
 
  * Updating/Installing Northstar
  * Launching Vanilla and or Northstar
- * Manage Mods (Soon, see [**mod-support**](https://github.com/0neGal/viper/tree/mod-support) branch)
+ * Manage Mods
  * Auto-Update itself 
  * Be pretty!
 
 Besides this I've been considering adding some easy to use VPK modding tools so everybody can have fun with VPK modding even if you don't know how to do it the traditional way. However that is not at the top of the todo list right now.
+</p>
 
 ## Configuration
 
