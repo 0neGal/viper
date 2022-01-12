@@ -2,12 +2,18 @@ const markdown = require("markdown").markdown.toHTML;
 
 function page(page) {
 	let pages = document.querySelectorAll(".mainContainer .contentContainer")
+	let btns = document.querySelectorAll(".gamesContainer button")
 
 	for (let i = 0; i < pages.length; i++) {
 		pages[i].classList.add("hidden");
 	}
 
+	for (let i = 0; i < btns.length; i++) {
+		btns[i].classList.add("inactive");
+	}
+
 	pages[page].classList.remove("hidden");
+	btns[page].classList.remove("inactive");
 	bgHolder.setAttribute("bg", page);
 }; page(0)
 

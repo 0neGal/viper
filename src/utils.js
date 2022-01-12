@@ -87,7 +87,7 @@ northstar_auto_updates: {
 
 		setTimeout(
 			_checkForUpdates, 
-			1 * 60 * 1000	// update checking interval must be bigger than cache validity duration
+			15 * 60 * 1000	// update checking interval must be bigger than cache validity duration
 		);
 	}
 
