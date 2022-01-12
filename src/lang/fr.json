@@ -20,6 +20,12 @@
 	"cli.update.uptodate": "La dernière version (%s) est déjà installée.",
 	"cli.update.uptodate.short": "Votre client est à jour",
 
+	"cli.autoupdates.checking": "Vérifications des mises à jour de Northstar...",
+	"cli.autoupdates.available": "Une mise à jour de Northstar est disponible !",
+	"cli.autoupdates.gamerunning": "Le jeu est en cours d'exécution, impossible de lancer la mise à jour.",
+	"cli.autoupdates.updatingns": "Lancement de la mise à jour...",
+	"cli.autoupdates.noupdate": "Pas de mise à jour de Northstar disponible.",
+
 	"cli.launch.linuxerror": "Le support du jeu sur Linux n'est pas encore implémenté.",
 
 	"cli.mods.failed": "L'installation du mod a échoué.",
@@ -61,6 +67,9 @@
 	"gui.update.finished": "Terminé, vous pouvez jouer !",
 	"gui.update.uptodate": "Déjà à jour !",
 	"gui.update.available": "Une mise à jour pour Viper est disponible, voulez-vous l'installer maintenant ?",
+
+	"gui.nsupdate.gaming.title": "Mise à jour Northstar disponible !",
+	"gui.nsupdate.gaming.body": "Une mise à jour pour Northstar est disponible.\nVous pourrez l'installer après avoir fermé le jeu.",
 
 	"gui.launch": "Jouer",
 	"gui.launchvanilla": "Vanilla",
