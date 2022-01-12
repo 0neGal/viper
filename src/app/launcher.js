@@ -7,12 +7,12 @@ function page(page) {
 		pages[i].classList.add("hidden");
 	}
 
-	pages[page].classList.remove("hidden")
+	pages[page].classList.remove("hidden");
 	bgHolder.setAttribute("bg", page);
 }; page(0)
 
 
-ipcRenderer.on("vp_notes", (event, response) => {
+ipcRenderer.on("vp-notes", (event, response) => {
 	let content = "";
 
 	for (const release of response) {
@@ -23,11 +23,11 @@ ipcRenderer.on("vp_notes", (event, response) => {
 	vpReleaseNotes.innerHTML = markdown(content);
 });
 async function loadVpReleases() {
-	ipcRenderer.send("get_vp_notes");	
+	ipcRenderer.send("get-vp-notes");	
 }; loadVpReleases();
 
 
-ipcRenderer.on("ns_notes", (event, response) => {
+ipcRenderer.on("ns-notes", (event, response) => {
 	let content = "";
 
 	for (let release of response) {
@@ -39,7 +39,7 @@ ipcRenderer.on("ns_notes", (event, response) => {
 });
 
 async function loadNsReleases() {
-	ipcRenderer.send("get_ns_notes");
+	ipcRenderer.send("get-ns-notes");
 }; loadNsReleases();
 
 // TODO: We gotta make this more automatic instead of switch statements

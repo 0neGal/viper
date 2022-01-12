@@ -32,7 +32,6 @@ async function getLatestNsVersion() {
         let cache = _getRequestsCache();
     
         if (cache[NORTHSTAR_LATEST_RELEASE_KEY] && (Date.now() - cache[NORTHSTAR_LATEST_RELEASE_KEY]["time"]) < 5 * 60 * 1000) {
-            console.log(`returning ${NORTHSTAR_LATEST_RELEASE_KEY} data from cache`);
             resolve( cache[NORTHSTAR_LATEST_RELEASE_KEY]["body"]["tag_name"] );
         } else {
             https.get({
@@ -77,7 +76,6 @@ async function getNsReleaseNotes() {
         let cache = _getRequestsCache();
 
         if (cache[NORTHSTAR_RELEASE_NOTES_KEY] && (Date.now() - cache[NORTHSTAR_RELEASE_NOTES_KEY]["time"]) < 5 * 60 * 1000) {
-            console.log(`returning ${NORTHSTAR_RELEASE_NOTES_KEY} data from cache`);
             resolve( cache[NORTHSTAR_RELEASE_NOTES_KEY]["body"] );
         } else {
             https.get({
@@ -114,7 +112,6 @@ async function getVpReleaseNotes() {
         let cache = _getRequestsCache();
 
         if (cache[VIPER_RELEASE_NOTES_KEY] && (Date.now() - cache[VIPER_RELEASE_NOTES_KEY]["time"]) < 5 * 60 * 1000) {
-            console.log(`returning ${VIPER_RELEASE_NOTES_KEY} data from cache`);
             resolve( cache[VIPER_RELEASE_NOTES_KEY]["body"] );
         } else {
             https.get({

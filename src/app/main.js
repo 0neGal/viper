@@ -62,7 +62,7 @@ function setButtons(state) {
 	playNsBtn.disabled = !state;
 }
 
-ipcRenderer.on('ns-update-event', (_, key) => {
+ipcRenderer.on("ns-update-event", (event, key) => {
 	document.getElementById("update").innerText = `(${lang(key)})`;
 	console.log(key);
 	switch(key) {
@@ -78,7 +78,6 @@ ipcRenderer.on('ns-update-event', (_, key) => {
 
 let lastselected = "";
 function select(entry) {
-	console.log(entry)
 	let entries = document.querySelectorAll("#modsdiv .mod .modtext");
 
 	for (let i = 0; i < entries.length; i++) {

@@ -32,10 +32,10 @@ function start() {
 	win.loadFile(__dirname + "/app/index.html");
 
 	ipcMain.on("exit", () => {process.exit(0)})
-	ipcMain.on("ns-update-event", (e) => win.webContents.send('ns-update-event', e));
-	ipcMain.on("winLog", (event, ...args) => {win.webContents.send("log", ...args)})
-	ipcMain.on("winAlert", (event, ...args) => {win.webContents.send("alert", ...args)})
-	ipcMain.on("guigetmods", (event, ...args) => {win.webContents.send("mods", utils.mods.list())})
+	ipcMain.on("winLog", (event, ...args) => {win.webContents.send("log", ...args)});
+	ipcMain.on("winAlert", (event, ...args) => {win.webContents.send("alert", ...args)});
+	ipcMain.on("ns-update-event", (event) => win.webContents.send("ns-update-event", event));
+	ipcMain.on("guigetmods", (event, ...args) => {win.webContents.send("mods", utils.mods.list())});
 
 	win.webContents.on("dom-ready", () => {
 		win.webContents.send("mods", utils.mods.list());
@@ -147,9 +147,9 @@ if (cli.hasArgs()) {
 	})
 }
 
-ipcMain.on("get_ns_notes", async _ => {
-	win.webContents.send("ns_notes", await requests.getNsReleaseNotes());
+ipcMain.on("get-ns-notes", async () => {
+	win.webContents.send("ns-notes", await requests.getNsReleaseNotes());
 });
-ipcMain.on("get_vp_notes", async _ => {
-	win.webContents.send("vp_notes", await requests.getVpReleaseNotes());
+ipcMain.on("get-vp-notes", async () => {
+	win.webContents.send("vp-notes", await requests.getVpReleaseNotes());
 });
