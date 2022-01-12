@@ -1,7 +1,7 @@
 {
 	"name": "viper",
 	"productName": "Viper",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"description": "Launcher+Updater for TF|2 Northstar",
 	"main": "src/index.js",
 	"build": {
@@ -51,6 +51,7 @@
 		"copy-dir": "^1.3.0",
 		"electron-updater": "^4.6.1",
 		"follow-redirects": "^1.14.6",
+		"fs-extra": "^10.0.0",
 		"marked": "^4.0.9",
 		"marked-man": "^0.7.0",
 		"unzipper": "^0.10.11"
