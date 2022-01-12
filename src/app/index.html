@@ -22,30 +22,23 @@
 					<li id="vpMainBtn" active onclick="showVpSection('main')">%%viper.menu.main%%</li>
 					<li id="vpReleaseBtn" onclick="showVpSection('release')">%%viper.menu.release%%</li>
 					<li id="vpInfoBtn" onclick="showVpSection('info')">%%viper.menu.info%%</li>
-					<li style="display:none" id="vpCreditsBtn" onclick="showVpSection('credits')">%%viper.menu.credits%%</li>
 				</ul>
 				<div class="contentBody">
-					<div id="vpMain">
+					<div id="vpMain" class="section">
 						<img src="icons/viper.png"/>
 						<div class="inline" style="margin-top: 20px;">
 							<div id="vpversion"></div> |
 							<a id="setpath" href="#" onclick="setpath()">%%gui.setpath%%</a>
 						</div>
 					</div>
-					<div id="vpReleaseNotes"></div>
-					<div id="vpInfo">
+					<div id="vpReleaseNotes" class="hidden section"></div>
+					<div id="vpInfo" class="hidden section">
 						<h2>%%viper.menu.info.links%%</h2>
 						<ul>
 							<li>%%viper.info.discord%% <a href="https://northstar.tf/discord">northstar.tf/discord</a></li>
 							<li>%%viper.info.issues%% <a href="https://github.com/0neGal/viper/issues">github.com/0neGal/viper/issues</a></li>
 						</ul>
 						<h2>%%viper.menu.info.credits%%</h2>
-						<ul>
-							<li>"Titanfall|2 + Northstar" logo: <a href="https://www.steamgriddb.com/logo/47851">Aftonstjarma</a></li>
-							<li>Viper logo: Imply#9781</li>
-						</ul>
-					</div>
-					<div id="vpCredits">
 						<ul>
 							<li>"Titanfall|2 + Northstar" logo: <a href="https://www.steamgriddb.com/logo/47851">Aftonstjarma</a></li>
 							<li>Viper logo: Imply#9781</li>
@@ -61,7 +54,7 @@
 					<li id="nsReleaseBtn" onclick="showNsSection('release')">%%ns.menu.release%%</li>
 				</ul>
 				<div class="contentBody">
-					<div id="nsMain">
+					<div id="nsMain" class="section">
 						<div class="img"><img src="../assets/ns.png"></div>
 						<div class="playBtnContainer">
 							<button id="playNsBtn" class="playBtn" onclick="launch()">%%gui.launch%%</button>
@@ -71,7 +64,7 @@
 							</div>
 						</div>
 					</div>
-					<div id="nsMods">
+					<div id="nsMods" class="hidden section">
 						<div id="modsdiv">
 						</div>
 						<div class="line">
@@ -85,17 +78,19 @@
 							</div>
 						</div>
 					</div>
-					<div id="nsRelease"></div>
+					<div id="nsRelease" class="hidden section"></div>
 				</div>
 			</div>
 
 			<div id="tfContent" class="contentContainer">
 				<ul class="contentMenu"><li style="opacity:0.0">filler</li></ul>
 				<div class="contentBody">
-					<div class="img"><img src="../assets/vanilla.png"></div>
-					<div class="playBtnContainer">
-						<button class="playBtn" onclick="launchVanilla()">%%gui.launch%%</button>
-						<div id="tf2Version"></div>
+					<div class="section">
+						<div class="img"><img src="../assets/vanilla.png"></div>
+						<div class="playBtnContainer">
+							<button class="playBtn" onclick="launchVanilla()">%%gui.launch%%</button>
+							<div id="tf2Version"></div>
+						</div>
 					</div>
 				</div>
 			</div>

@@ -213,7 +213,7 @@ img {pointer-events: none}
 	border-radius: 50px;
 	background: var(--red);
 	left: calc(50% - 15px);
-	transition: 0.3s ease-in-out;
+	transition: 0.2s ease-in-out;
 }
 
 .contentMenu li[active]::after {
@@ -221,15 +221,23 @@ img {pointer-events: none}
 	opacity: 1.0;
 }
 
-/* these sections are hidden at start */
-#vpCredits, #vpReleaseNotes, #vpInfo, #nsMods, #nsRelease {
-	display: none;
+.section {
+	opacity: 1.0;
+	position: fixed;
+	right: calc(var(--padding) * 2);
+	left: calc(100px + var(--padding));
+	transition: opacity 0.15s ease-in-out;
+}
+
+.section.hidden {
+	opacity: 0.0;
+	pointer-events: none;
 }
 
 .contentBody img {max-width: 100%}
-.contentBody .image {text-align: center}
+.contentBody .img {text-align: center}
 
-.contentBody > :not(.img) {
+.contentBody .section > :not(.img) {
 	margin-top: 35px;
 }
 

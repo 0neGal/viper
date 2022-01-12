@@ -42,35 +42,31 @@ async function loadNsReleases() {
 	ipcRenderer.send("get_ns_notes");
 }; loadNsReleases();
 
-
+// TODO: We gotta make this more automatic instead of switch statements
+// it's both not pretty, but adding more sections requires way too much
+// effort, compared to how it should be.
 function showVpSection(section) {
 	if (!["main", "release", "info", "credits"].includes(section)) throw new Error("unknown vp section");
 	vpMainBtn.removeAttribute("active");
 	vpReleaseBtn.removeAttribute("active");
 	vpInfoBtn.removeAttribute("active");
-	vpCreditsBtn.removeAttribute("active");
 
-	vpMain.style.display = "none";
-	vpReleaseNotes.style.display = "none";
-	vpCredits.style.display = "none";
-	vpInfo.style.display = "none";
+	vpMain.classList.add("hidden");
+	vpReleaseNotes.classList.add("hidden");
+	vpInfo.classList.add("hidden");
 
 	switch(section) {
 		case "main":
 			vpMainBtn.setAttribute("active", "");
-			vpMain.style.display = "block";
+			vpMain.classList.remove("hidden");
 			break;
 		case "release":
 			vpReleaseBtn.setAttribute("active", "");
-			vpReleaseNotes.style.display = "block";
+			vpReleaseNotes.classList.remove("hidden");
 			break;
 		case "info":
 			vpInfoBtn.setAttribute("active", "");
-			vpInfo.style.display = "block";
-			break;
-		case "credits":
-			vpCreditsBtn.setAttribute("active", "");
-			vpCredits.style.display = "block";
+			vpInfo.classList.remove("hidden");
 			break;
 	}
 }
@@ -81,22 +77,23 @@ function showNsSection(section) {
 	nsModsBtn.removeAttribute("active");
 	nsReleaseBtn.removeAttribute("active");
 
-	nsMods.style.display = "none";
-	nsMain.style.display = "none";
-	nsRelease.style.display = "none";
+	nsMain.classList.add("hidden");
+	nsMods.classList.add("hidden");
+	nsRelease.classList.add("hidden");
 
 	switch(section) {
 		case "main":
 			nsMainBtn.setAttribute("active", "");
-			nsMain.style.display = "block";
-			break;
-		case "release":
-			nsReleaseBtn.setAttribute("active", "");
-			nsRelease.style.display = "block";
+			nsMain.classList.remove("hidden");
 			break;
 		case "mods":
 			nsModsBtn.setAttribute("active", "");
 			nsMods.style.display = "block";
+			nsMods.classList.remove("hidden");
+			break;
+		case "release":
+			nsReleaseBtn.setAttribute("active", "");
+			nsRelease.classList.remove("hidden");
 			break;
 	}
 }
