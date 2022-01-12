@@ -1,7 +1,7 @@
 const path = require("path");
 const fs = require("fs-extra");
 const copy = require("copy-dir");
-const { BrowserWindow, app, dialog, ipcMain } = require("electron");
+const { BrowserWindow, app, dialog, ipcMain, Notification } = require("electron");
 
 const Emitter = require("events");
 const events = new Emitter();
@@ -11,7 +11,8 @@ const lang = require("./lang");
 const requests = require("./requests");
 
 const unzip = require("unzipper");
-const exec = require("child_process").spawn;
+const run = require("child_process").spawn;
+const exec = require("child_process").exec;
 const { https } = require("follow-redirects");
 
 process.chdir(app.getPath("appData"));
@@ -33,6 +34,66 @@ if (fs.existsSync("viper.json")) {
 } else {
 	console.log(lang("general.missingpath"));
 }
+
+
+async function isGameRunning() {
+	return new Promise(resolve => {
+		let procs = ["Titanfall2.exe", "Titanfall2-unpacked.exe", "NorthstarLauncher.exe"];
+		let cmd = (() => {
+			switch (process.platform) {
+				case "linux": return "ps -A";
+				case "win32": return "tasklist";
+			}
+		})();
+
+		exec(cmd, (err, stdout) => {
+			for (let i = 0; i < procs.length; i++) {
+				if (stdout.includes(procs[i])) {
+					resolve(true);
+					break
+				}
+
+				if (i == procs.length - 1) {resolve(false)}
+			}
+		});
+	});
+}
+
+northstar_auto_updates: {
+	if (!settings.autoupdate || !fs.existsSync("viper.json") || settings.gamepath.length === 0) {
+		break northstar_auto_updates;
+	}
+
+	async function _checkForUpdates() {
+		let localVersion = getNSVersion();
+		let distantVersion = await requests.getLatestNsVersion();
+		console.log(lang("cli.autoupdates.checking"));
+
+		if (localVersion !== distantVersion) {
+			console.log(lang("cli.autoupdates.available"));
+			if (await isGameRunning()) {
+				console.log(lang("cli.autoupdates.gamerunning"));
+				new Notification({
+					title: lang("gui.nsupdate.gaming.title"), 
+					body: lang("gui.nsupdate.gaming.body")
+				}).show();
+			} else {
+				console.log(lang("cli.autoupdates.updatingns"));
+				update();
+			}
+		} else {
+			console.log(lang("cli.autoupdates.noupdate"))
+		}
+
+		setTimeout(
+			_checkForUpdates, 
+			15 * 60 * 1000	// update checking interval must be bigger than cache validity duration
+		);
+	}
+
+	_checkForUpdates();
+}
+
 
 function setpath(win) {
 	if (! win) {
@@ -75,6 +136,21 @@ function getNSVersion() {
 	}
 }
 
+
+/**
+ * Loads up Titanfall|2 version from gameversion.txt file.
+ * TODO This file is present on Origin install, should check if it's present with 
+ * Steam install as well.
+ */
+function getTF2Version() {
+	var versionFilePath = path.join(settings.gamepath, "gameversion.txt");
+	if (fs.existsSync(versionFilePath)) {
+		return fs.readFileSync(versionFilePath, "utf8");
+	} else {
+		return "unknown";
+	}
+}
+
 async function update() {
 	for (let i = 0; i < settings.excludes.length; i++) {
 		let exclude = path.join(settings.gamepath + "/" + settings.excludes[i]);
@@ -83,14 +159,14 @@ async function update() {
 		}
 	}
 
-	ipcMain.emit("ns-updating");
+	ipcMain.emit("ns-update-event", "cli.update.checking");
 	console.log(lang("cli.update.checking"));
 	var version = getNSVersion();
 
 	const latestAvailableVersion = await requests.getLatestNsVersion();
 
 	if (version === latestAvailableVersion) {
-		ipcMain.emit("ns-updated");
+		ipcMain.emit("ns-update-event", "cli.update.uptodate.short");
 		console.log(lang("cli.update.uptodate"), version);
 
 		winLog(lang("gui.update.uptodate"));
@@ -98,9 +174,9 @@ async function update() {
 	} else {
 		if (version != "unknown") {
 			console.log(lang("cli.update.current"), version);
-		}; console.log(lang("cli.update.downloading") + ":", latestAvailableVersion);
-
-		winLog(lang("gui.update.downloading"));
+		}; 
+		console.log(lang("cli.update.downloading") + ":", latestAvailableVersion);
+		ipcMain.emit("ns-update-event", "cli.update.downloading");
 	}
 
 	https.get(requests.getLatestNsVersionLink(), (res) => {
@@ -110,17 +186,18 @@ async function update() {
 		let received = 0;
 		res.on("data", (chunk) => {
 			received += chunk.length;
-			winLog(lang("gui.update.downloading") + " " + (received / 1024 / 1024).toFixed(1) + "mb");
+			ipcMain.emit("ns-update-event", lang("gui.update.downloading") + " " + (received / 1024 / 1024).toFixed(1) + "mb");
 		})
 
 		stream.on("finish", () => {
 			stream.close();
 			winLog(lang("gui.update.extracting"));
+			ipcMain.emit("ns-update-event", "gui.update.extracting");
 			console.log(lang("cli.update.downloaddone"));
 			fs.createReadStream(settings.zip).pipe(unzip.Extract({path: settings.gamepath}))
 			.on("finish", () => {
-				fs.writeFileSync(path.join(settings.gamepath, "ns_version.txt"), latestAvailableVersion);
-				ipcMain.emit("getversion");
+					fs.writeFileSync(path.join(settings.gamepath, "ns_version.txt"), latestAvailableVersion);
+					ipcMain.emit("getversion");
 
 				for (let i = 0; i < settings.excludes.length; i++) {
 					let exclude = path.join(settings.gamepath + "/" + settings.excludes[i]);
@@ -129,11 +206,11 @@ async function update() {
 					}
 				}
 
-					ipcMain.emit("guigetmods");
-					ipcMain.emit("ns-updated");
-					winLog(lang("gui.update.finished"));
-					console.log(lang("cli.update.finished"));
-					cli.exit();
+				ipcMain.emit("guigetmods");
+				ipcMain.emit("ns-update-event", "cli.update.uptodate.short");
+				winLog(lang("gui.update.finished"));
+				console.log(lang("cli.update.finished"));
+				cli.exit();
 			})
 		})
 	})
@@ -164,11 +241,11 @@ function launch(version) {
 	switch(version) {
 		case "vanilla":
 			console.log(lang("general.launching"), "Vanilla...")
-			exec(path.join(settings.gamepath + "/Titanfall2.exe"))
+			run(path.join(settings.gamepath + "/Titanfall2.exe"))
 			break;
 		default:
 			console.log(lang("general.launching"), "Northstar...")
-			exec(path.join(settings.gamepath + "/NorthstarLauncher.exe"))
+			run(path.join(settings.gamepath + "/NorthstarLauncher.exe"))
 			break;
 	}
 }
@@ -436,8 +513,10 @@ module.exports = {
 	setpath,
 	updatevp,
 	settings,
+  getSysLang,
 	getNSVersion,
-	getSysLang,
+	getTF2Version,
+	isGameRunning,
 	setlang: (lang) => {
 		settings.lang = lang;
 		saveSettings();

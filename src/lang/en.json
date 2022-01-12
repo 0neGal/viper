@@ -13,11 +13,18 @@
 	"cli.setpath.noarg": "No argument provided for --setpath",
 
 	"cli.update.current": "Current version:",
-	"cli.update.downloading": "Downloading",
+	"cli.update.downloading": "Downloading...",
 	"cli.update.checking": "Checking for updates...",
 	"cli.update.downloaddone": "Download done! Extracting...",
 	"cli.update.finished": "Installation/Update finished!",
 	"cli.update.uptodate": "Latest version (%s) is already installed, skipping update.",
+	"cli.update.uptodate.short": "Up-to-date",
+
+	"cli.autoupdates.checking": "Checking for Northstar updates...",
+	"cli.autoupdates.available": "Northstar update available!",
+	"cli.autoupdates.gamerunning": "Game is running, refusing to update Northstar",
+	"cli.autoupdates.updatingns": "Launching update process...",
+	"cli.autoupdates.noupdate": "No Northstar update available.",
 
 	"cli.launch.linuxerror": "Launching the game is not currently supported on Linux",
 
@@ -37,6 +44,7 @@
 	"gui.update": "Update",
 	"gui.setpath": "Game Path",
 
+	"gui.update.check": "Check for updates",
 	"gui.mods": "Mods",
 	"gui.mods.count": "Mods Installed:",
 	"gui.mods.disabledtag": "Disabled",
@@ -46,7 +54,9 @@
 	"gui.mods.remove": "Remove Mod",
 	"gui.mods.removeall": "Remove All",
 	"gui.mods.nothingselected": "You've not selected a mod.",
-	"gui.mods.removeall.confirm": "Removing all mods will usually require you to reinstall Northstar, are you sure?",
+	"gui.mods.toggleall.confirm": "Toggling all mods could disable mods required for Northstar to function. Are you sure?",
+	"gui.mods.removeall.confirm": "Removing all mods will usually require you to reinstall Northstar. Are you sure?",
+	"gui.mods.required.confirm": "You've selected a core mod, Northstar may not function without it. Are you sure?",
 	"gui.mods.notamod": "Not a mod!",
 	"gui.mods.extracting": "Extracting mod...",
 	"gui.mods.installing": "Installing mod...",
@@ -58,19 +68,35 @@
 	"gui.update.uptodate": "Already up to date!",
 	"gui.update.available": "A new update for Viper is available, do you want to restart and apply it?",
 
+	"gui.nsupdate.gaming.title": "Northstar update available!",
+	"gui.nsupdate.gaming.body": "An update for Northstar is available.\nYou can force its installation after closing the game.",
+
 	"gui.launch": "Launch",
 	"gui.launchvanilla": "Vanilla",
 	"gui.launchnorthstar": "Northstar",
+	"gui.installnorthstar": "Install",
 
 	"gui.selectpath": "Please select the path!",
 	"gui.gamepath.must": "The game path must be set to start Viper.",
-	"gui.gamepath.wrong": "This folder is not a valid game path.",
+	"gui.gamepath.wrong": "This folder is not a valid game path.",	
 
+	"viper.menu.main": "Viper",
+	"viper.menu.release": "Release Notes",
+	"viper.menu.info": "Extras",
+	"viper.menu.info.links": "Links",
+	"viper.menu.info.credits": "Credits",
 
-	"general.launching": "Launching",
+	"viper.info.discord": "Join Discord:",
+	"viper.info.issues": "Report issues with Viper:",
+
+	"ns.menu.main": "Northstar Launcher",
+	"ns.menu.mods": "Mods",
+	"ns.menu.release": "Release Notes",
+
 	"general.mods.enabled": "Enabled mods:",
 	"general.mods.disabled": "Disabled mods:",
 	"general.mods.installed": "Installed mods:",
 	"general.missingpath": "Game path is not set!",
-	"general.notinstalled": "Northstar is not installed!"
+	"general.notinstalled": "Northstar is not installed!",
+	"general.launching": "Launching"
 }

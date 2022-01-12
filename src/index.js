@@ -1,23 +1,24 @@
 const fs = require("fs");
 const path = require("path");
 const { autoUpdater } = require("electron-updater");
-const { app, ipcMain, BrowserWindow } = require("electron");
+const { app, ipcMain, BrowserWindow, dialog } = require("electron");
 
 const Emitter = require("events");
 const events = new Emitter();
 
 const utils = require("./utils");
 const cli = require("./cli");
+const requests = require("./requests");
 
 function start() {
-	let width = 600;
 	win = new BrowserWindow({
-		width: width,
-		height: 115,
+		width: 1000,
+		height: 600,
 		show: false,
 		title: "Viper",
 		resizable: false,
 		titleBarStyle: "hidden",
+		frame: false,
 		icon: path.join(__dirname, "assets/icons/512x512.png"),
 		webPreferences: {
 			nodeIntegration: true,
@@ -31,17 +32,12 @@ function start() {
 	win.loadFile(__dirname + "/app/index.html");
 
 	ipcMain.on("exit", () => {process.exit(0)})
-	ipcMain.on("setsize", (event, height) => {
-		win.setSize(width, height);
-	})
+	ipcMain.on("winLog", (event, ...args) => {win.webContents.send("log", ...args)});
+	ipcMain.on("winAlert", (event, ...args) => {win.webContents.send("alert", ...args)});
+	ipcMain.on("ns-update-event", (event) => win.webContents.send("ns-update-event", event));
+	ipcMain.on("guigetmods", (event, ...args) => {win.webContents.send("mods", utils.mods.list())});
 
-	ipcMain.on("ns-updated", () => {win.webContents.send("ns-updated")})
-	ipcMain.on("ns-updating", () => {win.webContents.send("ns-updating")})
-	ipcMain.on("winLog", (event, ...args) => {win.webContents.send("log", ...args)})
-	ipcMain.on("winAlert", (event, ...args) => {win.webContents.send("alert", ...args)})
-	ipcMain.on("guigetmods", (event, ...args) => {win.webContents.send("mods", utils.mods.list())})
-
-	win.webContents.once("dom-ready", () => {
+	win.webContents.on("dom-ready", () => {
 		win.webContents.send("mods", utils.mods.list());
 	});
 
@@ -99,6 +95,7 @@ ipcMain.on("newpath", (event, newpath) => {
 function _sendVersionsInfo() {
 	win.webContents.send("version", {
 		ns: utils.getNSVersion(),
+		tf2: utils.getTF2Version(),
 		vp: "v" + require("../package.json").version
 	});
 }
@@ -148,6 +145,12 @@ app.on("ready", () => {
 		}
 	} else {
 		start();
-	}
-})
+	})
+}
 
+ipcMain.on("get-ns-notes", async () => {
+	win.webContents.send("ns-notes", await requests.getNsReleaseNotes());
+});
+ipcMain.on("get-vp-notes", async () => {
+	win.webContents.send("vp-notes", await requests.getVpReleaseNotes());
+});

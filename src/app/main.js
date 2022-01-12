@@ -1,8 +1,9 @@
 const fs = require("fs");
 const path = require("path");
-const { ipcRenderer } = require("electron");
+const { ipcRenderer, shell } = require("electron");
 
 const lang = require("../lang");
+let shouldInstallNorthstar = false;
 
 var settings = {
 	gamepath: "",
@@ -35,29 +36,45 @@ if (fs.existsSync("viper.json")) {
 function exit() {ipcRenderer.send("exit")}
 function update() {ipcRenderer.send("update")}
 
-/**
- * Reports to the main thread about game path status.
- * @param {boolean} value is game path loaded
- */
+// Reports to the main process about game path status.
+// @param {boolean} value is game path loaded
+
 function setpath(value = false) {
 	ipcRenderer.send("setpath", value);
 }
 
-function launch() {ipcRenderer.send("launch")}
+function launch() {
+	if (shouldInstallNorthstar) {
+		update();
+		shouldInstallNorthstar = false;
+	} else {
+		ipcRenderer.send("launch");
+	}
+}
 function launchVanilla() {ipcRenderer.send("launchVanilla")}
 
 function log(msg) {
 	console.log(msg);
-	welcome.innerHTML = msg;
+	// welcome.innerHTML = msg;
 }
 
 function setButtons(state) {
-	let buttons = document.querySelectorAll("button");
-
-	for (let i = 0; i < buttons.length; i++) {
-		buttons[i].disabled = !state;
-	}
+	playNsBtn.disabled = !state;
 }
+
+ipcRenderer.on("ns-update-event", (event, key) => {
+	document.getElementById("update").innerText = `(${lang(key)})`;
+	console.log(key);
+	switch(key) {
+		case "cli.update.uptodate.short":
+			setButtons(true);
+			playNsBtn.innerText = lang("gui.launch");
+			break;
+		default:
+			setButtons(false);
+			break;
+	}
+});
 
 let lastselected = "";
 function select(entry) {
@@ -92,7 +109,12 @@ function selected(all) {
 
 	return {
 		remove: () => {
-			if (selected == "allmods") {
+
+			if (selected.match(/^Northstar\./)) {
+				if (! confirm(lang("gui.mods.required.confirm"))) {
+					return;
+				}
+			} else if (selected == "allmods") {
 				if (! confirm(lang("gui.mods.removeall.confirm"))) {
 					return;
 				}
@@ -101,6 +123,16 @@ function selected(all) {
 			ipcRenderer.send("removemod", selected)
 		},
 		toggle: () => {
+			if (selected.match(/^Northstar\./)) {
+				if (! confirm(lang("gui.mods.required.confirm"))) {
+					return;
+				}
+			} else if (selected == "allmods") {
+				if (! confirm(lang("gui.mods.toggleall.confirm"))) {
+					return;
+				}
+			}
+
 			ipcRenderer.send("togglemod", selected)
 		}
 	}
@@ -109,9 +141,6 @@ function selected(all) {
 function installmod() {
 	ipcRenderer.send("installmod")
 }
-
-ipcRenderer.on("ns-updated", () => {setButtons(true)})
-ipcRenderer.on("ns-updating", () => {setButtons(false)})
 
 ipcRenderer.on("newpath", (event, newpath) => {
 	settings.gamepath = newpath;
@@ -141,8 +170,9 @@ ipcRenderer.on("mods", (event, mods) => {
 })
 
 ipcRenderer.on("version", (event, versions) => {
-	vpversion.innerText = lang("gui.versions.viper") + ": " + versions.vp;
-	nsversion.innerText = lang("gui.versions.northstar") + ": " + versions.ns;
+	vpversion.innerText = versions.vp;
+	nsversion.innerText = versions.ns;
+	tf2Version.innerText = versions.tf2;
 
 	if (versions.ns == "unknown") {
 		let buttons = document.querySelectorAll(".modbtns button");
@@ -150,6 +180,10 @@ ipcRenderer.on("version", (event, versions) => {
 		for (let i = 0; i < buttons.length; i++) {
 			buttons[i].disabled = true;
 		}
+
+		// Since Northstar is not installed, we cannot launch it
+		shouldInstallNorthstar = true;
+		playNsBtn.innerText = lang("gui.installnorthstar");
 	}
 }); ipcRenderer.send("getversion");
 
@@ -170,6 +204,10 @@ ipcRenderer.on("wrongpath", () => {
 });
 
 setlang();
-setInterval(() => {
-	ipcRenderer.send("setsize", document.querySelector(".lines").offsetHeight + 20);
-}, 150);
+
+document.body.addEventListener("click", event => {
+	if (event.target.tagName.toLowerCase() === "a" && event.target.protocol != "file:") {
+		event.preventDefault();
+		shell.openExternal(event.target.href);
+	}
+});
