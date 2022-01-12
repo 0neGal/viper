@@ -98,14 +98,14 @@ async function update() {
 		}
 	}
 
-	ipcMain.emit("ns-update-event", 'cli.update.checking');
+	ipcMain.emit("ns-update-event", "cli.update.checking");
 	console.log(lang("cli.update.checking"));
 	var version = getNSVersion();
 
 	const latestAvailableVersion = await requests.getLatestNsVersion();
 
 	if (version === latestAvailableVersion) {
-		ipcMain.emit("ns-update-event", 'cli.update.uptodate.short');
+		ipcMain.emit("ns-update-event", "cli.update.uptodate.short");
 		console.log(lang("cli.update.uptodate"), version);
 
 		winLog(lang("gui.update.uptodate"));
@@ -115,9 +115,7 @@ async function update() {
 			console.log(lang("cli.update.current"), version);
 		}; 
 		console.log(lang("cli.update.downloading") + ":", latestAvailableVersion);
-		ipcMain.emit("ns-update-event", 'cli.update.downloading');
-
-		winLog(lang("gui.update.downloading"));
+		ipcMain.emit("ns-update-event", "cli.update.downloading");
 	}
 
 	https.get(requests.getLatestNsVersionLink(), (res) => {
@@ -127,16 +125,16 @@ async function update() {
 		let received = 0;
 		res.on("data", (chunk) => {
 			received += chunk.length;
-			winLog(lang("gui.update.downloading") + " " + (received / 1024 / 1024).toFixed(1) + "mb");
+			ipcMain.emit("ns-update-event", lang("gui.update.downloading") + " " + (received / 1024 / 1024).toFixed(1) + "mb");
 		})
 
-			stream.on("finish", () => {
-				stream.close();
-				winLog(lang("gui.update.extracting"));
-				ipcMain.emit("ns-update-event", 'gui.update.extracting');
-				console.log(lang("cli.update.downloaddone"));
-				fs.createReadStream(settings.zip).pipe(unzip.Extract({path: settings.gamepath}))
-				.on("finish", () => {
+		stream.on("finish", () => {
+			stream.close();
+			winLog(lang("gui.update.extracting"));
+			ipcMain.emit("ns-update-event", "gui.update.extracting");
+			console.log(lang("cli.update.downloaddone"));
+			fs.createReadStream(settings.zip).pipe(unzip.Extract({path: settings.gamepath}))
+			.on("finish", () => {
 					fs.writeFileSync(path.join(settings.gamepath, "ns_version.txt"), latestAvailableVersion);
 					ipcMain.emit("getversion");
 
@@ -148,7 +146,7 @@ async function update() {
 				}
 
 				ipcMain.emit("guigetmods");
-				ipcMain.emit("ns-update-event", 'cli.update.uptodate.short');
+				ipcMain.emit("ns-update-event", "cli.update.uptodate.short");
 				winLog(lang("gui.update.finished"));
 				console.log(lang("cli.update.finished"));
 				cli.exit();
