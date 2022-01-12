@@ -1,7 +1,7 @@
 const path = require("path");
 const fs = require("fs-extra");
 const copy = require("copy-dir");
-const { app, dialog, ipcMain } = require("electron");
+const { app, dialog, ipcMain, Notification } = require("electron");
 
 const Emitter = require("events");
 const events = new Emitter();
@@ -11,7 +11,8 @@ const lang = require("./lang");
 const requests = require("./requests");
 
 const unzip = require("unzipper");
-const exec = require("child_process").spawn;
+const run = require("child_process").spawn;
+const exec = require("child_process").exec;
 const { https } = require("follow-redirects");
 
 process.chdir(app.getPath("appData"));
@@ -33,6 +34,66 @@ if (fs.existsSync("viper.json")) {
 } else {
 	console.log(lang("general.missingpath"));
 }
+
+
+async function isGameRunning() {
+	return new Promise(resolve => {
+		let procs = ["Titanfall2.exe", "Titanfall2-unpacked.exe", "NorthstarLauncher.exe"];
+		let cmd = (() => {
+			switch (process.platform) {
+				case "linux": return "ps -A";
+				case "win32": return "tasklist";
+			}
+		})();
+
+		exec(cmd, (err, stdout) => {
+			for (let i = 0; i < procs.length; i++) {
+				if (stdout.includes(procs[i])) {
+					resolve(true);
+					break
+				}
+
+				if (i == procs.length - 1) {resolve(false)}
+			}
+		});
+	});
+}
+
+northstar_auto_updates: {
+	if (!settings.autoupdate || !fs.existsSync("viper.json") || settings.gamepath.length === 0) {
+		break northstar_auto_updates;
+	}
+
+	async function _checkForUpdates() {
+		let localVersion = getNSVersion();
+		let distantVersion = await requests.getLatestNsVersion();
+		console.log(lang("cli.autoupdates.checking"));
+
+		if (localVersion !== distantVersion) {
+			console.log(lang("cli.autoupdates.available"));
+			if (await isGameRunning()) {
+				console.log(lang("cli.autoupdates.gamerunning"));
+				new Notification({
+					title: lang("gui.nsupdate.gaming.title"), 
+					body: lang("gui.nsupdate.gaming.body")
+				}).show();
+			} else {
+				console.log(lang("cli.autoupdates.updatingns"));
+				update();
+			}
+		} else {
+			console.log(lang("cli.autoupdates.noupdate"))
+		}
+
+		setTimeout(
+			_checkForUpdates, 
+			15 * 60 * 1000	// update checking interval must be bigger than cache validity duration
+		);
+	}
+
+	_checkForUpdates();
+}
+
 
 function setpath(win) {
 	if (! win) {
@@ -180,11 +241,11 @@ function launch(version) {
 	switch(version) {
 		case "vanilla":
 			console.log(lang("general.launching"), "Vanilla...")
-			exec(path.join(settings.gamepath + "/Titanfall2.exe"))
+			run(path.join(settings.gamepath + "/Titanfall2.exe"))
 			break;
 		default:
 			console.log(lang("general.launching"), "Northstar...")
-			exec(path.join(settings.gamepath + "/NorthstarLauncher.exe"))
+			run(path.join(settings.gamepath + "/NorthstarLauncher.exe"))
 			break;
 	}
 }
@@ -443,6 +504,7 @@ module.exports = {
 	settings,
 	getNSVersion,
 	getTF2Version,
+	isGameRunning,
 	setlang: (lang) => {
 		settings.lang = lang;
 		saveSettings();
