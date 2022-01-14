@@ -52,7 +52,7 @@
 		"electron-updater": "^4.6.1",
 		"follow-redirects": "^1.14.6",
 		"fs-extra": "^10.0.0",
-		"marked": "^4.0.9",
+		"marked": "^4.0.10",
 		"marked-man": "^0.7.0",
 		"unzipper": "^0.10.11"
 	},
