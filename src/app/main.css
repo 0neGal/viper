@@ -353,6 +353,7 @@ code {
 
 #modsdiv {
 	height: 50vh;
+	overflow-y: scroll;
 	border-radius: 5px;
 	background: var(--bg);
 	backdrop-filter: blur(15px);
