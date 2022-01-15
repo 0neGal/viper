@@ -272,7 +272,7 @@ const mods = {
 		let disabled = [];
 
 		if (! fs.existsSync(modpath)) {
-			fs.mkdirSync(path.join(modpath + "disabled"), {recursive: true})
+			fs.mkdirSync(path.join(modpath, "disabled"), {recursive: true})
 			return {
 				enabled: [],
 				disabled: [],
