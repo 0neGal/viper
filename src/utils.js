@@ -271,6 +271,15 @@ const mods = {
 		let mods = [];
 		let disabled = [];
 
+		if (! fs.existsSync(modpath)) {
+			fs.mkdirSync(path.join(modpath + "disabled"), {recursive: true})
+			return {
+				enabled: [],
+				disabled: [],
+				all: []
+			};
+		}
+
 		files = fs.readdirSync(modpath)
 		files.forEach((file) => {
 			if (fs.statSync(path.join(modpath, file)).isDirectory()) {
