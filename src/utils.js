@@ -337,6 +337,51 @@ const mods = {
 
 		return false;
 	},
+	modfile: () => {
+		let file = path.join(modpath, "..", "enabledmods.json");
+
+		if (! fs.existsSync(modpath)) {
+			fs.mkdirSync(path.join(modpath), {recursive: true})
+		}
+
+		if (! fs.existsSync(file)) {
+			fs.writeFileSync(file, "{}")
+		}
+
+		return {
+			gen: () => {
+				let names = {};
+				let list = mods.list().all;
+				for (let i = 0; i < list.length; i++) {
+					names[list[i].Name] = true
+				}
+
+				fs.writeFileSync(file, JSON.stringify(names))
+			},
+			toggle: (mod) => {
+				let data = require(file);
+				data[mod] = !data[mod];
+				console.log(data)
+			},
+			get: () => {
+				let enabled = [];
+				let disabled = [];
+				let data = require(file);
+
+				for (let i in data) {
+					if (data[i]) {
+						enabled.push(data[i])
+					} else {disabled.push(data[i])}
+				}
+
+				return {
+					enabled: enabled,
+					disabled: disabled,
+					all: [...enabled, ...disabled]
+				}
+			}
+		};
+	},
 	install: (mod) => {
 		if (getNSVersion() == "unknown") {
 			winLog(lang("general.notinstalled"))
@@ -501,6 +546,8 @@ const mods = {
 		ipcMain.emit("guigetmods");
 	}
 };
+
+console.log(mods.modfile().get())
 
 module.exports = {
 	mods,
