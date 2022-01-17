@@ -8,6 +8,9 @@ const cli = app.commandLine;
 const lang = require("./lang");
 
 function hasArgs() {
+	// Makes sure the GUI isn't launched.
+	// TODO: Perhaps we should get a better way of doing this, at the
+	// very least we should use a switch case here.
 	if (cli.hasSwitch("cli") ||
 		cli.hasSwitch("help") ||
 		cli.hasSwitch("mods") ||
@@ -24,11 +27,20 @@ function hasArgs() {
 	} else {return false}
 }
 
+// Exits the CLI, when run without CLI being on it'll do nothing, this
+// is needed as without even if no code is executed it'll continue to
+// run as Electron is still technically running.
 function exit(code) {
 	if (hasArgs()) {process.exit(code)}
 }
 
+// General CLI initialization
+//
+// A lot of the CLI is handled through events sent back to the main
+// process or utils.js to handle, this is because we re-use these events
+// for the renderer as well.
 async function init() {
+	// --help menu/argument
 	if (cli.hasSwitch("help")) {
 	console.log(`options:
   --help       ${lang("cli.help.help")}
@@ -48,10 +60,14 @@ async function init() {
 		exit();
 	}
 
+	// --update
 	if (cli.hasSwitch("update")) {ipcMain.emit("update")}
+	// --version
 	if (cli.hasSwitch("version")) {ipcMain.emit("versioncli")}
 
+	// --setpath
 	if (cli.hasSwitch("setpath")) {
+		// Checks to verify the path is legitimate
 		if (cli.getSwitchValue("setpath") != "") {
 			ipcMain.emit("setpathcli", cli.getSwitchValue("setpath"));
 		} else {
@@ -60,6 +76,7 @@ async function init() {
 		}
 	}
 
+	// --launch
 	if (cli.hasSwitch("launch")) {
 		switch(cli.getSwitchValue("launch")) {
 			case "vanilla":
@@ -71,10 +88,12 @@ async function init() {
 		}
 	}
 
+	// Mod related args, --installmod, --removemod, --togglemod
 	if (cli.hasSwitch("installmod")) {ipcMain.emit("installmod")}
 	if (cli.hasSwitch("removemod")) {ipcMain.emit("removemod", "", cli.getSwitchValue("removemod"))}
 	if (cli.hasSwitch("togglemod")) {ipcMain.emit("togglemod", "", cli.getSwitchValue("togglemod"))}
 
+	// Prints out the list of mods
 	if (cli.hasSwitch("mods")) {ipcMain.emit("getmods")}
 }
 
