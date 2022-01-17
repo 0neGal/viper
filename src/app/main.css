@@ -26,25 +26,33 @@
 	background: var(--red);
 }
 
-.playBtn, .gamesContainer button, #close {
+.playBtn, .gamesContainer button, #winbtns div {
 	cursor: pointer;
 }
 
-#close {
+#winbtns {
 	z-index: 1;
+	display: flex;
+	position: fixed;
+	top: var(--padding);
+	right: calc(var(--padding) / 2);
+}
+
+#winbtns div {
 	width: 25px;
 	opacity: 0.6;
 	height: 25px;
-	position: fixed;
-	top: var(--padding);
-	right: var(--padding);
+	position: relative;
 	background-size: contain;
 	transition: 0.25s ease-in-out;
-	background-image: url("icons/close.png");
+	margin-right: calc(var(--padding) / 2);
 }
 
-#close:hover {opacity: 1.0}
-#close:active {transform: scale(0.98)}
+#winbtns #close {background-image: url("icons/close.png")}
+#winbtns #minimize {background-image: url("icons/minimize.png")}
+
+#winbtns div:hover {opacity: 1.0}
+#winbtns div:active {transform: scale(0.98)}
 
 body {
 	margin: 0;
