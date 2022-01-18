@@ -81,4 +81,6 @@ Keep in mind building all Linux builds may take a while on some systems as packa
 
 ## Credits
 
-All credits for logos go to Imply#9781.
+**Logo:** Imply#9781<br>
+**Viper Background:** [Uber Panzerhund](https://www.reddit.com/r/titanfall/comments/fwuh2x/take_to_the_skies)<br>
+**Titanfall+Northstar Logo:** [Aftonstjarma](https://www.steamgriddb.com/logo/47851)
