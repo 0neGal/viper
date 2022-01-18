@@ -8,7 +8,10 @@
 	<body>
 		<div id="bgHolder"></div>
 
-		<div id="close" onclick="ipcRenderer.send('exit')"></div>
+		<div id="winbtns">
+			<div id="minimize" onclick="ipcRenderer.send('minimize')"></div>
+			<div id="close" onclick="ipcRenderer.send('exit')"></div>
+		</div>
 		
 		<nav class="gamesContainer">
 			<button id="vpBtn" onclick="page(0)"></button>
