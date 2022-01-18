@@ -486,7 +486,6 @@ const mods = {
 			}catch(err) {return notamod()}
 		}
 	},
- as well
 	// Removes mods
 	//
 	// Takes in the names of the mod then removes it, no confirmation,
