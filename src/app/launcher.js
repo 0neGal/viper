@@ -1,5 +1,7 @@
 const markdown = require("marked").parse;
 
+// Changes the main page
+// This is the tabs in the sidebar
 function page(page) {
 	let pages = document.querySelectorAll(".mainContainer .contentContainer")
 	let btns = document.querySelectorAll(".gamesContainer button")
@@ -18,6 +20,7 @@ function page(page) {
 }; page(0)
 
 
+// Updates the Viper release notes
 ipcRenderer.on("vp-notes", (event, response) => {
 	let content = "";
 
@@ -28,11 +31,13 @@ ipcRenderer.on("vp-notes", (event, response) => {
 
 	vpReleaseNotes.innerHTML = markdown(content);
 });
+
 async function loadVpReleases() {
 	ipcRenderer.send("get-vp-notes");	
 }; loadVpReleases();
 
 
+// Updates the Northstar release notes
 ipcRenderer.on("ns-notes", (event, response) => {
 	let content = "";
 

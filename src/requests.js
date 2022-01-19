@@ -71,6 +71,7 @@ function getLatestNsVersionLink() {
     return cache[NORTHSTAR_LATEST_RELEASE_KEY]["body"].assets[0].browser_download_url;
 }
 
+// Returns and caches the Northstar release notes
 async function getNsReleaseNotes() {
     return new Promise(resolve => {
         let cache = _getRequestsCache();
@@ -107,6 +108,7 @@ async function getNsReleaseNotes() {
     });
 }
 
+// Returns and caches the Viper release notes
 async function getVpReleaseNotes() {
     return new Promise(resolve => {
         let cache = _getRequestsCache();
