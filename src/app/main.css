@@ -30,6 +30,52 @@
 	cursor: pointer;
 }
 
+#browser {
+	--spacing: calc(var(--padding) * 3);
+
+	z-index: 1;
+	opacity: 0.0;
+	position: fixed;
+	overflow-y: scroll;
+	top: var(--spacing);
+	pointer-events: none;
+	left: var(--spacing);
+	background: var(--bg);
+	right: var(--spacing);
+	bottom: var(--spacing);
+	backdrop-filter: blur(15px);
+	transition: opacity 0.15s ease-in-out;
+	border-radius: calc(var(--padding) / 2);
+}
+
+#browser.shown {
+	opacity: 1.0;
+	pointer-events: all;
+}
+
+#browser .el {
+	--spacing: calc(var(--padding) / 2);
+	--height: calc(var(--padding) * 2.5);
+
+	color: white;
+	display: flex;
+	align-items: center;
+	height: var(--height);
+	margin: var(--spacing);
+	padding: var(--spacing);
+	background: var(--selbg);
+	border-radius: var(--spacing);
+	width: calc(100% - var(--spacing) * 4);
+}
+
+#browser .el .image, #browser .el .image img {
+	width: var(--height);
+	height: var(--height);
+	margin-right: var(--spacing);
+}
+#browser .el .title {font-size: 1.2em}
+#browser .el .description {font-size: 0.8em}
+
 #winbtns {
 	z-index: 1;
 	display: flex;

@@ -12,6 +12,8 @@
 			<div id="minimize" onclick="ipcRenderer.send('minimize')"></div>
 			<div id="close" onclick="ipcRenderer.send('exit')"></div>
 		</div>
+
+		<div id="browser"></div>
 		
 		<nav class="gamesContainer">
 			<button id="vpBtn" onclick="page(0)"></button>
@@ -102,6 +104,7 @@
 
 		<script src="lang.js"></script>
 		<script src="main.js"></script>
+		<script src="browser.js"></script>
 		<script src="launcher.js"></script>
 	</body>
 </html>
