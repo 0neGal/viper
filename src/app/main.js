@@ -5,6 +5,7 @@ const { ipcRenderer, shell } = require("electron");
 const lang = require("../lang");
 let shouldInstallNorthstar = false;
 
+// Base settings
 var settings = {
 	gamepath: "",
 	autoupdate: true,
@@ -16,8 +17,10 @@ var settings = {
 	]
 }
 
+// Sets the lang to the system default
 ipcRenderer.send("setlang", settings.lang);
 
+// Loads the settings
 if (fs.existsSync("viper.json")) {
 	settings = {...settings, ...JSON.parse(fs.readFileSync("viper.json", "utf8"))};
 	settings.zip = path.join(settings.gamepath + "/northstar.zip");
@@ -38,11 +41,11 @@ function update() {ipcRenderer.send("update")}
 
 // Reports to the main process about game path status.
 // @param {boolean} value is game path loaded
-
 function setpath(value = false) {
 	ipcRenderer.send("setpath", value);
 }
 
+// Tells the main process to launch or install Northstar
 function launch() {
 	if (shouldInstallNorthstar) {
 		update();
@@ -51,17 +54,23 @@ function launch() {
 		ipcRenderer.send("launch");
 	}
 }
+
+// Tells the main process to launch the vanilla game
 function launchVanilla() {ipcRenderer.send("launchVanilla")}
 
+// In conjunction with utils.js' winLog(), it'll send log messages in
+// the devTools from utils.js
 function log(msg) {
 	console.log(msg);
-	// welcome.innerHTML = msg;
 }
 
+// Disables or enables certain buttons when for example
+// updating/installing Northstar.
 function setButtons(state) {
 	playNsBtn.disabled = !state;
 }
 
+// Frontend part of updating Northstar
 ipcRenderer.on("ns-update-event", (event, key) => {
 	document.getElementById("update").innerText = `(${lang(key)})`;
 	console.log(key);
@@ -90,6 +99,7 @@ function select(entry) {
 	}
 }
 
+// Mod selection
 function selected(all) {
 	let selected = "";
 	if (all) {
@@ -138,17 +148,21 @@ function selected(all) {
 	}
 }
 
+// Tells the main process to install a mod
 function installmod() {
 	ipcRenderer.send("installmod")
 }
 
+// Frontend part of settings a new game path
 ipcRenderer.on("newpath", (event, newpath) => {
 	settings.gamepath = newpath;
 })
 
+// Continuation of log()
 ipcRenderer.on("log", (event, msg) => {log(msg)})
 ipcRenderer.on("alert", (event, msg) => {alert(msg)})
 
+// Updates the installed mods
 ipcRenderer.on("mods", (event, mods) => {
 	modcount.innerHTML = `${lang("gui.mods.count")} ${mods.all.length}`;
 	modsdiv.innerHTML = "";
@@ -169,6 +183,7 @@ ipcRenderer.on("mods", (event, mods) => {
 	select(lastselected);
 })
 
+// Updates version numbers
 ipcRenderer.on("version", (event, versions) => {
 	vpversion.innerText = versions.vp;
 	nsversion.innerText = versions.ns;
@@ -187,17 +202,20 @@ ipcRenderer.on("version", (event, versions) => {
 	}
 }); ipcRenderer.send("getversion");
 
+// When an update is available it'll ask the user about it
 ipcRenderer.on("updateavailable", () => {
 	if (confirm(lang("gui.update.available"))) {
 		ipcRenderer.send("updatenow");
 	}
 })
 
+// Error out when no game path is set
 ipcRenderer.on("nopathselected", () => {
 	alert(lang("gui.gamepath.must"));
 	exit();
 });
 
+// Error out when game path is wrong
 ipcRenderer.on("wrongpath", () => {
 	alert(lang("gui.gamepath.wrong"));
 	setpath(false);

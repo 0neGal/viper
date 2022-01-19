@@ -8,7 +8,10 @@
 	<body>
 		<div id="bgHolder"></div>
 
-		<div id="close" onclick="ipcRenderer.send('exit')"></div>
+		<div id="winbtns">
+			<div id="minimize" onclick="ipcRenderer.send('minimize')"></div>
+			<div id="close" onclick="ipcRenderer.send('exit')"></div>
+		</div>
 		
 		<nav class="gamesContainer">
 			<button id="vpBtn" onclick="page(0)"></button>
@@ -40,8 +43,9 @@
 						</ul>
 						<h2>%%viper.menu.info.credits%%</h2>
 						<ul>
-							<li>"Titanfall|2 + Northstar" logo: <a href="https://www.steamgriddb.com/logo/47851">Aftonstjarma</a></li>
-							<li>Viper logo: Imply#9781</li>
+							<li>Viper Logo: Imply#9781</li>
+							<li>Viper Background: <a href="https://www.reddit.com/r/titanfall/comments/fwuh2x/take_to_the_skies">Uber Panzerhund</a></li>
+							<li>Titanfall+Northstar Logo: <a href="https://www.steamgriddb.com/logo/47851">Aftonstjarma</a></li>
 						</ul>
 					</div>
 				</div>

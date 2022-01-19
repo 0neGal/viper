@@ -10,12 +10,20 @@ const utils = require("./utils");
 const cli = require("./cli");
 const requests = require("./requests");
 
+// Starts the actual BrowserWindow, which is only run when using the
+// GUI, for the CLI this function is never called.
 function start() {
 	win = new BrowserWindow({
 		width: 1000,
 		height: 600,
+
+		// Hides the window initially, it'll be shown when the DOM is
+		// loaded, as to not cause visual issues.
 		show: false,
 		title: "Viper",
+
+		// In the future we may want to allow the user to resize the window,
+		// as it's fairly responsive, but for now we won't allow that.
 		resizable: false,
 		titleBarStyle: "hidden",
 		frame: false,
@@ -26,12 +34,15 @@ function start() {
 		},
 	}); 
 
+	// When --debug is added it'll open the dev tools
 	if (cli.hasParam("debug")) {win.openDevTools()}
 
+	// General setup
 	win.removeMenu();
 	win.loadFile(__dirname + "/app/index.html");
 
 	ipcMain.on("exit", () => {process.exit(0)})
+	ipcMain.on("minimize", () => {win.minimize()})
 	ipcMain.on("winLog", (event, ...args) => {win.webContents.send("log", ...args)});
 	ipcMain.on("winAlert", (event, ...args) => {win.webContents.send("alert", ...args)});
 	ipcMain.on("ns-update-event", (event) => win.webContents.send("ns-update-event", event));
@@ -47,11 +58,15 @@ function start() {
 		win.webContents.send("updateavailable")
 	});
 
+	// Updates and restarts Viper, if user says yes to do so.
+	// Otherwise it'll do it on the next start up.
 	ipcMain.on("updatenow", () => {
 		autoUpdater.quitAndInstall();
 	})
 }
 
+// General events used to handle utils.js stuff without requiring the
+// module inside the file that sent the event. {
 ipcMain.on("installmod", () => {
 	if (cli.hasArgs()) {
 		utils.mods.install(cli.param("installmod"))
@@ -79,19 +94,6 @@ ipcMain.on("setpath", (event, value) => {
 	}
 });
 
-ipcMain.on("newpath", (event, newpath) => {
-	if (newpath === false && !win.isVisible()) {
-		win.webContents.send("nopathselected");
-	} else {
-		_sendVersionsInfo();
-		if (!win.isVisible()) {
-			win.show();
-		}
-	}
-}); ipcMain.on("wrongpath", (event) => {
-	win.webContents.send("wrongpath");
-});
-
 function _sendVersionsInfo() {
 	win.webContents.send("version", {
 		ns: utils.getNSVersion(),
@@ -100,8 +102,10 @@ function _sendVersionsInfo() {
 	});
 }
 
-ipcMain.on("getversion", () => _sendVersionsInfo());
+// Sends the version info back to the renderer
+ipcMain.on("getversion", () => {_sendVersionsInfo()});
 
+// Prints out version info for the CLI
 ipcMain.on("versioncli", () => {
 	console.log("Viper: v" + require("../package.json").version);
 	console.log("Northstar: " + utils.getNSVersion());
@@ -131,9 +135,25 @@ ipcMain.on("getmods", (event) => {
 		cli.exit(0);
 	}
 })
+// }
 
+ipcMain.on("newpath", (event, newpath) => {
+	if (newpath === false && !win.isVisible()) {
+		win.webContents.send("nopathselected");
+	} else {
+		_sendVersionsInfo();
+		if (!win.isVisible()) {
+			win.show();
+		}
+	}
+}); ipcMain.on("wrongpath", (event) => {
+	win.webContents.send("wrongpath");
+});
+
+// Ensures ./ is the config folder where viper.json is located.
 process.chdir(app.getPath("appData"));
 
+// Starts the GUI or CLI
 if (cli.hasArgs()) {
 	if (cli.hasParam("updatevp")) {
 		utils.updatevp(true);
@@ -147,9 +167,11 @@ if (cli.hasArgs()) {
 	})
 }
 
+// Returns cached requests
 ipcMain.on("get-ns-notes", async () => {
 	win.webContents.send("ns-notes", await requests.getNsReleaseNotes());
 });
+
 ipcMain.on("get-vp-notes", async () => {
 	win.webContents.send("vp-notes", await requests.getVpReleaseNotes());
 });
