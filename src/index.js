@@ -9,6 +9,8 @@ const events = new Emitter();
 const utils = require("./utils");
 const cli = require("./cli");
 const requests = require("./requests");
+const platform = require("./platform");
+
 
 // Starts the actual BrowserWindow, which is only run when using the
 // GUI, for the CLI this function is never called.
@@ -87,6 +89,8 @@ ipcMain.on("launchVanilla", (event) => {utils.launch("vanilla")})
 ipcMain.on("update", (event) => {utils.update()})
 ipcMain.on("setpathcli", (event) => {utils.setpath()});
 ipcMain.on("setpath", (event, value) => {
+	platform.getGameFolder();
+	
 	if (!value) {
 		utils.setpath(win);
 	} else if (!win.isVisible()) {
