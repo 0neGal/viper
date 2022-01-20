@@ -1,11 +1,28 @@
-function Browser() {
+function Browser(state) {
+	if (state) {
+		overlay.classList.add("shown")
+		browser.classList.add("shown")
+		return
+	} else if (! state) {
+		if (state != undefined) {
+			overlay.classList.remove("shown")
+			browser.classList.remove("shown")
+			return
+		}
+	}
+
+	overlay.classList.toggle("shown")
 	browser.classList.toggle("shown")
 };Browser()
+
+document.body.addEventListener("keyup", (e) => {
+	if (e.key == "Escape") {Browser(false)}
+})
 
 function BrowserEl(properties) {
 	properties = {
 		title: "No name",
-		image: "",
+		image: "icons/no-image.png",
 		author: "Unnamed Pilot",
 		description: "No description",
 		...properties

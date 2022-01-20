@@ -33,7 +33,7 @@
 #browser {
 	--spacing: calc(var(--padding) * 3);
 
-	z-index: 1;
+	z-index: 2;
 	opacity: 0.0;
 	position: fixed;
 	overflow-y: scroll;
@@ -43,17 +43,37 @@
 	background: var(--bg);
 	right: var(--spacing);
 	bottom: var(--spacing);
+	transform: scale(0.98);
 	backdrop-filter: blur(15px);
-	transition: opacity 0.15s ease-in-out;
 	border-radius: calc(var(--padding) / 2);
+	transition: opacity 0.15s ease-in-out, transform 0.15s ease-in-out;
 }
 
 #browser.shown {
 	opacity: 1.0;
 	pointer-events: all;
+	transform: scale(1.0);
 }
 
-#browser .el {
+#overlay {
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	z-index: 1;
+	opacity: 0.0;
+	position: fixed;
+	background: var(--bg);
+	pointer-events: none;
+	transition: opacity 0.15s ease-in-out;
+}
+
+#overlay.shown {
+	opacity: 0.8;
+	pointer-events: all;
+}
+
+#browser .el, #browser #search {
 	--spacing: calc(var(--padding) / 2);
 	--height: calc(var(--padding) * 2.5);
 
@@ -68,16 +88,25 @@
 	width: calc(100% - var(--spacing) * 4);
 }
 
+#browser #search {
+	--height: calc(var(--padding) * 1.5);
+
+	border: none;
+	outline: none;
+	width: calc(100% - var(--spacing) * 2);
+}
+
 #browser .el .image, #browser .el .image img {
 	width: var(--height);
 	height: var(--height);
 	margin-right: var(--spacing);
 }
+
 #browser .el .title {font-size: 1.2em}
 #browser .el .description {font-size: 0.8em}
 
 #winbtns {
-	z-index: 1;
+	z-index: 2;
 	display: flex;
 	position: fixed;
 	top: var(--padding);
@@ -104,8 +133,9 @@ body {
 	margin: 0;
 	overflow: hidden;
 	user-select: none;
-	font-family: "Roboto", sans-serif;
 }
+
+body, button, input {font-family: "Roboto", sans-serif}
 
 button {outline: none}
 b, strong {font-weight: 700}
@@ -131,9 +161,8 @@ img {pointer-events: none}
 	left: 0;
 	right: 0;
 	bottom: 0;
-	pointer-events: none;
-	position: fixed;
-	transform: scale(1.1);
+	z-index: -1;
+	position: absolute;
 	background-size: cover;
 	background-position: center;
 	background-repeat: no-repeat;
@@ -441,6 +470,6 @@ code {
   	-webkit-app-region: drag;
 }
 
-a, button, .contentMenu, #close, #nsRelease, #vpReleaseNotes, .mod {
+a, button, .contentMenu, #close, #nsRelease, #vpReleaseNotes, .mod, #overlay {
 	-webkit-app-region: no-drag;
 }

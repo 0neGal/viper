@@ -13,7 +13,10 @@
 			<div id="close" onclick="ipcRenderer.send('exit')"></div>
 		</div>
 
-		<div id="browser"></div>
+		<div id="overlay" onclick="Browser()"></div>
+		<div id="browser">
+			<input id="search" placeholder="Search...">
+		</div>
 		
 		<nav class="gamesContainer">
 			<button id="vpBtn" onclick="page(0)"></button>
