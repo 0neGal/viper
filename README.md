@@ -40,6 +40,15 @@ Almost all configuration takes place inside the UI, and almost no configuration 
 
 Your configuration file will be found in `%APPDATA%\viper.json` on Windows, and inside either `~/.config` or through your environment variables (`$XDG_CONFIG_HOME`) on Linux, the latter has priority.
 
+## Contact/Support
+
+To get supoport either open a GitHub issue.<br>
+Or if you must you can contact a developer through the methods below:
+
+Ways to contact the main developer: [0neGal](https://github.com/0neGal)
+ * Twitter: [@0neGal](https://twitter.com/0neGal)
+ * Reddit: [/u/0neGal](https://reddit.com/u/0neGal)
+
 ## Sidenote
 
 Given that we already have so many Northstar updaters and launchers I urge people to instead of creating new launchers unless there's a very specific reason, just make a pull request on one of the existing, otherwise we'll continue to have new ones.
