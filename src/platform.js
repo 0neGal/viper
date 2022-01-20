@@ -20,8 +20,7 @@ async function getGameFolder() {
                 console.log('Origin path could not be determined.')
             }
             
-            // TODO steam => 
-            break;
+            return await _getSteamGameFolder();
         case 'linux':
             // TODO wine
             // TODO proton
@@ -30,6 +29,37 @@ async function getGameFolder() {
         default:
             return '';
     }
+}
+
+
+async function _getSteamGameFolder() {
+    let steamInstallPath = "";
+
+    // Checking if Steam is installed on a 64-bit machine
+    try {
+        const {stdout} = await exec("Get-Item -Path Registry::HKEY_LOCAL_MACHINE\\SOFTWARE\\Wow6432Node\\Valve\\Steam", {"shell":"powershell.exe"});
+        steamInstallPath = stdout.split('\n')
+            .filter(r => r.indexOf('InstallPath') !== -1)[0]
+            .replace(/\s+/g,' ')
+            .trim()
+            .replace('Steam InstallPath : ','');
+    } catch (err) { }
+
+    // Trying to get 32-bit path then !
+    if (steamInstallPath.length === 0) {
+        try {
+            const {stdout} = await exec("Get-Item -Path Registry::HKEY_LOCAL_MACHINE\\SOFTWARE\\Valve\\Steam", {"shell":"powershell.exe"});
+            steamInstallPath = stdout.split('\n')
+                .filter(r => r.indexOf('InstallPath') !== -1)[0]
+                .replace(/\s+/g,' ')
+                .trim()
+                .replace('Steam InstallPath : ','');
+        } catch (err) { }
+    }
+
+    if (steamInstallPath.length === 0) return '';
+
+    // TODO read Steam/steamapps/libraryfolders.vdf and find Titanfall2 path in there
 }
 
 
