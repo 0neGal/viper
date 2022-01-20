@@ -7,15 +7,19 @@ const exec = util.promisify(require('child_process').exec);
 async function getGameFolder() {
     switch(os.platform()) {
         case 'win32':
-            const { stdout, stderr } = await exec("Get-Item -Path Registry::HKEY_LOCAL_MACHINE\\SOFTWARE\\Respawn\\Titanfall2\\", {"shell":"powershell.exe"});
-            const originPath = stdout.split('\n')
-                .filter(r => r.indexOf('Install Dir') !== -1)[0]
-                .replace(/\s+/g,' ')
-                .trim()
-                .replace('Install Dir : ','');
-            console.log(originPath);
+            // Origin path
+            try {
+                const {stdout} = await exec("Get-Item -Path Registry::HKEY_LOCAL_MACHINE\\SOFTWARE\\Respawn\\Titanfall2\\", {"shell":"powershell.exe"});
+                const originPath = stdout.split('\n')
+                    .filter(r => r.indexOf('Install Dir') !== -1)[0]
+                    .replace(/\s+/g,' ')
+                    .trim()
+                    .replace('Install Dir : ','');
+                return originPath;
+            } catch (err) {
+                console.log('Origin path could not be determined.')
+            }
             
-            // TODO origin => Get-Item -Path Registry::HKEY_LOCAL_MACHINE\SOFTWARE\Respawn\Titanfall2\
             // TODO steam => 
             break;
         case 'linux':
