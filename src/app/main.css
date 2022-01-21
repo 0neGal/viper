@@ -75,7 +75,7 @@
 
 #browser .el, #browser #search {
 	--spacing: calc(var(--padding) / 2);
-	--height: calc(var(--padding) * 2.5);
+	--height: calc(var(--padding) * 3);
 
 	color: white;
 	display: flex;
@@ -100,10 +100,15 @@
 	width: var(--height);
 	height: var(--height);
 	margin-right: var(--spacing);
+	border-radius: var(--spacing);
 }
 
 #browser .el .title {font-size: 1.2em}
 #browser .el .description {font-size: 0.8em}
+#browser .el button {
+	background: var(--blue);
+	margin-top: var(--spacing);
+}
 
 #winbtns {
 	z-index: 2;
