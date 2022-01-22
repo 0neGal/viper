@@ -1,5 +1,6 @@
 const path = require("path");
 const fs = require("fs-extra");
+const os = require("os")
 const copy = require("copy-dir");
 const { app, dialog, ipcMain, Notification } = require("electron");
 
@@ -14,6 +15,7 @@ const unzip = require("unzipper");
 const run = require("child_process").spawn;
 const exec = require("child_process").exec;
 const { https } = require("follow-redirects");
+const vdf = require('simple-vdf');
 
 process.chdir(app.getPath("appData"));
 
@@ -119,6 +121,68 @@ function setpath(win) {
 	if (! win) { // CLI
 		settings.gamepath = cli.param("setpath");
 	} else { // GUI
+		// Autodetect path
+
+
+		// Windows only using powershell and windows registery
+		// Get-Item -Path Registry::HKEY_LOCAL_MACHINE\SOFTWARE\Respawn\Titanfall2\
+		// https://nodejs.org/api/os.html#osplatform
+		if (os.platform() == "win32")
+		{
+			// TODO
+		}
+
+		// Detect using 
+		// Windows: C:\Program Files (x86)\Steam\steamapps
+		// Linux: ~/.steam/steam/steamapps/
+		// Mac: ~/Library/Application\ Support/Steam/steamapps
+
+		function read_libraryfolders(read_data)
+		{
+			// Parse read_data
+			data = vdf.parse(read_data);
+
+			//data['libraryfolders']
+			// `.length - 1` This is because the last value is `contentstatsid`
+			for (let pathIterator = 0; pathIterator < Object.values(data['libraryfolders']).length - 1; pathIterator++) {
+				let data_array = Object.values(data['libraryfolders'][pathIterator])
+				
+				if (fs.existsSync(data_array[0] + "/steamapps/common/Titanfall2/Titanfall2.exe")) {
+					// Found the location
+					settings.gamepath = data_array[0] + "/steamapps/common/Titanfall2/";
+					settings.zip = path.join(settings.gamepath + "/northstar.zip");
+					saveSettings();
+					win.webContents.send("newpath", settings.gamepath);
+					ipcMain.emit("newpath", null, settings.gamepath);
+
+					saveSettings();
+					cli.exit();
+					// Return 1 if success
+					return 1;
+				}
+			}
+		}
+
+		switch (os.platform()) {
+			case "win32":
+				if (fs.existsSync( "C:\\Program Files (x86)\\Steam\\steamapps\\libraryfolders.vdf"))
+				{
+					let read_data = fs.readFileSync("C:\\Program Files (x86)\\Steam\\steamapps\\libraryfolders.vdf")
+					if (read_libraryfolders(read_data.toString()) == 1)
+						return
+				}
+				break;
+			case "linux":
+				if (fs.existsSync( os.homedir() + "/.steam/steam/steamapps/libraryfolders.vdf"))
+				{
+					let read_data = fs.readFileSync(os.homedir() + "/.steam/steam/steamapps/libraryfolders.vdf")
+					if (read_libraryfolders(read_data.toString()) == 1)
+						return
+				}
+				break;	
+		}
+
+		// Let user choose manually
 		dialog.showOpenDialog({properties: ["openDirectory"]}).then(res => {
 			if (res.canceled) {
 				ipcMain.emit("newpath", null, false);
@@ -134,11 +198,12 @@ function setpath(win) {
 			saveSettings();
 			win.webContents.send("newpath", settings.gamepath);
 			ipcMain.emit("newpath", null, settings.gamepath);
+
+			saveSettings();
+			cli.exit();
+			return;
 		}).catch(err => {console.error(err)})
 	}
-
-	saveSettings();
-	cli.exit();
 }
 
 // As to not have to do the same one liner a million times, this
