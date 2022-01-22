@@ -199,7 +199,6 @@ function setpath(win) {
 			win.webContents.send("newpath", settings.gamepath);
 			ipcMain.emit("newpath", null, settings.gamepath);
 
-			saveSettings();
 			cli.exit();
 			return;
 		}).catch(err => {console.error(err)})
