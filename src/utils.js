@@ -121,7 +121,7 @@ async function setpath(win) {
 		settings.gamepath = cli.param("setpath");
 	} else { // GUI
 		function setGamepath(folder) {
-			settings.gamepath = folder + "/steamapps/common/Titanfall2/";
+			settings.gamepath = folder;
 			settings.zip = path.join(settings.gamepath + "/northstar.zip");
 			saveSettings();
 			win.webContents.send("newpath", settings.gamepath);
