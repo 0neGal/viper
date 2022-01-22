@@ -131,7 +131,7 @@ async function setpath(win) {
 		// Autodetect path
 		// Windows only using powershell and windows registery
 		// Get-Item -Path Registry::HKEY_LOCAL_MACHINE\SOFTWARE\Respawn\Titanfall2\
-		if (process.platform == "linux") {
+		if (process.platform == "win32") {
 			try {
                 let {stdout} = await exec("Get-Item -Path Registry::HKEY_LOCAL_MACHINE\\SOFTWARE\\Respawn\\Titanfall2\\", {"shell":"powershell.exe"});
                 let originPath = stdout.split('\n')
