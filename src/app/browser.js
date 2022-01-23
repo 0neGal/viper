@@ -61,7 +61,7 @@ function BrowserEl(properties) {
 			</div>
 			<div class="text">
 				<div class="title">${properties.title}</div>
-				<div class="description">${properties.description} - by ${properties.author}</div>
+				<div class="description">${properties.description} - ${lang("gui.browser.madeby")} ${properties.author}</div>
 				<button>Install</button>
 				<button>Info</button>
 			</div>

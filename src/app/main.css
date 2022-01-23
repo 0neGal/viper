@@ -26,12 +26,40 @@
 	background: var(--red);
 }
 
+::selection {
+	color: black;
+	background: var(--red);
+}
+
+body {
+	margin: 0;
+	overflow: hidden;
+	user-select: none;
+}
+
+body, button, input {font-family: "Roboto", sans-serif}
+
+button {outline: none}
+b, strong {font-weight: 700}
+body, input, button {font-weight: 500}
+
+button {
+	border: none;
+	color: white;
+	outline: none;
+	cursor: pointer;
+	font-weight: 700;
+	padding: 5px 10px;
+	border-radius: 5px;
+	transition: 0.2s ease-in-out;
+}
+
 .playBtn, .gamesContainer button, #winbtns div {
 	cursor: pointer;
 }
 
 #browser {
-	--spacing: calc(var(--padding) * 3);
+	--spacing: var(--padding);
 
 	z-index: 2;
 	opacity: 0.0;
@@ -116,7 +144,12 @@
 #browser #search {
 	border: none;
 	outline: none;
+	transition: filter 0.15s ease-in-out;
 	width: calc(100% - var(--spacing) * 2);
+}
+
+#browser #search:focus {
+	filter: brightness(1.5);
 }
 
 #browser #close {
@@ -181,28 +214,6 @@
 
 #winbtns div:hover {opacity: 1.0}
 #winbtns div:active {transform: scale(0.98)}
-
-body {
-	margin: 0;
-	overflow: hidden;
-	user-select: none;
-}
-
-body, button, input {font-family: "Roboto", sans-serif}
-
-button {outline: none}
-b, strong {font-weight: 700}
-body, input, button {font-weight: 500}
-
-button {
-	border: none;
-	color: white;
-	outline: none;
-	font-weight: 700;
-	padding: 5px 10px;
-	border-radius: 5px;
-	transition: 0.2s ease-in-out;
-}
 
 button:hover {filter: brightness(110%)}
 button:active {filter: brightness(90%)}
@@ -513,8 +524,8 @@ code {
 }
 
 .modbtns button {
-	--spacing: calc(var(--padding) / 3);
 	margin-left: var(--spacing);
+	--spacing: calc(var(--padding) / 3);
 	margin-top: calc(var(--spacing) / 2);
 	margin-bottom: calc(var(--spacing) / 2);
 }
