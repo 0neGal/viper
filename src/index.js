@@ -8,7 +8,7 @@ const events = new Emitter();
 
 const utils = require("./utils");
 const cli = require("./cli");
-const requests = require("./requests");
+const requests = require("./extras/requests");
 
 // Starts the actual BrowserWindow, which is only run when using the
 // GUI, for the CLI this function is never called.

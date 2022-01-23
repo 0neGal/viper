@@ -8,9 +8,9 @@ const events = new Emitter();
 
 const cli = require("./cli");
 const lang = require("./lang");
-const requests = require("./requests");
+const requests = require("./extras/requests");
+const findgame = require("./extras/findgame");
 
-const vdf = require("simple-vdf");
 const unzip = require("unzipper");
 const run = require("child_process").spawn;
 const exec = require("child_process").exec;
@@ -117,8 +117,16 @@ northstar_auto_updates: {
 // If running with CLI it takes in the --setpath argument otherwise it
 // open the systems file browser for the user to select a path.
 async function setpath(win) {
+	function setGamepath(folder) {
+		settings.gamepath = folder;
+		settings.zip = path.join(settings.gamepath + "/northstar.zip");
+		saveSettings();
+		win.webContents.send("newpath", settings.gamepath);
+		ipcMain.emit("newpath", null, settings.gamepath);
+	}
+
 	if (! win) { // CLI
-		settings.gamepath = cli.param("setpath");
+		setGamepath(cli.param("setpath"));
 	} else { // GUI
 		function setGamepath(folder) {
 			settings.gamepath = folder;
@@ -128,56 +136,10 @@ async function setpath(win) {
 			ipcMain.emit("newpath", null, settings.gamepath);
 		}
 
-		// Autodetect path
-		// Windows only using powershell and windows registery
-		// Get-Item -Path Registry::HKEY_LOCAL_MACHINE\SOFTWARE\Respawn\Titanfall2\
-		if (process.platform == "win32") {
-			try {
-                let {stdout} = await exec("Get-Item -Path Registry::HKEY_LOCAL_MACHINE\\SOFTWARE\\Respawn\\Titanfall2\\", {"shell":"powershell.exe"});
-                let originPath = stdout.split('\n')
-                    .filter(r => r.indexOf("Install Dir") !== -1)[0]
-                    .replace(/\s+/g,' ')
-                    .trim()
-                    .replace("Install Dir : ","");
-				setGamepath(originPath)
-                return
-            } catch (err) {}
-		}
-
-		// Detect using Steam VDF
-		function readvdf(data) {
-			// Parse read_data
-			data = vdf.parse(data);
-
-			//data['libraryfolders']
-			// `.length - 1` This is because the last value is `contentstatsid`
-			for (let pathIterator = 0; pathIterator < Object.values(data["libraryfolders"]).length - 1; pathIterator++) {
-				let data_array = Object.values(data["libraryfolders"][pathIterator])
-				
-				if (fs.existsSync(data_array[0] + "/steamapps/common/Titanfall2/Titanfall2.exe")) {
-					// Found the location
-					setGamepath(data_array[0] + "/steamapps/common/Titanfall2")
-
-					saveSettings();
-					cli.exit();
-					return true;
-				}
-			}
-		}
-
-		switch (process.platform) {
-			case "win32":
-				if (fs.existsSync("C:\\Program Files (x86)\\Steam\\steamapps\\libraryfolders.vdf")) {
-					let data = fs.readFileSync("C:\\Program Files (x86)\\Steam\\steamapps\\libraryfolders.vdf")
-					if (readvdf(data.toString())) {return}
-				}
-				break;
-			case "linux":
-				if (fs.existsSync(path.join(app.getPath("home"), "/.steam/steam/steamapps/libraryfolders.vdf"))) {
-					let data = fs.readFileSync(os.homedir() + "/.steam/steam/steamapps/libraryfolders.vdf")
-					if (readvdf(data.toString())) {return}
-				}
-				break;	
+		let gamepath = findgame();
+		if (findgame()) {
+			setGamepath(gamepath);
+			return;
 		}
 
 		// Fallback to manual selection
@@ -191,11 +153,7 @@ async function setpath(win) {
 				return;
 			}
 
-			settings.gamepath = res.filePaths[0];
-			settings.zip = path.join(settings.gamepath + "/northstar.zip");
-			saveSettings();
-			win.webContents.send("newpath", settings.gamepath);
-			ipcMain.emit("newpath", null, settings.gamepath);
+			setGamepath(res.filePaths[0])
 
 			cli.exit();
 			return;
