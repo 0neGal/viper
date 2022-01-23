@@ -14,7 +14,7 @@ module.exports = async () => {
 	// Get-Item -Path Registry::HKEY_LOCAL_MACHINE\SOFTWARE\Respawn\Titanfall2\
 	if (process.platform == "win32") {
 		try {
-			const {stdout} = await exec("Get-Item -Path Registry::HKEY_LOCAL_MACHINE\\SOFTWARE\\Respawn\\Titanfall2\\", {"shell":"powershell.exe"});
+			const {stdout} = await exec("Get-ItemProperty -Path Registry::HKEY_LOCAL_MACHINE\\SOFTWARE\\Respawn\\Titanfall2\\ -Name \"Install Dir\"", {"shell":"powershell.exe"});
 
 			const gamepath = stdout.split('\n')
 				.filter(r => r.indexOf("Install Dir") !== -1)[0]
