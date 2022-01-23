@@ -6,7 +6,7 @@ const { app } = require("electron");
 const util = require("util");
 const exec = util.promisify(require("child_process").exec);
 
-module.exports = () => {
+module.exports = async () => {
 	let gamepath = "";
 	
 	// Autodetect path
@@ -14,13 +14,13 @@ module.exports = () => {
 	// Get-Item -Path Registry::HKEY_LOCAL_MACHINE\SOFTWARE\Respawn\Titanfall2\
 	if (process.platform == "win32") {
 		try {
-			exec("Get-Item -Path Registry::HKEY_LOCAL_MACHINE\\SOFTWARE\\Respawn\\Titanfall2\\", {"shell":"powershell.exe"}, (err, stdout) => {
-				gamepath = stdout.split('\n')
-					.filter(r => r.indexOf("Install Dir") !== -1)[0]
-					.replace(/\s+/g,' ')
-					.trim()
-					.replace("Install Dir : ","");
-			});
+			const {stdout} = await exec("Get-ItemProperty -Path Registry::HKEY_LOCAL_MACHINE\\SOFTWARE\\Respawn\\Titanfall2\\ -Name \"Install Dir\"", {"shell":"powershell.exe"});
+
+			const gamepath = stdout.split('\n')
+				.filter(r => r.indexOf("Install Dir") !== -1)[0]
+				.replace(/\s+/g,' ')
+				.trim()
+				.replace("Install Dir : ","");
 
 			if (gamepath) {return gamepath}
 		} catch (err) {}

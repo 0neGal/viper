@@ -136,8 +136,8 @@ async function setpath(win) {
 			ipcMain.emit("newpath", null, settings.gamepath);
 		}
 
-		let gamepath = findgame();
-		if (findgame()) {
+		let gamepath = await findgame();
+		if (gamepath) {
 			setGamepath(gamepath);
 			return;
 		}
