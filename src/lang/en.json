@@ -62,6 +62,8 @@
 	"gui.mods.installing": "Installing mod...",
 	"gui.mods.installedmod": "Installed mod!",
 
+	"gui.browser.loading": "Loading mods...",
+
 	"gui.update.downloading": "Downloading...",
 	"gui.update.extracting": "Extracting update...",
 	"gui.update.finished": "Done! Ready to play!",

@@ -28,6 +28,11 @@ var Browser = {
 				description: pkg.description
 			})
 		}
+	},
+	loading: () => {
+		if (! browserEntries.querySelector(".loading")) {
+			browserEntries.innerHTML = `<div class="loading">${lang("gui.browser.loading")}</div>`;
+		}
 	}
 }; Browser.toggle()
 Browser.loadfront()
@@ -45,7 +50,11 @@ function BrowserEl(properties) {
 		...properties
 	}
 
-	browser.innerHTML += `
+	if (browserEntries.querySelector(".loading")) {
+		browserEntries.innerHTML = "";
+	}
+
+	browserEntries.innerHTML += `
 		<div class="el">
 			<div class="image">
 				<img src="${properties.image}">
@@ -59,7 +68,3 @@ function BrowserEl(properties) {
 		</div>
 	`
 }
-
-new BrowserEl()
-new BrowserEl()
-new BrowserEl()

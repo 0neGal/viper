@@ -15,7 +15,15 @@
 
 		<div id="overlay" onclick="Browser.toggle(false)"></div>
 		<div id="browser">
-			<input id="search" placeholder="Search...">
+			<div id="misc">
+				<input id="search" placeholder="Search...">
+				<button id="close" onclick="Browser.toggle(false)">
+					<img src="icons/close.png">
+				</button>
+			</div>
+			<div id="browserEntries">
+				<div class="loading">%%gui.browser.loading%%</div>
+			</div>
 		</div>
 		
 		<nav class="gamesContainer">

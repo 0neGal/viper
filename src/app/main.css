@@ -73,10 +73,27 @@
 	pointer-events: all;
 }
 
-#browser .el, #browser #search {
+@keyframes fadein {
+	0% {opacity: 0.0}
+	100% {opacity: 1.0}
+}
+
+#browser .el, #browser #misc, #browser .loading {
 	--spacing: calc(var(--padding) / 2);
 	--height: calc(var(--padding) * 3);
+	--mischeight: calc(var(--padding) * 1.5);
 
+	animation-duration: 0.15s;
+	animation-iteration-count: 1;
+	animation-name: fadein;
+	animation-fill-mode: forwards;
+	animation-timing-function: ease-in-out;
+
+	opacity: 0.0;
+	transition: 0.15s ease-in-out;
+}
+
+#browser .el, #browser #search, #browser #close {
 	color: white;
 	display: flex;
 	align-items: center;
@@ -88,12 +105,43 @@
 	width: calc(100% - var(--spacing) * 4);
 }
 
-#browser #search {
-	--height: calc(var(--padding) * 1.5);
+#browser #misc, #browser #search {
+	--height: var(--mischeight);
+}
 
+#browser #misc {
+	display: flex;
+}
+
+#browser #search {
 	border: none;
 	outline: none;
 	width: calc(100% - var(--spacing) * 2);
+}
+
+#browser #close {
+	--height: calc(var(--padding) * 1.5);
+
+	padding: 0px;
+	margin-left: 0px;
+	width: var(--height);
+}
+
+#browser #close img {
+	opacity: 0.6;
+	width: var(--height);
+	height: var(--height);
+	transform: scale(0.6);
+}
+
+#browser .loading {
+	width: 100%;
+	color: white;
+	display: flex;
+	text-align: center;
+	align-items: center;
+	justify-content: center;
+	height: calc(100% - var(--mischeight) - var(--height));
 }
 
 #browser .el .image, #browser .el .image img {
