@@ -1,6 +1,7 @@
 const fs = require("fs");
 const path = require("path");
 const vdf = require("simple-vdf");
+const { app } = require("electron");
 
 const util = require("util");
 const exec = util.promisify(require("child_process").exec);
@@ -30,7 +31,6 @@ module.exports = () => {
 		// Parse read_data
 		data = vdf.parse(data);
 
-		//data['libraryfolders']
 		// `.length - 1` This is because the last value is `contentstatsid`
 		for (let pathIterator = 0; pathIterator < Object.values(data["libraryfolders"]).length - 1; pathIterator++) {
 			let data_array = Object.values(data["libraryfolders"][pathIterator])
@@ -45,13 +45,15 @@ module.exports = () => {
 		case "win32":
 			if (fs.existsSync("C:\\Program Files (x86)\\Steam\\steamapps\\libraryfolders.vdf")) {
 				let data = fs.readFileSync("C:\\Program Files (x86)\\Steam\\steamapps\\libraryfolders.vdf")
-				if (readvdf(data.toString())) {return data.toString()}
+				let read_vdf = readvdf(data.toString())
+				if (read_vdf ) {return read_vdf}
 			}
 			break;
 		case "linux":
 			if (fs.existsSync(path.join(app.getPath("home"), "/.steam/steam/steamapps/libraryfolders.vdf"))) {
-				let data = fs.readFileSync(os.homedir() + "/.steam/steam/steamapps/libraryfolders.vdf")
-				if (readvdf(data.toString())) {return data.toString()}
+				let data = fs.readFileSync(path.join(app.getPath("home"), "/.steam/steam/steamapps/libraryfolders.vdf"))
+				let read_vdf = readvdf(data.toString())
+				if (read_vdf ) {return read_vdf}
 			}
 			break;	
 	}
