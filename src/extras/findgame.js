@@ -41,21 +41,20 @@ module.exports = async () => {
 		}
 	}
 
+	let folder = "";
 	switch (process.platform) {
 		case "win32":
-			if (fs.existsSync("C:\\Program Files (x86)\\Steam\\steamapps\\libraryfolders.vdf")) {
-				let data = fs.readFileSync("C:\\Program Files (x86)\\Steam\\steamapps\\libraryfolders.vdf")
-				let read_vdf = readvdf(data.toString())
-				if (read_vdf ) {return read_vdf}
-			}
-			break;
+			folder = "C:\\Program Files (x86)\\Steam\\steamapps\\libraryfolders.vdf";
+			break
 		case "linux":
-			if (fs.existsSync(path.join(app.getPath("home"), "/.steam/steam/steamapps/libraryfolders.vdf"))) {
-				let data = fs.readFileSync(path.join(app.getPath("home"), "/.steam/steam/steamapps/libraryfolders.vdf"))
-				let read_vdf = readvdf(data.toString())
-				if (read_vdf ) {return read_vdf}
-			}
-			break;	
+			folder = path.join(app.getPath("home"), "/.steam/steam/steamapps/libraryfolders.vdf");
+			break
+	}
+
+	if (fs.existsSync(folder)) {
+		let data = fs.readFileSync(folder)
+		let read_vdf = readvdf(data.toString())
+		if (read_vdf ) {return read_vdf}
 	}
 
 	if (gamepath) {
