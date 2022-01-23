@@ -513,7 +513,10 @@ code {
 }
 
 .modbtns button {
-	margin-left: calc(var(--padding) / 3);
+	--spacing: calc(var(--padding) / 3);
+	margin-left: var(--spacing);
+	margin-top: calc(var(--spacing) / 2);
+	margin-bottom: calc(var(--spacing) / 2);
 }
 
 /* drag control */

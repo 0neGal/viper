@@ -49,6 +49,7 @@
 	"gui.mods.count": "Mods Installed:",
 	"gui.mods.disabledtag": "Disabled",
 	"gui.mods.install": "Install Mod",
+	"gui.mods.find": "Find Mods",
 	"gui.mods.toggle": "Toggle Mod",
 	"gui.mods.toggleall": "Toggle All",
 	"gui.mods.remove": "Remove Mod",
