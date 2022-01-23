@@ -6,7 +6,7 @@ const { app } = require("electron");
 const util = require("util");
 const exec = util.promisify(require("child_process").exec);
 
-module.exports = () => {
+module.exports = async () => {
 	let gamepath = "";
 	
 	// Autodetect path
