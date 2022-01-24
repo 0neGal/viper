@@ -96,7 +96,7 @@
 	"general.mods.enabled": "Enabled mods:",
 	"general.mods.disabled": "Disabled mods:",
 	"general.mods.installed": "Installed mods:",
-	"general.missingpath": "Game path is not set!",
+	"general.missingpath": "Game location could not be found!",
 	"general.notinstalled": "Northstar is not installed!",
 	"general.launching": "Launching"
 }

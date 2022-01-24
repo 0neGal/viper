@@ -142,6 +142,8 @@ async function setpath(win) {
 			return;
 		}
 
+		alert(lang("general.missingpath"));
+
 		// Fallback to manual selection
 		dialog.showOpenDialog({properties: ["openDirectory"]}).then(res => {
 			if (res.canceled) {
