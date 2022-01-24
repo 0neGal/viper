@@ -96,7 +96,7 @@
 	"general.mods.enabled": "Mods activés :",
 	"general.mods.disabled": "Mods désactivés :",
 	"general.mods.installed": "Mods installés :",
-	"general.missingpath": "Le chemin du client n'est pas défini !",
+	"general.missingpath": "Le chemin du client n'a pu être trouvé automatiquement, merci de le sélectionner manuellement.",
 	"general.notinstalled": "Northstar n'est pas installé !",
 	"general.launching": "Lancement"
 }
