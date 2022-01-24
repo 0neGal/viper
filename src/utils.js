@@ -116,7 +116,7 @@ northstar_auto_updates: {
 //
 // If running with CLI it takes in the --setpath argument otherwise it
 // open the systems file browser for the user to select a path.
-async function setpath(win) {
+async function setpath(win, forcedialog) {
 	function setGamepath(folder) {
 		settings.gamepath = folder;
 		settings.zip = path.join(settings.gamepath + "/northstar.zip");
@@ -128,21 +128,23 @@ async function setpath(win) {
 	if (! win) { // CLI
 		setGamepath(cli.param("setpath"));
 	} else { // GUI
-		function setGamepath(folder) {
-			settings.gamepath = folder;
-			settings.zip = path.join(settings.gamepath + "/northstar.zip");
-			saveSettings();
-			win.webContents.send("newpath", settings.gamepath);
-			ipcMain.emit("newpath", null, settings.gamepath);
-		}
+		if (! forcedialog) {
+			function setGamepath(folder, forcedialog) {
+				settings.gamepath = folder;
+				settings.zip = path.join(settings.gamepath + "/northstar.zip");
+				saveSettings();
+				win.webContents.send("newpath", settings.gamepath);
+				ipcMain.emit("newpath", null, settings.gamepath);
+			}
 
-		let gamepath = await findgame();
-		if (gamepath) {
-			setGamepath(gamepath);
-			return;
-		}
+			let gamepath = await findgame();
+			if (gamepath) {
+				setGamepath(gamepath);
+				return;
+			}
 
-		alert(lang("general.missingpath"));
+			winAlert(lang("general.missingpath"));
+		}
 
 		// Fallback to manual selection
 		dialog.showOpenDialog({properties: ["openDirectory"]}).then(res => {

@@ -26,7 +26,6 @@ if (fs.existsSync("viper.json")) {
 	settings.zip = path.join(settings.gamepath + "/northstar.zip");
 
 	if (settings.gamepath.length === 0) {
-		alert(lang("general.missingpath"));
 		setpath(false);
 	} else {
 		setpath(true);
