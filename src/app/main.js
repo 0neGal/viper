@@ -32,7 +32,6 @@ if (fs.existsSync("viper.json")) {
 		setpath(true);
 	}
 } else {
-	alert(lang("general.missingpath"));
 	setpath();
 }
 

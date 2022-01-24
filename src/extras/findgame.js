@@ -41,17 +41,19 @@ module.exports = async () => {
 		}
 	}
 
-	let folder = "";
+	let folder = null;
 	switch (process.platform) {
 		case "win32":
 			folder = "C:\\Program Files (x86)\\Steam\\steamapps\\libraryfolders.vdf";
 			break
 		case "linux":
+		case "openbsd":
+		case "freebsd":
 			folder = path.join(app.getPath("home"), "/.steam/steam/steamapps/libraryfolders.vdf");
 			break
 	}
 
-	if (fs.existsSync(folder)) {
+	if (fs.existsSync(folder) && folder) {
 		let data = fs.readFileSync(folder)
 		let read_vdf = readvdf(data.toString())
 		if (read_vdf ) {return read_vdf}
