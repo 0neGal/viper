@@ -47,6 +47,8 @@ module.exports = async () => {
 			folder = "C:\\Program Files (x86)\\Steam\\steamapps\\libraryfolders.vdf";
 			break
 		case "linux":
+		case "openbsd":
+		case "freebsd":
 			folder = path.join(app.getPath("home"), "/.steam/steam/steamapps/libraryfolders.vdf");
 			break
 	}
