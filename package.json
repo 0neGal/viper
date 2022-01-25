@@ -54,6 +54,7 @@
 		"fs-extra": "^10.0.0",
 		"marked": "^4.0.10",
 		"marked-man": "^0.7.0",
+		"simple-vdf": "^1.1.1",
 		"unzipper": "^0.10.11"
 	},
 	"devDependencies": {
