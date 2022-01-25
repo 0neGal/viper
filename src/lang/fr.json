@@ -42,7 +42,7 @@
 	"gui.versions.northstar": "Version de Northstar",
 	"gui.exit": "Fermer",
 	"gui.update": "Mise à jour",
-	"gui.setpath": "Chemin du jeu",
+	"gui.setpath": "Mettre à jour le chemin du jeu",
 
 	"gui.update.check": "Vérifier les mises à jour",
 	"gui.mods": "Mods",
