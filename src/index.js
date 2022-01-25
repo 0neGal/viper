@@ -8,7 +8,7 @@ const events = new Emitter();
 
 const utils = require("./utils");
 const cli = require("./cli");
-const requests = require("./requests");
+const requests = require("./extras/requests");
 
 // Starts the actual BrowserWindow, which is only run when using the
 // GUI, for the CLI this function is never called.
@@ -87,9 +87,13 @@ ipcMain.on("launchVanilla", (event) => {utils.launch("vanilla")})
 ipcMain.on("update", (event) => {utils.update()})
 ipcMain.on("setpathcli", (event) => {utils.setpath()});
 ipcMain.on("setpath", (event, value) => {
-	if (!value) {
-		utils.setpath(win);
-	} else if (!win.isVisible()) {
+	if (! value) {
+		if (! win.isVisible()) {
+			utils.setpath(win);
+		} else {
+			utils.setpath(win, true);
+		}
+	} else if (! win.isVisible()) {
 		win.show();
 	}
 });
