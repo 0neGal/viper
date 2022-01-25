@@ -81,7 +81,7 @@
 	"gui.gamepath.wrong": "Esta carpeta no es una ruta válida para el juego.",	
 
 	"viper.menu.main": "Viper",
-	"viper.menu.release": "Notas de actualización",
+	"viper.menu.release": "Notas de la versión",
 	"viper.menu.info": "Extras",
 	"viper.menu.info.links": "Links",
 	"viper.menu.info.credits": "Creditos",
