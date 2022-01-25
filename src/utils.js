@@ -339,7 +339,6 @@ function winAlert(msg) {
 //
 // We can both get list of disabled mods, remove/install/toggle mods and
 // other things akin to that, all kinds of mod related stuff
-let modpath = path.join(settings.gamepath, "R2Northstar/mods");
 const mods = {
 	// Returns a list of mods
 	//
@@ -347,6 +346,8 @@ const mods = {
 	// combination of the other two, enabled being enabled mods, and you
 	// guessed it, disabled being disabled mods.
 	list: () => {
+		let modpath = path.join(settings.gamepath, "R2Northstar/mods");
+
 		if (getNSVersion() == "unknown") {
 			winLog(lang("general.notinstalled"))
 			console.log("error: " + lang("general.notinstalled"))
@@ -413,6 +414,8 @@ const mods = {
 	// the absolute basics will be provided and we can't know the
 	// version or similar.
 	get: (mod) => {
+		let modpath = path.join(settings.gamepath, "R2Northstar/mods");
+
 		if (getNSVersion() == "unknown") {
 			winLog(lang("general.notinstalled"))
 			console.log("error: " + lang("general.notinstalled"))
@@ -437,6 +440,8 @@ const mods = {
 	// inside the zip or folder to see if buried in another folder or
 	// not, as sometimes that's the case.
 	install: (mod) => {
+		let modpath = path.join(settings.gamepath, "R2Northstar/mods");
+
 		if (getNSVersion() == "unknown") {
 			winLog(lang("general.notinstalled"))
 			console.log("error: " + lang("general.notinstalled"))
@@ -515,6 +520,8 @@ const mods = {
 	// Takes in the names of the mod then removes it, no confirmation,
 	// that'd be up to the GUI.
 	remove: (mod) => {
+		let modpath = path.join(settings.gamepath, "R2Northstar/mods");
+
 		if (getNSVersion() == "unknown") {
 			winLog(lang("general.notinstalled"))
 			console.log("error: " + lang("general.notinstalled"))
@@ -565,6 +572,8 @@ const mods = {
 	// you checked for if a mod is already disable and if not run the
 	// function. However we currently have no need for that.
 	toggle: (mod, fork) => {
+		let modpath = path.join(settings.gamepath, "R2Northstar/mods");
+
 		if (getNSVersion() == "unknown") {
 			winLog(lang("general.notinstalled"))
 			console.log("error: " + lang("general.notinstalled"))
