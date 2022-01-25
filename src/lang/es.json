@@ -42,7 +42,7 @@
 	"gui.versions.northstar": "Versión de Northstar",
 	"gui.exit": "Salir",
 	"gui.update": "Actualizar",
-	"gui.setpath": "Ruta del juego",
+	"gui.setpath": "Cambiar la ruta del juego",
 
 	"gui.update.check": "Buscar actualizaciones",
 	"gui.mods": "Modificaciones (Mods)",
@@ -96,7 +96,7 @@
 	"general.mods.enabled": "Modificaciones habilitadas:",
 	"general.mods.disabled": "Modificaciones deshabilitadas:",
 	"general.mods.installed": "Modificiaciones intaladas:",
-	"general.missingpath": "¡La ruta del jueno no se ha establecido!",
+	"general.missingpath": "¡La ruta del jueno no se ha podido encontrar automaticamente! ¡Por favor, elige la ruta manualmente!",
 	"general.notinstalled": "¡Northstar no se ha instalado!",
 	"general.launching": "Ejecutando"
 }
