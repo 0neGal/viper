@@ -61,9 +61,9 @@ function BrowserEl(properties) {
 		browserEntries.innerHTML = "";
 	}
 
-	let installstring = "Install";
+	let installstr = lang("gui.browser.install");
 	if (normalize(modsdiv.innerText.split("\n")).includes(normalize(properties.title))) {
-		installstring = "Re-Install";
+		installstr = lang("gui.browser.reinstall");
 	}
 
 	browserEntries.innerHTML += `
@@ -74,7 +74,7 @@ function BrowserEl(properties) {
 			<div class="text">
 				<div class="title">${properties.title}</div>
 				<div class="description">${properties.description} - ${lang("gui.browser.madeby")} ${properties.author}</div>
-				<button onclick="installFromURL('${properties.download}')">${installstring}</button>
+				<button onclick="installFromURL('${properties.download}')">${installstr}</button>
 				<button class="visual">${properties.version}</button>
 			</div>
 		</div>
@@ -86,7 +86,7 @@ ipcRenderer.on("installedmod", (event, modname) => {
 	modname = normalize(modname);
 
 	if (document.getElementById(modname)) {
-		document.getElementById(modname).querySelector(".text button").innerHTML = "Re-Install";
+		document.getElementById(modname).querySelector(".text button").innerHTML = lang("gui.browser.reinstall");
 	}
 })
 

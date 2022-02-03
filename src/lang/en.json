@@ -65,6 +65,8 @@
 
 	"gui.browser.loading": "Loading mods...",
 	"gui.browser.madeby": "by",
+	"gui.browser.install": "Install",
+	"gui.browser.reinstall": "Re-Install",
 
 	"gui.update.downloading": "Downloading...",
 	"gui.update.extracting": "Extracting update...",
