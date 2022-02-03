@@ -55,16 +55,46 @@ function BrowserEl(properties) {
 		browserEntries.innerHTML = "";
 	}
 
+	let installstring = "Install";
+	if (normalize(modsdiv.innerText.split("\n")).includes(normalize(properties.title))) {
+		installstring = "Re-Install";
+	}
+
 	browserEntries.innerHTML += `
-		<div class="el">
+		<div class="el" id="${normalize(properties.title)}">
 			<div class="image">
 				<img src="${properties.image}">
 			</div>
 			<div class="text">
 				<div class="title">${properties.title}</div>
 				<div class="description">${properties.description} - ${lang("gui.browser.madeby")} ${properties.author}</div>
-				<button onclick="installFromURL('${properties.download}')">Install</button>
+				<button onclick="installFromURL('${properties.download}')">${installstring}</button>
 			</div>
 		</div>
 	`
+}
+
+ipcRenderer.on("installedmod", (event, modname) => {
+	setButtons(true);
+	modname = normalize(modname);
+
+	if (document.getElementById(modname)) {
+		document.getElementById(modname).querySelector(".text button").innerHTML = "Re-Install";
+	}
+})
+
+function normalize(items) {
+	let main = (string) => {
+		return string.replaceAll(" ", "").replaceAll(".", "").toLowerCase()
+	}
+	if (typeof items == "string") {
+		return main(items)
+	} else {
+		let newArray = [];
+		for (let i = 0; i < items.length; i++) {
+			newArray.push(main(items[i]));
+		}
+
+		return newArray;
+	}
 }

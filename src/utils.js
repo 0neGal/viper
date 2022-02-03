@@ -444,11 +444,14 @@ const mods = {
 			if (fs.existsSync(path.join(mod, "mod.json")) && 
 				fs.statSync(path.join(mod, "mod.json")).isFile()) {
 
-				copy.sync(mod, path.join(modpath, mod.replace(/^.*(\\|\/|\:)/, "")), {
+				let modname = mod.replace(/^.*(\\|\/|\:)/, "");
+				copy.sync(mod, path.join(modpath, modname), {
 					mode: true,
 					cover: true,
 					utimes: true,
 				});
+
+				ipcMain.emit("installedmod", "", modname);
 
 				return installed();
 			} else {

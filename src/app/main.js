@@ -68,6 +68,15 @@ function log(msg) {
 // updating/installing Northstar.
 function setButtons(state) {
 	playNsBtn.disabled = !state;
+
+	let disablearray = (array) => {
+		for (let i = 0; i < array.length; i++) {
+			array[i].disabled = !state;
+		}
+	}
+
+	disablearray(document.querySelectorAll("#nsMods .buttons.modbtns button"))
+	disablearray(document.querySelectorAll("#browser #browserEntries .text button"))
 }
 
 // Frontend part of updating Northstar
@@ -150,11 +159,13 @@ function selected(all) {
 
 // Tells the main process to install a mod
 function installmod() {
+	setButtons(false);
 	ipcRenderer.send("installmod")
 }
 
 // Tells the main process to install a mod from a URL
 function installFromURL(url) {
+	setButtons(false);
 	ipcRenderer.send("installfromurl", url)
 }
 
