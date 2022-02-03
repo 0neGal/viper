@@ -485,6 +485,12 @@ button:disabled {
 	pointer-events: none;
 }
 
+button.visual {
+	opacity: 1.0;
+	pointer-events: none;
+	background: transparent !important;
+}
+
 code {
     font-size: 16px;
     padding: 2px 5px;

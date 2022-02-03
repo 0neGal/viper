@@ -26,6 +26,7 @@ var Browser = {
 				image: pkg.icon,
 				author: pkg.owner,
 				download: pkg.download_url,
+				version: pkg.version_number,
 				description: pkg.description
 			})
 		}
@@ -45,10 +46,15 @@ document.body.addEventListener("keyup", (e) => {
 function BrowserEl(properties) {
 	properties = {
 		title: "No name",
+		version: "1.0.0",
 		image: "icons/no-image.png",
 		author: "Unnamed Pilot",
 		description: "No description",
 		...properties
+	}
+
+	if (properties.version[0] != "v") {
+		properties.version = "v" + properties.version;
 	}
 
 	if (browserEntries.querySelector(".loading")) {
@@ -69,6 +75,7 @@ function BrowserEl(properties) {
 				<div class="title">${properties.title}</div>
 				<div class="description">${properties.description} - ${lang("gui.browser.madeby")} ${properties.author}</div>
 				<button onclick="installFromURL('${properties.download}')">${installstring}</button>
+				<button class="visual">${properties.version}</button>
 			</div>
 		</div>
 	`
