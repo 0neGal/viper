@@ -95,8 +95,17 @@ function BrowserEl(properties) {
 	}
 
 	let installstr = lang("gui.browser.install");
+
 	if (normalize(modsdiv.innerText.split("\n")).includes(normalize(properties.title))) {
 		installstr = lang("gui.browser.reinstall");
+
+		for (let i = 0; i < modsobj.all.length; i++) {
+			if (normalize(modsobj.all[i].Name) == normalize(properties.title)
+				&& "v" + modsobj.all[i].Version != properties.version) {
+				
+				installstr = lang("gui.browser.update");
+			}
+		}
 	}
 
 	browserEntries.innerHTML += `

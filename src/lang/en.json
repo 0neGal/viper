@@ -63,10 +63,11 @@
 	"gui.mods.installing": "Installing mod...",
 	"gui.mods.installedmod": "Installed mod!",
 
-	"gui.browser.loading": "Loading mods...",
 	"gui.browser.madeby": "by",
+	"gui.browser.update": "Update",
 	"gui.browser.install": "Install",
 	"gui.browser.reinstall": "Re-Install",
+	"gui.browser.loading": "Loading mods...",
 
 	"gui.update.downloading": "Downloading...",
 	"gui.update.extracting": "Extracting update...",
