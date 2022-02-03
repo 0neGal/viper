@@ -49,6 +49,7 @@
 	"gui.mods.count": "Modificaciones instaladas:",
 	"gui.mods.disabledtag": "Deshabilitado",
 	"gui.mods.install": "Instalar modificación",
+	"gui.mods.find": "Encontrar modificaciones",
 	"gui.mods.toggle": "Alternar modificación",
 	"gui.mods.toggleall": "Alternar todo",
 	"gui.mods.remove": "Remover modificación",
@@ -62,6 +63,11 @@
 	"gui.mods.installing": "Instalando modificación...",
 	"gui.mods.installedmod": "¡Modificación instalada!",
 
+	"gui.browser.loading": "Loading mods...",
+	"gui.browser.madeby": "by",
+	"gui.browser.install": "Install",
+	"gui.browser.reinstall": "Re-Install",
+	
 	"gui.update.downloading": "Descargando...",
 	"gui.update.extracting": "Extrayendo actualización...",
 	"gui.update.finished": "¡Hecho! ¡Está listo para jugar!",
