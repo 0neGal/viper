@@ -1,3 +1,7 @@
+const Fuse = require("fuse.js");
+var fuse;
+var packages = [];
+
 var Browser = {
 	toggle: (state) => {
 		if (state) {
@@ -16,24 +20,40 @@ var Browser = {
 		browser.classList.toggle("shown")
 	},
 	loadfront: async () => {
-		let packages = await (await fetch("https://northstar.thunderstore.io/api/v1/package/")).json();
+		Browser.loading();
 		
-		for (let i in packages) {
-			let pkg = {...packages[i], ...packages[i].versions[0]};
+		if (packages.length < 1) {
+			packages = await (await fetch("https://northstar.thunderstore.io/api/v1/package/")).json();
 
-			new BrowserEl({
-				title: pkg.name,
-				image: pkg.icon,
-				author: pkg.owner,
-				download: pkg.download_url,
-				version: pkg.version_number,
-				description: pkg.description
+			fuse = new Fuse(packages, {
+				keys: ["full_name"]
 			})
 		}
+		
+		for (let i in packages) {
+			new BrowserElFromObj(packages[i]);
+		}
 	},
-	loading: () => {
+	loading: (string) => {
+		if (string) {
+			browserEntries.innerHTML = `<div class="loading">${string}</div>`;
+		}
+
 		if (! browserEntries.querySelector(".loading")) {
-			browserEntries.innerHTML = `<div class="loading">${lang("gui.browser.loading")}</div>`;
+			browserEntries.innerHTML = `<div class="loading">${lang('gui.browser.loading')}</div>`;
+		}
+	},
+	search: (string) => {
+		Browser.loading();
+		let res = fuse.search(string);
+
+		if (res.length < 1) {
+			Browser.loading("No results...")
+			return
+		}
+
+		for (let i = 0; i < res.length; i++) {
+			new BrowserElFromObj(res[i].item);
 		}
 	}
 }; Browser.toggle()
@@ -42,6 +62,19 @@ Browser.loadfront()
 document.body.addEventListener("keyup", (e) => {
 	if (e.key == "Escape") {Browser.toggle(false)}
 })
+
+function BrowserElFromObj(obj) {
+	let pkg = {...obj, ...obj.versions[0]};
+
+	new BrowserEl({
+		title: pkg.name,
+		image: pkg.icon,
+		author: pkg.owner,
+		download: pkg.download_url,
+		version: pkg.version_number,
+		description: pkg.description
+	})
+}
 
 function BrowserEl(properties) {
 	properties = {
@@ -105,3 +138,22 @@ function normalize(items) {
 		return newArray;
 	}
 }
+
+let searchtimeout;
+let searchstr = "";
+search.addEventListener("keyup", () => {
+	clearTimeout(searchtimeout);
+
+	if (searchstr != search.value) {
+		if (search.value.replaceAll(" ", "") == "") {
+			searchstr = "";
+			Browser.loadfront();
+			return
+		}
+
+		searchtimeout = setTimeout(() => {
+			Browser.search(search.value);
+			searchstr = search.value;
+		}, 500)
+	}
+})
