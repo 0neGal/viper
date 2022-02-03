@@ -440,6 +440,7 @@ const mods = {
 
 		if (fs.statSync(mod).isDirectory()) {
 			winLog(lang("gui.mods.installing"))
+			files = fs.readdirSync(mod);
 			if (fs.existsSync(path.join(mod, "mod.json")) && 
 				fs.statSync(path.join(mod, "mod.json")).isFile()) {
 
@@ -458,6 +459,7 @@ const mods = {
 						if (fs.existsSync(path.join(mod, files[i], "mod.json")) &&
 							fs.statSync(path.join(mod, files[i], "mod.json")).isFile()) {
 
+							console.log(mods.install(path.join(mod, files[i])))
 							if (mods.install(path.join(mod, files[i]))) {return true};
 						}
 					}
@@ -479,6 +481,20 @@ const mods = {
 			try {
 				fs.createReadStream(mod).pipe(unzip.Extract({path: cache}))
 				.on("finish", () => {
+					if (fs.existsSync(path.join(cache, "manifest.json"))) {
+						files = fs.readdirSync(path.join(cache, "mods"));
+
+						for (let i = 0; i < files.length; i++) {
+							let mod = path.join(cache, "mods", files[i]);
+							if (fs.statSync(mod).isDirectory()) {
+								setTimeout(() => {
+									if (mods.install(mod)) {return true};
+								}, 1000)
+							}
+						}
+						return notamod();
+					}
+
 					if (mods.install(cache)) {
 						installed();
 					} else {return notamod()}
@@ -486,6 +502,45 @@ const mods = {
 			}catch(err) {return notamod()}
 		}
 	},
+
+	// Installs mods from URL's
+	//
+	// This'll simply download the file that the URL points to and then
+	// install it with mods.install()
+	installFromURL: (url) => {
+		https.get(url, (res) => {
+			let tmp = path.join(app.getPath("cache"), "vipertmp");
+			let modlocation = path.join(tmp, "/mod.zip");
+
+			if (fs.existsSync(tmp)) {
+				if (! fs.statSync(tmp).isDirectory()) {
+					fs.rmSync(tmp)
+				}
+			} else {
+				fs.mkdirSync(tmp)
+				if (fs.existsSync(modlocation)) {
+					fs.rmSync(modlocation)
+				}
+			}
+
+			let stream = fs.createWriteStream(modlocation);
+			res.pipe(stream);
+
+			// let received = 0;
+			// // Progress messages, we should probably switch this to
+			// // percentage instead of how much is downloaded.
+			// res.on("data", (chunk) => {
+			// 	received += chunk.length;
+			// 	ipcMain.emit("ns-update-event", lang("gui.update.downloading") + " " + (received / 1024 / 1024).toFixed(1) + "mb");
+			// })
+
+			stream.on("finish", () => {
+				stream.close();
+				mods.install(modlocation)
+			})
+		})
+	},
+
 	// Removes mods
 	//
 	// Takes in the names of the mod then removes it, no confirmation,

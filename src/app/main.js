@@ -153,6 +153,11 @@ function installmod() {
 	ipcRenderer.send("installmod")
 }
 
+// Tells the main process to install a mod from a URL
+function installFromURL(url) {
+	ipcRenderer.send("installfromurl", url)
+}
+
 // Frontend part of settings a new game path
 ipcRenderer.on("newpath", (event, newpath) => {
 	settings.gamepath = newpath;

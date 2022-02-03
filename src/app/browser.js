@@ -25,6 +25,7 @@ var Browser = {
 				title: pkg.name,
 				image: pkg.icon,
 				author: pkg.owner,
+				download: pkg.download_url,
 				description: pkg.description
 			})
 		}
@@ -62,8 +63,7 @@ function BrowserEl(properties) {
 			<div class="text">
 				<div class="title">${properties.title}</div>
 				<div class="description">${properties.description} - ${lang("gui.browser.madeby")} ${properties.author}</div>
-				<button>Install</button>
-				<button>Info</button>
+				<button onclick="installFromURL('${properties.download}')">Install</button>
 			</div>
 		</div>
 	`

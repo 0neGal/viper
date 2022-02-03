@@ -47,6 +47,7 @@ function start() {
 	ipcMain.on("winAlert", (event, ...args) => {win.webContents.send("alert", ...args)});
 	ipcMain.on("ns-update-event", (event) => win.webContents.send("ns-update-event", event));
 	ipcMain.on("guigetmods", (event, ...args) => {win.webContents.send("mods", utils.mods.list())});
+	ipcMain.on("installfromurl", (event, url) => {utils.mods.installFromURL(url)})
 
 	win.webContents.on("dom-ready", () => {
 		win.webContents.send("mods", utils.mods.list());
