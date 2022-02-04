@@ -49,6 +49,7 @@
 	"gui.mods.count": "Mods installés :",
 	"gui.mods.disabledtag": "Désactivé",
 	"gui.mods.install": "Installer le mod",
+	"gui.mods.find": "Chercher des mods",
 	"gui.mods.toggle": "Activer/désactiver le mod",
 	"gui.mods.toggleall": "Activer/désactiver tous les mods",
 	"gui.mods.remove": "Supprimer le mod",
@@ -61,6 +62,12 @@
 	"gui.mods.extracting": "Extraction du mod...",
 	"gui.mods.installing": "Installation du mod...",
 	"gui.mods.installedmod": "Mod installé !",
+
+	"gui.browser.madeby": "par",
+	"gui.browser.update": "Mise à jour",
+	"gui.browser.install": "Installer",
+	"gui.browser.reinstall": "Réinstaller",
+	"gui.browser.loading": "Chargement des mods...",
 
 	"gui.update.downloading": "Téléchargement de la mise à jour...",
 	"gui.update.extracting": "Extraction des fichiers...",
