@@ -3,6 +3,7 @@ const path = require("path");
 const { ipcRenderer, shell } = require("electron");
 
 const lang = require("../lang");
+var modsobj = {};
 let shouldInstallNorthstar = false;
 
 // Base settings
@@ -180,6 +181,7 @@ ipcRenderer.on("alert", (event, msg) => {alert(msg)})
 
 // Updates the installed mods
 ipcRenderer.on("mods", (event, mods) => {
+	modsobj = mods;
 	modcount.innerHTML = `${lang("gui.mods.count")} ${mods.all.length}`;
 	modsdiv.innerHTML = "";
 	
