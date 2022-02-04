@@ -63,10 +63,11 @@
 	"gui.mods.installing": "Instalando modificación...",
 	"gui.mods.installedmod": "¡Modificación instalada!",
 
-	"gui.browser.loading": "Loading mods...",
-	"gui.browser.madeby": "by",
-	"gui.browser.install": "Install",
-	"gui.browser.reinstall": "Re-Install",
+	"gui.browser.madeby": "por",
+	"gui.browser.update": "Actualizar",
+	"gui.browser.install": "Instalar",
+	"gui.browser.reinstall": "Re-Instalar",
+	"gui.browser.loading": "Cargando modificaciones...",
 	
 	"gui.update.downloading": "Descargando...",
 	"gui.update.extracting": "Extrayendo actualización...",
@@ -78,7 +79,7 @@
 	"gui.nsupdate.gaming.body": "Una actualización de northstar está disponible.\nPuedes forzar su instalación despues de cerrar el juego.",
 
 	"gui.launch": "Ejecutar",
-	"gui.launchvanilla": "Vanilla",
+	"gui.launchvanilla": "Vainilla",
 	"gui.launchnorthstar": "Northstar",
 	"gui.installnorthstar": "Instalar",
 
