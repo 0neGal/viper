@@ -100,6 +100,7 @@ function BrowserElFromObj(obj) {
 		title: pkg.name,
 		image: pkg.icon,
 		author: pkg.owner,
+		url: pkg.package_url,
 		download: pkg.download_url,
 		version: pkg.version_number,
 		description: pkg.description
@@ -147,6 +148,7 @@ function BrowserEl(properties) {
 				<div class="title">${properties.title}</div>
 				<div class="description">${properties.description}</div>
 				<button onclick="installFromURL('${properties.download}')">${installstr}</button>
+				<button onclick="require('electron').shell.openExternal('${properties.url}')">${lang('gui.browser.info')}</button>
 				<button class="visual">${properties.version}</button>
 				<button class="visual">${lang("gui.browser.madeby")} ${properties.author}</button>
 			</div>

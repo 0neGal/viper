@@ -9,7 +9,11 @@
 	--selbg: rgba(80, 80, 80, 0.5);
 	--redbg: linear-gradient(45deg, var(--red), #FA4343);
 	--bluebg: linear-gradient(45deg, var(--blue), #7380ED);
+}
 
+#browser, #modsdiv {
+	outline: 1px solid #444444;
+	border: 3px solid var(--bg);
 }
 
 ::-webkit-scrollbar {
@@ -73,7 +77,7 @@ button {
 	bottom: var(--spacing);
 	transform: scale(0.98);
 	backdrop-filter: blur(15px);
-	border-radius: calc(var(--padding) / 2);
+	border-radius: calc(var(--padding) / 3);
 	transition: opacity 0.15s ease-in-out, transform 0.15s ease-in-out;
 }
 
@@ -556,7 +560,9 @@ code {
 
 /* drag control */
 
-#bgHolder {
+#bgHolder, 
+#overlay.shown + .mainContainer, 
+#overlay.shown + .gamesContainer {
 	user-select: none;
   	-webkit-app-region: drag;
 }
