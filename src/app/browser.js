@@ -134,7 +134,7 @@ ipcRenderer.on("installedmod", (event, modname) => {
 
 function normalize(items) {
 	let main = (string) => {
-		return string.replaceAll(" ", "").replaceAll(".", "").toLowerCase()
+		return string.replaceAll(" ", "").replaceAll(".", "").replaceAll("-", "").replaceAll("_", "").toLowerCase()
 	}
 	if (typeof items == "string") {
 		return main(items)
