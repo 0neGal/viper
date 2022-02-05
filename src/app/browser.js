@@ -58,12 +58,24 @@ var Browser = {
 	},
 	setbutton: (mod, string) => {
 		mod = normalize(mod);
+		console.log(mod)
 		if (document.getElementById(mod)) {
 			let elems = document.querySelectorAll(`#${mod}`);
 
 			for (let i = 0; i < elems.length; i++) {
 				elems[i].querySelector(".text button").innerHTML = string;
 			}
+		} else {
+			setTimeout(() => {
+				for (let i = 0; i < modsobj.all.length; i++) {
+					let modname = normalize(modsobj.all[i].Name);
+					if (mod.includes(modname)) {
+						if (document.getElementById(modname)) {
+							Browser.setbutton(modname, string);
+						}
+					}
+				}
+			}, 1501)
 		}
 	}
 }; Browser.toggle()
