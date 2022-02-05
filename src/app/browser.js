@@ -145,9 +145,10 @@ function BrowserEl(properties) {
 			</div>
 			<div class="text">
 				<div class="title">${properties.title}</div>
-				<div class="description">${properties.description} - ${lang("gui.browser.madeby")} ${properties.author}</div>
+				<div class="description">${properties.description}</div>
 				<button onclick="installFromURL('${properties.download}')">${installstr}</button>
 				<button class="visual">${properties.version}</button>
+				<button class="visual">${lang("gui.browser.madeby")} ${properties.author}</button>
 			</div>
 		</div>
 	`
