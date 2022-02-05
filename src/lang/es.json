@@ -63,11 +63,14 @@
 	"gui.mods.installing": "Instalando modificación...",
 	"gui.mods.installedmod": "¡Modificación instalada!",
 
+	"gui.browser.info": "Información",
 	"gui.browser.madeby": "por",
+	"gui.browser.search": "Buscar...",
 	"gui.browser.update": "Actualizar",
 	"gui.browser.install": "Instalar",
 	"gui.browser.reinstall": "Re-Instalar",
 	"gui.browser.loading": "Cargando modificaciones...",
+	"gui.browser.endoflist": "Se ha cargado el máximo de paquetes.<br>¡Usa la búsqueda para encontrar otros paquetes!",
 	
 	"gui.update.downloading": "Descargando...",
 	"gui.update.extracting": "Extrayendo actualización...",
