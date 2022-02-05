@@ -448,6 +448,9 @@ const mods = {
 			if (fs.existsSync(path.join(mod, "mod.json")) && 
 				fs.statSync(path.join(mod, "mod.json")).isFile()) {
 
+				if (fs.existsSync(path.join(modpath, modname))) {
+					fs.rmSync(path.join(modpath, modname), {recursive: true});
+				}
 				copy(mod, path.join(modpath, modname))
 
 				return installed();
@@ -473,9 +476,9 @@ const mods = {
 			let cache = path.join(app.getPath("userData"), "Archives");
 			if (fs.existsSync(cache)) {
 				fs.rmSync(cache, {recursive: true});
-				fs.mkdirSync(cache);
+				fs.mkdirSync(path.join(cache, "mods"), {recursive: true});
 			} else {
-				fs.mkdirSync(cache);
+				fs.mkdirSync(path.join(cache, "mods"), {recursive: true});
 			}
 
 			try {

@@ -58,7 +58,6 @@ var Browser = {
 	},
 	setbutton: (mod, string) => {
 		mod = normalize(mod);
-		console.log(mod)
 		if (document.getElementById(mod)) {
 			let elems = document.querySelectorAll(`#${mod}`);
 
@@ -136,7 +135,6 @@ function BrowserEl(properties) {
 
 ipcRenderer.on("removedmod", (event, modname) => {
 	setButtons(true);
-	console.log("test" + modname)
 	Browser.setbutton(modname, lang("gui.browser.install"));
 })
 
