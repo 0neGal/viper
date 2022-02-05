@@ -177,6 +177,13 @@ button {
 	height: calc(100% - var(--mischeight) - var(--height));
 }
 
+#browser .message {
+	color: white;
+	text-align: center;
+	margin: var(--padding);
+	width: calc(100% - var(--padding));
+}
+
 #browser .el .image, #browser .el .image img {
 	width: var(--height);
 	height: var(--height);

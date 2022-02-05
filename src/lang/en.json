@@ -65,6 +65,7 @@
 
 	"gui.browser.madeby": "by",
 	"gui.browser.update": "Update",
+	"gui.browser.endoflist": "Maximum packages has been loaded.<br>Use the search for finding other packages!",
 	"gui.browser.install": "Install",
 	"gui.browser.reinstall": "Re-Install",
 	"gui.browser.loading": "Loading mods...",

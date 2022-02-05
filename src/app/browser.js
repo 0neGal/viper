@@ -3,8 +3,10 @@ var fuse;
 var packages = [];
 
 var Browser = {
+	maxentries: 50,
 	toggle: (state) => {
 		if (state) {
+			browser.scrollTo(0, 0);
 			overlay.classList.add("shown")
 			browser.classList.add("shown")
 			return
@@ -16,6 +18,7 @@ var Browser = {
 			}
 		}
 
+		browser.scrollTo(0, 0);
 		overlay.classList.toggle("shown")
 		browser.classList.toggle("shown")
 	},
@@ -31,6 +34,7 @@ var Browser = {
 		}
 		
 		for (let i in packages) {
+			if (i == Browser.maxentries) {Browser.endoflist();break}
 			new BrowserElFromObj(packages[i]);
 		}
 	},
@@ -43,6 +47,9 @@ var Browser = {
 			browserEntries.innerHTML = `<div class="loading">${lang('gui.browser.loading')}</div>`;
 		}
 	},
+	endoflist: () => {
+		browserEntries.innerHTML += `<div class="message">${lang('gui.browser.endoflist')}</div>`
+	},
 	search: (string) => {
 		Browser.loading();
 		let res = fuse.search(string);
@@ -53,6 +60,7 @@ var Browser = {
 		}
 
 		for (let i = 0; i < res.length; i++) {
+			if (i == Browser.maxentries) {Browser.endoflist();break}
 			new BrowserElFromObj(res[i].item);
 		}
 	},
