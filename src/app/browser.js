@@ -55,6 +55,17 @@ var Browser = {
 		for (let i = 0; i < res.length; i++) {
 			new BrowserElFromObj(res[i].item);
 		}
+	},
+	setbutton: (mod, string) => {
+		mod = normalize(mod);
+		console.log(mod)
+		if (document.getElementById(mod)) {
+			let elems = document.querySelectorAll(`#${mod}`);
+
+			for (let i = 0; i < elems.length; i++) {
+				elems[i].querySelector(".text button").innerHTML = string;
+			}
+		}
 	}
 }; Browser.toggle()
 Browser.loadfront()
@@ -123,13 +134,15 @@ function BrowserEl(properties) {
 	`
 }
 
+ipcRenderer.on("removedmod", (event, modname) => {
+	setButtons(true);
+	console.log("test" + modname)
+	Browser.setbutton(modname, lang("gui.browser.install"));
+})
+
 ipcRenderer.on("installedmod", (event, modname) => {
 	setButtons(true);
-	modname = normalize(modname);
-
-	if (document.getElementById(modname)) {
-		document.getElementById(modname).querySelector(".text button").innerHTML = lang("gui.browser.reinstall");
-	}
+	Browser.setbutton(modname, lang("gui.browser.reinstall"));
 })
 
 function normalize(items) {

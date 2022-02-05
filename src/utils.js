@@ -413,6 +413,8 @@ const mods = {
 	// inside the zip or folder to see if buried in another folder or
 	// not, as sometimes that's the case.
 	install: (mod) => {
+		let modname = mod.replace(/^.*(\\|\/|\:)/, "");
+
 		if (getNSVersion() == "unknown") {
 			winLog(lang("general.notinstalled"))
 			console.log("error: " + lang("general.notinstalled"))
@@ -432,6 +434,8 @@ const mods = {
 			cli.exit();
 
 			winLog(lang("gui.mods.installedmod"))
+
+			ipcMain.emit("installedmod", "", modname);
 			ipcMain.emit("guigetmods");
 			return true;
 		}
@@ -444,9 +448,7 @@ const mods = {
 			if (fs.existsSync(path.join(mod, "mod.json")) && 
 				fs.statSync(path.join(mod, "mod.json")).isFile()) {
 
-				let modname = mod.replace(/^.*(\\|\/|\:)/, "");
 				copy(mod, path.join(modpath, modname))
-				ipcMain.emit("installedmod", "", modname);
 
 				return installed();
 			} else {
@@ -479,23 +481,25 @@ const mods = {
 			try {
 				fs.createReadStream(mod).pipe(unzip.Extract({path: cache}))
 				.on("finish", () => {
-					if (fs.existsSync(path.join(cache, "manifest.json"))) {
-						files = fs.readdirSync(path.join(cache, "mods"));
+					setTimeout(() => {
+						if (fs.existsSync(path.join(cache, "manifest.json"))) {
+							files = fs.readdirSync(path.join(cache, "mods"));
 
-						for (let i = 0; i < files.length; i++) {
-							let mod = path.join(cache, "mods", files[i]);
-							if (fs.statSync(mod).isDirectory()) {
-								setTimeout(() => {
-									if (mods.install(mod)) {return true};
-								}, 1000)
+							for (let i = 0; i < files.length; i++) {
+								let mod = path.join(cache, "mods", files[i]);
+								if (fs.statSync(mod).isDirectory()) {
+									setTimeout(() => {
+										if (mods.install(mod)) {return true};
+									}, 1000)
+								}
 							}
+							return notamod();
 						}
-						return notamod();
-					}
 
-					if (mods.install(cache)) {
-						installed();
-					} else {return notamod()}
+						if (mods.install(cache)) {
+							installed();
+						} else {return notamod()}
+					}, 1000)
 				});
 			}catch(err) {return notamod()}
 		}
@@ -582,6 +586,7 @@ const mods = {
 			console.log(lang("cli.mods.removed"));
 			cli.exit();
 			ipcMain.emit("guigetmods");
+			ipcMain.emit("removedmod", "", mod.replace(/^.*(\\|\/|\:)/, ""));
 		} else {
 			cli.exit(1);
 		}
