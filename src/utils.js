@@ -349,7 +349,7 @@ const mods = {
 					try {
 						mods.push({...require(path.join(modpath, file, "mod.json")), FolderName: file, Disabled: false})
 					}catch(err) {
-						console.log("error: " + lang("cli.mods.improperjson"), file)
+						if (cli.hasArgs()) {console.log("error: " + lang("cli.mods.improperjson"), file)}
 						mods.push({Name: file, FolderName: file, Version: "unknown", Disabled: false})
 					}
 				}
@@ -368,7 +368,7 @@ const mods = {
 					try {
 						disabled.push({...require(path.join(disabledPath, file, "mod.json")), FolderName: file, Disabled: true})
 					}catch(err) {
-						console.log("error: " + lang("cli.mods.improperjson"), file)
+						if (cli.hasArgs()) {console.log("error: " + lang("cli.mods.improperjson"), file)}
 						disabled.push({Name: file, FolderName: file, Version: "unknown", Disabled: true})
 					}
 				}
@@ -645,6 +645,10 @@ const mods = {
 		ipcMain.emit("guigetmods");
 	}
 };
+
+setInterval(() => {
+	ipcMain.emit("guigetmods");
+}, 1500)
 
 module.exports = {
 	mods,
