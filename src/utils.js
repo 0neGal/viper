@@ -1,6 +1,6 @@
 const path = require("path");
 const fs = require("fs-extra");
-const copy = require("copy-dir");
+const copy = require("recursive-copy");
 const { app, dialog, ipcMain, Notification } = require("electron");
 
 const Emitter = require("events");
@@ -445,12 +445,7 @@ const mods = {
 				fs.statSync(path.join(mod, "mod.json")).isFile()) {
 
 				let modname = mod.replace(/^.*(\\|\/|\:)/, "");
-				copy.sync(mod, path.join(modpath, modname), {
-					mode: true,
-					cover: true,
-					utimes: true,
-				});
-
+				copy(mod, path.join(modpath, modname))
 				ipcMain.emit("installedmod", "", modname);
 
 				return installed();
