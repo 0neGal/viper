@@ -63,11 +63,14 @@
 	"gui.mods.installing": "Installation du mod...",
 	"gui.mods.installedmod": "Mod installé !",
 
+	"gui.browser.info": "Info",
 	"gui.browser.madeby": "par",
+	"gui.browser.search": "Rechercher",
 	"gui.browser.update": "Mise à jour",
 	"gui.browser.install": "Installer",
 	"gui.browser.reinstall": "Réinstaller",
 	"gui.browser.loading": "Chargement des mods...",
+	"gui.browser.endoflist": "Fin de la liste de mods.<br>Utilisez la barre de recherche pour en trouver davantage !",
 
 	"gui.update.downloading": "Téléchargement de la mise à jour...",
 	"gui.update.extracting": "Extraction des fichiers...",
