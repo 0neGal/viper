@@ -77,9 +77,14 @@ var Browser = {
 			setTimeout(() => {
 				for (let i = 0; i < modsobj.all.length; i++) {
 					let modname = normalize(modsobj.all[i].Name);
+					let modfolder = normalize(modsobj.all[i].FolderName);
 					if (mod.includes(modname)) {
 						if (document.getElementById(modname)) {
 							Browser.setbutton(modname, string);
+						}
+					} else if (mod.includes(modfolder)) {
+						if (document.getElementById(modfolder)) {
+							Browser.setbutton(modfolder, string);
 						}
 					}
 				}
@@ -135,6 +140,20 @@ function BrowserEl(properties) {
 				&& "v" + modsobj.all[i].Version != properties.version) {
 				
 				installstr = lang("gui.browser.update");
+			}
+		}
+	} else {
+		for (let i = 0; i < modsobj.all.length; i++) {
+			let title = normalize(properties.title);
+			let folder = normalize(modsobj.all[i].FolderName);
+			if (title.includes(folder)) {
+				installstr = lang("gui.browser.reinstall");
+
+				if (folder == title
+					&& "v" + modsobj.all[i].Version != properties.version) {
+					
+					installstr = lang("gui.browser.update");
+				}
 			}
 		}
 	}

@@ -412,7 +412,7 @@ const mods = {
 	// Either a zip or folder is supported, we'll also try to search
 	// inside the zip or folder to see if buried in another folder or
 	// not, as sometimes that's the case.
-	install: (mod) => {
+	install: (mod, destname) => {
 		let modname = mod.replace(/^.*(\\|\/|\:)/, "");
 
 		if (getNSVersion() == "unknown") {
@@ -435,6 +435,14 @@ const mods = {
 
 			winLog(lang("gui.mods.installedmod"))
 
+			if (modname == "mods") {
+				let manifest = path.join(app.getPath("userData"), "Archives/manifest.json")
+
+				if (fs.existsSync(manifest)) {
+					modname = require(manifest).name;
+				}
+			}
+
 			ipcMain.emit("installedmod", "", modname);
 			ipcMain.emit("guigetmods");
 			return true;
@@ -451,7 +459,9 @@ const mods = {
 				if (fs.existsSync(path.join(modpath, modname))) {
 					fs.rmSync(path.join(modpath, modname), {recursive: true});
 				}
-				copy(mod, path.join(modpath, modname))
+				let copydest = path.join(modpath, modname);
+				if (typeof destname == "string") {copydest = path.join(modpath, destname)}
+				copy(mod, copydest)
 
 				return installed();
 			} else {
@@ -488,14 +498,21 @@ const mods = {
 						if (fs.existsSync(path.join(cache, "manifest.json"))) {
 							files = fs.readdirSync(path.join(cache, "mods"));
 
-							for (let i = 0; i < files.length; i++) {
-								let mod = path.join(cache, "mods", files[i]);
-								if (fs.statSync(mod).isDirectory()) {
-									setTimeout(() => {
-										if (mods.install(mod)) {return true};
-									}, 1000)
+							if (fs.existsSync(path.join(cache, "mods/mod.json"))) {
+								if (mods.install(path.join(cache, "mods"), require(path.join(cache, "manifest.json")).name)) {
+									return true;
+								}
+							} else {
+								for (let i = 0; i < files.length; i++) {
+									let mod = path.join(cache, "mods", files[i]);
+									if (fs.statSync(mod).isDirectory()) {
+										setTimeout(() => {
+											if (mods.install(mod)) {return true};
+										}, 1000)
+									}
 								}
 							}
+
 							return notamod();
 						}
 
