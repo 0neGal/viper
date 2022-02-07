@@ -560,13 +560,19 @@ code {
 
 /* drag control */
 
-#bgHolder, 
-#overlay.shown + .mainContainer, 
-#overlay.shown + .gamesContainer {
+#bgHolder,
+.mainContainer, 
+.gamesContainer {
 	user-select: none;
   	-webkit-app-region: drag;
 }
 
-a, button, .contentMenu, #close, #nsRelease, #vpReleaseNotes, .mod, #overlay {
+#overlay.shown ~ #bgHolder,
+#overlay.shown ~ .mainContainer, 
+#overlay.shown ~ .gamesContainer {
+  	-webkit-app-region: no-drag;
+}
+
+a, button, .contentMenu li, #close, #nsRelease, #vpReleaseNotes, .mod, #overlay, #modsdiv {
 	-webkit-app-region: no-drag;
 }
