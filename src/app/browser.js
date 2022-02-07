@@ -91,8 +91,7 @@ var Browser = {
 			}, 1501)
 		}
 	}
-}; Browser.toggle()
-Browser.loadfront()
+}; Browser.loadfront()
 
 document.body.addEventListener("keyup", (e) => {
 	if (e.key == "Escape") {Browser.toggle(false)}
