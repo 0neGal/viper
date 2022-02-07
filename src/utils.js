@@ -352,6 +352,11 @@ const mods = {
 						if (cli.hasArgs()) {console.log("error: " + lang("cli.mods.improperjson"), file)}
 						mods.push({Name: file, FolderName: file, Version: "unknown", Disabled: false})
 					}
+
+					let manifest = path.join(modpath, file, "manifest.json");
+					if (fs.existsSync(manifest)) {
+						mods[mods.length - 1].ManifestName = require(manifest).name;
+					}
 				}
 			}
 		})
@@ -371,6 +376,11 @@ const mods = {
 						if (cli.hasArgs()) {console.log("error: " + lang("cli.mods.improperjson"), file)}
 						disabled.push({Name: file, FolderName: file, Version: "unknown", Disabled: true})
 					}
+				}
+
+				let manifest = path.join(modpath, file, "manifest.json");
+				if (fs.existsSync(manifest)) {
+					mods[mods.length - 1].ManifestName = require(manifest).name;
 				}
 			}
 		})
@@ -412,7 +422,7 @@ const mods = {
 	// Either a zip or folder is supported, we'll also try to search
 	// inside the zip or folder to see if buried in another folder or
 	// not, as sometimes that's the case.
-	install: (mod, destname) => {
+	install: (mod, destname, manifestfile) => {
 		let modname = mod.replace(/^.*(\\|\/|\:)/, "");
 
 		if (getNSVersion() == "unknown") {
@@ -462,6 +472,7 @@ const mods = {
 				let copydest = path.join(modpath, modname);
 				if (typeof destname == "string") {copydest = path.join(modpath, destname)}
 				copy(mod, copydest)
+				copy(manifestfile, path.join(copydest, "manifest.json"))
 
 				return installed();
 			} else {
@@ -495,11 +506,12 @@ const mods = {
 				fs.createReadStream(mod).pipe(unzip.Extract({path: cache}))
 				.on("finish", () => {
 					setTimeout(() => {
-						if (fs.existsSync(path.join(cache, "manifest.json"))) {
+						let manifest = path.join(cache, "manifest.json");
+						if (fs.existsSync(manifest)) {
 							files = fs.readdirSync(path.join(cache, "mods"));
 
 							if (fs.existsSync(path.join(cache, "mods/mod.json"))) {
-								if (mods.install(path.join(cache, "mods"), require(path.join(cache, "manifest.json")).name)) {
+								if (mods.install(path.join(cache, "mods"), require(manifest).name, manifest)) {
 									return true;
 								}
 							} else {
@@ -507,7 +519,7 @@ const mods = {
 									let mod = path.join(cache, "mods", files[i]);
 									if (fs.statSync(mod).isDirectory()) {
 										setTimeout(() => {
-											if (mods.install(mod)) {return true};
+											if (mods.install(mod, false, manifest)) {return true};
 										}, 1000)
 									}
 								}
@@ -602,11 +614,19 @@ const mods = {
 		}
 
 		if (fs.statSync(modPath).isDirectory()) {
+			let manifestname = null;
+			if (fs.existsSync(path.join(modPath, "manifest.json"))) {
+				manifestname = require(path.join(modPath, "manifest.json")).name;
+			}
+
 			fs.rmSync(modPath, {recursive: true});
 			console.log(lang("cli.mods.removed"));
 			cli.exit();
 			ipcMain.emit("guigetmods");
-			ipcMain.emit("removedmod", "", mod.replace(/^.*(\\|\/|\:)/, ""));
+			ipcMain.emit("removedmod", "", {
+				name: mod.replace(/^.*(\\|\/|\:)/, ""),
+				manifestname: manifestname
+			});
 		} else {
 			cli.exit(1);
 		}

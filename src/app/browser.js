@@ -66,7 +66,6 @@ var Browser = {
 	},
 	setbutton: (mod, string) => {
 		mod = normalize(mod);
-		console.log(mod)
 		if (document.getElementById(mod)) {
 			let elems = document.querySelectorAll(`#${mod}`);
 
@@ -74,19 +73,27 @@ var Browser = {
 				elems[i].querySelector(".text button").innerHTML = string;
 			}
 		} else {
+			let make = (str) => {
+				if (document.getElementById(str)) {
+					return Browser.setbutton(str, string);
+				} else {
+					return false;
+				}
+			}
+
 			setTimeout(() => {
 				for (let i = 0; i < modsobj.all.length; i++) {
 					let modname = normalize(modsobj.all[i].Name);
 					let modfolder = normalize(modsobj.all[i].FolderName);
+
 					if (mod.includes(modname)) {
-						if (document.getElementById(modname)) {
-							Browser.setbutton(modname, string);
-						}
-					} else if (mod.includes(modfolder)) {
-						if (document.getElementById(modfolder)) {
-							Browser.setbutton(modfolder, string);
+						if (! make(modname)) {
+							if (modsobj.all[i].ManifestName) {
+								make(normalize(modsobj.all[i].ManifestName));
+							}
 						}
 					}
+					else if (mod.includes(modfolder)) {make(modfolder);break}
 				}
 			}, 1501)
 		}
@@ -145,7 +152,12 @@ function BrowserEl(properties) {
 		for (let i = 0; i < modsobj.all.length; i++) {
 			let title = normalize(properties.title);
 			let folder = normalize(modsobj.all[i].FolderName);
-			if (title.includes(folder)) {
+			let manifestname = null;
+			if (modsobj.all[i].ManifestName) {
+				manifestname = normalize(modsobj.all[i].ManifestName);
+			}
+
+			if (title.includes(folder) || title.includes(manifestname)) {
 				installstr = lang("gui.browser.reinstall");
 
 				if (folder == title
@@ -174,9 +186,12 @@ function BrowserEl(properties) {
 	`
 }
 
-ipcRenderer.on("removedmod", (event, modname) => {
+ipcRenderer.on("removedmod", (event, mod) => {
 	setButtons(true);
-	Browser.setbutton(modname, lang("gui.browser.install"));
+	Browser.setbutton(mod.name, lang("gui.browser.install"));
+	if (mod.manifestname) {
+		Browser.setbutton(mod.manifestname, lang("gui.browser.install"));
+	}
 })
 
 ipcRenderer.on("installedmod", (event, modname) => {
