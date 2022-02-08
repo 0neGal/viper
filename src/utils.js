@@ -8,7 +8,8 @@ const events = new Emitter();
 
 const cli = require("./cli");
 const lang = require("./lang");
-const requests = require("./requests");
+const requests = require("./extras/requests");
+const findgame = require("./extras/findgame");
 
 const unzip = require("unzipper");
 const run = require("child_process").spawn;
@@ -115,10 +116,37 @@ northstar_auto_updates: {
 //
 // If running with CLI it takes in the --setpath argument otherwise it
 // open the systems file browser for the user to select a path.
-function setpath(win) {
+async function setpath(win, forcedialog) {
+	function setGamepath(folder) {
+		settings.gamepath = folder;
+		settings.zip = path.join(settings.gamepath + "/northstar.zip");
+		saveSettings();
+		win.webContents.send("newpath", settings.gamepath);
+		ipcMain.emit("newpath", null, settings.gamepath);
+	}
+
 	if (! win) { // CLI
-		settings.gamepath = cli.param("setpath");
+		setGamepath(cli.param("setpath"));
 	} else { // GUI
+		if (! forcedialog) {
+			function setGamepath(folder, forcedialog) {
+				settings.gamepath = folder;
+				settings.zip = path.join(settings.gamepath + "/northstar.zip");
+				saveSettings();
+				win.webContents.send("newpath", settings.gamepath);
+				ipcMain.emit("newpath", null, settings.gamepath);
+			}
+
+			let gamepath = await findgame();
+			if (gamepath) {
+				setGamepath(gamepath);
+				return;
+			}
+
+			winAlert(lang("general.missingpath"));
+		}
+
+		// Fallback to manual selection
 		dialog.showOpenDialog({properties: ["openDirectory"]}).then(res => {
 			if (res.canceled) {
 				ipcMain.emit("newpath", null, false);
@@ -129,16 +157,12 @@ function setpath(win) {
 				return;
 			}
 
-			settings.gamepath = res.filePaths[0];
-			settings.zip = path.join(settings.gamepath + "/northstar.zip");
-			saveSettings();
-			win.webContents.send("newpath", settings.gamepath);
-			ipcMain.emit("newpath", null, settings.gamepath);
+			setGamepath(res.filePaths[0])
+
+			cli.exit();
+			return;
 		}).catch(err => {console.error(err)})
 	}
-
-	saveSettings();
-	cli.exit();
 }
 
 // As to not have to do the same one liner a million times, this
@@ -315,7 +339,6 @@ function winAlert(msg) {
 //
 // We can both get list of disabled mods, remove/install/toggle mods and
 // other things akin to that, all kinds of mod related stuff
-let modpath = path.join(settings.gamepath, "R2Northstar/mods");
 const mods = {
 	// Returns a list of mods
 	//
@@ -323,6 +346,8 @@ const mods = {
 	// combination of the other two, enabled being enabled mods, and you
 	// guessed it, disabled being disabled mods.
 	list: () => {
+		let modpath = path.join(settings.gamepath, "R2Northstar/mods");
+
 		if (getNSVersion() == "unknown") {
 			winLog(lang("general.notinstalled"))
 			console.log("error: " + lang("general.notinstalled"))
@@ -399,6 +424,8 @@ const mods = {
 	// the absolute basics will be provided and we can't know the
 	// version or similar.
 	get: (mod) => {
+		let modpath = path.join(settings.gamepath, "R2Northstar/mods");
+
 		if (getNSVersion() == "unknown") {
 			winLog(lang("general.notinstalled"))
 			console.log("error: " + lang("general.notinstalled"))
@@ -580,6 +607,8 @@ const mods = {
 	// Takes in the names of the mod then removes it, no confirmation,
 	// that'd be up to the GUI.
 	remove: (mod) => {
+		let modpath = path.join(settings.gamepath, "R2Northstar/mods");
+
 		if (getNSVersion() == "unknown") {
 			winLog(lang("general.notinstalled"))
 			console.log("error: " + lang("general.notinstalled"))
@@ -639,6 +668,8 @@ const mods = {
 	// you checked for if a mod is already disable and if not run the
 	// function. However we currently have no need for that.
 	toggle: (mod, fork) => {
+		let modpath = path.join(settings.gamepath, "R2Northstar/mods");
+
 		if (getNSVersion() == "unknown") {
 			winLog(lang("general.notinstalled"))
 			console.log("error: " + lang("general.notinstalled"))

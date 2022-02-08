@@ -42,7 +42,7 @@
 	"gui.versions.northstar": "Northstar version",
 	"gui.exit": "Exit",
 	"gui.update": "Update",
-	"gui.setpath": "Game Path",
+	"gui.setpath": "Change Game Path",
 
 	"gui.update.check": "Check for updates",
 	"gui.mods": "Mods",
@@ -106,7 +106,7 @@
 	"general.mods.enabled": "Enabled mods:",
 	"general.mods.disabled": "Disabled mods:",
 	"general.mods.installed": "Installed mods:",
-	"general.missingpath": "Game path is not set!",
+	"general.missingpath": "Game location could not be found automatically! Please select it manually!",
 	"general.notinstalled": "Northstar is not installed!",
 	"general.launching": "Launching"
 }

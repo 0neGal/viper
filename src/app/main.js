@@ -27,13 +27,11 @@ if (fs.existsSync("viper.json")) {
 	settings.zip = path.join(settings.gamepath + "/northstar.zip");
 
 	if (settings.gamepath.length === 0) {
-		alert(lang("general.missingpath"));
 		setpath(false);
 	} else {
 		setpath(true);
 	}
 } else {
-	alert(lang("general.missingpath"));
 	setpath();
 }
 
@@ -173,6 +171,7 @@ function installFromURL(url) {
 // Frontend part of settings a new game path
 ipcRenderer.on("newpath", (event, newpath) => {
 	settings.gamepath = newpath;
+	ipcRenderer.send("guigetmods");
 })
 
 // Continuation of log()
@@ -182,6 +181,8 @@ ipcRenderer.on("alert", (event, msg) => {alert(msg)})
 // Updates the installed mods
 ipcRenderer.on("mods", (event, mods) => {
 	modsobj = mods;
+	if (! mods) {return}
+
 	modcount.innerHTML = `${lang("gui.mods.count")} ${mods.all.length}`;
 	modsdiv.innerHTML = "";
 	
