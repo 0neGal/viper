@@ -198,9 +198,34 @@ ipcRenderer.on("removedmod", (event, mod) => {
 	}
 })
 
-ipcRenderer.on("installedmod", (event, modname) => {
+ipcRenderer.on("failedmod", (event, modname) => {
 	setButtons(true);
-	Browser.setbutton(modname, lang("gui.browser.reinstall"));
+	new Toast({
+		timeout: 10000,
+		scheme: "error",
+		title: lang("gui.toast.title.failed"),
+		description: lang("gui.toast.desc.failed")
+	})
+})
+
+ipcRenderer.on("installedmod", (event, mod) => {
+	setButtons(true);
+	Browser.setbutton(mod.name, lang("gui.browser.reinstall"));
+
+	if (mod.malformed) {
+		new Toast({
+			timeout: 8000,
+			scheme: "warning",
+			title: lang("gui.toast.title.malformed"),
+			description: mod.name + " " + lang("gui.toast.desc.malformed")
+		})
+	}
+
+	new Toast({
+		scheme: "success",
+		title: lang("gui.toast.title.installed"),
+		description: mod.name + " " + lang("gui.toast.desc.installed")
+	})
 })
 
 function normalize(items) {

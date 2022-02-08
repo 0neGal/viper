@@ -450,7 +450,7 @@ const mods = {
 	// Either a zip or folder is supported, we'll also try to search
 	// inside the zip or folder to see if buried in another folder or
 	// not, as sometimes that's the case.
-	install: (mod, destname, manifestfile) => {
+	install: (mod, destname, manifestfile, malformed = false) => {
 		let modname = mod.replace(/^.*(\\|\/|\:)/, "");
 
 		if (getNSVersion() == "unknown") {
@@ -481,7 +481,10 @@ const mods = {
 				}
 			}
 
-			ipcMain.emit("installedmod", "", modname);
+			ipcMain.emit("installedmod", "", {
+				name: modname,
+				malformed: malformed,
+			});
 			ipcMain.emit("guigetmods");
 			return true;
 		}
@@ -539,7 +542,7 @@ const mods = {
 							files = fs.readdirSync(path.join(cache, "mods"));
 
 							if (fs.existsSync(path.join(cache, "mods/mod.json"))) {
-								if (mods.install(path.join(cache, "mods"), require(manifest).name, manifest)) {
+								if (mods.install(path.join(cache, "mods"), require(manifest).name, manifest, true)) {
 									return true;
 								}
 							} else {
@@ -553,6 +556,7 @@ const mods = {
 								}
 							}
 
+							ipcMain.emit("failedmod", "", modname);
 							return notamod();
 						}
 
