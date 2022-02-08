@@ -5,11 +5,14 @@ var packages = [];
 var Browser = {
 	maxentries: 50,
 	toggle: (state) => {
-		Browser.loadfront();
 		if (state) {
 			browser.scrollTo(0, 0);
 			overlay.classList.add("shown")
 			browser.classList.add("shown")
+
+			if (browserEntries.querySelectorAll(".el").length == 0) {
+				Browser.loadfront();
+			}
 			return
 		} else if (! state) {
 			if (state != undefined) {
