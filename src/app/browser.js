@@ -5,6 +5,7 @@ var packages = [];
 var Browser = {
 	maxentries: 50,
 	toggle: (state) => {
+		Browser.loadfront();
 		if (state) {
 			browser.scrollTo(0, 0);
 			overlay.classList.add("shown")
@@ -98,7 +99,7 @@ var Browser = {
 			}, 1501)
 		}
 	}
-}; Browser.loadfront()
+}
 
 document.body.addEventListener("keyup", (e) => {
 	if (e.key == "Escape") {Browser.toggle(false)}
