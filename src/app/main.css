@@ -323,7 +323,7 @@ img {pointer-events: none}
 }
 
 .contentContainer {
-	width: 90%;
+	width: 85%;
 	color: white;
 	flex-grow: 1;
 	opacity: 1.0;
@@ -561,18 +561,18 @@ code {
 /* drag control */
 
 #bgHolder,
-.mainContainer, 
+.contentContainer, 
 .gamesContainer {
 	user-select: none;
   	-webkit-app-region: drag;
 }
 
 #overlay.shown ~ #bgHolder,
-#overlay.shown ~ .mainContainer, 
+#overlay.shown ~ .contentContainer, 
 #overlay.shown ~ .gamesContainer {
   	-webkit-app-region: no-drag;
 }
 
-a, button, .contentMenu li, #close, #nsRelease, #vpReleaseNotes, .mod, #overlay, #modsdiv {
+a, button, #close, #nsRelease, #vpReleaseNotes, .mod, #overlay, #modsdiv, #winbtns, .contentMenu {
 	-webkit-app-region: no-drag;
 }
