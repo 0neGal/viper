@@ -558,6 +558,60 @@ code {
 	margin-bottom: calc(var(--spacing) / 2);
 }
 
+#toasts {
+	position: fixed;
+	z-index: 100000;
+	right: calc(var(--padding) * 1.5);
+	bottom: calc(var(--padding) * 1.5);
+}
+
+@keyframes bodyfadeaway {
+	0% {opacity: 0.0; transform: scale(0.95)}
+	100% {opacity: 1.0; transform: scale(1.0)}
+}
+
+#toasts .toast {
+	width: 300px;
+	opacity: 0.0;
+	cursor: pointer;
+	overflow: hidden;
+	max-height: 100vh;
+	background: #FFFFFF;
+	transform: scale(0.95);
+	transition: 0.2s ease-in-out;
+	padding: calc(var(--padding) / 2);
+	margin-top: calc(var(--padding) / 2);
+	border-radius: calc(var(--padding) / 2.5);
+	box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+
+	animation-duration: 0.2s;
+	animation-iteration-count: 1;
+	animation-name: bodyfadeaway;
+	animation-fill-mode: forwards;
+	animation-timing-function: ease-in-out;
+}
+
+#toasts .toast.hidden {
+	margin-top: 0px;
+	max-height: 0px;
+	padding-top: 0px;
+	padding-bottom: 0px;
+	filter: opacity(0.0);
+	transform: scale(0.95);
+}
+
+#toasts .toast:not(.hidden):hover {filter: opacity(0.9)}
+#toasts .toast:not(.hidden):active {filter: opacity(0.8)}
+
+.toast .title {
+}
+
+.toast .description {
+	opacity: 0.8;
+	font-size: 0.8em;
+	font-weight: 400;
+}
+
 /* drag control */
 
 #bgHolder,
