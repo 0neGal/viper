@@ -25,6 +25,7 @@ function Toast(properties) {
 
 
 	let id = Date.now();
+	if (document.getElementById(id)) {id = id + 1}
 	let el = document.createElement("div");
 
 	el.classList.add("toast");
