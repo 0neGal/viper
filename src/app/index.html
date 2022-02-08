@@ -12,6 +12,19 @@
 			<div id="minimize" onclick="ipcRenderer.send('minimize')"></div>
 			<div id="close" onclick="ipcRenderer.send('exit')"></div>
 		</div>
+
+		<div id="overlay" onclick="Browser.toggle(false)"></div>
+		<div id="browser">
+			<div id="misc">
+				<input id="search" placeholder="%%gui.browser.search%%">
+				<button id="close" onclick="Browser.toggle(false)">
+					<img src="icons/close.png">
+				</button>
+			</div>
+			<div id="browserEntries">
+				<div class="loading">%%gui.browser.loading%%</div>
+			</div>
+		</div>
 		
 		<nav class="gamesContainer">
 			<button id="vpBtn" onclick="page(0)"></button>
@@ -79,6 +92,7 @@
 								<button id="togglemod" onclick="selected().toggle()">%%gui.mods.toggle%%</button>
 								<button id="toggleall" onclick="selected(true).toggle(true)">%%gui.mods.toggleall%%</button>
 								<button id="installmod" onclick="installmod()">%%gui.mods.install%%</button>
+								<button id="installmod" onclick="Browser.toggle(true)">%%gui.mods.find%%</button>
 							</div>
 						</div>
 					</div>
@@ -102,6 +116,7 @@
 
 		<script src="lang.js"></script>
 		<script src="main.js"></script>
+		<script src="browser.js"></script>
 		<script src="launcher.js"></script>
 	</body>
 </html>

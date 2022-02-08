@@ -43,9 +43,13 @@ function start() {
 
 	ipcMain.on("exit", () => {process.exit(0)})
 	ipcMain.on("minimize", () => {win.minimize()})
+	ipcMain.on("installfromurl", (event, url) => {utils.mods.installFromURL(url)})
 	ipcMain.on("winLog", (event, ...args) => {win.webContents.send("log", ...args)});
 	ipcMain.on("winAlert", (event, ...args) => {win.webContents.send("alert", ...args)});
 	ipcMain.on("ns-update-event", (event) => win.webContents.send("ns-update-event", event));
+	ipcMain.on("failedmod", (event, modname) => {win.webContents.send("failedmod", modname)});
+	ipcMain.on("removedmod", (event, modname) => {win.webContents.send("removedmod", modname)});
+	ipcMain.on("installedmod", (event, modname) => {win.webContents.send("installedmod", modname)});
 	ipcMain.on("guigetmods", (event, ...args) => {win.webContents.send("mods", utils.mods.list())});
 
 	win.webContents.on("dom-ready", () => {

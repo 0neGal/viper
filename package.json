@@ -48,12 +48,13 @@
 	},
 	"homepage": "https://github.com/0neGal/viper#readme",
 	"dependencies": {
-		"copy-dir": "^1.3.0",
 		"electron-updater": "^4.6.1",
 		"follow-redirects": "^1.14.7",
 		"fs-extra": "^10.0.0",
+		"fuse.js": "^6.5.3",
 		"marked": "^4.0.10",
 		"marked-man": "^0.7.0",
+		"recursive-copy": "^2.0.13",
 		"simple-vdf": "^1.1.1",
 		"unzipper": "^0.10.11"
 	},

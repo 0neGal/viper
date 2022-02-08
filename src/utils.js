@@ -1,6 +1,6 @@
 const path = require("path");
 const fs = require("fs-extra");
-const copy = require("copy-dir");
+const copy = require("recursive-copy");
 const { app, dialog, ipcMain, Notification } = require("electron");
 
 const Emitter = require("events");
@@ -374,8 +374,13 @@ const mods = {
 					try {
 						mods.push({...require(path.join(modpath, file, "mod.json")), FolderName: file, Disabled: false})
 					}catch(err) {
-						console.log("error: " + lang("cli.mods.improperjson"), file)
+						if (cli.hasArgs()) {console.log("error: " + lang("cli.mods.improperjson"), file)}
 						mods.push({Name: file, FolderName: file, Version: "unknown", Disabled: false})
+					}
+
+					let manifest = path.join(modpath, file, "manifest.json");
+					if (fs.existsSync(manifest)) {
+						mods[mods.length - 1].ManifestName = require(manifest).name;
 					}
 				}
 			}
@@ -393,9 +398,14 @@ const mods = {
 					try {
 						disabled.push({...require(path.join(disabledPath, file, "mod.json")), FolderName: file, Disabled: true})
 					}catch(err) {
-						console.log("error: " + lang("cli.mods.improperjson"), file)
+						if (cli.hasArgs()) {console.log("error: " + lang("cli.mods.improperjson"), file)}
 						disabled.push({Name: file, FolderName: file, Version: "unknown", Disabled: true})
 					}
+				}
+
+				let manifest = path.join(modpath, file, "manifest.json");
+				if (fs.existsSync(manifest)) {
+					mods[mods.length - 1].ManifestName = require(manifest).name;
 				}
 			}
 		})
@@ -439,8 +449,8 @@ const mods = {
 	// Either a zip or folder is supported, we'll also try to search
 	// inside the zip or folder to see if buried in another folder or
 	// not, as sometimes that's the case.
-	install: (mod) => {
-		let modpath = path.join(settings.gamepath, "R2Northstar/mods");
+	install: (mod, destname, manifestfile) => {
+		let modname = mod.replace(/^.*(\\|\/|\:)/, "");
 
 		if (getNSVersion() == "unknown") {
 			winLog(lang("general.notinstalled"))
@@ -461,6 +471,16 @@ const mods = {
 			cli.exit();
 
 			winLog(lang("gui.mods.installedmod"))
+
+			if (modname == "mods") {
+				let manifest = path.join(app.getPath("userData"), "Archives/manifest.json")
+
+				if (fs.existsSync(manifest)) {
+					modname = require(manifest).name;
+				}
+			}
+
+			ipcMain.emit("installedmod", "", modname);
 			ipcMain.emit("guigetmods");
 			return true;
 		}
@@ -469,14 +489,17 @@ const mods = {
 
 		if (fs.statSync(mod).isDirectory()) {
 			winLog(lang("gui.mods.installing"))
+			files = fs.readdirSync(mod);
 			if (fs.existsSync(path.join(mod, "mod.json")) && 
 				fs.statSync(path.join(mod, "mod.json")).isFile()) {
 
-				copy.sync(mod, path.join(modpath, mod.replace(/^.*(\\|\/|\:)/, "")), {
-					mode: true,
-					cover: true,
-					utimes: true,
-				});
+				if (fs.existsSync(path.join(modpath, modname))) {
+					fs.rmSync(path.join(modpath, modname), {recursive: true});
+				}
+				let copydest = path.join(modpath, modname);
+				if (typeof destname == "string") {copydest = path.join(modpath, destname)}
+				copy(mod, copydest)
+				copy(manifestfile, path.join(copydest, "manifest.json"))
 
 				return installed();
 			} else {
@@ -487,6 +510,7 @@ const mods = {
 						if (fs.existsSync(path.join(mod, files[i], "mod.json")) &&
 							fs.statSync(path.join(mod, files[i], "mod.json")).isFile()) {
 
+							console.log(mods.install(path.join(mod, files[i])))
 							if (mods.install(path.join(mod, files[i]))) {return true};
 						}
 					}
@@ -500,21 +524,84 @@ const mods = {
 			let cache = path.join(app.getPath("userData"), "Archives");
 			if (fs.existsSync(cache)) {
 				fs.rmSync(cache, {recursive: true});
-				fs.mkdirSync(cache);
+				fs.mkdirSync(path.join(cache, "mods"), {recursive: true});
 			} else {
-				fs.mkdirSync(cache);
+				fs.mkdirSync(path.join(cache, "mods"), {recursive: true});
 			}
 
 			try {
 				fs.createReadStream(mod).pipe(unzip.Extract({path: cache}))
 				.on("finish", () => {
-					if (mods.install(cache)) {
-						installed();
-					} else {return notamod()}
+					setTimeout(() => {
+						let manifest = path.join(cache, "manifest.json");
+						if (fs.existsSync(manifest)) {
+							files = fs.readdirSync(path.join(cache, "mods"));
+
+							if (fs.existsSync(path.join(cache, "mods/mod.json"))) {
+								if (mods.install(path.join(cache, "mods"), require(manifest).name, manifest)) {
+									return true;
+								}
+							} else {
+								for (let i = 0; i < files.length; i++) {
+									let mod = path.join(cache, "mods", files[i]);
+									if (fs.statSync(mod).isDirectory()) {
+										setTimeout(() => {
+											if (mods.install(mod, false, manifest)) {return true};
+										}, 1000)
+									}
+								}
+							}
+
+							return notamod();
+						}
+
+						if (mods.install(cache)) {
+							installed();
+						} else {return notamod()}
+					}, 1000)
 				});
 			}catch(err) {return notamod()}
 		}
 	},
+
+	// Installs mods from URL's
+	//
+	// This'll simply download the file that the URL points to and then
+	// install it with mods.install()
+	installFromURL: (url) => {
+		https.get(url, (res) => {
+			let tmp = path.join(app.getPath("cache"), "vipertmp");
+			let modlocation = path.join(tmp, "/mod.zip");
+
+			if (fs.existsSync(tmp)) {
+				if (! fs.statSync(tmp).isDirectory()) {
+					fs.rmSync(tmp)
+				}
+			} else {
+				fs.mkdirSync(tmp)
+				if (fs.existsSync(modlocation)) {
+					fs.rmSync(modlocation)
+				}
+			}
+
+			let stream = fs.createWriteStream(modlocation);
+			res.pipe(stream);
+
+			// let received = 0;
+			// // Progress messages, we should probably switch this to
+			// // percentage instead of how much is downloaded.
+			// res.on("data", (chunk) => {
+			// 	received += chunk.length;
+			// 	ipcMain.emit("ns-update-event", lang("gui.update.downloading") + " " + (received / 1024 / 1024).toFixed(1) + "mb");
+			// })
+
+			stream.on("finish", () => {
+				stream.close();
+				mods.install(modlocation)
+			})
+		})
+	},
+
 	// Removes mods
 	//
 	// Takes in the names of the mod then removes it, no confirmation,
@@ -556,10 +643,19 @@ const mods = {
 		}
 
 		if (fs.statSync(modPath).isDirectory()) {
+			let manifestname = null;
+			if (fs.existsSync(path.join(modPath, "manifest.json"))) {
+				manifestname = require(path.join(modPath, "manifest.json")).name;
+			}
+
 			fs.rmSync(modPath, {recursive: true});
 			console.log(lang("cli.mods.removed"));
 			cli.exit();
 			ipcMain.emit("guigetmods");
+			ipcMain.emit("removedmod", "", {
+				name: mod.replace(/^.*(\\|\/|\:)/, ""),
+				manifestname: manifestname
+			});
 		} else {
 			cli.exit(1);
 		}
@@ -620,6 +716,10 @@ const mods = {
 		ipcMain.emit("guigetmods");
 	}
 };
+
+setInterval(() => {
+	ipcMain.emit("guigetmods");
+}, 1500)
 
 module.exports = {
 	mods,

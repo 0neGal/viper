@@ -9,7 +9,11 @@
 	--selbg: rgba(80, 80, 80, 0.5);
 	--redbg: linear-gradient(45deg, var(--red), #FA4343);
 	--bluebg: linear-gradient(45deg, var(--blue), #7380ED);
+}
 
+#browser, #modsdiv {
+	outline: 1px solid #444444;
+	border: 3px solid var(--bg);
 }
 
 ::-webkit-scrollbar {
@@ -26,12 +30,191 @@
 	background: var(--red);
 }
 
+::selection {
+	color: black;
+	background: var(--red);
+}
+
+body {
+	margin: 0;
+	overflow: hidden;
+	user-select: none;
+}
+
+body, button, input {font-family: "Roboto", sans-serif}
+
+button {outline: none}
+b, strong {font-weight: 700}
+body, input, button {font-weight: 500}
+
+button {
+	border: none;
+	color: white;
+	outline: none;
+	cursor: pointer;
+	font-weight: 700;
+	padding: 5px 10px;
+	border-radius: 5px;
+	transition: 0.2s ease-in-out;
+}
+
 .playBtn, .gamesContainer button, #winbtns div {
 	cursor: pointer;
 }
 
-#winbtns {
+#browser {
+	--spacing: var(--padding);
+
+	z-index: 2;
+	opacity: 0.0;
+	position: fixed;
+	overflow-y: scroll;
+	top: var(--spacing);
+	pointer-events: none;
+	left: var(--spacing);
+	background: var(--bg);
+	right: var(--spacing);
+	bottom: var(--spacing);
+	transform: scale(0.98);
+	backdrop-filter: blur(15px);
+	border-radius: calc(var(--padding) / 3);
+	transition: opacity 0.15s ease-in-out, transform 0.15s ease-in-out;
+}
+
+#browser.shown {
+	opacity: 1.0;
+	pointer-events: all;
+	transform: scale(1.0);
+}
+
+#overlay {
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
 	z-index: 1;
+	opacity: 0.0;
+	position: fixed;
+	background: var(--bg);
+	pointer-events: none;
+	transition: opacity 0.15s ease-in-out;
+}
+
+#overlay.shown {
+	opacity: 0.8;
+	pointer-events: all;
+}
+
+@keyframes fadein {
+	0% {opacity: 0.0}
+	100% {opacity: 1.0}
+}
+
+#browser .el, #browser #misc, #browser .loading {
+	--spacing: calc(var(--padding) / 2);
+	--height: calc(var(--padding) * 3);
+	--mischeight: calc(var(--padding) * 1.5);
+
+	animation-duration: 0.15s;
+	animation-iteration-count: 1;
+	animation-name: fadein;
+	animation-fill-mode: forwards;
+	animation-timing-function: ease-in-out;
+
+	opacity: 0.0;
+	transition: 0.15s ease-in-out;
+}
+
+#browser .el, #browser #search, #browser #close {
+	color: white;
+	display: flex;
+	align-items: center;
+	height: var(--height);
+	margin: var(--spacing);
+	padding: var(--spacing);
+	background: var(--selbg);
+	border-radius: var(--spacing);
+	width: calc(100% - var(--spacing) * 4);
+}
+
+#browser #misc, #browser #search {
+	--height: var(--mischeight);
+}
+
+#browser #misc {
+	display: flex;
+}
+
+#browser #search {
+	border: none;
+	outline: none;
+	transition: filter 0.15s ease-in-out;
+	width: calc(100% - var(--spacing) * 2);
+}
+
+#browser #search:focus {
+	filter: brightness(1.5);
+}
+
+#browser #close {
+	--height: calc(var(--padding) * 1.5);
+
+	padding: 0px;
+	margin-left: 0px;
+	width: var(--height);
+}
+
+#browser #close img {
+	opacity: 0.6;
+	width: var(--height);
+	height: var(--height);
+	transform: scale(0.6);
+}
+
+#browser .loading {
+	width: 100%;
+	color: white;
+	display: flex;
+	text-align: center;
+	align-items: center;
+	justify-content: center;
+	height: calc(100% - var(--mischeight) - var(--height));
+}
+
+#browser .message {
+	color: white;
+	text-align: center;
+	margin: var(--padding);
+	width: calc(100% - var(--padding));
+}
+
+#browser .el .image, #browser .el .image img {
+	width: var(--height);
+	height: var(--height);
+	margin-right: var(--spacing);
+	border-radius: var(--spacing);
+}
+
+#browser .el .text {
+	overflow: hidden;
+}
+
+#browser .el .title, #browser .el .description {
+	height: 1.2em;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+
+#browser .el .title {font-size: 1.2em}
+#browser .el .description {font-size: 0.8em}
+#browser .el button {
+	background: var(--blue);
+	margin-top: var(--spacing);
+}
+
+#winbtns {
+	z-index: 2;
 	display: flex;
 	position: fixed;
 	top: var(--padding);
@@ -54,40 +237,18 @@
 #winbtns div:hover {opacity: 1.0}
 #winbtns div:active {transform: scale(0.98)}
 
-body {
-	margin: 0;
-	overflow: hidden;
-	user-select: none;
-	font-family: "Roboto", sans-serif;
-}
-
-button {outline: none}
-b, strong {font-weight: 700}
-body, input, button {font-weight: 500}
-
-button {
-	border: none;
-	color: white;
-	outline: none;
-	font-weight: 700;
-	padding: 5px 10px;
-	border-radius: 5px;
-	transition: 0.2s ease-in-out;
-}
-
 button:hover {filter: brightness(110%)}
 button:active {filter: brightness(90%)}
 
 img {pointer-events: none}
 
 #bgHolder {
-	top: 0;
-	left: 0;
-	right: 0;
-	bottom: 0;
-	pointer-events: none;
-	position: fixed;
-	transform: scale(1.1);
+	top: -5px;
+	left: -5px;
+	right: -5px;
+	bottom: -5px;
+	z-index:  -1;
+	position: absolute;
 	background-size: cover;
 	background-position: center;
 	background-repeat: no-repeat;
@@ -162,7 +323,7 @@ img {pointer-events: none}
 }
 
 .contentContainer {
-	width: 90%;
+	width: 85%;
 	color: white;
 	flex-grow: 1;
 	opacity: 1.0;
@@ -346,6 +507,12 @@ button:disabled {
 	pointer-events: none;
 }
 
+button.visual {
+	opacity: 1.0;
+	pointer-events: none;
+	background: transparent !important;
+}
+
 code {
     font-size: 16px;
     padding: 2px 5px;
@@ -385,16 +552,27 @@ code {
 }
 
 .modbtns button {
-	margin-left: calc(var(--padding) / 3);
+	margin-left: var(--spacing);
+	--spacing: calc(var(--padding) / 3);
+	margin-top: calc(var(--spacing) / 2);
+	margin-bottom: calc(var(--spacing) / 2);
 }
 
 /* drag control */
 
-#bgHolder {
+#bgHolder,
+.contentContainer, 
+.gamesContainer {
 	user-select: none;
   	-webkit-app-region: drag;
 }
 
-a, button, .contentMenu, #close, #nsRelease, #vpReleaseNotes, .mod {
+#overlay.shown ~ #bgHolder,
+#overlay.shown ~ .contentContainer, 
+#overlay.shown ~ .gamesContainer {
+  	-webkit-app-region: no-drag;
+}
+
+a, button, #close, #nsRelease, #vpReleaseNotes, .mod, #overlay, #modsdiv, #winbtns, .contentMenu {
 	-webkit-app-region: no-drag;
 }
