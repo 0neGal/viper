@@ -339,6 +339,7 @@ function winAlert(msg) {
 //
 // We can both get list of disabled mods, remove/install/toggle mods and
 // other things akin to that, all kinds of mod related stuff
+let modpath = path.join(settings.gamepath, "R2Northstar/mods");
 const mods = {
 	// Returns a list of mods
 	//
