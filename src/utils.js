@@ -123,6 +123,8 @@ async function setpath(win, forcedialog) {
 		saveSettings();
 		win.webContents.send("newpath", settings.gamepath);
 		ipcMain.emit("newpath", null, settings.gamepath);
+
+		modpath = path.join(settings.gamepath, "R2Northstar/mods");
 	}
 
 	if (! win) { // CLI
