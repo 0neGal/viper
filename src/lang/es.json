@@ -88,7 +88,14 @@
 
 	"gui.selectpath": "Por favor, ¡elija la ruta del juego!",
 	"gui.gamepath.must": "La ruta del juego debe establecerse para ejecutar Viper.",
-	"gui.gamepath.wrong": "Esta carpeta no es una ruta válida para el juego.",	
+	"gui.gamepath.wrong": "Esta carpeta no es una ruta válida para el juego.",
+	
+	"gui.toast.title.installed": "¡Modificación instalada!",
+	"gui.toast.title.failed": "¡Falló al instalar!",
+	"gui.toast.title.malformed": "¡Estructura de las carpetas incorrecta!",
+	"gui.toast.desc.installed": "¡Ha sido instalado exitosamente!",
+	"gui.toast.desc.malformed": "tiene una estructura de carpetas incorrecta, si usted es el desarrollador, debe corregir esto.",
+	"gui.toast.desc.failed": "Se produjo un error desconocido al intentar instalar la modificación. Esto puede ser culpa del autor de la modificación, y también puede ser culpa de Viper.",
 
 	"viper.menu.main": "Viper",
 	"viper.menu.release": "Notas de la versión",
