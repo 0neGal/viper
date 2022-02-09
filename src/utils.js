@@ -516,15 +516,16 @@ const mods = {
 						if (fs.existsSync(path.join(mod, files[i], "mod.json")) &&
 							fs.statSync(path.join(mod, files[i], "mod.json")).isFile()) {
 
-							console.log(mods.install(path.join(mod, files[i])))
+							mods.install(path.join(mod, files[i]))
 							if (mods.install(path.join(mod, files[i]))) {return true};
 						}
 					}
 				}
 
-				notamod();
-				return false;
+				return notamod();
 			}
+
+			return notamod();
 		} else {
 			winLog(lang("gui.mods.extracting"))
 			let cache = path.join(app.getPath("userData"), "Archives");
@@ -542,7 +543,6 @@ const mods = {
 						let manifest = path.join(cache, "manifest.json");
 						if (fs.existsSync(manifest)) {
 							files = fs.readdirSync(path.join(cache, "mods"));
-
 							if (fs.existsSync(path.join(cache, "mods/mod.json"))) {
 								if (mods.install(path.join(cache, "mods"), require(manifest).name, manifest, true)) {
 									return true;
@@ -556,9 +556,13 @@ const mods = {
 										}, 1000)
 									}
 								}
+
+								if (files.length == 0) {
+									ipcMain.emit("failedmod");
+									return notamod();
+								}
 							}
 
-							ipcMain.emit("failedmod", "", modname);
 							return notamod();
 						}
 
@@ -604,7 +608,7 @@ const mods = {
 
 			stream.on("finish", () => {
 				stream.close();
-				mods.install(modlocation)
+				mods.install(modlocation);
 			})
 		})
 	},
