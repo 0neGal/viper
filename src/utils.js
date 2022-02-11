@@ -383,7 +383,7 @@ const mods = {
 
 					let manifest = path.join(modpath, file, "manifest.json");
 					if (fs.existsSync(manifest)) {
-						mods[mods.length - 1].ManifestName = require(manifest).name;
+						try {mods[mods.length - 1].ManifestName = require(manifest).name}catch(err){}
 					}
 				}
 			}
@@ -408,7 +408,7 @@ const mods = {
 
 				let manifest = path.join(modpath, file, "manifest.json");
 				if (fs.existsSync(manifest)) {
-					mods[mods.length - 1].ManifestName = require(manifest).name;
+					try {mods[mods.length - 1].ManifestName = require(manifest).name}catch(err){}
 				}
 			}
 		})
