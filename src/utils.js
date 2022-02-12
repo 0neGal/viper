@@ -212,14 +212,6 @@ function getTF2Version() {
 // <file>.excluded, then rename them back after the extraction. The
 // unzip module does not support excluding files directly.
 async function update() {
-	// Renames excluded files to <file>.excluded
-	for (let i = 0; i < settings.excludes.length; i++) {
-		let exclude = path.join(settings.gamepath + "/" + settings.excludes[i]);
-		if (fs.existsSync(exclude)) {
-			fs.renameSync(exclude, exclude + ".excluded")
-		}
-	}
-
 	ipcMain.emit("ns-update-event", "cli.update.checking");
 	console.log(lang("cli.update.checking"));
 	var version = getNSVersion();
@@ -239,6 +231,14 @@ async function update() {
 		}; 
 		console.log(lang("cli.update.downloading") + ":", latestAvailableVersion);
 		ipcMain.emit("ns-update-event", "cli.update.downloading");
+	}
+
+	// Renames excluded files to <file>.excluded
+	for (let i = 0; i < settings.excludes.length; i++) {
+		let exclude = path.join(settings.gamepath + "/" + settings.excludes[i]);
+		if (fs.existsSync(exclude)) {
+			fs.renameSync(exclude, exclude + ".excluded")
+		}
 	}
 
 	// Start the download of the zip
