@@ -202,6 +202,19 @@ function getTF2Version() {
 	}
 }
 
+
+// Renames excluded files to their original name
+function restoreExcludedFiles() {
+	for (let i = 0; i < settings.excludes.length; i++) {
+		let exclude = path.join(settings.gamepath + "/" + settings.excludes[i]);
+		if (fs.existsSync(exclude + ".excluded")) {
+			fs.renameSync(exclude + ".excluded", exclude)
+		}
+	}
+}
+// At start, restore excluded files who might have been created by an incomplete update process.
+restoreExcludedFiles();
+
 // Installs/Updates Northstar
 //
 // If Northstar is already installed it'll be an update, otherwise it'll
@@ -263,16 +276,10 @@ async function update() {
 			// installing Northstar.
 			fs.createReadStream(settings.zip).pipe(unzip.Extract({path: settings.gamepath}))
 			.on("finish", () => {
-					fs.writeFileSync(path.join(settings.gamepath, "ns_version.txt"), latestAvailableVersion);
-					ipcMain.emit("getversion");
+				fs.writeFileSync(path.join(settings.gamepath, "ns_version.txt"), latestAvailableVersion);
+				ipcMain.emit("getversion");
 
-				// Renames excluded files to their original name
-				for (let i = 0; i < settings.excludes.length; i++) {
-					let exclude = path.join(settings.gamepath + "/" + settings.excludes[i]);
-					if (fs.existsSync(exclude + ".excluded")) {
-						fs.renameSync(exclude + ".excluded", exclude)
-					}
-				}
+				restoreExcludedFiles();
 
 				ipcMain.emit("guigetmods");
 				ipcMain.emit("ns-update-event", "cli.update.uptodate.short");
