@@ -42,13 +42,14 @@
 	"gui.versions.northstar": "Version de Northstar",
 	"gui.exit": "Fermer",
 	"gui.update": "Mise à jour",
-	"gui.setpath": "Chemin du jeu",
+	"gui.setpath": "Mettre à jour le chemin du jeu",
 
 	"gui.update.check": "Vérifier les mises à jour",
 	"gui.mods": "Mods",
 	"gui.mods.count": "Mods installés :",
 	"gui.mods.disabledtag": "Désactivé",
 	"gui.mods.install": "Installer le mod",
+	"gui.mods.find": "Chercher des mods",
 	"gui.mods.toggle": "Activer/désactiver le mod",
 	"gui.mods.toggleall": "Activer/désactiver tous les mods",
 	"gui.mods.remove": "Supprimer le mod",
@@ -61,6 +62,15 @@
 	"gui.mods.extracting": "Extraction du mod...",
 	"gui.mods.installing": "Installation du mod...",
 	"gui.mods.installedmod": "Mod installé !",
+
+	"gui.browser.info": "Info",
+	"gui.browser.madeby": "par",
+	"gui.browser.search": "Rechercher",
+	"gui.browser.update": "Mise à jour",
+	"gui.browser.install": "Installer",
+	"gui.browser.reinstall": "Réinstaller",
+	"gui.browser.loading": "Chargement des mods...",
+	"gui.browser.endoflist": "Fin de la liste de mods.<br>Utilisez la barre de recherche pour en trouver davantage !",
 
 	"gui.update.downloading": "Téléchargement de la mise à jour...",
 	"gui.update.extracting": "Extraction des fichiers...",
@@ -80,6 +90,13 @@
 	"gui.gamepath.must": "Vous devez sélectionner le chemin du dossier du jeu Titanfall 2 pour pouvoir lancer Viper.",
 	"gui.gamepath.wrong": "Ce dossier ne contient pas le jeu Titanfall 2, et n'est donc pas valide.",	
 
+	"gui.toast.title.installed": "Mod installé !",
+	"gui.toast.title.failed": "L'installation a échoué",
+	"gui.toast.title.malformed": "La structure du dossier du mod est incorrecte.",
+	"gui.toast.desc.installed": "a été installé avec succès !",
+	"gui.toast.desc.malformed": "a une structure de dossier incorrecte ; si vous êtes son développeur, vous devriez réparer ça.",
+	"gui.toast.desc.failed": "Une erreur inconnue est survenue lors de l'installation du mod. Cela peut être du ressort de l'auteur du mod ou de Viper.",
+
 	"viper.menu.main": "Viper",
 	"viper.menu.release": "Notes de mises à jour",
 	"viper.menu.info": "Informations",
@@ -96,7 +113,7 @@
 	"general.mods.enabled": "Mods activés :",
 	"general.mods.disabled": "Mods désactivés :",
 	"general.mods.installed": "Mods installés :",
-	"general.missingpath": "Le chemin du client n'est pas défini !",
+	"general.missingpath": "Le chemin du client n'a pu être trouvé automatiquement, merci de le sélectionner manuellement.",
 	"general.notinstalled": "Northstar n'est pas installé !",
 	"general.launching": "Lancement"
 }

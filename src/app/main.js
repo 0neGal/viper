@@ -3,6 +3,7 @@ const path = require("path");
 const { ipcRenderer, shell } = require("electron");
 
 const lang = require("../lang");
+var modsobj = {};
 let shouldInstallNorthstar = false;
 
 // Base settings
@@ -26,13 +27,11 @@ if (fs.existsSync("viper.json")) {
 	settings.zip = path.join(settings.gamepath + "/northstar.zip");
 
 	if (settings.gamepath.length === 0) {
-		alert(lang("general.missingpath"));
 		setpath(false);
 	} else {
 		setpath(true);
 	}
 } else {
-	alert(lang("general.missingpath"));
 	setpath();
 }
 
@@ -68,6 +67,15 @@ function log(msg) {
 // updating/installing Northstar.
 function setButtons(state) {
 	playNsBtn.disabled = !state;
+
+	let disablearray = (array) => {
+		for (let i = 0; i < array.length; i++) {
+			array[i].disabled = !state;
+		}
+	}
+
+	disablearray(document.querySelectorAll("#nsMods .buttons.modbtns button"))
+	disablearray(document.querySelectorAll("#browser #browserEntries .text button"))
 }
 
 // Frontend part of updating Northstar
@@ -150,12 +158,20 @@ function selected(all) {
 
 // Tells the main process to install a mod
 function installmod() {
+	setButtons(false);
 	ipcRenderer.send("installmod")
+}
+
+// Tells the main process to install a mod from a URL
+function installFromURL(url) {
+	setButtons(false);
+	ipcRenderer.send("installfromurl", url)
 }
 
 // Frontend part of settings a new game path
 ipcRenderer.on("newpath", (event, newpath) => {
 	settings.gamepath = newpath;
+	ipcRenderer.send("guigetmods");
 })
 
 // Continuation of log()
@@ -164,6 +180,9 @@ ipcRenderer.on("alert", (event, msg) => {alert(msg)})
 
 // Updates the installed mods
 ipcRenderer.on("mods", (event, mods) => {
+	modsobj = mods;
+	if (! mods) {return}
+
 	modcount.innerHTML = `${lang("gui.mods.count")} ${mods.all.length}`;
 	modsdiv.innerHTML = "";
 	

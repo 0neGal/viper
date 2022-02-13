@@ -1,6 +1,6 @@
 const path = require("path");
 const fs = require("fs-extra");
-const copy = require("copy-dir");
+const copy = require("recursive-copy");
 const { app, dialog, ipcMain, Notification } = require("electron");
 
 const Emitter = require("events");
@@ -8,7 +8,8 @@ const events = new Emitter();
 
 const cli = require("./cli");
 const lang = require("./lang");
-const requests = require("./requests");
+const requests = require("./extras/requests");
+const findgame = require("./extras/findgame");
 
 const unzip = require("unzipper");
 const run = require("child_process").spawn;
@@ -115,10 +116,39 @@ northstar_auto_updates: {
 //
 // If running with CLI it takes in the --setpath argument otherwise it
 // open the systems file browser for the user to select a path.
-function setpath(win) {
+async function setpath(win, forcedialog) {
+	function setGamepath(folder) {
+		settings.gamepath = folder;
+		settings.zip = path.join(settings.gamepath + "/northstar.zip");
+		saveSettings();
+		win.webContents.send("newpath", settings.gamepath);
+		ipcMain.emit("newpath", null, settings.gamepath);
+
+		modpath = path.join(settings.gamepath, "R2Northstar/mods");
+	}
+
 	if (! win) { // CLI
-		settings.gamepath = cli.param("setpath");
+		setGamepath(cli.param("setpath"));
 	} else { // GUI
+		if (! forcedialog) {
+			function setGamepath(folder, forcedialog) {
+				settings.gamepath = folder;
+				settings.zip = path.join(settings.gamepath + "/northstar.zip");
+				saveSettings();
+				win.webContents.send("newpath", settings.gamepath);
+				ipcMain.emit("newpath", null, settings.gamepath);
+			}
+
+			let gamepath = await findgame();
+			if (gamepath) {
+				setGamepath(gamepath);
+				return;
+			}
+
+			winAlert(lang("general.missingpath"));
+		}
+
+		// Fallback to manual selection
 		dialog.showOpenDialog({properties: ["openDirectory"]}).then(res => {
 			if (res.canceled) {
 				ipcMain.emit("newpath", null, false);
@@ -129,16 +159,12 @@ function setpath(win) {
 				return;
 			}
 
-			settings.gamepath = res.filePaths[0];
-			settings.zip = path.join(settings.gamepath + "/northstar.zip");
-			saveSettings();
-			win.webContents.send("newpath", settings.gamepath);
-			ipcMain.emit("newpath", null, settings.gamepath);
+			setGamepath(res.filePaths[0])
+
+			cli.exit();
+			return;
 		}).catch(err => {console.error(err)})
 	}
-
-	saveSettings();
-	cli.exit();
 }
 
 // As to not have to do the same one liner a million times, this
@@ -176,6 +202,19 @@ function getTF2Version() {
 	}
 }
 
+
+// Renames excluded files to their original name
+function restoreExcludedFiles() {
+	for (let i = 0; i < settings.excludes.length; i++) {
+		let exclude = path.join(settings.gamepath + "/" + settings.excludes[i]);
+		if (fs.existsSync(exclude + ".excluded")) {
+			fs.renameSync(exclude + ".excluded", exclude)
+		}
+	}
+}
+// At start, restore excluded files who might have been created by an incomplete update process.
+restoreExcludedFiles();
+
 // Installs/Updates Northstar
 //
 // If Northstar is already installed it'll be an update, otherwise it'll
@@ -186,14 +225,6 @@ function getTF2Version() {
 // <file>.excluded, then rename them back after the extraction. The
 // unzip module does not support excluding files directly.
 async function update() {
-	// Renames excluded files to <file>.excluded
-	for (let i = 0; i < settings.excludes.length; i++) {
-		let exclude = path.join(settings.gamepath + "/" + settings.excludes[i]);
-		if (fs.existsSync(exclude)) {
-			fs.renameSync(exclude, exclude + ".excluded")
-		}
-	}
-
 	ipcMain.emit("ns-update-event", "cli.update.checking");
 	console.log(lang("cli.update.checking"));
 	var version = getNSVersion();
@@ -213,6 +244,14 @@ async function update() {
 		}; 
 		console.log(lang("cli.update.downloading") + ":", latestAvailableVersion);
 		ipcMain.emit("ns-update-event", "cli.update.downloading");
+	}
+
+	// Renames excluded files to <file>.excluded
+	for (let i = 0; i < settings.excludes.length; i++) {
+		let exclude = path.join(settings.gamepath + "/" + settings.excludes[i]);
+		if (fs.existsSync(exclude)) {
+			fs.renameSync(exclude, exclude + ".excluded")
+		}
 	}
 
 	// Start the download of the zip
@@ -237,16 +276,10 @@ async function update() {
 			// installing Northstar.
 			fs.createReadStream(settings.zip).pipe(unzip.Extract({path: settings.gamepath}))
 			.on("finish", () => {
-					fs.writeFileSync(path.join(settings.gamepath, "ns_version.txt"), latestAvailableVersion);
-					ipcMain.emit("getversion");
+				fs.writeFileSync(path.join(settings.gamepath, "ns_version.txt"), latestAvailableVersion);
+				ipcMain.emit("getversion");
 
-				// Renames excluded files to their original name
-				for (let i = 0; i < settings.excludes.length; i++) {
-					let exclude = path.join(settings.gamepath + "/" + settings.excludes[i]);
-					if (fs.existsSync(exclude + ".excluded")) {
-						fs.renameSync(exclude + ".excluded", exclude)
-					}
-				}
+				restoreExcludedFiles();
 
 				ipcMain.emit("guigetmods");
 				ipcMain.emit("ns-update-event", "cli.update.uptodate.short");
@@ -323,6 +356,8 @@ const mods = {
 	// combination of the other two, enabled being enabled mods, and you
 	// guessed it, disabled being disabled mods.
 	list: () => {
+		let modpath = path.join(settings.gamepath, "R2Northstar/mods");
+
 		if (getNSVersion() == "unknown") {
 			winLog(lang("general.notinstalled"))
 			console.log("error: " + lang("general.notinstalled"))
@@ -349,8 +384,13 @@ const mods = {
 					try {
 						mods.push({...require(path.join(modpath, file, "mod.json")), FolderName: file, Disabled: false})
 					}catch(err) {
-						console.log("error: " + lang("cli.mods.improperjson"), file)
+						if (cli.hasArgs()) {console.log("error: " + lang("cli.mods.improperjson"), file)}
 						mods.push({Name: file, FolderName: file, Version: "unknown", Disabled: false})
+					}
+
+					let manifest = path.join(modpath, file, "manifest.json");
+					if (fs.existsSync(manifest)) {
+						try {mods[mods.length - 1].ManifestName = require(manifest).name}catch(err){}
 					}
 				}
 			}
@@ -368,9 +408,14 @@ const mods = {
 					try {
 						disabled.push({...require(path.join(disabledPath, file, "mod.json")), FolderName: file, Disabled: true})
 					}catch(err) {
-						console.log("error: " + lang("cli.mods.improperjson"), file)
+						if (cli.hasArgs()) {console.log("error: " + lang("cli.mods.improperjson"), file)}
 						disabled.push({Name: file, FolderName: file, Version: "unknown", Disabled: true})
 					}
+				}
+
+				let manifest = path.join(modpath, file, "manifest.json");
+				if (fs.existsSync(manifest)) {
+					try {mods[mods.length - 1].ManifestName = require(manifest).name}catch(err){}
 				}
 			}
 		})
@@ -389,6 +434,8 @@ const mods = {
 	// the absolute basics will be provided and we can't know the
 	// version or similar.
 	get: (mod) => {
+		let modpath = path.join(settings.gamepath, "R2Northstar/mods");
+
 		if (getNSVersion() == "unknown") {
 			winLog(lang("general.notinstalled"))
 			console.log("error: " + lang("general.notinstalled"))
@@ -462,7 +509,9 @@ const mods = {
 	// Either a zip or folder is supported, we'll also try to search
 	// inside the zip or folder to see if buried in another folder or
 	// not, as sometimes that's the case.
-	install: (mod) => {
+	install: (mod, destname, manifestfile, malformed = false) => {
+		let modname = mod.replace(/^.*(\\|\/|\:)/, "");
+
 		if (getNSVersion() == "unknown") {
 			winLog(lang("general.notinstalled"))
 			console.log("error: " + lang("general.notinstalled"))
@@ -482,6 +531,19 @@ const mods = {
 			cli.exit();
 
 			winLog(lang("gui.mods.installedmod"))
+
+			if (modname == "mods") {
+				let manifest = path.join(app.getPath("userData"), "Archives/manifest.json")
+
+				if (fs.existsSync(manifest)) {
+					modname = require(manifest).name;
+				}
+			}
+
+			ipcMain.emit("installedmod", "", {
+				name: modname,
+				malformed: malformed,
+			});
 			ipcMain.emit("guigetmods");
 			return true;
 		}
@@ -490,14 +552,17 @@ const mods = {
 
 		if (fs.statSync(mod).isDirectory()) {
 			winLog(lang("gui.mods.installing"))
+			files = fs.readdirSync(mod);
 			if (fs.existsSync(path.join(mod, "mod.json")) && 
 				fs.statSync(path.join(mod, "mod.json")).isFile()) {
 
-				copy.sync(mod, path.join(modpath, mod.replace(/^.*(\\|\/|\:)/, "")), {
-					mode: true,
-					cover: true,
-					utimes: true,
-				});
+				if (fs.existsSync(path.join(modpath, modname))) {
+					fs.rmSync(path.join(modpath, modname), {recursive: true});
+				}
+				let copydest = path.join(modpath, modname);
+				if (typeof destname == "string") {copydest = path.join(modpath, destname)}
+				copy(mod, copydest)
+				copy(manifestfile, path.join(copydest, "manifest.json"))
 
 				return installed();
 			} else {
@@ -508,39 +573,110 @@ const mods = {
 						if (fs.existsSync(path.join(mod, files[i], "mod.json")) &&
 							fs.statSync(path.join(mod, files[i], "mod.json")).isFile()) {
 
+							mods.install(path.join(mod, files[i]))
 							if (mods.install(path.join(mod, files[i]))) {return true};
 						}
 					}
 				}
 
-				notamod();
-				return false;
+				return notamod();
 			}
+
+			return notamod();
 		} else {
 			winLog(lang("gui.mods.extracting"))
 			let cache = path.join(app.getPath("userData"), "Archives");
 			if (fs.existsSync(cache)) {
 				fs.rmSync(cache, {recursive: true});
-				fs.mkdirSync(cache);
+				fs.mkdirSync(path.join(cache, "mods"), {recursive: true});
 			} else {
-				fs.mkdirSync(cache);
+				fs.mkdirSync(path.join(cache, "mods"), {recursive: true});
 			}
 
 			try {
 				fs.createReadStream(mod).pipe(unzip.Extract({path: cache}))
 				.on("finish", () => {
-					if (mods.install(cache)) {
-						installed();
-					} else {return notamod()}
+					setTimeout(() => {
+						let manifest = path.join(cache, "manifest.json");
+						if (fs.existsSync(manifest)) {
+							files = fs.readdirSync(path.join(cache, "mods"));
+							if (fs.existsSync(path.join(cache, "mods/mod.json"))) {
+								if (mods.install(path.join(cache, "mods"), require(manifest).name, manifest, true)) {
+									return true;
+								}
+							} else {
+								for (let i = 0; i < files.length; i++) {
+									let mod = path.join(cache, "mods", files[i]);
+									if (fs.statSync(mod).isDirectory()) {
+										setTimeout(() => {
+											if (mods.install(mod, false, manifest)) {return true};
+										}, 1000)
+									}
+								}
+
+								if (files.length == 0) {
+									ipcMain.emit("failedmod");
+									return notamod();
+								}
+							}
+
+							return notamod();
+						}
+
+						if (mods.install(cache)) {
+							installed();
+						} else {return notamod()}
+					}, 1000)
 				});
 			}catch(err) {return notamod()}
 		}
 	},
+
+	// Installs mods from URL's
+	//
+	// This'll simply download the file that the URL points to and then
+	// install it with mods.install()
+	installFromURL: (url) => {
+		https.get(url, (res) => {
+			let tmp = path.join(app.getPath("cache"), "vipertmp");
+			let modlocation = path.join(tmp, "/mod.zip");
+
+			if (fs.existsSync(tmp)) {
+				if (! fs.statSync(tmp).isDirectory()) {
+					fs.rmSync(tmp)
+				}
+			} else {
+				fs.mkdirSync(tmp)
+				if (fs.existsSync(modlocation)) {
+					fs.rmSync(modlocation)
+				}
+			}
+
+			let stream = fs.createWriteStream(modlocation);
+			res.pipe(stream);
+
+			// let received = 0;
+			// // Progress messages, we should probably switch this to
+			// // percentage instead of how much is downloaded.
+			// res.on("data", (chunk) => {
+			// 	received += chunk.length;
+			// 	ipcMain.emit("ns-update-event", lang("gui.update.downloading") + " " + (received / 1024 / 1024).toFixed(1) + "mb");
+			// })
+
+			stream.on("finish", () => {
+				stream.close();
+				mods.install(modlocation);
+			})
+		})
+	},
+
 	// Removes mods
 	//
 	// Takes in the names of the mod then removes it, no confirmation,
 	// that'd be up to the GUI.
 	remove: (mod) => {
+		let modpath = path.join(settings.gamepath, "R2Northstar/mods");
+
 		if (getNSVersion() == "unknown") {
 			winLog(lang("general.notinstalled"))
 			console.log("error: " + lang("general.notinstalled"))
@@ -575,10 +711,19 @@ const mods = {
 		}
 
 		if (fs.statSync(modPath).isDirectory()) {
+			let manifestname = null;
+			if (fs.existsSync(path.join(modPath, "manifest.json"))) {
+				manifestname = require(path.join(modPath, "manifest.json")).name;
+			}
+
 			fs.rmSync(modPath, {recursive: true});
 			console.log(lang("cli.mods.removed"));
 			cli.exit();
 			ipcMain.emit("guigetmods");
+			ipcMain.emit("removedmod", "", {
+				name: mod.replace(/^.*(\\|\/|\:)/, ""),
+				manifestname: manifestname
+			});
 		} else {
 			cli.exit(1);
 		}
@@ -591,6 +736,8 @@ const mods = {
 	// you checked for if a mod is already disable and if not run the
 	// function. However we currently have no need for that.
 	toggle: (mod, fork) => {
+		let modpath = path.join(settings.gamepath, "R2Northstar/mods");
+
 		if (getNSVersion() == "unknown") {
 			winLog(lang("general.notinstalled"))
 			console.log("error: " + lang("general.notinstalled"))
@@ -639,6 +786,9 @@ const mods = {
 };
 
 console.log(mods.modfile().get())
+setInterval(() => {
+	ipcMain.emit("guigetmods");
+}, 1500)
 
 module.exports = {
 	mods,
