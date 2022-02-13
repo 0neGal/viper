@@ -1,8 +1,9 @@
 <p align="center">
-	<img src="src/assets/icons/512x512.png" width="200px"><br><br>
+	<img src="src/assets/icons/512x512.png" width="200px"><br>
+	<a href="https://github.com/0neGal/viper/releases/download/v1.2.1/Viper-Setup-1.2.1.exe"><img src="assets/download.png" width="300px"></a><br>
 	<a href="https://github.com/0neGal/viper/projects/1">Overview</a> | 
-	<a href="https://github.com/0neGal/viper/releases">Releases</a>
-</p><br><br>
+	<a href="https://github.com/0neGal/viper/releases">Releases</a><br>
+</p>
 
 ## What is Viper?
 
@@ -14,9 +15,9 @@ Downloads are available on the [releases page](https://github.com/0neGal/viper/r
 
 Please note that some versions will update themselves automatically when a new release is available (just like Origin or Steam) and some will NOT, so choose it accordingly. Only the AppImage and Windows Setup/Installer can auto-update.
 
-**Windows:** `Viper Setup [x.y.z].exe` (auto-updates, and is recommanded), `Viper [x.y.z].exe` (single executable, no fuss)
+**Windows:** [`Viper Setup [x.y.z].exe`](https://github.com/0neGal/viper/releases/download/v1.2.1/Viper-Setup-1.2.1.exe) (auto-updates, and is recommanded), [`Viper [x.y.z].exe`](https://github.com/0neGal/viper/releases/download/v1.2.1/Viper-1.2.1.exe) (single executable, no fuss)
 
-**Linux:** `.AppImage` (auto-updates), `.deb`, `.rpm`, `.snap`, `.tar.gz`
+**Linux:** [`.AppImage`](https://github.com/0neGal/viper/releases/download/v1.2.1/Viper-1.2.1.AppImage) (auto-updates), [`.deb`](https://github.com/0neGal/viper/releases/download/v1.2.1/viper-1.2.1_amd64.deb), [`.rpm`](https://github.com/0neGal/viper/releases/download/v1.2.1/Viper-1.2.1.x86_64.rpm), [`.tar.gz`](https://github.com/0neGal/viper/releases/download/v1.2.1/Viper-1.2.1.tar.gz)
 
 ## What can it do specifically?
 
@@ -39,6 +40,19 @@ Besides this I've been considering adding some easy to use VPK modding tools so 
 Almost all configuration takes place inside the UI, and almost no configuration isn't either handled their or automatically handled, the only option that isn't configured in the GUI is disabling auto-updates, by default updates are handled automatically, when you launch the application it'll update, ask you if you want to restart, if not it'll continue with the old version until you restart, however you can disable this entirely by settings `"autoupdates": true` to false in your `viper.json`
 
 Your configuration file will be found in `%APPDATA%\viper.json` on Windows, and inside either `~/.config` or through your environment variables (`$XDG_CONFIG_HOME`) on Linux, the latter has priority.
+
+## Contact/Support
+
+To get support either open a GitHub issue.<br>
+Or if you must you can contact a developer through the methods below:
+
+Ways to contact the main developer: [0neGal](https://github.com/0neGal)
+ * Twitter: [@0neGal](https://twitter.com/0neGal)
+ * Reddit: [/u/0neGal](https://reddit.com/u/0neGal)
+
+### Frequently Asked Questions (FAQ)
+
+Many of the questions and problems you may have might be able to be answered by reading the [FAQ page](FAQ.md). So before opening an issue or asking for support please read through it first!
 
 ## Sidenote
 
@@ -81,4 +95,6 @@ Keep in mind building all Linux builds may take a while on some systems as packa
 
 ## Credits
 
-All credits for logos go to Imply#9781.
+**Logo:** Imply#9781<br>
+**Viper Background:** [Uber Panzerhund](https://www.reddit.com/r/titanfall/comments/fwuh2x/take_to_the_skies)<br>
+**Titanfall+Northstar Logo:** [Aftonstjarma](https://www.steamgriddb.com/logo/47851)

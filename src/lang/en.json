@@ -42,13 +42,14 @@
 	"gui.versions.northstar": "Northstar version",
 	"gui.exit": "Exit",
 	"gui.update": "Update",
-	"gui.setpath": "Game Path",
+	"gui.setpath": "Change Game Path",
 
 	"gui.update.check": "Check for updates",
 	"gui.mods": "Mods",
 	"gui.mods.count": "Mods Installed:",
 	"gui.mods.disabledtag": "Disabled",
 	"gui.mods.install": "Install Mod",
+	"gui.mods.find": "Find Mods",
 	"gui.mods.toggle": "Toggle Mod",
 	"gui.mods.toggleall": "Toggle All",
 	"gui.mods.remove": "Remove Mod",
@@ -61,6 +62,15 @@
 	"gui.mods.extracting": "Extracting mod...",
 	"gui.mods.installing": "Installing mod...",
 	"gui.mods.installedmod": "Installed mod!",
+
+	"gui.browser.info": "Info",
+	"gui.browser.madeby": "by",
+	"gui.browser.search": "Search...",
+	"gui.browser.update": "Update",
+	"gui.browser.install": "Install",
+	"gui.browser.reinstall": "Re-Install",
+	"gui.browser.loading": "Loading mods...",
+	"gui.browser.endoflist": "Maximum packages has been loaded.<br>Use the search for finding other packages!",
 
 	"gui.update.downloading": "Downloading...",
 	"gui.update.extracting": "Extracting update...",
@@ -80,6 +90,13 @@
 	"gui.gamepath.must": "The game path must be set to start Viper.",
 	"gui.gamepath.wrong": "This folder is not a valid game path.",	
 
+	"gui.toast.title.installed": "Mod installed!",
+	"gui.toast.title.failed": "Failed to install",
+	"gui.toast.title.malformed": "Incorrect folder structure!",
+	"gui.toast.desc.installed": "has been installed successfully!",
+	"gui.toast.desc.malformed": "has an incorrect folder structure, if you're the developer, you should fix this.",
+	"gui.toast.desc.failed": "An unknown error occurred while trying to install the mod. This may be the author's fault, and it may also be Viper's fault.",
+
 	"viper.menu.main": "Viper",
 	"viper.menu.release": "Release Notes",
 	"viper.menu.info": "Extras",
@@ -96,7 +113,7 @@
 	"general.mods.enabled": "Enabled mods:",
 	"general.mods.disabled": "Disabled mods:",
 	"general.mods.installed": "Installed mods:",
-	"general.missingpath": "Game path is not set!",
+	"general.missingpath": "Game location could not be found automatically! Please select it manually!",
 	"general.notinstalled": "Northstar is not installed!",
 	"general.launching": "Launching"
 }
