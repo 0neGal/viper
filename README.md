@@ -1,6 +1,6 @@
 <p align="center">
 	<img src="src/assets/icons/512x512.png" width="200px"><br>
-	<a href="https://github.com/0neGal/viper/releases/download/v1.2.1/Viper-Setup-1.2.1.exe"><img src="assets/download.png" width="300px"></a><br>
+	<a href="https://github.com/0neGal/viper/releases/download/v1.2.2/Viper-Setup-1.2.2.exe"><img src="assets/download.png" width="300px"></a><br>
 	<a href="https://github.com/0neGal/viper/projects/1">Overview</a> | 
 	<a href="https://github.com/0neGal/viper/releases">Releases</a><br>
 </p>
@@ -15,9 +15,9 @@ Downloads are available on the [releases page](https://github.com/0neGal/viper/r
 
 Please note that some versions will update themselves automatically when a new release is available (just like Origin or Steam) and some will NOT, so choose it accordingly. Only the AppImage and Windows Setup/Installer can auto-update.
 
-**Windows:** [`Viper Setup [x.y.z].exe`](https://github.com/0neGal/viper/releases/download/v1.2.1/Viper-Setup-1.2.1.exe) (auto-updates, and is recommanded), [`Viper [x.y.z].exe`](https://github.com/0neGal/viper/releases/download/v1.2.1/Viper-1.2.1.exe) (single executable, no fuss)
+**Windows:** [`Viper Setup [x.y.z].exe`](https://github.com/0neGal/viper/releases/download/v1.2.2/Viper-Setup-1.2.2.exe) (auto-updates, and is recommanded), [`Viper [x.y.z].exe`](https://github.com/0neGal/viper/releases/download/v1.2.2/Viper-1.2.2.exe) (single executable, no fuss)
 
-**Linux:** [`.AppImage`](https://github.com/0neGal/viper/releases/download/v1.2.1/Viper-1.2.1.AppImage) (auto-updates), [`.deb`](https://github.com/0neGal/viper/releases/download/v1.2.1/viper-1.2.1_amd64.deb), [`.rpm`](https://github.com/0neGal/viper/releases/download/v1.2.1/Viper-1.2.1.x86_64.rpm), [`.tar.gz`](https://github.com/0neGal/viper/releases/download/v1.2.1/Viper-1.2.1.tar.gz)
+**Linux:** [`.AppImage`](https://github.com/0neGal/viper/releases/download/v1.2.2/Viper-1.2.2.AppImage) (auto-updates), [`.deb`](https://github.com/0neGal/viper/releases/download/v1.2.2/viper-1.2.2_amd64.deb), [`.rpm`](https://github.com/0neGal/viper/releases/download/v1.2.2/Viper-1.2.2.x86_64.rpm), [`.tar.gz`](https://github.com/0neGal/viper/releases/download/v1.2.2/Viper-1.2.2.tar.gz)
 
 ## What can it do specifically?
 
