@@ -76,7 +76,11 @@ ipcMain.on("installmod", () => {
 		utils.mods.install(cli.param("installmod"))
 	} else {
 		dialog.showOpenDialog({properties: ["openFile"]}).then(res => {
-			utils.mods.install(res.filePaths[0]);
+			if (res.filePaths.length != 0) {
+				utils.mods.install(res.filePaths[0]);
+			} else {
+				win.webContents.send("setbuttons", true);
+			}
 		}).catch(err => {console.error(err)})
 	}
 })

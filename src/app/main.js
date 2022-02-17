@@ -78,6 +78,8 @@ function setButtons(state) {
 	disablearray(document.querySelectorAll("#browser #browserEntries .text button"))
 }
 
+ipcRenderer.on("setbuttons", (event, state) => {setButtons(state)})
+
 // Frontend part of updating Northstar
 ipcRenderer.on("ns-update-event", (event, key) => {
 	document.getElementById("update").innerText = `(${lang(key)})`;
