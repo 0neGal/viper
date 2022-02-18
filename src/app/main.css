@@ -38,10 +38,14 @@
 body {
 	margin: 0;
 	overflow: hidden;
-	user-select: none;
 }
 
 body, button, input {font-family: "Roboto", sans-serif}
+
+body, button, img, a {
+	-webkit-user-drag: none;
+	user-select: none;
+}
 
 button {outline: none}
 b, strong {font-weight: 700}
@@ -610,6 +614,58 @@ code {
 	opacity: 0.8;
 	font-size: 0.8em;
 	font-weight: 600;
+}
+
+#dragUI {
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	color: white;
+	opacity: 0.0;
+	position: fixed;
+	z-index: 1000000;
+	pointer-events: none;
+	background: var(--bg);
+	backdrop-filter: blur(15px);
+	transition: 0.1s ease-in-out;
+}
+
+#dragUI.shown {
+	opacity: 1.0;
+	pointer-events: all;
+}
+
+#dragUI #dragitems {
+	--size: 25vw;
+	top: 50%;
+	left: 50%;
+	opacity: 0.6;
+	position: absolute;
+	text-align: center;
+	width: var(--size);
+	height: var(--size);
+	margin-top: calc(var(--size) / 2 * -1);
+	margin-left: calc(var(--size) / 2 * -1);
+}
+
+#dragUI #dragitems #icon {
+	width: 100%;
+	height: 100%;
+	filter: invert(1);
+	transform: scale(0.45);
+	background-size: cover;
+	background-image: url("icons/download.png");
+	transition: 0.1s ease-in-out;
+}
+
+#dragUI.shown #dragitems #icon {
+	transform: scale(0.5);
+}
+
+#dragUI #dragitems #text {
+	top: -5vw;
+	position: relative;
 }
 
 /* drag control */

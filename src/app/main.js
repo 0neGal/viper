@@ -158,10 +158,16 @@ function selected(all) {
 	}
 }
 
-// Tells the main process to install a mod
+// Tells the main process to install a mod through the file selector
 function installmod() {
 	setButtons(false);
 	ipcRenderer.send("installmod")
+}
+
+// Tells the main process to directly install a mod from this path
+function installFromPath(path) {
+	setButtons(false);
+	ipcRenderer.send("installfrompath", path)
 }
 
 // Tells the main process to install a mod from a URL
@@ -243,6 +249,31 @@ ipcRenderer.on("wrongpath", () => {
 });
 
 setlang();
+
+let dragtimer;
+document.addEventListener("dragover", (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+	dragUI.classList.add("shown");
+
+	clearTimeout(dragtimer);
+	dragtimer = setTimeout(() => {
+		dragUI.classList.remove("shown");
+	}, 5000)
+});
+
+document.addEventListener("mouseover", (e) => {
+	clearTimeout(dragtimer);
+	dragUI.classList.remove("shown");
+});
+
+document.addEventListener("drop", (e) => {
+    event.preventDefault();
+    event.stopPropagation();
+
+	dragUI.classList.remove("shown");
+	installFromPath(event.dataTransfer.files[0].path)
+});
 
 document.body.addEventListener("click", event => {
 	if (event.target.tagName.toLowerCase() === "a" && event.target.protocol != "file:") {
