@@ -174,7 +174,6 @@ if (cli.hasArgs()) {
 		cli.init();
 	}
 } else {
-	app.disableHardwareAcceleration();
 	app.on("ready", () => {
 		app.setPath("userData", path.join(app.getPath("cache"), app.name));
 		start();
