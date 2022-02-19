@@ -172,7 +172,7 @@ if (cli.hasArgs()) {
 		utils.updatevp(true);
 	} else {
 		start();
-	})
+	}
 }
 
 // Returns cached requests
