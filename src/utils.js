@@ -544,40 +544,44 @@ const mods = {
 			}
 
 			try {
-				fs.createReadStream(mod).pipe(unzip.Extract({path: cache}))
-				.on("finish", () => {
-					setTimeout(() => {
-						let manifest = path.join(cache, "manifest.json");
-						if (fs.existsSync(manifest)) {
-							files = fs.readdirSync(path.join(cache, "mods"));
-							if (fs.existsSync(path.join(cache, "mods/mod.json"))) {
-								if (mods.install(path.join(cache, "mods"), require(manifest).name, manifest, true)) {
-									return true;
-								}
-							} else {
-								for (let i = 0; i < files.length; i++) {
-									let mod = path.join(cache, "mods", files[i]);
-									if (fs.statSync(mod).isDirectory()) {
-										setTimeout(() => {
-											if (mods.install(mod, false, manifest)) {return true};
-										}, 1000)
+				if (mod.replace(/.*\./, "").toLowerCase() == "zip") {
+					fs.createReadStream(mod).pipe(unzip.Extract({path: cache}))
+					.on("finish", () => {
+						setTimeout(() => {
+							let manifest = path.join(cache, "manifest.json");
+							if (fs.existsSync(manifest)) {
+								files = fs.readdirSync(path.join(cache, "mods"));
+								if (fs.existsSync(path.join(cache, "mods/mod.json"))) {
+									if (mods.install(path.join(cache, "mods"), require(manifest).name, manifest, true)) {
+										return true;
+									}
+								} else {
+									for (let i = 0; i < files.length; i++) {
+										let mod = path.join(cache, "mods", files[i]);
+										if (fs.statSync(mod).isDirectory()) {
+											setTimeout(() => {
+												if (mods.install(mod, false, manifest)) {return true};
+											}, 1000)
+										}
+									}
+
+									if (files.length == 0) {
+										ipcMain.emit("failedmod");
+										return notamod();
 									}
 								}
 
-								if (files.length == 0) {
-									ipcMain.emit("failedmod");
-									return notamod();
-								}
+								return notamod();
 							}
 
-							return notamod();
-						}
-
-						if (mods.install(cache)) {
-							installed();
-						} else {return notamod()}
-					}, 1000)
-				});
+							if (mods.install(cache)) {
+								installed();
+							} else {return notamod()}
+						}, 1000)
+					});
+				} else {
+					return notamod();
+				}
 			}catch(err) {return notamod()}
 		}
 	},

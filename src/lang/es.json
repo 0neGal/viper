@@ -62,6 +62,7 @@
 	"gui.mods.extracting": "Extrayendo modificación...",
 	"gui.mods.installing": "Instalando modificación...",
 	"gui.mods.installedmod": "¡Modificación instalada!",
+	"gui.mods.dragdrop": "Arrastra y suelta una modificación para instalarla",
 
 	"gui.browser.info": "Información",
 	"gui.browser.madeby": "por",

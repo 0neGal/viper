@@ -43,6 +43,7 @@ function start() {
 
 	ipcMain.on("exit", () => {process.exit(0)})
 	ipcMain.on("minimize", () => {win.minimize()})
+	ipcMain.on("installfrompath", (event, path) => {utils.mods.install(path)})
 	ipcMain.on("installfromurl", (event, url) => {utils.mods.installFromURL(url)})
 	ipcMain.on("winLog", (event, ...args) => {win.webContents.send("log", ...args)});
 	ipcMain.on("winAlert", (event, ...args) => {win.webContents.send("alert", ...args)});
@@ -76,7 +77,11 @@ ipcMain.on("installmod", () => {
 		utils.mods.install(cli.param("installmod"))
 	} else {
 		dialog.showOpenDialog({properties: ["openFile"]}).then(res => {
-			utils.mods.install(res.filePaths[0]);
+			if (res.filePaths.length != 0) {
+				utils.mods.install(res.filePaths[0]);
+			} else {
+				win.webContents.send("setbuttons", true);
+			}
 		}).catch(err => {console.error(err)})
 	}
 })
