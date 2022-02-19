@@ -43,6 +43,7 @@ function start() {
 
 	ipcMain.on("exit", () => {process.exit(0)})
 	ipcMain.on("minimize", () => {win.minimize()})
+	ipcMain.on("installfrompath", (event, path) => {utils.mods.install(path)})
 	ipcMain.on("installfromurl", (event, url) => {utils.mods.installFromURL(url)})
 	ipcMain.on("winLog", (event, ...args) => {win.webContents.send("log", ...args)});
 	ipcMain.on("winAlert", (event, ...args) => {win.webContents.send("alert", ...args)});

@@ -62,6 +62,7 @@
 	"gui.mods.extracting": "Extracting mod...",
 	"gui.mods.installing": "Installing mod...",
 	"gui.mods.installedmod": "Installed mod!",
+	"gui.mods.dragdrop": "Drag and drop a mod to install",
 
 	"gui.browser.info": "Info",
 	"gui.browser.madeby": "by",
