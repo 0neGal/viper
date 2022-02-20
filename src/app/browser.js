@@ -104,10 +104,6 @@ var Browser = {
 	}
 }
 
-document.body.addEventListener("keyup", (e) => {
-	if (e.key == "Escape") {Browser.toggle(false)}
-})
-
 function BrowserElFromObj(obj) {
 	let pkg = {...obj, ...obj.versions[0]};
 

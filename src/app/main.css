@@ -1,17 +1,17 @@
 :root {
-	--red: #C7777F;
-	--blue: #81A1C1;
-	--orange: #D59783;
+	--red: 199, 119, 127;
+	--blue: 129, 161, 193;
+	--orange: 213, 151, 131;
 
 	--padding: 25px;
 
 	--bg: rgba(0, 0, 0, 0.5);
 	--selbg: rgba(80, 80, 80, 0.5);
-	--redbg: linear-gradient(45deg, var(--red), #FA4343);
-	--bluebg: linear-gradient(45deg, var(--blue), #7380ED);
+	--redbg: linear-gradient(45deg, rgb(var(--red)), #FA4343);
+	--bluebg: linear-gradient(45deg, rgb(var(--blue)), #7380ED);
 }
 
-#browser, #modsdiv {
+.popup, #modsdiv {
 	outline: 1px solid #444444;
 	border: 3px solid var(--bg);
 }
@@ -27,12 +27,12 @@
  
 ::-webkit-scrollbar-thumb {
 	border-radius: 10px;
-	background: var(--red);
+	background: rgb(var(--red));
 }
 
 ::selection {
 	color: black;
-	background: var(--red);
+	background: rgb(var(--red));
 }
 
 body {
@@ -66,7 +66,7 @@ button {
 	cursor: pointer;
 }
 
-#browser {
+.popup {
 	--spacing: var(--padding);
 
 	z-index: 2;
@@ -85,7 +85,7 @@ button {
 	transition: opacity 0.15s ease-in-out, transform 0.15s ease-in-out;
 }
 
-#browser.shown {
+.popup.shown {
 	opacity: 1.0;
 	pointer-events: all;
 	transform: scale(1.0);
@@ -114,7 +114,7 @@ button {
 	100% {opacity: 1.0}
 }
 
-#browser .el, #browser #misc, #browser .loading {
+.popup .el, .popup .misc, .popup .loading {
 	--spacing: calc(var(--padding) / 2);
 	--height: calc(var(--padding) * 3);
 	--mischeight: calc(var(--padding) * 1.5);
@@ -129,7 +129,7 @@ button {
 	transition: 0.15s ease-in-out;
 }
 
-#browser .el, #browser #search, #browser #close {
+.popup .el, .popup #search, .option .actions input, .popup #close, .popup .misc button {
 	color: white;
 	display: flex;
 	align-items: center;
@@ -141,41 +141,48 @@ button {
 	width: calc(100% - var(--spacing) * 4);
 }
 
-#browser #misc, #browser #search {
+.popup .misc, .popup #search, .option .actions input {
 	--height: var(--mischeight);
 }
 
-#browser #misc {
+.popup .misc {
 	display: flex;
 }
 
-#browser #search {
+.popup #search, .option .actions input {
 	border: none;
 	outline: none;
 	transition: filter 0.15s ease-in-out;
 	width: calc(100% - var(--spacing) * 2);
 }
 
-#browser #search:focus {
+.popup #search:focus, .option .actions input:focus, .option .actions button:active {
 	filter: brightness(1.5);
 }
 
-#browser #close {
+.popup .misc button {
 	--height: calc(var(--padding) * 1.5);
 
 	padding: 0px;
 	margin-left: 0px;
-	width: var(--height);
+	padding: 0px !important;
+	width: var(--height) !important;
 }
 
-#browser #close img {
+.popup .misc button img {
 	opacity: 0.6;
 	width: var(--height);
-	height: var(--height);
 	transform: scale(0.6);
+	height: var(--height) !important;
 }
 
-#browser .loading {
+#options.popup .misc button {
+	margin-left: 0px;
+	width: auto !important;
+	padding-right: calc(var(--padding) / 2) !important;
+}
+
+.popup .loading {
 	width: 100%;
 	color: white;
 	display: flex;
@@ -185,36 +192,90 @@ button {
 	height: calc(100% - var(--mischeight) - var(--height));
 }
 
-#browser .message {
+.popup .message {
 	color: white;
 	text-align: center;
 	margin: var(--padding);
 	width: calc(100% - var(--padding));
 }
 
-#browser .el .image, #browser .el .image img {
+.popup .el .image, .popup .el .image img {
 	width: var(--height);
 	height: var(--height);
 	margin-right: var(--spacing);
 	border-radius: var(--spacing);
 }
 
-#browser .el .text {
+.popup .el .text {
 	overflow: hidden;
 }
 
-#browser .el .title, #browser .el .description {
+.popup .el .title, .popup .el .description {
 	height: 1.2em;
 	overflow: hidden;
 	white-space: nowrap;
 	text-overflow: ellipsis;
 }
 
-#browser .el .title {font-size: 1.2em}
-#browser .el .description {font-size: 0.8em}
-#browser .el button {
-	background: var(--blue);
+.popup .el .title {font-size: 1.2em}
+.popup .el .description {font-size: 0.8em}
+.popup .el button {
+	background: rgb(var(--blue));
 	margin-top: var(--spacing);
+}
+
+.popup .options {
+	color: white;
+	margin: calc(var(--padding) / 2);
+}
+
+.popup .options .option {
+	width: 100%;
+	display: flex;
+	margin-bottom: var(--padding);
+	justify-content: space-between;
+}
+
+.option .actions text {opacity: 0.8}
+
+.option .actions input {
+	width: 100%;
+	margin: 0px;
+	--spacing: calc(var(--padding) / 3);
+}
+
+.option .actions button {
+	background: var(--selbg);
+}
+
+.switch {
+	width: 50px;
+	height: 25px;
+	border-radius: 50px;
+}
+
+.switch.on {
+	background: rgba(var(--red), 0.2) !important;
+}
+
+.switch::after {
+	left: -5px;
+	width: 15px;
+	height: 15px;
+	content: " ";
+	display: block;
+	background: red;
+	position: relative;
+	border-radius: 50px;
+	background: var(--bg);
+	transition: 0.2s ease-in-out;
+}
+
+.switch.on::after {
+	left: 15px;
+	width: 20px;
+	opacity: 0.5;
+	background: rgb(var(--red));
 }
 
 #winbtns {
@@ -237,9 +298,10 @@ button {
 
 #winbtns #close {background-image: url("icons/close.png")}
 #winbtns #minimize {background-image: url("icons/minimize.png")}
+#winbtns #settings {background-image: url("icons/settings.png")}
 
 #winbtns div:hover {opacity: 1.0}
-#winbtns div:active {transform: scale(0.98)}
+#winbtns div:active {transform: scale(0.95)}
 
 button:hover {filter: brightness(110%)}
 button:active {filter: brightness(90%)}
@@ -388,7 +450,7 @@ img {pointer-events: none}
 	text-align: center;
 	position: relative;
 	border-radius: 50px;
-	background: var(--red);
+	background: rgb(var(--red));
 	left: calc(50% - 15px);
 	transition: 0.2s ease-in-out;
 }
@@ -453,7 +515,7 @@ img {pointer-events: none}
 }
 
 a {
-	color: var(--red);
+	color: rgb(var(--red));
 	text-decoration: none;
 	transition: filter 0.2s ease-in;
 }
@@ -500,12 +562,12 @@ a:hover {
 }
 
 .simplebar-scrollbar:before {
-	background: var(--red) !important;
+	background: rgb(var(--red)) !important;
 }
 
-#installmod {background: var(--blue)}
-#togglemod, #toggleall {background: var(--orange)}
-#northstar, #removeall, #removemod {background: var(--red)}
+#installmod {background: rgb(var(--blue))}
+#togglemod, #toggleall {background: rgb(var(--orange))}
+#northstar, #removeall, #removemod {background: rgb(var(--red))}
 button:disabled {
 	opacity: 0.5;
 	pointer-events: none;

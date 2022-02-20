@@ -10,6 +10,7 @@
 		<div id="toasts"></div>
 
 		<div id="winbtns">
+			<div id="settings" onclick="Settings.toggle(true)"></div>
 			<div id="minimize" onclick="ipcRenderer.send('minimize')"></div>
 			<div id="close" onclick="ipcRenderer.send('exit')"></div>
 		</div>
@@ -21,9 +22,51 @@
 			</div>
 		</div>
 
-		<div id="overlay" onclick="Browser.toggle(false)"></div>
-		<div id="browser">
-			<div id="misc">
+		<div id="overlay" onclick="Browser.toggle(false);Settings.toggle(false)"></div>
+		<div class="popup" id="options">
+			<div class="misc">
+				<div style="width:100%"></div>
+				<button id="apply" onclick="Settings.apply()">
+					<img src="icons/apply.png">
+					Save
+				</button>
+				<button id="close" onclick="Settings.toggle(false)">
+					<img src="icons/close.png">
+					Discard
+				</button>
+			</div>
+			<div class="options">
+				<h2>Northstar</h2>
+				<div class="option">
+					<div class="text">
+						Launch options
+					</div>
+					<div class="actions">
+						<input>
+					</div>
+				</div>
+				<h2>Updates</h2>
+				<div class="option">
+					<div class="text">
+						Northstar Auto-Updates
+					</div>
+					<div class="actions">
+						<button class="switch on"></button>
+					</div>
+				</div>
+				<div class="option">
+					<div class="text">
+						Viper Auto-Updates
+					</div>
+					<div class="actions">
+						<button class="switch on"></button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="popup" id="browser">
+			<div class="misc">
 				<input id="search" placeholder="%%gui.browser.search%%">
 				<button id="close" onclick="Browser.toggle(false)">
 					<img src="icons/close.png">
@@ -126,6 +169,7 @@
 		<script src="main.js"></script>
 		<script src="toast.js"></script>
 		<script src="browser.js"></script>
+		<script src="settings.js"></script>
 		<script src="launcher.js"></script>
 	</body>
 </html>

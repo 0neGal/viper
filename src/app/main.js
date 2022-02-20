@@ -275,6 +275,13 @@ document.addEventListener("drop", (e) => {
 	installFromPath(event.dataTransfer.files[0].path)
 });
 
+document.body.addEventListener("keyup", (e) => {
+	if (e.key == "Escape") {
+		Browser.toggle(false);
+		Settings.toggle(false);
+	}
+})
+
 document.body.addEventListener("click", event => {
 	if (event.target.tagName.toLowerCase() === "a" && event.target.protocol != "file:") {
 		event.preventDefault();
