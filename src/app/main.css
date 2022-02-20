@@ -236,7 +236,14 @@ button {
 	justify-content: space-between;
 }
 
-.option .actions text {opacity: 0.8}
+.option .text {font-weight: 600}
+.option .text .desc {
+	opacity: 0.8;
+	font-weight: 500;
+	font-size: 0.9em;
+	max-width: 400px;
+	margin-top: calc(var(--padding) / 3);
+}
 
 .option .actions input {
 	width: 100%;
