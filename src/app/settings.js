@@ -1,6 +1,7 @@
 var Settings = {
 	toggle: (state) => {
 		if (state) {
+			Settings.load();
 			options.scrollTo(0, 0);
 			overlay.classList.add("shown")
 			options.classList.add("shown")
@@ -14,6 +15,7 @@ var Settings = {
 			}
 		}
 
+		Settings.load();
 		options.scrollTo(0, 0);
 		overlay.classList.toggle("shown")
 		options.classList.toggle("shown")
@@ -39,8 +41,60 @@ var Settings = {
 		}
 
 		Settings.reloadSwitches();
+	},
+	get: () => {
+		let opts = {};
+		let options = document.querySelectorAll(".option");
+
+		for (let i = 0; i < options.length; i++) {
+			let optName = options[i].getAttribute("name");
+			if (options[i].querySelector(".actions input")) {
+				let input = options[i].querySelector(".actions input").value;
+				if (options[i].getAttribute("type")) {
+					opts[optName] = input.split(" ");
+				} else {
+					opts[optName] = input;
+				}
+			} else if (options[i].querySelector(".actions .switch")) {
+				if (options[i].querySelector(".actions .switch.on")) {
+					opts[optName] = true;
+				} else {
+					opts[optName] = false;
+				}
+			}
+		}
+
+		return opts;
+	},
+	load: () => {
+		let options = document.querySelectorAll(".option");
+
+		for (let i = 0; i < options.length; i++) {
+			let optName = options[i].getAttribute("name");
+			if (settings[optName] != undefined) {
+				switch(typeof settings[optName]) {
+					case "string":
+						options[i].querySelector(".actions input").value = settings[optName];
+						break
+					case "object":
+						options[i].querySelector(".actions input").value = settings[optName].join(" ");
+						break
+					case "boolean":
+						let switchDiv = options[i].querySelector(".actions .switch");
+						if (settings[optName]) {
+							switchDiv.classList.add("on");
+							switchDiv.classList.remove("off");
+						} else {
+							switchDiv.classList.add("off");
+							switchDiv.classList.remove("on");
+						}
+						break
+
+				}
+			}
+		}
 	}
 }
 
 Settings.reloadSwitches();
-
+Settings.load();

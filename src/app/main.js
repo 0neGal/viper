@@ -8,7 +8,9 @@ let shouldInstallNorthstar = false;
 
 // Base settings
 var settings = {
+	nsargs: "",
 	gamepath: "",
+	nsupdate: true,
 	autoupdate: true,
 	zip: "/northstar.zip",
 	lang: navigator.language,

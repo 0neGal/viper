@@ -20,8 +20,10 @@ process.chdir(app.getPath("appData"));
 
 // Base settings
 var settings = {
+	nsargs: "",
 	gamepath: "",
 	lang: "en-US",
+	nsupdate: true,
 	autoupdate: true,
 	zip: "/northstar.zip",
 
