@@ -73,9 +73,9 @@ async function isGameRunning() {
 //
 // It uses isGameRunning() to ensure it doesn't run while the game is
 // running, as that may have all kinds of issues.
-northstar_auto_updates: {
+function handleNorthstarAutoUpdating() {
 	if (!settings.autoupdate || !fs.existsSync("viper.json") || settings.gamepath.length === 0) {
-		break northstar_auto_updates;
+		return;
 	}
 
 	async function _checkForUpdates() {
@@ -306,7 +306,11 @@ function updatevp(autoinstall) {
 	}
 
 	autoUpdater.on("error", (info) => {cli.exit(1)});
-	autoUpdater.on("update-not-available", (info) => {cli.exit()});
+	autoUpdater.on("update-not-available", (info) => {
+		// only check for N* updates if Viper itself has no updates
+		handleNorthstarAutoUpdating();
+		cli.exit();
+	});
 
 	autoUpdater.checkForUpdatesAndNotify();
 }
