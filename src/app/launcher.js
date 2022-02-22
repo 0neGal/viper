@@ -46,6 +46,7 @@ ipcRenderer.on("ns-notes", (event, response) => {
 			+ release.body.replaceAll("\r\n", "\nhtmlbreak") + "\n\n\n";
 	}
 
+	content = content.replaceAll(/\@(\S+)/g, `<a href="https://github.com/$1">@$1</a>`);
 	nsRelease.innerHTML = markdown(content).replaceAll("htmlbreak", "<br>");
 });
 
