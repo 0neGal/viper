@@ -251,6 +251,11 @@ button {
 	--spacing: calc(var(--padding) / 3);
 }
 
+.option[type=array] .actions input {
+	word-spacing: 15px;
+	margin-right: 15vw;
+}
+
 .option .actions button {
 	background: var(--selbg);
 }

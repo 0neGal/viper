@@ -28,20 +28,20 @@
 				<div style="width:100%"></div>
 				<button id="apply" onclick="Settings.toggle(false);Settings.apply()">
 					<img src="icons/apply.png">
-					Save
+					%%gui.settings.save%%
 				</button>
 				<button id="close" onclick="Settings.toggle(false);Settings.load()">
 					<img src="icons/close.png">
-					Discard
+					%%gui.settings.discard%%
 				</button>
 			</div>
 			<div class="options">
 				<h2>Northstar</h2>
 				<div class="option" name="nsargs">
 					<div class="text">
-						Launch options
+						%%gui.settings.nsargs.title%%
 						<div class="desc">
-							Here you can add launch options for Northstar/Titanfall.
+							%%gui.settings.nsargs.desc%%
 						</div>
 					</div>
 					<div class="actions">
@@ -51,9 +51,9 @@
 				<h2>Updates</h2>
 				<div class="option" name="autoupdate">
 					<div class="text">
-						Viper Auto-Updates
+						%%gui.settings.autoupdate.title%%
 						<div class="desc">
-							Viper will automatically keep itself up-to-date.
+							%%gui.settings.autoupdate.desc%%
 						</div>
 					</div>
 					<div class="actions">
@@ -62,9 +62,9 @@
 				</div>
 				<div class="option" name="nsupdate">
 					<div class="text">
-						Northstar Auto-Updates
+						%%gui.settings.nsupdate.title%%
 						<div class="desc">
-							Viper will automatically keep Northstar up-to-date, however it can still manually be updated through the Northstar page.
+							%%gui.settings.nsupdate.desc%%
 						</div>
 					</div>
 					<div class="actions">
@@ -73,13 +73,13 @@
 				</div>
 				<div class="option" name="excludes" type="array">
 					<div class="text">
-						Retain files on update
+						%%gui.settings.excludes.title%%
 						<div class="desc">
-							When Northstar is updated, files specified here will not be overwritten by files from the new Northstar update, unless you know what you're changing, you should probably not change anything here.
+							%%gui.settings.excludes.desc%%
 						</div>
 					</div>
 					<div class="actions">
-						<input>
+						<input type="text">
 					</div>
 				</div>
 			</div>
