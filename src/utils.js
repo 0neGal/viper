@@ -75,7 +75,7 @@ async function isGameRunning() {
 //
 // It uses isGameRunning() to ensure it doesn't run while the game is
 // running, as that may have all kinds of issues.
-function handleNorthstarAutoUpdating() {
+function handleNorthstarUpdating() {
 	if (!settings.autoupdate || !fs.existsSync("viper.json") || settings.gamepath.length === 0) {
 		return;
 	}
@@ -314,8 +314,11 @@ function updatevp(autoinstall) {
 
 	autoUpdater.on("error", (info) => {cli.exit(1)});
 	autoUpdater.on("update-not-available", (info) => {
-		// only check for N* updates if Viper itself has no updates
-		handleNorthstarAutoUpdating();
+		// only check for NS updates if Viper itself has no updates and
+		// if NS auto updates is enabled.
+		if (settings.nsupdate || cli.hasArgs()) {
+			handleNorthstarUpdating();
+		}
 		cli.exit();
 	});
 
@@ -767,6 +770,7 @@ module.exports = {
 	getNSVersion,
 	getTF2Version,
 	isGameRunning,
+	handleNorthstarUpdating,
 	setlang: (lang) => {
 		settings.lang = lang;
 		saveSettings();

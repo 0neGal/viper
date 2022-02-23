@@ -59,7 +59,13 @@ function start() {
 		win.webContents.send("mods", utils.mods.list());
 	});
 
-	if (utils.settings.autoupdate) {utils.updatevp(false)}
+	if (utils.settings.autoupdate) {
+		utils.updatevp(false)
+	} else {
+		if (utils.settings.nsupdate) {
+			utils.update();
+		}
+	}
 
 	autoUpdater.on("update-downloaded", () => {
 		win.webContents.send("updateavailable")
