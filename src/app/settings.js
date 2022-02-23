@@ -20,7 +20,10 @@ var Settings = {
 		overlay.classList.toggle("shown")
 		options.classList.toggle("shown")
 	},
-	apply: () => {},
+	apply: () => {
+		settings = {...settings, ...Settings.get()};
+		ipcRenderer.send("savesettings", Settings.get());
+	},
 	reloadSwitches: () => {
 		let switches = document.querySelectorAll(".switch");
 

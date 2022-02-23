@@ -26,11 +26,11 @@
 		<div class="popup" id="options">
 			<div class="misc">
 				<div style="width:100%"></div>
-				<button id="apply" onclick="Settings.apply()">
+				<button id="apply" onclick="Settings.toggle(false);Settings.apply()">
 					<img src="icons/apply.png">
 					Save
 				</button>
-				<button id="close" onclick="Settings.toggle(false)">
+				<button id="close" onclick="Settings.toggle(false);Settings.load()">
 					<img src="icons/close.png">
 					Discard
 				</button>

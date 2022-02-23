@@ -20,15 +20,15 @@ process.chdir(app.getPath("appData"));
 
 // Base settings
 var settings = {
-	nsargs: "",
 	gamepath: "",
 	lang: "en-US",
 	nsupdate: true,
 	autoupdate: true,
+	nsargs: "-multiple",
 	zip: "/northstar.zip",
 
 	// These files won't be overwritten when installing/updating
-	// Northstar, useful for config file.
+	// Northstar, useful for config files
 	excludes: [
 		"ns_startup_args.txt",
 		"ns_startup_args_dedi.txt"
@@ -172,8 +172,13 @@ async function setpath(win, forcedialog) {
 // As to not have to do the same one liner a million times, this
 // function exists, as the name suggests, it simply writes the current
 // settings to the disk.
-function saveSettings() {
-	fs.writeFileSync(app.getPath("appData") + "/viper.json", JSON.stringify(settings));
+//
+// You can also pass a settings object to the function and it'll try and
+// merge it together with the already existing settings
+function saveSettings(obj = {}) {
+	settings = {...settings, ...obj};
+	fs.writeFileSync(path.join(settings.gamepath, "ns_startup_args.txt"), settings.nsargs);
+	fs.writeFileSync(app.getPath("appData") + "/viper.json", JSON.stringify({...settings, ...obj}));
 }
 
 // Returns the current Northstar version
@@ -754,6 +759,7 @@ module.exports = {
 	setpath,
 	updatevp,
 	settings,
+	saveSettings,
 	getNSVersion,
 	getTF2Version,
 	isGameRunning,

@@ -53,6 +53,8 @@ function start() {
 	ipcMain.on("installedmod", (event, modname) => {win.webContents.send("installedmod", modname)});
 	ipcMain.on("guigetmods", (event, ...args) => {win.webContents.send("mods", utils.mods.list())});
 
+	ipcMain.on("savesettings", (event, obj) => {utils.saveSettings(obj)})
+
 	win.webContents.on("dom-ready", () => {
 		win.webContents.send("mods", utils.mods.list());
 	});
