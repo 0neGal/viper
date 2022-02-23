@@ -96,6 +96,11 @@ var Settings = {
 				}
 			}
 		}
+
+		ipcRenderer.send("can-autoupdate");
+		ipcRenderer.on("cant-autoupdate", () => {
+			document.querySelector(".option[name=autoupdate]").style.display = "none";
+		})
 	}
 }
 

@@ -76,7 +76,7 @@ async function isGameRunning() {
 // It uses isGameRunning() to ensure it doesn't run while the game is
 // running, as that may have all kinds of issues.
 function handleNorthstarUpdating() {
-	if (!settings.autoupdate || !fs.existsSync("viper.json") || settings.gamepath.length === 0) {
+	if (! settings.nsupdate || ! fs.existsSync("viper.json") || settings.gamepath.length === 0) {
 		return;
 	}
 
@@ -305,6 +305,13 @@ async function update() {
 // useful. Not much we have to do on our side.
 function updatevp(autoinstall) {
 	const { autoUpdater } = require("electron-updater");
+
+	if (! autoUpdater.isUpdaterActive()) {
+		if (settings.nsupdate) {
+			handleNorthstarUpdating();
+		}
+		return cli.exit();
+	}
 
 	if (autoinstall) {
 		autoUpdater.on("update-downloaded", (info) => {

@@ -55,6 +55,12 @@ function start() {
 
 	ipcMain.on("savesettings", (event, obj) => {utils.saveSettings(obj)})
 
+	ipcMain.on("can-autoupdate", (event) => {
+		if (! require("electron-updater").autoUpdater.isUpdaterActive()) {
+			win.webContents.send("cant-autoupdate")
+		}
+	})
+
 	win.webContents.on("dom-ready", () => {
 		win.webContents.send("mods", utils.mods.list());
 	});
@@ -62,9 +68,7 @@ function start() {
 	if (utils.settings.autoupdate) {
 		utils.updatevp(false)
 	} else {
-		if (utils.settings.nsupdate) {
-			utils.update();
-		}
+		utils.handleNorthstarUpdating();
 	}
 
 	autoUpdater.on("update-downloaded", () => {
