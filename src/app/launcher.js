@@ -33,6 +33,7 @@ ipcRenderer.on("vp-notes", (event, response) => {
 			+ release.body.replaceAll("\r\n", "\n") + "\n\n\n";
 	}
 
+	content = enrichMarkdown(content);
 	vpReleaseNotes.innerHTML = markdown(content);
 });
 
