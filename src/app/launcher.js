@@ -20,6 +20,10 @@ function page(page) {
 }; page(0)
 
 
+function enrichMarkdown(content) {
+	return content.replaceAll(/\@(\S+)/g, `<a href="https://github.com/$1">@$1</a>`);
+}
+
 // Updates the Viper release notes
 ipcRenderer.on("vp-notes", (event, response) => {
 	let content = "";
@@ -46,7 +50,7 @@ ipcRenderer.on("ns-notes", (event, response) => {
 			+ release.body.replaceAll("\r\n", "\nhtmlbreak") + "\n\n\n";
 	}
 
-	content = content.replaceAll(/\@(\S+)/g, `<a href="https://github.com/$1">@$1</a>`);
+	content = enrichMarkdown(content);
 	nsRelease.innerHTML = markdown(content).replaceAll("htmlbreak", "<br>");
 });
 
