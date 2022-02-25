@@ -37,7 +37,7 @@ Besides this I've been considering adding some easy to use VPK modding tools so 
 
 ## Configuration
 
-Almost all configuration takes place inside the UI, and almost no configuration isn't either handled their or automatically handled, the only option that isn't configured in the GUI is disabling auto-updates, by default updates are handled automatically, when you launch the application it'll update, ask you if you want to restart, if not it'll continue with the old version until you restart, however you can disable this entirely by settings `"autoupdates": true` to false in your `viper.json`
+All settings take place in the settings page, found in the top right corner of the app, where you can disable auto-updates, and other related settings. You can also manually go in and edit your config file (`viper.json`), if you feel so inclined.
 
 Your configuration file will be found in `%APPDATA%\viper.json` on Windows, and inside either `~/.config` or through your environment variables (`$XDG_CONFIG_HOME`) on Linux, the latter has priority.
 
