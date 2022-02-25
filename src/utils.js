@@ -22,11 +22,13 @@ process.chdir(app.getPath("appData"));
 var settings = {
 	gamepath: "",
 	lang: "en-US",
+	nsupdate: true,
 	autoupdate: true,
+	nsargs: "-multiple",
 	zip: "/northstar.zip",
 
 	// These files won't be overwritten when installing/updating
-	// Northstar, useful for config file.
+	// Northstar, useful for config files
 	excludes: [
 		"ns_startup_args.txt",
 		"ns_startup_args_dedi.txt"
@@ -73,8 +75,8 @@ async function isGameRunning() {
 //
 // It uses isGameRunning() to ensure it doesn't run while the game is
 // running, as that may have all kinds of issues.
-function handleNorthstarAutoUpdating() {
-	if (!settings.autoupdate || !fs.existsSync("viper.json") || settings.gamepath.length === 0) {
+function handleNorthstarUpdating() {
+	if (! settings.nsupdate || ! fs.existsSync("viper.json") || settings.gamepath.length === 0) {
 		return;
 	}
 
@@ -170,8 +172,13 @@ async function setpath(win, forcedialog) {
 // As to not have to do the same one liner a million times, this
 // function exists, as the name suggests, it simply writes the current
 // settings to the disk.
-function saveSettings() {
-	fs.writeFileSync(app.getPath("appData") + "/viper.json", JSON.stringify(settings));
+//
+// You can also pass a settings object to the function and it'll try and
+// merge it together with the already existing settings
+function saveSettings(obj = {}) {
+	settings = {...settings, ...obj};
+	fs.writeFileSync(path.join(settings.gamepath, "ns_startup_args.txt"), settings.nsargs);
+	fs.writeFileSync(app.getPath("appData") + "/viper.json", JSON.stringify({...settings, ...obj}));
 }
 
 // Returns the current Northstar version
@@ -299,6 +306,13 @@ async function update() {
 function updatevp(autoinstall) {
 	const { autoUpdater } = require("electron-updater");
 
+	if (! autoUpdater.isUpdaterActive()) {
+		if (settings.nsupdate) {
+			handleNorthstarUpdating();
+		}
+		return cli.exit();
+	}
+
 	if (autoinstall) {
 		autoUpdater.on("update-downloaded", (info) => {
 			autoUpdater.quitAndInstall();
@@ -307,8 +321,11 @@ function updatevp(autoinstall) {
 
 	autoUpdater.on("error", (info) => {cli.exit(1)});
 	autoUpdater.on("update-not-available", (info) => {
-		// only check for N* updates if Viper itself has no updates
-		handleNorthstarAutoUpdating();
+		// only check for NS updates if Viper itself has no updates and
+		// if NS auto updates is enabled.
+		if (settings.nsupdate || cli.hasArgs()) {
+			handleNorthstarUpdating();
+		}
 		cli.exit();
 	});
 
@@ -756,9 +773,11 @@ module.exports = {
 	setpath,
 	updatevp,
 	settings,
+	saveSettings,
 	getNSVersion,
 	getTF2Version,
 	isGameRunning,
+	handleNorthstarUpdating,
 	setlang: (lang) => {
 		settings.lang = lang;
 		saveSettings();

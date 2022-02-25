@@ -10,6 +10,7 @@
 		<div id="toasts"></div>
 
 		<div id="winbtns">
+			<div id="settings" onclick="Settings.toggle(true)"></div>
 			<div id="minimize" onclick="ipcRenderer.send('minimize')"></div>
 			<div id="close" onclick="ipcRenderer.send('exit')"></div>
 		</div>
@@ -21,9 +22,71 @@
 			</div>
 		</div>
 
-		<div id="overlay" onclick="Browser.toggle(false)"></div>
-		<div id="browser">
-			<div id="misc">
+		<div id="overlay" onclick="Browser.toggle(false);Settings.toggle(false)"></div>
+		<div class="popup" id="options">
+			<div class="misc">
+				<div style="width:100%"></div>
+				<button id="apply" onclick="Settings.toggle(false);Settings.apply()">
+					<img src="icons/apply.png">
+					%%gui.settings.save%%
+				</button>
+				<button id="close" onclick="Settings.toggle(false);Settings.load()">
+					<img src="icons/close.png">
+					%%gui.settings.discard%%
+				</button>
+			</div>
+			<div class="options">
+				<h2>Northstar</h2>
+				<div class="option" name="nsargs">
+					<div class="text">
+						%%gui.settings.nsargs.title%%
+						<div class="desc">
+							%%gui.settings.nsargs.desc%%
+						</div>
+					</div>
+					<div class="actions">
+						<input>
+					</div>
+				</div>
+				<h2>Updates</h2>
+				<div class="option" name="autoupdate">
+					<div class="text">
+						%%gui.settings.autoupdate.title%%
+						<div class="desc">
+							%%gui.settings.autoupdate.desc%%
+						</div>
+					</div>
+					<div class="actions">
+						<button class="switch on"></button>
+					</div>
+				</div>
+				<div class="option" name="nsupdate">
+					<div class="text">
+						%%gui.settings.nsupdate.title%%
+						<div class="desc">
+							%%gui.settings.nsupdate.desc%%
+						</div>
+					</div>
+					<div class="actions">
+						<button class="switch on"></button>
+					</div>
+				</div>
+				<div class="option" name="excludes" type="array">
+					<div class="text">
+						%%gui.settings.excludes.title%%
+						<div class="desc">
+							%%gui.settings.excludes.desc%%
+						</div>
+					</div>
+					<div class="actions">
+						<input type="text">
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="popup" id="browser">
+			<div class="misc">
 				<input id="search" placeholder="%%gui.browser.search%%">
 				<button id="close" onclick="Browser.toggle(false)">
 					<img src="icons/close.png">
@@ -126,6 +189,7 @@
 		<script src="main.js"></script>
 		<script src="toast.js"></script>
 		<script src="browser.js"></script>
+		<script src="settings.js"></script>
 		<script src="launcher.js"></script>
 	</body>
 </html>
