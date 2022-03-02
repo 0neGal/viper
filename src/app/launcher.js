@@ -17,7 +17,7 @@ function page(page) {
 	pages[page].classList.remove("hidden");
 	btns[page].classList.remove("inactive");
 	bgHolder.setAttribute("bg", page);
-}; page(0)
+}; page(1)
 
 
 // Updates the Viper release notes
