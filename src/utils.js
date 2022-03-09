@@ -39,6 +39,11 @@ var settings = {
 if (fs.existsSync("viper.json")) {
 	settings = {...settings, ...JSON.parse(fs.readFileSync("viper.json", "utf8"))};
 	settings.zip = path.join(settings.gamepath + "/northstar.zip");
+
+	let args = path.join(settings.gamepath, "ns_startup_args.txt");
+	if (fs.existsSync(args)) {
+		settings.nsargs = fs.readFileSync(args, "utf8");
+	}
 } else {
 	console.log(lang("general.missingpath"));
 }
