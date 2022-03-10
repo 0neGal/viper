@@ -33,6 +33,11 @@ if (fs.existsSync("viper.json")) {
 	} else {
 		setpath(true);
 	}
+
+	let args = path.join(settings.gamepath, "ns_startup_args.txt");
+	if (fs.existsSync(args)) {
+		settings.nsargs = fs.readFileSync(args, "utf8");
+	}
 } else {
 	setpath();
 }
