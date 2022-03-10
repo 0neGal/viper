@@ -579,7 +579,7 @@ a:hover {
 
 #installmod {background: rgb(var(--blue))}
 #togglemod, #toggleall {background: rgb(var(--orange))}
-#northstar, #removeall, #removemod {background: rgb(var(--red))}
+#removeall, #removemod {background: rgb(var(--red))}
 button:disabled {
 	opacity: 0.5;
 	pointer-events: none;
