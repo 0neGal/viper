@@ -31,6 +31,8 @@ module.exports = async () => {
 		// Parse read_data
 		data = vdf.parse(data);
 
+		console.log(data)
+
 		// `.length - 1` This is because the last value is `contentstatsid`
 		for (let pathIterator = 0; pathIterator < Object.values(data["libraryfolders"]).length - 1; pathIterator++) {
 			let data_array = Object.values(data["libraryfolders"][pathIterator])
