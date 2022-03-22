@@ -55,7 +55,17 @@ module.exports = async () => {
 		case "linux":
 		case "openbsd":
 		case "freebsd":
-			folder = path.join(app.getPath("home"), "/.steam/steam/steamapps/libraryfolders.vdf");
+			let paths = [
+				"/.steam/steam/steamapps/libraryfolders.vdf",
+				".var/app/com.valvesoftware.Steam/.steam/steam/steamapps/libraryfolders.vdf"
+			]
+
+			for (let i = 0; i < paths.length; i++) {
+				if (fs.existsSync(path.join(app.getPath("home"), paths[i]))) {
+					folder = path.join(app.getPath("home"), paths[i]);
+					continue
+				}
+			}
 			break
 	}
 
