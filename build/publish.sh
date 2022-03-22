@@ -31,11 +31,11 @@ node build/langs.js || {
 	exit 1
 }
 
-GH_TOKEN="$GH_TOKEN"
+TOKEN="$GH_TOKEN"
 
-[ "$GH_TOKEN" = "" ] && {
+[ "$TOKEN" = "" ] && {
 	echo "GH_TOKEN is not set, please type it below:"
-	read -p "> " GH_TOKEN
+	read -p "> " TOKEN
 }
 
-npm run publish
+GH_TOKEN="$TOKEN" npm run publish
