@@ -34,8 +34,10 @@ module.exports = async () => {
 		console.log(data)
 
 		// `.length - 1` This is because the last value is `contentstatsid`
-		for (let pathIterator = 0; pathIterator < Object.values(data["libraryfolders"]).length - 1; pathIterator++) {
-			let data_array = Object.values(data["libraryfolders"][pathIterator])
+		for (let i = 0; i < Object.values(data["libraryfolders"]).length - 1; i++) {
+			console.log("test1")
+			let data_array = Object.values(data["libraryfolders"][i])
+			console.log("test2")
 			
 			if (fs.existsSync(data_array[0] + "/steamapps/common/Titanfall2/Titanfall2.exe")) {
 				console.log("Found game in:", data_array[0])
@@ -43,6 +45,7 @@ module.exports = async () => {
 			} else {
 				console.log("Game not found in:", data_array[0])
 			}
+			console.log("test3")
 		}
 	}
 
