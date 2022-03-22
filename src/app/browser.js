@@ -70,15 +70,15 @@ var Browser = {
 	},
 	setbutton: (mod, string) => {
 		mod = normalize(mod);
-		if (document.getElementById(mod)) {
-			let elems = document.querySelectorAll(`#${mod}`);
+		if (browserEntries.querySelector(`#mod-${mod}`)) {
+			let elems = browserEntries.querySelectorAll(`.el#mod-${mod}`);
 
 			for (let i = 0; i < elems.length; i++) {
 				elems[i].querySelector(".text button").innerHTML = string;
 			}
 		} else {
 			let make = (str) => {
-				if (document.getElementById(str)) {
+				if (browserEntries.querySelector(`#mod-${str}`)) {
 					return Browser.setbutton(str, string);
 				} else {
 					return false;
@@ -170,7 +170,7 @@ function BrowserEl(properties) {
 	}
 
 	browserEntries.innerHTML += `
-		<div class="el" id="${normalize(properties.title)}">
+		<div class="el" id="mod-${normalize(properties.title)}">
 			<div class="image">
 				<img src="${properties.image}">
 			</div>
