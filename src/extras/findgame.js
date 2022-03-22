@@ -31,11 +31,17 @@ module.exports = async () => {
 		// Parse read_data
 		data = vdf.parse(data);
 
+		let values = Object.values(data["libraryfolders"]);
+		if (typeof values[values.length - 1] != "object") {
+			values.pop(1);
+		}
+		
 		// `.length - 1` This is because the last value is `contentstatsid`
-		for (let pathIterator = 0; pathIterator < Object.values(data["libraryfolders"]).length - 1; pathIterator++) {
-			let data_array = Object.values(data["libraryfolders"][pathIterator])
+		for (let i = 0; i < values.length; i++) {
+			let data_array = Object.values(values[i])
 			
 			if (fs.existsSync(data_array[0] + "/steamapps/common/Titanfall2/Titanfall2.exe")) {
+				console.log("Found game in:", data_array[0])
 				return data_array[0] + "/steamapps/common/Titanfall2";
 			}
 		}
