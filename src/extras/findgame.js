@@ -36,7 +36,10 @@ module.exports = async () => {
 			let data_array = Object.values(data["libraryfolders"][pathIterator])
 			
 			if (fs.existsSync(data_array[0] + "/steamapps/common/Titanfall2/Titanfall2.exe")) {
+				console.log("Found game in:", data_array[0])
 				return data_array[0] + "/steamapps/common/Titanfall2";
+			} else {
+				console.log("Game not found in:", data_array[0])
 			}
 		}
 	}
@@ -54,6 +57,7 @@ module.exports = async () => {
 	}
 
 	if (fs.existsSync(folder) && folder) {
+		console.log("VDF file found at:", folder)
 		let data = fs.readFileSync(folder)
 		let read_vdf = readvdf(data.toString())
 		if (read_vdf ) {return read_vdf}
