@@ -769,8 +769,6 @@ setInterval(() => {
 	ipcMain.emit("guigetmods");
 }, 1500)
 
-console.log(findgame())
-
 module.exports = {
 	mods,
 	lang,
