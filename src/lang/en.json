@@ -6,6 +6,7 @@
 	"cli.help.update": "updates Northstar from your set game path",
 	"cli.help.setpath": "sets your game path",
 	"cli.help.updatevp": "updates Viper itself, if supported.",
+	"cli.help.novpupdates": "overwrites viper.json and disables Viper updates",
 	"cli.help.installmod": "installs a mod, folder or zip",
 	"cli.help.removemod": "removes a mod",
 	"cli.help.togglemod": "toggles a mod",

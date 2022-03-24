@@ -56,7 +56,7 @@ function start() {
 	ipcMain.on("savesettings", (event, obj) => {utils.saveSettings(obj)})
 
 	ipcMain.on("can-autoupdate", (event) => {
-		if (! require("electron-updater").autoUpdater.isUpdaterActive()) {
+		if (! require("electron-updater").autoUpdater.isUpdaterActive() || cli.hasParam("no-vp-updates")) {
 			win.webContents.send("cant-autoupdate")
 		}
 	})
@@ -66,7 +66,11 @@ function start() {
 	});
 
 	if (utils.settings.autoupdate) {
-		utils.updatevp(false)
+		if (cli.hasParam("no-vp-updates")) {
+			utils.handleNorthstarUpdating();
+		} else {
+			utils.updatevp(false)
+		}
 	} else {
 		utils.handleNorthstarUpdating();
 	}

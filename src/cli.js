@@ -43,18 +43,19 @@ async function init() {
 	// --help menu/argument
 	if (cli.hasSwitch("help")) {
 	console.log(`options:
-  --help       ${lang("cli.help.help")}
-  --debug      ${lang("cli.help.debug")}
-  --version    ${lang("cli.help.version")}
+  --help          ${lang("cli.help.help")}
+  --debug         ${lang("cli.help.debug")}
+  --version       ${lang("cli.help.version")}
 
-  --cli        ${lang("cli.help.cli")}
-  --update     ${lang("cli.help.update")}
-  --updatevp   ${lang("cli.help.updatevp")}
-  --setpath    ${lang("cli.help.setpath")}
+  --cli           ${lang("cli.help.cli")}
+  --update        ${lang("cli.help.update")}
+  --updatevp      ${lang("cli.help.updatevp")}
+  --setpath       ${lang("cli.help.setpath")}
+  --no-vp-updates ${lang("cli.help.novpupdates")}
 
-  --installmod ${lang("cli.help.installmod")}
-  --removemod  ${lang("cli.help.removemod")}
-  --togglemod  ${lang("cli.help.togglemod")}`)
+  --installmod    ${lang("cli.help.installmod")}
+  --removemod     ${lang("cli.help.removemod")}
+  --togglemod     ${lang("cli.help.togglemod")}`)
 		// In the future --setpath should be able to understand
 		// relative paths, instead of just absolute ones.
 		exit();
