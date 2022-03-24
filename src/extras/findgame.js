@@ -43,36 +43,38 @@ module.exports = async () => {
 			if (fs.existsSync(data_array[0] + "/steamapps/common/Titanfall2/Titanfall2.exe")) {
 				console.log("Found game in:", data_array[0])
 				return data_array[0] + "/steamapps/common/Titanfall2";
+			} else {
+				console.log("Game not in:", data_array[0])
 			}
 		}
 	}
 
-	let folder = null;
+	let folders = [];
 	switch (process.platform) {
 		case "win32":
-			folder = "C:\\Program Files (x86)\\Steam\\steamapps\\libraryfolders.vdf";
+			folders = ["C:\\Program Files (x86)\\Steam\\steamapps\\libraryfolders.vdf"];
 			break
 		case "linux":
 		case "openbsd":
 		case "freebsd":
-			let paths = [
-				"/.steam/steam/steamapps/libraryfolders.vdf",
-				".var/app/com.valvesoftware.Steam/.steam/steam/steamapps/libraryfolders.vdf"
+			let home = app.getPath("home");
+			folders = [
+				path.join(home, "/.steam/steam/steamapps/libraryfolders.vdf"),
+				path.join(home, ".var/app/com.valvesoftware.Steam/.steam/steam/steamapps/libraryfolders.vdf"),
+				path.join(home, ".var/app/com.valvesoftware.Steam/.local/share/Steam/steamapps/libraryfolders.vdf")
 			]
-
-			for (let i = 0; i < paths.length; i++) {
-				if (fs.existsSync(path.join(app.getPath("home"), paths[i]))) {
-					folder = path.join(app.getPath("home"), paths[i]);
-					continue
-				}
-			}
 			break
 	}
 
-	if (fs.existsSync(folder) && folder) {
-		let data = fs.readFileSync(folder)
-		let read_vdf = readvdf(data.toString())
-		if (read_vdf ) {return read_vdf}
+	if (folders.length > 0) {
+		for (let i = 0; i < folders.length; i++) {
+			if (! fs.existsSync(folders[i])) {continue}
+			console.log("Searching VDF file at:", folders[i])
+
+			let data = fs.readFileSync(folders[i])
+			let read_vdf = readvdf(data.toString())
+			if (read_vdf) {return read_vdf}
+		}
 	}
 
 	if (gamepath) {
