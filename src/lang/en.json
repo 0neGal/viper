@@ -73,6 +73,11 @@
 	"gui.browser.reinstall": "Re-Install",
 	"gui.browser.loading": "Loading mods...",
 	"gui.browser.endoflist": "Maximum packages has been loaded.<br>Use the search for finding other packages!",
+	"gui.browser.noresults": "No results...",
+	"gui.browser.filter.mods": "Mods",
+	"gui.browser.filter.skins": "Skins",
+	"gui.browser.filter.client": "Client-side",
+	"gui.browser.filter.server": "Server-side",
 
 	"gui.settings.save": "Save",
 	"gui.settings.discard": "Discard",

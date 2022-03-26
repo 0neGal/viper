@@ -68,7 +68,7 @@ var Browser = {
 			return
 		} else if (! state) {
 			if (state != undefined) {
-				Browser.filters(false);
+				Browser.filters.toggle(false);
 				overlay.classList.remove("shown")
 				browser.classList.remove("shown")
 				return
@@ -96,7 +96,7 @@ var Browser = {
 	},
 	loading: (string) => {
 		if (Browser.filters.get().unfiltered.length == 0) {
-			string = "No mods found...";
+			string = lang("gui.browser.noresults");
 		}
 
 		if (string) {
@@ -116,7 +116,7 @@ var Browser = {
 		let res = fuse.search(string);
 
 		if (res.length < 1) {
-			Browser.loading("No results...")
+			Browser.loading(lang("gui.browser.noresults"))
 			return
 		}
 
@@ -325,9 +325,6 @@ search.addEventListener("keyup", () => {
 browser.addEventListener("scroll", () => {
 	Browser.filters.toggle(false);
 })
-
-Browser.toggle(true);
-Browser.filters.toggle();
 
 let checks = document.querySelectorAll(".check");
 for (let i = 0; i < checks.length; i++) {
