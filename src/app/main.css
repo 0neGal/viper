@@ -268,15 +268,19 @@ button {
 	width: 1em;
 	height: 1em;
 	content: " ";
+    background-size: 75%;
 	filter: brightness(1.3);
-	background: var(--selbg);
+    background-position: center;
+    background-repeat: no-repeat;
 	transition: 0.15s ease-in-out;
+	background-color: var(--selbg);
 	margin-right: calc(var(--spacing) / 3);
 	border-radius: calc(var(--spacing) / 4);
 }
 
 .check.checked::before {
-	background: rgb(var(--red));
+	background-color: rgb(var(--red));
+    background-image: url(icons/check.png);
 }
 
 .option .text {font-weight: 600}
