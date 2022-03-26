@@ -4,6 +4,58 @@ var packages = [];
 
 var Browser = {
 	maxentries: 50,
+	filters: {
+		get: () => {
+			let filtered = [];
+			let unfiltered = [];
+			let checks = browser.querySelectorAll("#filters .check");
+
+			for (let i = 0; i < checks.length; i++) {
+				if (! checks[i].classList.contains("checked")) {
+					filtered.push(checks[i].getAttribute("value"));
+				} else {
+					unfiltered.push(checks[i].getAttribute("value"));
+				}
+			}
+
+			return {
+				filtered,
+				unfiltered
+			};
+		},
+		isfiltered: (categories) => {
+			let filtered = Browser.filters.get().filtered;
+			let unfiltered = Browser.filters.get().unfiltered;
+			let state = false;
+			if (categories.length == 0) {return true}
+			for (let i = 0; i < categories.length; i++) {
+				if (filtered.includes(categories[i])) {
+					state = true;
+					continue
+				} else if (unfiltered.includes(categories[i])) {
+					state = false;
+					continue
+				}
+
+				state = true;
+			}
+
+			return state;
+		},
+		toggle: (state) => {
+			if (state == false) {
+				filters.classList.remove("shown");
+				return
+			}
+
+			filters.classList.toggle("shown");
+			let filterRect = filter.getBoundingClientRect();
+			let spacing = parseInt(getComputedStyle(filters).getPropertyValue("--spacing"));
+
+			filters.style.top = filterRect.bottom - spacing;
+			filters.style.right = filterRect.right - filterRect.left + filterRect.width;
+		},
+	},
 	toggle: (state) => {
 		if (state) {
 			browser.scrollTo(0, 0);
@@ -16,6 +68,7 @@ var Browser = {
 			return
 		} else if (! state) {
 			if (state != undefined) {
+				Browser.filters(false);
 				overlay.classList.remove("shown")
 				browser.classList.remove("shown")
 				return
@@ -38,11 +91,14 @@ var Browser = {
 		}
 		
 		for (let i in packages) {
-			if (i == Browser.maxentries) {Browser.endoflist();break}
 			new BrowserElFromObj(packages[i]);
 		}
 	},
 	loading: (string) => {
+		if (Browser.filters.get().unfiltered.length == 0) {
+			string = "No mods found...";
+		}
+
 		if (string) {
 			browserEntries.innerHTML = `<div class="loading">${string}</div>`;
 		}
@@ -52,6 +108,7 @@ var Browser = {
 		}
 	},
 	endoflist: () => {
+		if (browserEntries.querySelector(".message")) {return}
 		browserEntries.innerHTML += `<div class="message">${lang('gui.browser.endoflist')}</div>`
 	},
 	search: (string) => {
@@ -64,7 +121,6 @@ var Browser = {
 		}
 
 		for (let i = 0; i < res.length; i++) {
-			if (i == Browser.maxentries) {Browser.endoflist();break}
 			new BrowserElFromObj(res[i].item);
 		}
 	},
@@ -114,11 +170,17 @@ function BrowserElFromObj(obj) {
 		url: pkg.package_url,
 		download: pkg.download_url,
 		version: pkg.version_number,
+		categories: pkg.categories,
 		description: pkg.description
 	})
 }
 
 function BrowserEl(properties) {
+	if (Browser.filters.isfiltered(properties.categories)) {return}
+
+	let entries = browser.querySelectorAll(".el").length;
+	if (entries == Browser.maxentries) {Browser.endoflist();return}
+	
 	properties = {
 		title: "No name",
 		version: "1.0.0",
@@ -243,6 +305,7 @@ function normalize(items) {
 let searchtimeout;
 let searchstr = "";
 search.addEventListener("keyup", () => {
+	Browser.filters.toggle(false);
 	clearTimeout(searchtimeout);
 
 	if (searchstr != search.value) {
@@ -258,3 +321,15 @@ search.addEventListener("keyup", () => {
 		}, 500)
 	}
 })
+
+browser.addEventListener("scroll", () => {
+	Browser.filters.toggle(false);
+})
+
+Browser.toggle(true);
+Browser.filters.toggle();
+
+let checks = document.querySelectorAll(".check");
+for (let i = 0; i < checks.length; i++) {
+	checks[i].setAttribute("onclick", "this.classList.toggle('checked');Browser.loadfront();search.value = ''")
+}

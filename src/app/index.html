@@ -86,8 +86,20 @@
 		</div>
 
 		<div class="popup" id="browser">
+			<div class="overlay" id="filters">
+				<div class="checks">
+					<div class="check checked" value="Mods">Mods</div>
+					<div class="check checked" value="Skins">Skins</div>
+					<div class="check checked" value="Client-side">Client-side</div>
+					<div class="check" value="Server-side">Server-side</div>
+				</div>
+			</div>
+
 			<div class="misc">
 				<input id="search" placeholder="%%gui.browser.search%%">
+				<button id="filter" onclick="Browser.filters.toggle()">
+					<img src="icons/filter.png">
+				</button>
 				<button id="close" onclick="Browser.toggle(false)">
 					<img src="icons/close.png">
 				</button>
