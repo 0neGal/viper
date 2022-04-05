@@ -64,10 +64,11 @@ Given that we already have so many Northstar updaters and launchers I urge peopl
 </p>
 
 Some of the existing launchers are listed below:
- * Viper - A launcher with an easy to use GUI and CLI albeit missing some features
+ * Viper - A launcher, updater and mod manager with an easy to use GUI
+ * [ViperSH](https://github.com/0neGal/viper-sh) - A Bourne Shell, CLI only, Northstar updater and mod manager
  * [Ronin](https://github.com/MindSwipe/ronin) - a CLI only updater
  * [laundmo's updater](https://github.com/laundmo/northstar-updater) - another CLI only updater
- * [Juicy's mod manager](https://github.com/BigSpice/NorthStar-Mod-Manager-Ext-1) - an updater and manager for mods, most feature rich
+ * [VTOL](https://github.com/BigSpice/VTOL) - an updater and manager for mods, very feature rich
 
 ## Development
 
