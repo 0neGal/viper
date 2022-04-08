@@ -13,11 +13,11 @@ Viper is a launcher and updater for [Northstar](https://github.com/R2Northstar/N
 
 Downloads are available on the [releases page](https://github.com/0neGal/viper/releases/latest). 
 
-Please note that some versions will update themselves automatically when a new release is available (just like Origin or Steam) and some will NOT, so choose it accordingly. Only the AppImage and Windows Setup/Installer can auto-update.
+Please note that some versions will update themselves automatically when a new release is available (just like Origin or Steam) and some will NOT, so choose it accordingly. Only the AppImage, Flatpak and Windows Setup/Installer can auto-update.
 
 **Windows:** [`Viper Setup [x.y.z].exe`](https://github.com/0neGal/viper/releases/download/v1.3.1/Viper-Setup-1.3.1.exe) (auto-updates, and is recommanded), [`Viper [x.y.z].exe`](https://github.com/0neGal/viper/releases/download/v1.3.1/Viper-1.3.1.exe) (single executable, no fuss)
 
-**Linux:** [`.AppImage`](https://github.com/0neGal/viper/releases/download/v1.3.1/Viper-1.3.1.AppImage) (auto-updates), [`.deb`](https://github.com/0neGal/viper/releases/download/v1.3.1/viper-1.3.1_amd64.deb), [`.rpm`](https://github.com/0neGal/viper/releases/download/v1.3.1/Viper-1.3.1.x86_64.rpm), [`.tar.gz`](https://github.com/0neGal/viper/releases/download/v1.3.1/Viper-1.3.1.tar.gz)
+**Linux:** [`.AppImage`](https://github.com/0neGal/viper/releases/download/v1.3.1/Viper-1.3.1.AppImage) or [Flatpak](https://flathub.org/apps/details/com.github._0negal.Viper) (auto-updates), [`.deb`](https://github.com/0neGal/viper/releases/download/v1.3.1/viper-1.3.1_amd64.deb), [`.rpm`](https://github.com/0neGal/viper/releases/download/v1.3.1/Viper-1.3.1.x86_64.rpm), [`.tar.gz`](https://github.com/0neGal/viper/releases/download/v1.3.1/Viper-1.3.1.tar.gz)
 
 ## What can it do specifically?
 
