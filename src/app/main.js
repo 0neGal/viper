@@ -11,6 +11,8 @@ var settings = {
 	nsargs: "",
 	gamepath: "",
 	nsupdate: true,
+	autolang: true,
+	forcedlang: "en",
 	autoupdate: true,
 	zip: "/northstar.zip",
 	lang: navigator.language,

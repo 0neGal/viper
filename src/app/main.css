@@ -129,7 +129,7 @@ button {
 	transition: 0.15s ease-in-out;
 }
 
-.popup .el, .popup #search, .option .actions input, .popup #close, .popup .misc button {
+.popup .el, .popup #search, .option .actions select, .option .actions input, .popup #close, .popup .misc button {
 	color: white;
 	display: flex;
 	align-items: center;
@@ -149,7 +149,7 @@ button {
 	display: flex;
 }
 
-.popup #search, .option .actions input {
+.popup #search, .option .actions input, .option .actions select {
 	border: none;
 	outline: none;
 	transition: filter 0.15s ease-in-out;
@@ -292,7 +292,7 @@ button {
 	margin-top: calc(var(--padding) / 3);
 }
 
-.option .actions input {
+.option .actions input, .option .actions select {
 	width: 100%;
 	margin: 0px;
 	--spacing: calc(var(--padding) / 3);
