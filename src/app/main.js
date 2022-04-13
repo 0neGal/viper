@@ -92,7 +92,7 @@ ipcRenderer.on("setbuttons", (event, state) => {setButtons(state)})
 // Frontend part of updating Northstar
 ipcRenderer.on("ns-update-event", (event, key) => {
 	document.getElementById("update").innerText = `(${lang(key)})`;
-	console.log(key);
+	console.log(lang(key));
 	switch(key) {
 		case "cli.update.uptodate.short":
 			setButtons(true);
