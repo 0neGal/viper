@@ -258,6 +258,7 @@ async function update() {
 		console.log(lang("cli.update.uptodate"), version);
 
 		winLog(lang("gui.update.uptodate"));
+		cli.exit();
 		return;
 	} else {
 		if (version != "unknown") {
