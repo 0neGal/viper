@@ -184,8 +184,10 @@ async function setpath(win, forcedialog) {
 // merge it together with the already existing settings
 function saveSettings(obj = {}) {
 	settings = {...settings, ...obj};
-	fs.writeFileSync(path.join(settings.gamepath, "ns_startup_args.txt"), settings.nsargs);
 	fs.writeFileSync(app.getPath("appData") + "/viper.json", JSON.stringify({...settings, ...obj}));
+
+	if (! gamepathExists()) {return}
+	fs.writeFileSync(path.join(settings.gamepath, "ns_startup_args.txt"), settings.nsargs);
 }
 
 // Returns the current Northstar version
@@ -196,7 +198,10 @@ function getNSVersion() {
 	if (fs.existsSync(versionFilePath)) {
 		return fs.readFileSync(versionFilePath, "utf8");
 	} else {
-		fs.writeFileSync(versionFilePath, "unknown");
+		if (gamepathExists()) {
+			fs.writeFileSync(versionFilePath, "unknown");
+		}
+
 		return "unknown";
 	}
 }
@@ -239,6 +244,8 @@ restoreExcludedFiles();
 // <file>.excluded, then rename them back after the extraction. The
 // unzip module does not support excluding files directly.
 async function update() {
+	if (! gamepathExists()) {return}
+
 	ipcMain.emit("ns-update-event", "cli.update.checking");
 	console.log(lang("cli.update.checking"));
 	var version = getNSVersion();
@@ -370,6 +377,12 @@ function winLog(msg) {
 // Sends an alert to the renderer
 function winAlert(msg) {
 	ipcMain.emit("winAlert", msg, msg);
+}
+
+// Returns true/false depending on if the gamepath currently exists/is
+// mounted, used to avoid issues...
+function gamepathExists() {
+	return fs.existsSync(settings.gamepath);
 }
 
 // Used to manage mods.
@@ -768,7 +781,11 @@ const mods = {
 };
 
 setInterval(() => {
-	ipcMain.emit("guigetmods");
+	if (gamepathExists()) {
+		ipcMain.emit("guigetmods");
+	} else {
+		ipcMain.emit("gamepathlost");
+	}
 }, 1500)
 
 module.exports = {
@@ -784,6 +801,7 @@ module.exports = {
 	getNSVersion,
 	getTF2Version,
 	isGameRunning,
+	gamepathExists,
 	handleNorthstarUpdating,
 	setlang: (lang) => {
 		settings.lang = lang;

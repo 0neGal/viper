@@ -53,6 +53,14 @@ function start() {
 	ipcMain.on("installedmod", (event, modname) => {win.webContents.send("installedmod", modname)});
 	ipcMain.on("guigetmods", (event, ...args) => {win.webContents.send("mods", utils.mods.list())});
 
+	let gamepathlost = false;
+	ipcMain.on("gamepathlost", (event, ...args) => {
+		if (! gamepathlost) {
+			gamepathlost = true;
+			win.webContents.send("gamepathlost");
+		}
+	});
+
 	ipcMain.on("savesettings", (event, obj) => {utils.saveSettings(obj)})
 
 	ipcMain.on("can-autoupdate", (event) => {

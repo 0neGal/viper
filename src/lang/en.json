@@ -31,6 +31,8 @@
 
 	"cli.launch.linuxerror": "Launching the game is not currently supported on Linux",
 
+	"cli.gamepath.lost": "Gamepath not found, make sure it's mounted!",
+
 	"cli.mods.failed": "Failed to install mod!",
 	"cli.mods.removed": "Successfully removed mod!",
 	"cli.mods.toggled": "Successfully toggled mod",
@@ -116,6 +118,7 @@
 	"gui.selectpath": "Please select the path!",
 	"gui.gamepath.must": "The game path must be set to start Viper.",
 	"gui.gamepath.wrong": "This folder is not a valid game path.",	
+	"gui.gamepath.lost": "Gamepath no longer exists/can't be found!\n\nMake sure your drive is mounted properly, or if you moved your game location that you update the game path.\n\nViper may not work properly until next restart!",
 
 	"gui.toast.title.installed": "Mod installed!",
 	"gui.toast.title.failed": "Failed to install",
