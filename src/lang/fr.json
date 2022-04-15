@@ -31,6 +31,8 @@
 
 	"cli.launch.linuxerror": "Le support du jeu sur Linux n'est pas encore implémenté.",
 
+	"cli.gamepath.lost": "Dossier de jeu non trouvé, veuillez vérifier qu'il est bien accessible !",
+
 	"cli.mods.failed": "L'installation du mod a échoué.",
 	"cli.mods.removed": "Le mod a bien été supprimé.",
 	"cli.mods.toggled": "Le mod a bien été activé/désactivé.",
@@ -84,9 +86,14 @@
 	"gui.settings.save": "Sauvegarder",
 	"gui.settings.discard": "Annuler",
 	"gui.settings.title.ns": "Northstar",
+	"gui.settings.title.language": "Langue",
 	"gui.settings.title.updates": "Mises à jour",
 	"gui.settings.nsargs.title": "Options de lancement",
 	"gui.settings.nsargs.desc": "Vous pouvez ajouter ici des options de démarrage pour Northstar/Titanfall.",
+	"gui.settings.autolang.title": "Auto-détection de la langue",
+	"gui.settings.autolang.desc": "Lorsque activée, Viper essaie de déterminer automatiquement la langue de votre système ; désactiver cette option vous permet de sélectionner manuellement la langue utilisée.",
+	"gui.settings.forcedlang.title": "Langue",
+	"gui.settings.forcedlang.desc": "Lorsque \"Auto-détection de la langue\" est désactivée, cette option permet de sélectionner la langue (requiert un redémarrage).",
 	"gui.settings.autoupdate.title": "Mises à jour pour Viper",
 	"gui.settings.autoupdate.desc": "Viper se tient automatiquement à jour.",
 	"gui.settings.nsupdate.title": "Mises à jour pour Northstar",
@@ -111,6 +118,7 @@
 	"gui.selectpath": "Veuillez sélectionner le dossier où se trouve le client Titanfall 2.",
 	"gui.gamepath.must": "Vous devez sélectionner le chemin du dossier du jeu Titanfall 2 pour pouvoir lancer Viper.",
 	"gui.gamepath.wrong": "Ce dossier ne contient pas le jeu Titanfall 2, et n'est donc pas valide.",	
+	"gui.gamepath.lost": "Le chemin du jeu ne peut être trouvé / n'existe plus !\n\nVeuillez vérifier que votre disqué est correctement monté, ou, si vous avez déplacé votre jeu, que vous avez mis à jour le chemin du dossier.\n\nViper ne fonctionnera pas correctement jusqu'au prochain redémarrage.",
 
 	"gui.toast.title.installed": "Mod installé !",
 	"gui.toast.title.failed": "L'installation a échoué",
