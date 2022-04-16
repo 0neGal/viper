@@ -118,7 +118,7 @@
 	"gui.selectpath": "Por favor, ¡elija la ruta del juego!",
 	"gui.gamepath.must": "La ruta del juego debe establecerse para ejecutar Viper.",
 	"gui.gamepath.wrong": "Esta carpeta no es una ruta válida para el juego.",
-	"gui.gamepath.lost": "¡El directorio del juego ya no existe/no se puede encontrar!\n\nAsegúrate de que tu unidad esté instalada correctamente o, si cambiaste la ubicación del juego, actualiza la ruta del juego.\n\nViper puede no funcionará correctamente hasta el próximo reinicio!",
+	"gui.gamepath.lost": "¡El directorio del juego ya no existe/no se puede encontrar!\n\nAsegúrate de que tu unidad esté instalada correctamente o, si cambiaste la ubicación del juego, actualiza la ruta del juego.\n\nViper puede no funcionar correctamente hasta el próximo reinicio!",
 	
 	"gui.toast.title.installed": "¡Modificación instalada!",
 	"gui.toast.title.failed": "¡Falló al instalar!",
