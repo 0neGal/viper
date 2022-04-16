@@ -1,4 +1,6 @@
 {
+	"lang.title": "English",
+
 	"cli.help.help": "shows this help message",
 	"cli.help.debug": "opens the dev/debug tools",
 	"cli.help.version": "outputs version info",
@@ -28,6 +30,8 @@
 	"cli.autoupdates.noupdate": "No Northstar update available.",
 
 	"cli.launch.linuxerror": "Launching the game is not currently supported on Linux",
+
+	"cli.gamepath.lost": "Gamepath not found, make sure it's mounted!",
 
 	"cli.mods.failed": "Failed to install mod!",
 	"cli.mods.removed": "Successfully removed mod!",
@@ -82,9 +86,14 @@
 	"gui.settings.save": "Save",
 	"gui.settings.discard": "Discard",
 	"gui.settings.title.ns": "Northstar",
+	"gui.settings.title.language": "Language",
 	"gui.settings.title.updates": "Updates",
 	"gui.settings.nsargs.title": "Launch options",
 	"gui.settings.nsargs.desc": "Here you can add launch options for Northstar/Titanfall.",
+	"gui.settings.autolang.title": "Auto-Detect Language",
+	"gui.settings.autolang.desc": "When enabled, Viper tries to automatically detect your system language, when disabled you can manually change the language below.",
+	"gui.settings.forcedlang.title": "Language",
+	"gui.settings.forcedlang.desc": "When \"Auto-Detect Language\" is disabled, this will decide the language. Requires a restart to take effect.",
 	"gui.settings.autoupdate.title": "Viper Auto-Updates",
 	"gui.settings.autoupdate.desc": "Viper will automatically keep itself up-to-date.",
 	"gui.settings.nsupdate.title": "Northstar Auto-Updates",
@@ -109,6 +118,7 @@
 	"gui.selectpath": "Please select the path!",
 	"gui.gamepath.must": "The game path must be set to start Viper.",
 	"gui.gamepath.wrong": "This folder is not a valid game path.",	
+	"gui.gamepath.lost": "Gamepath no longer exists/can't be found!\n\nMake sure your drive is mounted properly, or if you moved your game location that you update the game path.\n\nViper may not work properly until next restart!",
 
 	"gui.toast.title.installed": "Mod installed!",
 	"gui.toast.title.failed": "Failed to install",

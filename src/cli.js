@@ -34,6 +34,21 @@ function exit(code) {
 	if (hasArgs()) {process.exit(code)}
 }
 
+// Ensures the gamepath exists, it's called by options that require the
+// gamepath to be able to work.
+function gamepath() {
+	if (fs.existsSync("viper.json")) {
+		gamepath = JSON.parse(fs.readFileSync("viper.json", "utf8")).gamepath;
+
+		if (! fs.existsSync(gamepath)) {
+			console.error(`error: ${lang("cli.gamepath.lost")}`);
+			exit(1);
+		} else {
+			return true;
+		}
+	}
+}
+
 // General CLI initialization
 //
 // A lot of the CLI is handled through events sent back to the main
@@ -62,9 +77,9 @@ async function init() {
 	}
 
 	// --update
-	if (cli.hasSwitch("update")) {ipcMain.emit("update")}
+	if (gamepath() && cli.hasSwitch("update")) {ipcMain.emit("update")}
 	// --version
-	if (cli.hasSwitch("version")) {ipcMain.emit("versioncli")}
+	if (gamepath() && cli.hasSwitch("version")) {ipcMain.emit("versioncli")}
 
 	// --setpath
 	if (cli.hasSwitch("setpath")) {
@@ -78,7 +93,7 @@ async function init() {
 	}
 
 	// --launch
-	if (cli.hasSwitch("launch")) {
+	if (gamepath() && cli.hasSwitch("launch")) {
 		switch(cli.getSwitchValue("launch")) {
 			case "vanilla":
 				ipcMain.emit("launchVanilla");
@@ -90,12 +105,12 @@ async function init() {
 	}
 
 	// Mod related args, --installmod, --removemod, --togglemod
-	if (cli.hasSwitch("installmod")) {ipcMain.emit("installmod")}
-	if (cli.hasSwitch("removemod")) {ipcMain.emit("removemod", "", cli.getSwitchValue("removemod"))}
-	if (cli.hasSwitch("togglemod")) {ipcMain.emit("togglemod", "", cli.getSwitchValue("togglemod"))}
+	if (gamepath() && cli.hasSwitch("installmod")) {ipcMain.emit("installmod")}
+	if (gamepath() && cli.hasSwitch("removemod")) {ipcMain.emit("removemod", "", cli.getSwitchValue("removemod"))}
+	if (gamepath() && cli.hasSwitch("togglemod")) {ipcMain.emit("togglemod", "", cli.getSwitchValue("togglemod"))}
 
 	// Prints out the list of mods
-	if (cli.hasSwitch("mods")) {ipcMain.emit("getmods")}
+	if (gamepath() && cli.hasSwitch("mods")) {ipcMain.emit("getmods")}
 }
 
 module.exports = {

@@ -11,6 +11,8 @@ var settings = {
 	nsargs: "",
 	gamepath: "",
 	nsupdate: true,
+	autolang: true,
+	forcedlang: "en",
 	autoupdate: true,
 	zip: "/northstar.zip",
 	lang: navigator.language,
@@ -81,16 +83,22 @@ function setButtons(state) {
 		}
 	}
 
+	disablearray(document.querySelectorAll(".playBtnContainer .playBtn"))
 	disablearray(document.querySelectorAll("#nsMods .buttons.modbtns button"))
 	disablearray(document.querySelectorAll("#browser #browserEntries .text button"))
 }
 
 ipcRenderer.on("setbuttons", (event, state) => {setButtons(state)})
+ipcRenderer.on("gamepathlost", (event, state) => {
+	page(0);
+	setButtons(false);
+	alert(lang("gui.gamepath.lost"));
+})
 
 // Frontend part of updating Northstar
 ipcRenderer.on("ns-update-event", (event, key) => {
 	document.getElementById("update").innerText = `(${lang(key)})`;
-	console.log(key);
+	console.log(lang(key));
 	switch(key) {
 		case "cli.update.uptodate.short":
 			setButtons(true);

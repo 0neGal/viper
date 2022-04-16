@@ -58,6 +58,8 @@ var Settings = {
 				} else {
 					opts[optName] = input;
 				}
+			} else if (options[i].querySelector(".actions select")) {
+				opts[optName] = options[i].querySelector(".actions select").value;
 			} else if (options[i].querySelector(".actions .switch")) {
 				if (options[i].querySelector(".actions .switch.on")) {
 					opts[optName] = true;
@@ -74,6 +76,23 @@ var Settings = {
 
 		for (let i = 0; i < options.length; i++) {
 			let optName = options[i].getAttribute("name");
+			if (optName == "forcedlang") {
+				let div = options[i].querySelector("select");
+
+				div.innerHTML = "";
+				let langs = fs.readdirSync(__dirname + "/../lang");
+				for (let i in langs) {
+					title = JSON.parse(fs.readFileSync(__dirname + `/../lang/${langs[i]}`, "utf8"))["lang.title"];
+					if (title) {
+						div.innerHTML += `<option value="${langs[i].replace(/\..*$/, '')}">${title}</option>`
+					}
+					
+				}
+
+				div.value = settings.forcedlang;
+				continue;
+			}
+
 			if (settings[optName] != undefined) {
 				switch(typeof settings[optName]) {
 					case "string":

@@ -1,4 +1,6 @@
 {
+	"lang.title": "Spanish - Española",
+
 	"cli.help.help": "muestra este mensaje de ayuda",
 	"cli.help.debug": "habre las herramientas de desarrollador/depuración ",
 	"cli.help.version": "muestra la información de la versión",

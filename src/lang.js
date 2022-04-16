@@ -7,8 +7,16 @@ var langObj = {};
 
 function _loadTranslation() {
 	if (fs.existsSync("viper.json")) {
-		lang = JSON.parse(fs.readFileSync("viper.json", "utf8")).lang;
+		opts = JSON.parse(fs.readFileSync("viper.json", "utf8"));
+		lang = opts.lang;
+
 		if (! lang) {lang = "en"}
+
+		if (opts.autolang == false) {
+			lang = opts.forcedlang;
+			if (! lang) {lang = "en"}
+		}
+
 		if (! fs.existsSync(__dirname + `/lang/${lang}.json`)) {
 			if (fs.existsSync(__dirname + `/lang/${lang.replace(/-.*$/, "")}.json`)) {
 				lang = lang.replace(/-.*$/, "");
@@ -19,6 +27,7 @@ function _loadTranslation() {
 	} else {
 		lang = "en";
 	}
+
 	langObj = JSON.parse(fs.readFileSync(__dirname + `/lang/${lang}.json`, "utf8"));
 }
 
