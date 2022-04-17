@@ -787,7 +787,11 @@ setInterval(() => {
 	if (gamepathExists()) {
 		ipcMain.emit("guigetmods");
 	} else {
-		ipcMain.emit("gamepathlost");
+		if (fs.existsSync("viper.json")) {
+			if (settings.gamepath != "") {
+				ipcMain.emit("gamepathlost");
+			}
+		}
 	}
 }, 1500)
 
