@@ -184,10 +184,12 @@ async function setpath(win, forcedialog) {
 // merge it together with the already existing settings
 function saveSettings(obj = {}) {
 	settings = {...settings, ...obj};
-	fs.writeFileSync(app.getPath("appData") + "/viper.json", JSON.stringify({...settings, ...obj}));
 
-	if (! gamepathExists()) {return}
-	fs.writeFileSync(path.join(settings.gamepath, "ns_startup_args.txt"), settings.nsargs);
+	if (fs.existsSync(settings.gamepath)) {
+		fs.writeFileSync(path.join(settings.gamepath, "ns_startup_args.txt"), settings.nsargs);
+	}
+
+	fs.writeFileSync(app.getPath("appData") + "/viper.json", JSON.stringify({...settings, ...obj}));
 }
 
 // Returns the current Northstar version
