@@ -31,16 +31,26 @@ var Settings = {
 			switches[i].setAttribute("onclick", `Settings.switch(${i})`); 
 		}
 	},
-	switch: (element) => {
+	switch: (element, state) => {
 		let switches = document.querySelectorAll(".switch");
-		element = switches[element];
+		if (switches[element]) {
+			element = switches[element];
+		}
 
-		if (element.classList.contains("on")) {
-			element.classList.add("off");
-			element.classList.remove("on");
-		} else {
+		let on = () => {
 			element.classList.add("on");
 			element.classList.remove("off");
+		}
+
+		let off = () => {
+			element.classList.add("off");
+			element.classList.remove("on");
+		}
+
+		if (state != undefined) {
+			if (state) {on()} else {off()}
+		} else {
+			if (element.classList.contains("on")) {off()} else {on()}
 		}
 
 		Settings.reloadSwitches();
