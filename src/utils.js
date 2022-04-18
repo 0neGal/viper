@@ -28,6 +28,7 @@ var settings = {
 	autoupdate: true,
 	nsargs: "-multiple",
 	zip: "/northstar.zip",
+	winebin: "/usr/bin/wine64",
 
 	// These files won't be overwritten when installing/updating
 	// Northstar, useful for config files
@@ -354,22 +355,32 @@ function updatevp(autoinstall) {
 // Either Northstar or Vanilla. Linux support is not currently a thing,
 // however it'll be added at some point.
 function launch(version) {
-	if (process.platform == "linux") {
-		console.error("error:", lang("cli.launch.linuxerror"))
-		cli.exit(1);
-	}
-
+	let cwd = process.cwd();
 	process.chdir(settings.gamepath);
+
 	switch(version) {
 		case "vanilla":
 			console.log(lang("general.launching"), "Vanilla...")
-			run(path.join(settings.gamepath + "/Titanfall2.exe"))
+
+			if (process.platform == "linux") {
+				run(settings.winebin, [path.join(settings.gamepath + "/Titanfall2.exe")])
+			} else {
+				run(path.join(settings.gamepath + "/Titanfall2.exe"))
+			}
+
 			break;
 		default:
 			console.log(lang("general.launching"), "Northstar...")
-			run(path.join(settings.gamepath + "/NorthstarLauncher.exe"))
+
+			if (process.platform == "linux") {
+				run(settings.winebin, [path.join(settings.gamepath + "/NorthstarLauncher.exe")])
+			} else {
+				run(path.join(settings.gamepath + "/NorthstarLauncher.exe"))
+			}
 			break;
 	}
+
+	process.chdir(cwd);
 }
 
 // Logs into the dev tools of the renderer

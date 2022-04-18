@@ -16,6 +16,7 @@ var settings = {
 	autoupdate: true,
 	zip: "/northstar.zip",
 	lang: navigator.language,
+	winebin: "/usr/bin/wine64",
 	excludes: [
 		"ns_startup_args.txt",
 		"ns_startup_args_dedi.txt"

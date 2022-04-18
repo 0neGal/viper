@@ -86,6 +86,7 @@
 	"gui.settings.save": "Guardar",
 	"gui.settings.discard": "Descartar",
 	"gui.settings.title.ns": "Northstar",
+	"gui.settings.title.linux": "Linux",
 	"gui.settings.title.updates": "Actualizaciones",
 	"gui.settings.nsargs.title": "Opciones de lanzamiento",
 	"gui.settings.nsargs.desc": "Aqui puedes añadir opciones de lanzamiento para Northstar/Titanfall.",

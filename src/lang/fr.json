@@ -86,6 +86,7 @@
 	"gui.settings.save": "Sauvegarder",
 	"gui.settings.discard": "Annuler",
 	"gui.settings.title.ns": "Northstar",
+	"gui.settings.title.linux": "Linux",
 	"gui.settings.title.language": "Langue",
 	"gui.settings.title.updates": "Mises à jour",
 	"gui.settings.nsargs.title": "Options de lancement",

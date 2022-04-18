@@ -126,6 +126,13 @@ var Settings = {
 			}
 		}
 
+		if (process.platform == "win32") {
+			let linuxopts = document.querySelectorAll(".options .linuxopt");
+			for (let i = 0; i < linuxopts.length; i++) {
+				linuxopts[i].style.display = "none";
+			}
+		}
+
 		ipcRenderer.send("can-autoupdate");
 		ipcRenderer.on("cant-autoupdate", () => {
 			document.querySelector(".option[name=autoupdate]").style.display = "none";
