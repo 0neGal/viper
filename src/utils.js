@@ -8,8 +8,8 @@ const events = new Emitter();
 
 const cli = require("./cli");
 const lang = require("./lang");
+const find = require("./extras/find");
 const requests = require("./extras/requests");
-const findgame = require("./extras/findgame");
 
 const unzip = require("unzipper");
 const run = require("child_process").spawn;
@@ -24,6 +24,7 @@ var settings = {
 	lang: "en-US",
 	nsupdate: true,
 	autolang: true,
+	wineprefix: "",
 	forcedlang: "en",
 	autoupdate: true,
 	nsargs: "-multiple",
@@ -149,7 +150,7 @@ async function setpath(win, forcedialog) {
 				ipcMain.emit("newpath", null, settings.gamepath);
 			}
 
-			let gamepath = await findgame();
+			let gamepath = await find.game();
 			if (gamepath) {
 				setGamepath(gamepath);
 				return;
@@ -356,13 +357,28 @@ function updatevp(autoinstall) {
 // however it'll be added at some point.
 function launch(version) {
 	let cwd = process.cwd();
+	let prefix = settings.wineprefix;
 	process.chdir(settings.gamepath);
+
+	if (process.platform != "win32") {
+		let foundprefix = find.prefix();
+		if (foundprefix) {
+			prefix = foundprefix;
+		}
+
+		if (! fs.existsSync(prefix.path)) {
+			winAlert("invalid wine prefix");
+			return false;
+		} else {
+			process.env["WINEPREFIX"] = prefix.path;
+		}
+	}
 
 	switch(version) {
 		case "vanilla":
 			console.log(lang("general.launching"), "Vanilla...")
 
-			if (process.platform == "linux") {
+			if (process.platform != "win32") {
 				run(settings.winebin, [path.join(settings.gamepath + "/Titanfall2.exe")])
 			} else {
 				run(path.join(settings.gamepath + "/Titanfall2.exe"))
@@ -372,11 +388,13 @@ function launch(version) {
 		default:
 			console.log(lang("general.launching"), "Northstar...")
 
-			if (process.platform == "linux") {
+			if (process.platform != "win32") {
+				run(settings.winebin, [prefix.origin])
 				run(settings.winebin, [path.join(settings.gamepath + "/NorthstarLauncher.exe")])
 			} else {
-				run(path.join(settings.gamepath + "/NorthstarLauncher.exe"))
+				run(path.join(settings.gamepath + "/Titanfall2.exe -northstar"))
 			}
+
 			break;
 	}
 
@@ -805,6 +823,8 @@ setInterval(() => {
 		}
 	}
 }, 1500)
+
+console.log(find.prefix())
 
 module.exports = {
 	mods,

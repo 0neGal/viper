@@ -10,6 +10,7 @@ let shouldInstallNorthstar = false;
 var settings = {
 	nsargs: "",
 	gamepath: "",
+	wineprefix: "",
 	nsupdate: true,
 	autolang: true,
 	forcedlang: "en",
