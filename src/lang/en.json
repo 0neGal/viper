@@ -116,6 +116,7 @@
 	"gui.nsupdate.gaming.body": "An update for Northstar is available.\nYou can force its installation after closing the game.",
 
 	"gui.launch": "Launch",
+	"gui.running": "Running",
 	"gui.launchvanilla": "Vanilla",
 	"gui.launchnorthstar": "Northstar",
 	"gui.installnorthstar": "Install",

@@ -53,6 +53,9 @@ function start() {
 	ipcMain.on("installedmod", (event, modname) => {win.webContents.send("installedmod", modname)});
 	ipcMain.on("guigetmods", (event, ...args) => {win.webContents.send("mods", utils.mods.list())});
 
+	ipcMain.on("gamestarted", (event) => {win.webContents.send("gamestate", true)});
+	ipcMain.on("gamestopped", (event) => {win.webContents.send("gamestate", false)});
+
 	let gamepathlost = false;
 	ipcMain.on("gamepathlost", (event, ...args) => {
 		if (! gamepathlost) {

@@ -91,6 +91,20 @@ function setButtons(state) {
 }
 
 ipcRenderer.on("setbuttons", (event, state) => {setButtons(state)})
+
+ipcRenderer.on("gamestate", (event, state) => {
+	setButtons(! state);
+
+	let string = lang("gui.launch");
+	if (state) {
+		string = lang("gui.running");
+	}
+
+	let btns = document.querySelectorAll(".playBtnContainer .playBtn");
+	btns[0].innerHTML = string;
+	btns[1].innerHTML = string;
+})
+
 ipcRenderer.on("gamepathlost", (event, state) => {
 	page(0);
 	setButtons(false);

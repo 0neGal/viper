@@ -835,7 +835,7 @@ const mods = {
 	}
 };
 
-setInterval(() => {
+setInterval(async () => {
 	if (gamepathExists()) {
 		ipcMain.emit("guigetmods");
 	} else {
@@ -844,6 +844,12 @@ setInterval(() => {
 				ipcMain.emit("gamepathlost");
 			}
 		}
+	}
+
+	if (await isGameRunning()) {
+		ipcMain.emit("gamestarted");
+	} else {
+		ipcMain.emit("gamestopped");
 	}
 }, 1500)
 
