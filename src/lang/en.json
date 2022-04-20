@@ -92,9 +92,9 @@
 	"gui.settings.nsargs.title": "Launch options",
 	"gui.settings.nsargs.desc": "Here you can add launch options for Northstar/Titanfall.",
 	"gui.settings.wineprefix.title": "Wine Prefix",
-	"gui.settings.wineprefix.desc": "The prefix which Wine/Proton will run from, if the game is installed through Steam this should be auto detected.",
+	"gui.settings.wineprefix.desc": "The prefix which Wine/Proton will use, if left empty, it'll try to find your Steam prefix automatically.",
 	"gui.settings.winebin.title": "Wine Executable",
-	"gui.settings.winebin.desc": "The version of Wine/Proton to use to run the game, this is by default set to \"/usr/bin/wine64\" if Proton can't be found.<br><br>This is unlikely to work properly, and is only a fallback",
+	"gui.settings.winebin.desc": "The version of Wine/Proton to use to run the game, if set to \"/usr/bin/wine64\", Viper will try to find the latest installed version of Proton automatically, if it can't find anything it'll fallback to wine64",
 	"gui.settings.autolang.title": "Auto-Detect Language",
 	"gui.settings.autolang.desc": "When enabled, Viper tries to automatically detect your system language, when disabled you can manually change the language below.",
 	"gui.settings.forcedlang.title": "Language",
@@ -131,6 +131,10 @@
 	"gui.toast.desc.installed": "has been installed successfully!",
 	"gui.toast.desc.malformed": "has an incorrect folder structure, if you're the developer, you should fix this.",
 	"gui.toast.desc.failed": "An unknown error occurred while trying to install the mod. This may be the author's fault, and it may also be Viper's fault.",
+
+	"wine.invalidprefix": "The selected Wine prefix doesn't exist, and is therefore invalid.",
+	"wine.originnotfound": "Origin can't be found in the selected Wine prefix.",
+	"wine.cantfindprefix": "Viper was unable to automatically find and set your Wine prefix.",
 
 	"viper.menu.main": "Viper",
 	"viper.menu.release": "Release Notes",

@@ -6,6 +6,7 @@ const { app } = require("electron");
 const util = require("util");
 const exec = util.promisify(require("child_process").exec);
 
+let libraries = [];
 let home = app.getPath("home");
 
 let symdir = ".steam/steam";
@@ -38,7 +39,30 @@ module.exports = {
 		 
 		return false;
 	},
-	game: async () => {
+	proton: () => {
+		module.exports.game(true);
+
+		let proton = "0.0";
+		let protonpath = false;
+
+		for (let i = 0; i < libraries.length; i++) {
+			let files = fs.readdirSync(libraries[i]);
+			for (let ii = 0; ii < files.length; ii++) {
+				if (files[ii].match(/^Proton [0-9]+\.[0-9]+/)) {
+					if (fs.existsSync(path.join(libraries[i], files[ii], "/dist/bin/wine64"))) {
+						let version = files[ii].replace(/^Proton /, "");
+						if (version > proton) {
+							proton = version;
+							protonpath = path.join(libraries[i], files[ii], "/dist/bin/wine64");
+						}
+					}
+				}
+			}
+		}
+
+		return protonpath;
+	},
+	game: async (quiet) => {
 		let gamepath = "";
 		
 		// Autodetect path
@@ -67,16 +91,20 @@ module.exports = {
 			if (typeof values[values.length - 1] != "object") {
 				values.pop(1);
 			}
+
+			libraries = [];
 			
 			// `.length - 1` This is because the last value is `contentstatsid`
 			for (let i = 0; i < values.length; i++) {
+				libraries.push(values[i].path + "/steamapps/common"); 
+
 				let data_array = Object.values(values[i])
 				
 				if (fs.existsSync(data_array[0] + "/steamapps/common/Titanfall2/Titanfall2.exe")) {
-					console.log("Found game in:", data_array[0])
+					if (! quiet ) {console.log("Found game in:", data_array[0])}
 					return data_array[0] + "/steamapps/common/Titanfall2";
 				} else {
-					console.log("Game not in:", data_array[0])
+					if (! quiet ) {console.log("Game not in:", data_array[0])}
 				}
 			}
 		}
@@ -102,7 +130,7 @@ module.exports = {
 		if (folders.length > 0) {
 			for (let i = 0; i < folders.length; i++) {
 				if (! fs.existsSync(folders[i])) {continue}
-				console.log("Searching VDF file at:", folders[i])
+				if (! quiet ) {console.log("Searching VDF file at:", folders[i])}
 
 				let data = fs.readFileSync(folders[i])
 				let read_vdf = readvdf(data.toString())
