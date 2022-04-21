@@ -415,7 +415,7 @@ function launch(version) {
 				run(winebin, [prefix.origin])
 				run(winebin, [path.join(settings.gamepath + "/NorthstarLauncher.exe")])
 			} else {
-				run(path.join(settings.gamepath + "/Titanfall2.exe", ["-northstar"]))
+				run(path.join(settings.gamepath + "/Titanfall2.exe"), ["-northstar"])
 			}
 
 			break;
