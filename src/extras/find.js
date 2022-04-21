@@ -16,7 +16,7 @@ let flatpakdir = ".var/app/com.valvesoftware.Steam/";
 module.exports = {
 	prefix: () => {
 		if (process.platform == "win32") {return false}
-		let compatdir = "/steamapps/compatdata/123790/pfx";
+		let compatdir = "/steamapps/compatdata/1237970/pfx";
 		let folders = [
 			path.join(home, symdir, compatdir),
 			path.join(home, localdir, compatdir),
