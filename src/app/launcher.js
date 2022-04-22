@@ -25,6 +25,8 @@ ipcRenderer.on("vp-notes", (event, response) => {
 	let content = "";
 
 	for (const release of response) {
+		if (release.prerelease) {continue}
+
 		content += "# " + release.name + "\n\n"
 			+ release.body.replaceAll("\r\n", "\n") + "\n\n\n";
 	}
@@ -42,6 +44,8 @@ ipcRenderer.on("ns-notes", (event, response) => {
 	let content = "";
 
 	for (let release of response) {
+		if (release.prerelease) {continue}
+
 		content += "# " + release.name + "\n\n"
 			+ release.body.replaceAll("\r\n", "\nhtmlbreak") + "\n\n\n";
 	}
