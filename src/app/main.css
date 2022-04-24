@@ -182,6 +182,10 @@ button {
 	padding-right: calc(var(--padding) / 2) !important;
 }
 
+.popup .misc button:last-child {
+	margin-left: 0px !important;
+}
+
 .popup .loading {
 	width: 100%;
 	color: white;
@@ -206,6 +210,13 @@ button {
 	border-radius: var(--spacing);
 }
 
+.popup .el .image img.blur {
+	z-index: -1;
+    position: relative;
+    filter: blur(10px);
+    top: calc(var(--height) * -1 + 5px);
+}
+
 .popup .el .text {
 	overflow: hidden;
 }
@@ -217,7 +228,11 @@ button {
 	text-overflow: ellipsis;
 }
 
-.popup .el .title {font-size: 1.2em}
+.popup .el .title {
+	font-size: 1.2em;
+	font-weight: 700;
+}
+
 .popup .el .description {font-size: 0.8em}
 .popup .el button {
 	background: rgb(var(--blue));
@@ -634,6 +649,7 @@ button:disabled {
 
 button.visual {
 	opacity: 1.0;
+	padding-right: 0px;
 	pointer-events: none;
 	background: transparent !important;
 }

@@ -53,7 +53,7 @@ var Browser = {
 			let spacing = parseInt(getComputedStyle(filters).getPropertyValue("--spacing"));
 
 			filters.style.top = filterRect.bottom - spacing;
-			filters.style.right = filterRect.right - filterRect.left + filterRect.width;
+			filters.style.right = filterRect.right - filterRect.left + filterRect.width - (spacing / 2);
 		},
 	},
 	toggle: (state) => {
@@ -235,6 +235,7 @@ function BrowserEl(properties) {
 		<div class="el" id="mod-${normalize(properties.title)}">
 			<div class="image">
 				<img src="${properties.image}">
+				<img class="blur" src="${properties.image}">
 			</div>
 			<div class="text">
 				<div class="title">${properties.title}</div>
