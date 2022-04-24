@@ -1,7 +1,13 @@
 :root {
 	--red: 199, 119, 127;
+	--red2: 181 97 105;
+
 	--blue: 129, 161, 193;
+	--blue2: 139, 143, 185;
+
 	--orange: 213, 151, 131;
+	--orange2: 197 129 107;
+
 
 	--padding: 25px;
 
@@ -172,7 +178,7 @@ button {
 .popup .misc button img {
 	opacity: 0.6;
 	width: var(--height);
-	transform: scale(0.6);
+	transform: scale(0.5);
 	height: var(--height) !important;
 }
 
@@ -237,6 +243,10 @@ button {
 .popup .el button {
 	background: rgb(var(--blue));
 	margin-top: var(--spacing);
+}
+
+.popup .el button.info {
+	background: rgb(var(--blue2));
 }
 
 .popup .options {
@@ -392,7 +402,7 @@ img {pointer-events: none}
 	background-size: cover;
 	background-position: center;
 	background-repeat: no-repeat;
-	transition: background-image 0.5s ease-in-out;
+	transition: background-image 0.1s ease-in-out;
 	filter: brightness(0.4) blur(2px) grayscale(0.6);
 }
 
@@ -570,7 +580,7 @@ img {pointer-events: none}
 	margin-bottom: 10px;
 	border-radius: 10px;
 	background: var(--redbg);
-	transition: 0.3s ease-in-out;
+	transition: 0.2s ease-in-out;
 	filter: drop-shadow(0px 8px 5px rgba(0, 0, 0, 0.1));
 }
 
@@ -640,8 +650,13 @@ a:hover {
 }
 
 #installmod {background: rgb(var(--blue))}
-#togglemod, #toggleall {background: rgb(var(--orange))}
-#removeall, #removemod {background: rgb(var(--red))}
+#findmod {background: rgb(var(--blue2))}
+
+#togglemod {background: rgb(var(--orange))}
+#toggleall {background: rgb(var(--orange2))}
+
+#removemod {background: rgb(var(--red))}
+#removeall {background: rgb(var(--red2))}
 button:disabled {
 	opacity: 0.5;
 	pointer-events: none;

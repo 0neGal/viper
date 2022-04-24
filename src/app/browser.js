@@ -240,8 +240,8 @@ function BrowserEl(properties) {
 			<div class="text">
 				<div class="title">${properties.title}</div>
 				<div class="description">${properties.description}</div>
-				<button onclick="installFromURL('${properties.download}')">${installstr}</button>
-				<button onclick="require('electron').shell.openExternal('${properties.url}')">${lang('gui.browser.info')}</button>
+				<button class="install" onclick="installFromURL('${properties.download}')">${installstr}</button>
+				<button class="info" onclick="require('electron').shell.openExternal('${properties.url}')">${lang('gui.browser.info')}</button>
 				<button class="visual">${properties.version}</button>
 				<button class="visual">${lang("gui.browser.madeby")} ${properties.author}</button>
 			</div>
