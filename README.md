@@ -1,6 +1,6 @@
 <p align="center">
 	<img src="src/assets/icons/512x512.png" width="200px"><br>
-	<a href="https://github.com/0neGal/viper/releases/download/v1.3.3/Viper-Setup-1.3.3.exe"><img src="assets/download.png" width="300px"></a><br>
+	<a href="https://github.com/0neGal/viper/releases/download/v1.3.4/Viper-Setup-1.3.4.exe"><img src="assets/download.png" width="300px"></a><br>
 	<a href="https://github.com/0neGal/viper/projects/1">Overview</a> | 
 	<a href="https://github.com/0neGal/viper/releases">Releases</a><br>
 </p>
@@ -15,9 +15,9 @@ Downloads are available on the [releases page](https://github.com/0neGal/viper/r
 
 Please note that some versions will update themselves automatically when a new release is available (just like Origin or Steam) and some will NOT, so choose it accordingly. Only the AppImage, Flatpak and Windows Setup/Installer can auto-update.
 
-**Windows:** [`Viper Setup [x.y.z].exe`](https://github.com/0neGal/viper/releases/download/v1.3.3/Viper-Setup-1.3.3.exe) (auto-updates, and is recommanded), [`Viper [x.y.z].exe`](https://github.com/0neGal/viper/releases/download/v1.3.3/Viper-1.3.3.exe) (single executable, no fuss)
+**Windows:** [`Viper Setup [x.y.z].exe`](https://github.com/0neGal/viper/releases/download/v1.3.4/Viper-Setup-1.3.4.exe) (auto-updates, and is recommanded), [`Viper [x.y.z].exe`](https://github.com/0neGal/viper/releases/download/v1.3.4/Viper-1.3.4.exe) (single executable, no fuss)
 
-**Linux:** [`.AppImage`](https://github.com/0neGal/viper/releases/download/v1.3.3/Viper-1.3.3.AppImage) or [Flatpak](https://flathub.org/apps/details/com.github._0negal.Viper) (auto-updates), [AUR (unofficial)](https://aur.archlinux.org/packages/viper-bin), [`.deb`](https://github.com/0neGal/viper/releases/download/v1.3.3/viper-1.3.3_amd64.deb), [`.rpm`](https://github.com/0neGal/viper/releases/download/v1.3.3/Viper-1.3.3.x86_64.rpm), [`.tar.gz`](https://github.com/0neGal/viper/releases/download/v1.3.3/Viper-1.3.3.tar.gz)
+**Linux:** [`.AppImage`](https://github.com/0neGal/viper/releases/download/v1.3.4/Viper-1.3.4.AppImage) or [Flatpak](https://flathub.org/apps/details/com.github._0negal.Viper) (auto-updates), [AUR (unofficial)](https://aur.archlinux.org/packages/viper-bin), [`.deb`](https://github.com/0neGal/viper/releases/download/v1.3.4/viper-1.3.4_amd64.deb), [`.rpm`](https://github.com/0neGal/viper/releases/download/v1.3.4/Viper-1.3.4.x86_64.rpm), [`.tar.gz`](https://github.com/0neGal/viper/releases/download/v1.3.4/Viper-1.3.4.tar.gz)
 
 ## What can it do specifically?
 
