@@ -91,6 +91,10 @@
 	"gui.settings.title.updates": "Mises à jour",
 	"gui.settings.nsargs.title": "Options de lancement",
 	"gui.settings.nsargs.desc": "Vous pouvez ajouter ici des options de démarrage pour Northstar/Titanfall.",
+	"gui.settings.wineprefix.title": "Préfixe Wine",
+	"gui.settings.wineprefix.desc": "Le préfixe utilisé par Wine/Proton ; si laissé vide, il essaiera de trouver automatiquement votre préfixe Steam.",
+	"gui.settings.winebin.title": "Exécutable Wine",
+	"gui.settings.winebin.desc": "La version de Wine/Proton à utiliser pour lancer le jeu, s'il vaut \"/usr/bin/wine64\", Viper essaiera de déterminer automatiquement la dernière version installée de Proton (et utilisera wine64 s'il ne trouve rien).",
 	"gui.settings.autolang.title": "Auto-détection de la langue",
 	"gui.settings.autolang.desc": "Lorsque activée, Viper essaie de déterminer automatiquement la langue de votre système ; désactiver cette option vous permet de sélectionner manuellement la langue utilisée.",
 	"gui.settings.forcedlang.title": "Langue",
@@ -112,6 +116,7 @@
 	"gui.nsupdate.gaming.body": "Une mise à jour pour Northstar est disponible.\nVous pourrez l'installer après avoir fermé le jeu.",
 
 	"gui.launch": "Jouer",
+	"gui.running": "En cours d'exécution",
 	"gui.launchvanilla": "Vanilla",
 	"gui.launchnorthstar": "Northstar",
 	"gui.installnorthstar": "Installer",
@@ -127,6 +132,10 @@
 	"gui.toast.desc.installed": "a été installé avec succès !",
 	"gui.toast.desc.malformed": "a une structure de dossier incorrecte ; si vous êtes son développeur, vous devriez réparer ça.",
 	"gui.toast.desc.failed": "Une erreur inconnue est survenue lors de l'installation du mod. Cela peut être du ressort de l'auteur du mod ou de Viper.",
+
+	"wine.invalidprefix": "Le préfixe Wine sélectionné n'existe pas, et n'est donc pas valide.",
+	"wine.originnotfound": "Origin ne peut être trouvé dans le préfixe Wine sélectionné.",
+	"wine.cantfindprefix": "Viper n'a pas pu trouver et configurer votre préfixe Wine.",
 
 	"viper.menu.main": "Viper",
 	"viper.menu.release": "Notes de mises à jour",
