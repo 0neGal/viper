@@ -101,6 +101,10 @@
 	"gui.settings.autolang.desc": "Cuando está habilitado, Viper intenta detectar automáticamente el idioma de su sistema, cuando está deshabilitado, puede cambiar manualmente el idioma a continuación.",
 	"gui.settings.forcedlang.title": "Idioma",
 	"gui.settings.forcedlang.desc": "Cuando \"Detectar automáticamente el idioma\" está deshabilitado, ésta opción decidirá el lenguaje. Se necesita reiniciar para que surja efecto.",
+	"gui.settings.wineprefix.title": "Prefijo de Wine",
+	"gui.settings.wineprefix.desc": "El prefijo el cual usará Wine/Proton. Si se deja vacío, se tratará de encontrar su prefijo de Steam automáticamente.",
+	"gui.settings.winebin.title": "Ejecutable de Wine ",
+	"gui.settings.winebin.desc": "La versión de Wine/Proton que se usará para ejecutar el juego. Si se elige \"/usr/bin/wine64\", Viper tratará de encontrar la ultima versión instalada de Proton automáticamente, si no se encuentra, se usará wine64",
 	
 	"gui.update.downloading": "Descargando...",
 	"gui.update.extracting": "Extrayendo actualización...",
@@ -128,6 +132,8 @@
 	"gui.toast.desc.malformed": "tiene una estructura de carpetas incorrecta, si usted es el desarrollador, debe corregir esto.",
 	"gui.toast.desc.failed": "Se produjo un error desconocido al intentar instalar la modificación. Esto puede ser culpa del autor de la modificación, y también puede ser culpa de Viper.",
 
+	"gui.running": "Ejecutándose",
+	
 	"viper.menu.main": "Viper",
 	"viper.menu.release": "Notas de la versión",
 	"viper.menu.info": "Extras",
@@ -144,7 +150,11 @@
 	"general.mods.enabled": "Modificaciones habilitadas:",
 	"general.mods.disabled": "Modificaciones deshabilitadas:",
 	"general.mods.installed": "Modificiaciones intaladas:",
-	"general.missingpath": "¡La ruta del jueno no se ha podido encontrar automaticamente! ¡Por favor, elige la ruta manualmente!",
+	"general.missingpath": "¡La ruta del jueno no se ha podido encontrar automáticamente! ¡Por favor, elige la ruta manualmente!",
 	"general.notinstalled": "¡Northstar no se ha instalado!",
 	"general.launching": "Ejecutando"
+	
+	"wine.invalidprefix": "El prefijo seleccionado de Wine no existe, y por ende es inválido.",
+	"wine.originnotfound": "Origin no pudo ser encontrado en el prefijo de Wine seleccionado.",
+	"wine.cantfindprefix": "Viper no logró encontrar y establecer automáticamente el prefijo de Wine",
 }
