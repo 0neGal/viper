@@ -10,12 +10,14 @@ let shouldInstallNorthstar = false;
 var settings = {
 	nsargs: "",
 	gamepath: "",
+	wineprefix: "",
 	nsupdate: true,
 	autolang: true,
 	forcedlang: "en",
 	autoupdate: true,
 	zip: "/northstar.zip",
 	lang: navigator.language,
+	winebin: "/usr/bin/wine64",
 	excludes: [
 		"ns_startup_args.txt",
 		"ns_startup_args_dedi.txt"
@@ -106,6 +108,20 @@ function setButtons(state) {
 }
 
 ipcRenderer.on("setbuttons", (event, state) => {setButtons(state)})
+
+ipcRenderer.on("gamestate", (event, state) => {
+	setButtons(! state);
+
+	let string = lang("gui.launch");
+	if (state) {
+		string = lang("gui.running");
+	}
+
+	let btns = document.querySelectorAll(".playBtnContainer .playBtn");
+	btns[0].innerHTML = string;
+	btns[1].innerHTML = string;
+})
+
 ipcRenderer.on("gamepathlost", (event, state) => {
 	page(0);
 	setButtons(false);

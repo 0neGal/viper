@@ -8,8 +8,8 @@ const events = new Emitter();
 
 const cli = require("./cli");
 const lang = require("./lang");
+const find = require("./extras/find");
 const requests = require("./extras/requests");
-const findgame = require("./extras/findgame");
 
 const unzip = require("unzipper");
 const run = require("child_process").spawn;
@@ -26,10 +26,12 @@ var settings = {
 	lang: "en-US",
 	nsupdate: true,
 	autolang: true,
+	wineprefix: "",
 	forcedlang: "en",
 	autoupdate: true,
 	nsargs: "-multiple",
 	zip: "/northstar.zip",
+	winebin: "/usr/bin/wine64",
 
 	// These files won't be overwritten when installing/updating
 	// Northstar, useful for config files
@@ -170,7 +172,7 @@ async function setpath(win, forcedialog) {
 				ipcMain.emit("newpath", null, settings.gamepath);
 			}
 
-			let gamepath = await findgame();
+			let gamepath = await find.game();
 			if (gamepath) {
 				setGamepath(gamepath);
 				return;
@@ -378,22 +380,72 @@ function updatevp(autoinstall) {
 // Either Northstar or Vanilla. Linux support is not currently a thing,
 // however it'll be added at some point.
 function launch(version) {
-	if (process.platform == "linux") {
-		console.error("error:", lang("cli.launch.linuxerror"))
-		cli.exit(1);
+	let cwd = process.cwd();
+	let prefix = {
+		path: settings.wineprefix,
+		origin: path.join(settings.wineprefix, "/drive_c/Program Files (x86)/Origin/Origin.exe")
 	}
 
 	process.chdir(settings.gamepath);
+
+	let winebin = settings.winebin;
+
+	if (process.platform != "win32") {
+		if (winebin == "/usr/bin/wine64") {
+			let proton = find.proton();
+			if (proton) {winebin = proton}
+		}
+
+		if (prefix.path == "") {
+			let foundprefix = find.prefix();
+			if (foundprefix) {
+				prefix = foundprefix;
+			} else {
+				winAlert(lang("wine.cantfindprefix"));
+				return false;
+			}
+		} else {
+
+		}
+
+		if (! fs.existsSync(prefix.path)) {
+			winAlert(lang("wine.invalidprefix") + "\n\n" + prefix.path);
+			return false;
+		} else {
+			process.env["WINEPREFIX"] = prefix.path;
+		}
+	}
+
 	switch(version) {
 		case "vanilla":
 			console.log(lang("general.launching"), "Vanilla...")
-			run(path.join(settings.gamepath + "/Titanfall2.exe"))
+
+			if (process.platform != "win32") {
+				run(winebin, [path.join(settings.gamepath + "/Titanfall2.exe")])
+			} else {
+				run(path.join(settings.gamepath + "/Titanfall2.exe"))
+			}
+
 			break;
 		default:
 			console.log(lang("general.launching"), "Northstar...")
-			run(path.join(settings.gamepath + "/NorthstarLauncher.exe"))
+
+			if (process.platform != "win32") {
+				if (! fs.existsSync(prefix.origin)) {
+					winAlert(lang("wine.originnotfound") + "\n\n" + prefix.origin);
+					return false;
+				}
+
+				run(winebin, [prefix.origin])
+				run(winebin, [path.join(settings.gamepath + "/NorthstarLauncher.exe")])
+			} else {
+				run(path.join(settings.gamepath + "/Titanfall2.exe"), ["-northstar"])
+			}
+
 			break;
 	}
+
+	process.chdir(cwd);
 }
 
 // Returns true/false depending on if the gamepath currently exists/is
@@ -797,7 +849,7 @@ const mods = {
 	}
 };
 
-setInterval(() => {
+setInterval(async () => {
 	if (gamepathExists()) {
 		ipcMain.emit("guigetmods");
 	} else {
@@ -806,6 +858,12 @@ setInterval(() => {
 				ipcMain.emit("gamepathlost");
 			}
 		}
+	}
+
+	if (await isGameRunning()) {
+		ipcMain.emit("gamestarted");
+	} else {
+		ipcMain.emit("gamestopped");
 	}
 }, 1500)
 
