@@ -41,8 +41,10 @@ function start() {
 	win.removeMenu();
 	win.loadFile(__dirname + "/app/index.html");
 
+
 	ipcMain.on("exit", () => {process.exit(0)})
 	ipcMain.on("minimize", () => {win.minimize()})
+	ipcMain.on("relaunch", () => {app.relaunch();app.exit()})
 	ipcMain.on("installfrompath", (event, path) => {utils.mods.install(path)})
 	ipcMain.on("installfromurl", (event, url) => {utils.mods.installFromURL(url)})
 	ipcMain.on("winLog", (event, ...args) => {win.webContents.send("log", ...args)});

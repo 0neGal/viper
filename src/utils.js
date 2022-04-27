@@ -18,6 +18,8 @@ const { https } = require("follow-redirects");
 
 process.chdir(app.getPath("appData"));
 
+var invalidsettings = false;
+
 // Base settings
 var settings = {
 	gamepath: "",
@@ -37,9 +39,29 @@ var settings = {
 	]
 }
 
+// Logs into the dev tools of the renderer
+function winLog(msg) {
+	ipcMain.emit("winLog", msg, msg);
+}
+
+// Sends an alert to the renderer
+function winAlert(msg) {
+	ipcMain.emit("winAlert", msg, msg);
+}
+
 // Creates the settings file with the base settings if it doesn't exist.
 if (fs.existsSync("viper.json")) {
-	settings = {...settings, ...JSON.parse(fs.readFileSync("viper.json", "utf8"))};
+	let conf = fs.readFileSync("viper.json", "utf8");
+	let json = "{}";
+
+	// Validates viper.json
+	try {
+		json = JSON.parse(conf);
+	}catch (e) {
+		invalidsettings = true;
+	}
+
+	settings = {...settings, ...json};
 	settings.zip = path.join(settings.gamepath + "/northstar.zip");
 
 	let args = path.join(settings.gamepath, "ns_startup_args.txt");
@@ -183,6 +205,8 @@ async function setpath(win, forcedialog) {
 // You can also pass a settings object to the function and it'll try and
 // merge it together with the already existing settings
 function saveSettings(obj = {}) {
+	if (invalidsettings) {return false}
+
 	settings = {...settings, ...obj};
 
 	if (fs.existsSync(settings.gamepath)) {
@@ -370,16 +394,6 @@ function launch(version) {
 			run(path.join(settings.gamepath + "/NorthstarLauncher.exe"))
 			break;
 	}
-}
-
-// Logs into the dev tools of the renderer
-function winLog(msg) {
-	ipcMain.emit("winLog", msg, msg);
-}
-
-// Sends an alert to the renderer
-function winAlert(msg) {
-	ipcMain.emit("winAlert", msg, msg);
 }
 
 // Returns true/false depending on if the gamepath currently exists/is

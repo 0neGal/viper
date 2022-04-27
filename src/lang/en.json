@@ -145,5 +145,7 @@
 	"general.mods.installed": "Installed mods:",
 	"general.missingpath": "Game location could not be found automatically! Please select it manually!",
 	"general.notinstalled": "Northstar is not installed!",
-	"general.launching": "Launching"
+	"general.launching": "Launching",
+	"general.reset": "Reset",
+	"general.invalidconfig": "Your config file is improperly formatted, if it's been manually edited, please validate that everything is typed correctly.\n\nIf you did not manually edit the config file, it is recommended to simply reset the config.\n\nTo reset your config file simply click \"Ok\" below.\n\nMore details:\n"
 }

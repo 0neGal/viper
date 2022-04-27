@@ -5,12 +5,23 @@ let lang = "";
 var langObj = {};
 
 
-function _loadTranslation() {
+function _loadTranslation(forcedlang) {
 	if (fs.existsSync("viper.json")) {
-		opts = JSON.parse(fs.readFileSync("viper.json", "utf8"));
+		// Validate viper.json
+		let opts = {
+			lang: "en",
+			autolang: true,
+		}
+
+		try {
+			opts = JSON.parse(fs.readFileSync("viper.json", "utf8"));
+		}catch (e) {}
+
 		lang = opts.lang;
 
 		if (! lang) {lang = "en"}
+
+		if (forcedlang) {lang = forcedlang}
 
 		if (opts.autolang == false) {
 			lang = opts.forcedlang;
@@ -32,9 +43,14 @@ function _loadTranslation() {
 }
 
 
-module.exports = (string) => {
-	if (lang === "")
+module.exports = (string, forcedlang) => {
+	if (lang === "") {
 		_loadTranslation();
+	}
+	 
+	if (forcedlang) {
+		_loadTranslation(forcedlang);
+	}
 
 	if (langObj[string]) {
 		return langObj[string];

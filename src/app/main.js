@@ -27,7 +27,24 @@ ipcRenderer.send("setlang", settings.lang);
 
 // Loads the settings
 if (fs.existsSync("viper.json")) {
-	settings = {...settings, ...JSON.parse(fs.readFileSync("viper.json", "utf8"))};
+	let conf = fs.readFileSync("viper.json", "utf8");
+	let json = {};
+
+	// Validates viper.json
+	try {
+		json = JSON.parse(conf);
+	}catch (e) {
+		let reset = confirm(lang("general.invalidconfig", navigator.language) + e);
+		if (! reset) {
+			ipcRenderer.send("exit")
+		} else {
+			fs.writeFileSync("viper.json", "{}")
+			ipcRenderer.send("relaunch");
+		}
+		
+	}
+
+	settings = {...settings, ...json};
 	settings.zip = path.join(settings.gamepath + "/northstar.zip");
 
 	if (settings.gamepath.length === 0) {
