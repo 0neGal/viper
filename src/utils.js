@@ -542,7 +542,12 @@ const mods = {
 			},
 			toggle: (mod) => {
 				let data = require(file);
-				data[mod] = ! data[mod];
+				if (data[mod] != undefined) {
+					data[mod] = ! data[mod];
+				} else {
+					data[mod] = false;
+				}
+
 				fs.writeFileSync(file, JSON.stringify(data));
 			},
 			get: (mod) => {
@@ -796,8 +801,6 @@ const mods = {
 	// you checked for if a mod is already disable and if not run the
 	// function. However we currently have no need for that.
 	toggle: (mod, fork) => {
-		let modpath = path.join(settings.gamepath, "R2Northstar/mods");
-
 		if (getNSVersion() == "unknown") {
 			winLog(lang("general.notinstalled"))
 			console.log("error: " + lang("general.notinstalled"))
@@ -816,27 +819,7 @@ const mods = {
 			return
 		}
 
-		let disabled = path.join(modpath, "disabled");
-		if (! fs.existsSync(disabled)) {
-			fs.mkdirSync(disabled)
-		}
-
-		let modName = mods.get(mod).FolderName;
-		if (! modName) {
-			console.log("error: " + lang("cli.mods.cantfind"))
-			cli.exit(1);
-			return;
-		}
-
-		let modPath = path.join(modpath, modName);
-		let dest = path.join(disabled, modName);
-
-		if (mods.get(mod).Disabled) {
-			modPath = path.join(disabled, modName);
-			dest = path.join(modpath, modName);
-		}
-
-		fs.moveSync(modPath, dest)
+		mods.modfile().toggle(mod);
 		if (! fork) {
 			console.log(lang("cli.mods.toggled"));
 			cli.exit();
@@ -845,7 +828,6 @@ const mods = {
 	}
 };
 
-console.log(mods.list())
 setInterval(() => {
 	if (gamepathExists()) {
 		ipcMain.emit("guigetmods");
