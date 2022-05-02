@@ -539,10 +539,20 @@ const mods = {
 
 				fs.writeFileSync(file, JSON.stringify(names))
 			},
+			disable: (mod) => {
+				let data = require(file);
+				data[mod] = false;
+				fs.writeFileSync(file, JSON.stringify(data));
+			},
+			enable: (mod) => {
+				let data = require(file);
+				data[mod] = true;
+				fs.writeFileSync(file, JSON.stringify(data));
+			},
 			toggle: (mod) => {
 				let data = require(file);
-				data[mod] = !data[mod];
-				console.log(data)
+				data[mod] = ! data[mod];
+				fs.writeFileSync(file, JSON.stringify(data));
 			},
 			get: () => {
 				let enabled = [];
@@ -901,8 +911,7 @@ const mods = {
 	}
 };
 
-mods.modfile().gen();
-console.log(mods.modfile().toggle("EladNLG.HUDRevamp"))
+console.log(mods.list())
 setInterval(() => {
 	if (gamepathExists()) {
 		ipcMain.emit("guigetmods");
