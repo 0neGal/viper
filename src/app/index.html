@@ -10,15 +10,121 @@
 		<div id="toasts"></div>
 
 		<div id="winbtns">
+			<div id="settings" onclick="Settings.toggle(true)"></div>
 			<div id="minimize" onclick="ipcRenderer.send('minimize')"></div>
 			<div id="close" onclick="ipcRenderer.send('exit')"></div>
 		</div>
 
+		<div id="dragUI">
+			<div id="dragitems">
+				<div id="icon"></div>
+				<div id="text">%%gui.mods.dragdrop%%</div>
+			</div>
+		</div>
 
-		<div id="overlay" onclick="Browser.toggle(false)"></div>
-		<div id="browser">
-			<div id="misc">
+		<div id="overlay" onclick="Browser.toggle(false);Settings.toggle(false)"></div>
+		<div class="popup" id="options">
+			<div class="misc">
+				<div style="width:100%"></div>
+				<button id="apply" onclick="Settings.toggle(false);Settings.apply()">
+					<img src="icons/apply.png">
+					%%gui.settings.save%%
+				</button>
+				<button id="close" onclick="Settings.toggle(false);Settings.load()">
+					<img src="icons/close.png">
+					%%gui.settings.discard%%
+				</button>
+			</div>
+			<div class="options">
+				<h2>%%gui.settings.title.ns%%</h2>
+				<div class="option" name="nsargs">
+					<div class="text">
+						%%gui.settings.nsargs.title%%
+						<div class="desc">
+							%%gui.settings.nsargs.desc%%
+						</div>
+					</div>
+					<div class="actions">
+						<input>
+					</div>
+				</div>
+				<h2>%%gui.settings.title.language%%</h2>
+				<div class="option" name="autolang">
+					<div class="text">
+						%%gui.settings.autolang.title%%
+						<div class="desc">
+							%%gui.settings.autolang.desc%%
+						</div>
+					</div>
+					<div class="actions">
+						<button class="switch off"></button>
+					</div>
+				</div>
+				<div class="option" name="forcedlang">
+					<div class="text">
+						%%gui.settings.forcedlang.title%%
+						<div class="desc">
+							%%gui.settings.forcedlang.desc%%
+						</div>
+					</div>
+					<div class="actions">
+						<select onchange="Settings.switch(document.querySelector(`.option[name='autolang'] button`), false)">
+							<option></option>
+						</select>
+					</div>
+				</div>
+				<h2>%%gui.settings.title.updates%%</h2>
+				<div class="option" name="autoupdate">
+					<div class="text">
+						%%gui.settings.autoupdate.title%%
+						<div class="desc">
+							%%gui.settings.autoupdate.desc%%
+						</div>
+					</div>
+					<div class="actions">
+						<button class="switch on"></button>
+					</div>
+				</div>
+				<div class="option" name="nsupdate">
+					<div class="text">
+						%%gui.settings.nsupdate.title%%
+						<div class="desc">
+							%%gui.settings.nsupdate.desc%%
+						</div>
+					</div>
+					<div class="actions">
+						<button class="switch on"></button>
+					</div>
+				</div>
+				<div class="option" name="excludes" type="array">
+					<div class="text">
+						%%gui.settings.excludes.title%%
+						<div class="desc">
+							%%gui.settings.excludes.desc%%
+						</div>
+					</div>
+					<div class="actions">
+						<input type="text">
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="popup" id="browser">
+			<div class="overlay" id="filters">
+				<div class="checks">
+					<div class="check checked" value="Mods">%%gui.browser.filter.mods%%</div>
+					<div class="check checked" value="Skins">%%gui.browser.filter.skins%%</div>
+					<div class="check checked" value="Client-side">%%gui.browser.filter.client%%</div>
+					<div class="check" value="Server-side">%%gui.browser.filter.server%%</div>
+				</div>
+			</div>
+
+			<div class="misc">
 				<input id="search" placeholder="%%gui.browser.search%%">
+				<button id="filter" onclick="Browser.filters.toggle()">
+					<img src="icons/filter.png">
+				</button>
 				<button id="close" onclick="Browser.toggle(false)">
 					<img src="icons/close.png">
 				</button>
@@ -94,7 +200,7 @@
 								<button id="togglemod" onclick="selected().toggle()">%%gui.mods.toggle%%</button>
 								<button id="toggleall" onclick="selected(true).toggle(true)">%%gui.mods.toggleall%%</button>
 								<button id="installmod" onclick="installmod()">%%gui.mods.install%%</button>
-								<button id="installmod" onclick="Browser.toggle(true)">%%gui.mods.find%%</button>
+								<button id="findmod" onclick="Browser.toggle(true)">%%gui.mods.find%%</button>
 							</div>
 						</div>
 					</div>
@@ -120,6 +226,7 @@
 		<script src="main.js"></script>
 		<script src="toast.js"></script>
 		<script src="browser.js"></script>
+		<script src="settings.js"></script>
 		<script src="launcher.js"></script>
 	</body>
 </html>

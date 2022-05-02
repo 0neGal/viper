@@ -1,4 +1,6 @@
 {
+	"lang.title": "Spanish - Español",
+
 	"cli.help.help": "muestra este mensaje de ayuda",
 	"cli.help.debug": "habre las herramientas de desarrollador/depuración ",
 	"cli.help.version": "muestra la información de la versión",
@@ -6,11 +8,14 @@
 	"cli.help.update": "actualiza Northstar desde la ruta de juego establecida",
 	"cli.help.setpath": "establece la ruta del juego",
 	"cli.help.updatevp": "actualiza Viper si es soportado",
+	"cli.help.novpupdates": "sobrescribe viper.json y deshabilita las actualizaciones de Viper",
 	"cli.help.installmod": "instala una modificación, desde una carpeta o zip",
 	"cli.help.removemod": "remueve una modificación",
 	"cli.help.togglemod": "alterna el estado de la modificación",
 
 	"cli.setpath.noarg": "No se ha proporcionado ningún argumento para --setpath",
+	
+	"cli.gamepath.lost": "El directorio del juego no fue encontrado, ¡asegúrate de que esté montado!",
 
 	"cli.update.current": "Versión actual:",
 	"cli.update.downloading": "Descargando...",
@@ -62,6 +67,7 @@
 	"gui.mods.extracting": "Extrayendo modificación...",
 	"gui.mods.installing": "Instalando modificación...",
 	"gui.mods.installedmod": "¡Modificación instalada!",
+	"gui.mods.dragdrop": "Arrastra y suelta una modificación para instalarla",
 
 	"gui.browser.info": "Información",
 	"gui.browser.madeby": "por",
@@ -71,6 +77,29 @@
 	"gui.browser.reinstall": "Re-Instalar",
 	"gui.browser.loading": "Cargando modificaciones...",
 	"gui.browser.endoflist": "Se ha cargado el máximo de paquetes.<br>¡Usa la búsqueda para encontrar otros paquetes!",
+	"gui.browser.noresults": "Sin resultados...",
+	"gui.browser.filter.mods": "Modificaciones",
+	"gui.browser.filter.skins": "Skins",
+	"gui.browser.filter.client": "Del lado del cliente",
+	"gui.browser.filter.server": "Del lado del servidor",
+	
+	"gui.settings.save": "Guardar",
+	"gui.settings.discard": "Descartar",
+	"gui.settings.title.ns": "Northstar",
+	"gui.settings.title.updates": "Actualizaciones",
+	"gui.settings.nsargs.title": "Opciones de lanzamiento",
+	"gui.settings.nsargs.desc": "Aqui puedes añadir opciones de lanzamiento para Northstar/Titanfall.",
+	"gui.settings.autoupdate.title": "Actualizaciones automáticas de Viper",
+	"gui.settings.autoupdate.desc": "Viper se mantendrá automáticamente actualizado.",
+	"gui.settings.nsupdate.title": "Actualizaciones automáticas de Northstar",
+	"gui.settings.nsupdate.desc": "Viper mantendrá Northstar actualizado automáticamente, sin embargo, todavía se puede actualizar manualmente a través de la sección de Northstar.",
+	"gui.settings.excludes.title": "Conservar archivos en la actualización",
+	"gui.settings.excludes.desc": "Cuando se actualice Northstar, los archivos especificados aquí no se sobrescribirán con archivos de la nueva actualización de Northstar. A menos que sepa lo que está cambiando, probablemente no debería cambiar nada aquí. Cada archivo se debe separar con un espacio.",
+	"gui.settings.title.language": "Idioma",
+	"gui.settings.autolang.title": "Detectar automáticamente el idioma",
+	"gui.settings.autolang.desc": "Cuando está habilitado, Viper intenta detectar automáticamente el idioma de su sistema, cuando está deshabilitado, puede cambiar manualmente el idioma a continuación.",
+	"gui.settings.forcedlang.title": "Idioma",
+	"gui.settings.forcedlang.desc": "Cuando \"Detectar automáticamente el idioma\" está deshabilitado, ésta opción decidirá el lenguaje. Se necesita reiniciar para que surja efecto.",
 	
 	"gui.update.downloading": "Descargando...",
 	"gui.update.extracting": "Extrayendo actualización...",
@@ -89,6 +118,7 @@
 	"gui.selectpath": "Por favor, ¡elija la ruta del juego!",
 	"gui.gamepath.must": "La ruta del juego debe establecerse para ejecutar Viper.",
 	"gui.gamepath.wrong": "Esta carpeta no es una ruta válida para el juego.",
+	"gui.gamepath.lost": "¡El directorio del juego ya no existe/no se puede encontrar!\n\nAsegúrate de que tu unidad esté instalada correctamente o, si cambiaste la ubicación del juego, actualiza la ruta del juego.\n\nViper puede no funcionar correctamente hasta el próximo reinicio!",
 	
 	"gui.toast.title.installed": "¡Modificación instalada!",
 	"gui.toast.title.failed": "¡Falló al instalar!",

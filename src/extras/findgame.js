@@ -31,32 +31,50 @@ module.exports = async () => {
 		// Parse read_data
 		data = vdf.parse(data);
 
+		let values = Object.values(data["libraryfolders"]);
+		if (typeof values[values.length - 1] != "object") {
+			values.pop(1);
+		}
+		
 		// `.length - 1` This is because the last value is `contentstatsid`
-		for (let pathIterator = 0; pathIterator < Object.values(data["libraryfolders"]).length - 1; pathIterator++) {
-			let data_array = Object.values(data["libraryfolders"][pathIterator])
+		for (let i = 0; i < values.length; i++) {
+			let data_array = Object.values(values[i])
 			
 			if (fs.existsSync(data_array[0] + "/steamapps/common/Titanfall2/Titanfall2.exe")) {
+				console.log("Found game in:", data_array[0])
 				return data_array[0] + "/steamapps/common/Titanfall2";
+			} else {
+				console.log("Game not in:", data_array[0])
 			}
 		}
 	}
 
-	let folder = null;
+	let folders = [];
 	switch (process.platform) {
 		case "win32":
-			folder = "C:\\Program Files (x86)\\Steam\\steamapps\\libraryfolders.vdf";
+			folders = ["C:\\Program Files (x86)\\Steam\\steamapps\\libraryfolders.vdf"];
 			break
 		case "linux":
 		case "openbsd":
 		case "freebsd":
-			folder = path.join(app.getPath("home"), "/.steam/steam/steamapps/libraryfolders.vdf");
+			let home = app.getPath("home");
+			folders = [
+				path.join(home, "/.steam/steam/steamapps/libraryfolders.vdf"),
+				path.join(home, ".var/app/com.valvesoftware.Steam/.steam/steam/steamapps/libraryfolders.vdf"),
+				path.join(home, ".var/app/com.valvesoftware.Steam/.local/share/Steam/steamapps/libraryfolders.vdf")
+			]
 			break
 	}
 
-	if (fs.existsSync(folder) && folder) {
-		let data = fs.readFileSync(folder)
-		let read_vdf = readvdf(data.toString())
-		if (read_vdf ) {return read_vdf}
+	if (folders.length > 0) {
+		for (let i = 0; i < folders.length; i++) {
+			if (! fs.existsSync(folders[i])) {continue}
+			console.log("Searching VDF file at:", folders[i])
+
+			let data = fs.readFileSync(folders[i])
+			let read_vdf = readvdf(data.toString())
+			if (read_vdf) {return read_vdf}
+		}
 	}
 
 	if (gamepath) {

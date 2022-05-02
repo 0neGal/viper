@@ -11,7 +11,7 @@ function Toast(properties) {
 	switch(toast.scheme) {
 		case "error":
 			toast.fg = "#FFFFFF";
-			toast.bg = "var(--red)";
+			toast.bg = "rgb(var(--red))";
 			break
 		case "success":
 			toast.fg = "#FFFFFF";

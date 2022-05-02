@@ -18,25 +18,56 @@ const { https } = require("follow-redirects");
 
 process.chdir(app.getPath("appData"));
 
+var invalidsettings = false;
+
 // Base settings
 var settings = {
 	gamepath: "",
 	lang: "en-US",
+	nsupdate: true,
+	autolang: true,
+	forcedlang: "en",
 	autoupdate: true,
+	nsargs: "-multiple",
 	zip: "/northstar.zip",
 
 	// These files won't be overwritten when installing/updating
-	// Northstar, useful for config file.
+	// Northstar, useful for config files
 	excludes: [
 		"ns_startup_args.txt",
 		"ns_startup_args_dedi.txt"
 	]
 }
 
+// Logs into the dev tools of the renderer
+function winLog(msg) {
+	ipcMain.emit("winLog", msg, msg);
+}
+
+// Sends an alert to the renderer
+function winAlert(msg) {
+	ipcMain.emit("winAlert", msg, msg);
+}
+
 // Creates the settings file with the base settings if it doesn't exist.
 if (fs.existsSync("viper.json")) {
-	settings = {...settings, ...JSON.parse(fs.readFileSync("viper.json", "utf8"))};
+	let conf = fs.readFileSync("viper.json", "utf8");
+	let json = "{}";
+
+	// Validates viper.json
+	try {
+		json = JSON.parse(conf);
+	}catch (e) {
+		invalidsettings = true;
+	}
+
+	settings = {...settings, ...json};
 	settings.zip = path.join(settings.gamepath + "/northstar.zip");
+
+	let args = path.join(settings.gamepath, "ns_startup_args.txt");
+	if (fs.existsSync(args)) {
+		settings.nsargs = fs.readFileSync(args, "utf8");
+	}
 } else {
 	console.log(lang("general.missingpath"));
 }
@@ -73,9 +104,9 @@ async function isGameRunning() {
 //
 // It uses isGameRunning() to ensure it doesn't run while the game is
 // running, as that may have all kinds of issues.
-northstar_auto_updates: {
-	if (!settings.autoupdate || !fs.existsSync("viper.json") || settings.gamepath.length === 0) {
-		break northstar_auto_updates;
+function handleNorthstarUpdating() {
+	if (! settings.nsupdate || ! fs.existsSync("viper.json") || settings.gamepath.length === 0) {
+		return;
 	}
 
 	async function _checkForUpdates() {
@@ -170,8 +201,19 @@ async function setpath(win, forcedialog) {
 // As to not have to do the same one liner a million times, this
 // function exists, as the name suggests, it simply writes the current
 // settings to the disk.
-function saveSettings() {
-	fs.writeFileSync(app.getPath("appData") + "/viper.json", JSON.stringify(settings));
+//
+// You can also pass a settings object to the function and it'll try and
+// merge it together with the already existing settings
+function saveSettings(obj = {}) {
+	if (invalidsettings) {return false}
+
+	settings = {...settings, ...obj};
+
+	if (fs.existsSync(settings.gamepath)) {
+		fs.writeFileSync(path.join(settings.gamepath, "ns_startup_args.txt"), settings.nsargs);
+	}
+
+	fs.writeFileSync(app.getPath("appData") + "/viper.json", JSON.stringify({...settings, ...obj}));
 }
 
 // Returns the current Northstar version
@@ -182,7 +224,10 @@ function getNSVersion() {
 	if (fs.existsSync(versionFilePath)) {
 		return fs.readFileSync(versionFilePath, "utf8");
 	} else {
-		fs.writeFileSync(versionFilePath, "unknown");
+		if (gamepathExists()) {
+			fs.writeFileSync(versionFilePath, "unknown");
+		}
+
 		return "unknown";
 	}
 }
@@ -225,6 +270,8 @@ restoreExcludedFiles();
 // <file>.excluded, then rename them back after the extraction. The
 // unzip module does not support excluding files directly.
 async function update() {
+	if (! gamepathExists()) {return}
+
 	ipcMain.emit("ns-update-event", "cli.update.checking");
 	console.log(lang("cli.update.checking"));
 	var version = getNSVersion();
@@ -237,6 +284,7 @@ async function update() {
 		console.log(lang("cli.update.uptodate"), version);
 
 		winLog(lang("gui.update.uptodate"));
+		cli.exit();
 		return;
 	} else {
 		if (version != "unknown") {
@@ -299,6 +347,13 @@ async function update() {
 function updatevp(autoinstall) {
 	const { autoUpdater } = require("electron-updater");
 
+	if (! autoUpdater.isUpdaterActive()) {
+		if (settings.nsupdate) {
+			handleNorthstarUpdating();
+		}
+		return cli.exit();
+	}
+
 	if (autoinstall) {
 		autoUpdater.on("update-downloaded", (info) => {
 			autoUpdater.quitAndInstall();
@@ -306,7 +361,14 @@ function updatevp(autoinstall) {
 	}
 
 	autoUpdater.on("error", (info) => {cli.exit(1)});
-	autoUpdater.on("update-not-available", (info) => {cli.exit()});
+	autoUpdater.on("update-not-available", (info) => {
+		// only check for NS updates if Viper itself has no updates and
+		// if NS auto updates is enabled.
+		if (settings.nsupdate || cli.hasArgs()) {
+			handleNorthstarUpdating();
+		}
+		cli.exit();
+	});
 
 	autoUpdater.checkForUpdatesAndNotify();
 }
@@ -334,14 +396,10 @@ function launch(version) {
 	}
 }
 
-// Logs into the dev tools of the renderer
-function winLog(msg) {
-	ipcMain.emit("winLog", msg, msg);
-}
-
-// Sends an alert to the renderer
-function winAlert(msg) {
-	ipcMain.emit("winAlert", msg, msg);
+// Returns true/false depending on if the gamepath currently exists/is
+// mounted, used to avoid issues...
+function gamepathExists() {
+	return fs.existsSync(settings.gamepath);
 }
 
 // Used to manage mods.
@@ -594,40 +652,44 @@ const mods = {
 			}
 
 			try {
-				fs.createReadStream(mod).pipe(unzip.Extract({path: cache}))
-				.on("finish", () => {
-					setTimeout(() => {
-						let manifest = path.join(cache, "manifest.json");
-						if (fs.existsSync(manifest)) {
-							files = fs.readdirSync(path.join(cache, "mods"));
-							if (fs.existsSync(path.join(cache, "mods/mod.json"))) {
-								if (mods.install(path.join(cache, "mods"), require(manifest).name, manifest, true)) {
-									return true;
-								}
-							} else {
-								for (let i = 0; i < files.length; i++) {
-									let mod = path.join(cache, "mods", files[i]);
-									if (fs.statSync(mod).isDirectory()) {
-										setTimeout(() => {
-											if (mods.install(mod, false, manifest)) {return true};
-										}, 1000)
+				if (mod.replace(/.*\./, "").toLowerCase() == "zip") {
+					fs.createReadStream(mod).pipe(unzip.Extract({path: cache}))
+					.on("finish", () => {
+						setTimeout(() => {
+							let manifest = path.join(cache, "manifest.json");
+							if (fs.existsSync(manifest)) {
+								files = fs.readdirSync(path.join(cache, "mods"));
+								if (fs.existsSync(path.join(cache, "mods/mod.json"))) {
+									if (mods.install(path.join(cache, "mods"), require(manifest).name, manifest, true)) {
+										return true;
+									}
+								} else {
+									for (let i = 0; i < files.length; i++) {
+										let mod = path.join(cache, "mods", files[i]);
+										if (fs.statSync(mod).isDirectory()) {
+											setTimeout(() => {
+												if (mods.install(mod, false, manifest)) {return true};
+											}, 1000)
+										}
+									}
+
+									if (files.length == 0) {
+										ipcMain.emit("failedmod");
+										return notamod();
 									}
 								}
 
-								if (files.length == 0) {
-									ipcMain.emit("failedmod");
-									return notamod();
-								}
+								return notamod();
 							}
 
-							return notamod();
-						}
-
-						if (mods.install(cache)) {
-							installed();
-						} else {return notamod()}
-					}, 1000)
-				});
+							if (mods.install(cache)) {
+								installed();
+							} else {return notamod()}
+						}, 1000)
+					});
+				} else {
+					return notamod();
+				}
 			}catch(err) {return notamod()}
 		}
 	},
@@ -787,7 +849,15 @@ const mods = {
 
 console.log(mods.modfile().get())
 setInterval(() => {
-	ipcMain.emit("guigetmods");
+	if (gamepathExists()) {
+		ipcMain.emit("guigetmods");
+	} else {
+		if (fs.existsSync("viper.json")) {
+			if (settings.gamepath != "") {
+				ipcMain.emit("gamepathlost");
+			}
+		}
+	}
 }, 1500)
 
 module.exports = {
@@ -799,9 +869,12 @@ module.exports = {
 	setpath,
 	updatevp,
 	settings,
+	saveSettings,
 	getNSVersion,
 	getTF2Version,
 	isGameRunning,
+	gamepathExists,
+	handleNorthstarUpdating,
 	setlang: (lang) => {
 		settings.lang = lang;
 		saveSettings();

@@ -8,7 +8,11 @@ let shouldInstallNorthstar = false;
 
 // Base settings
 var settings = {
+	nsargs: "",
 	gamepath: "",
+	nsupdate: true,
+	autolang: true,
+	forcedlang: "en",
 	autoupdate: true,
 	zip: "/northstar.zip",
 	lang: navigator.language,
@@ -23,13 +27,35 @@ ipcRenderer.send("setlang", settings.lang);
 
 // Loads the settings
 if (fs.existsSync("viper.json")) {
-	settings = {...settings, ...JSON.parse(fs.readFileSync("viper.json", "utf8"))};
+	let conf = fs.readFileSync("viper.json", "utf8");
+	let json = {};
+
+	// Validates viper.json
+	try {
+		json = JSON.parse(conf);
+	}catch (e) {
+		let reset = confirm(lang("general.invalidconfig", navigator.language) + e);
+		if (! reset) {
+			ipcRenderer.send("exit")
+		} else {
+			fs.writeFileSync("viper.json", "{}")
+			ipcRenderer.send("relaunch");
+		}
+		
+	}
+
+	settings = {...settings, ...json};
 	settings.zip = path.join(settings.gamepath + "/northstar.zip");
 
 	if (settings.gamepath.length === 0) {
 		setpath(false);
 	} else {
 		setpath(true);
+	}
+
+	let args = path.join(settings.gamepath, "ns_startup_args.txt");
+	if (fs.existsSync(args)) {
+		settings.nsargs = fs.readFileSync(args, "utf8");
 	}
 } else {
 	setpath();
@@ -74,14 +100,22 @@ function setButtons(state) {
 		}
 	}
 
+	disablearray(document.querySelectorAll(".playBtnContainer .playBtn"))
 	disablearray(document.querySelectorAll("#nsMods .buttons.modbtns button"))
 	disablearray(document.querySelectorAll("#browser #browserEntries .text button"))
 }
 
+ipcRenderer.on("setbuttons", (event, state) => {setButtons(state)})
+ipcRenderer.on("gamepathlost", (event, state) => {
+	page(0);
+	setButtons(false);
+	alert(lang("gui.gamepath.lost"));
+})
+
 // Frontend part of updating Northstar
 ipcRenderer.on("ns-update-event", (event, key) => {
 	document.getElementById("update").innerText = `(${lang(key)})`;
-	console.log(key);
+	console.log(lang(key));
 	switch(key) {
 		case "cli.update.uptodate.short":
 			setButtons(true);
@@ -156,10 +190,16 @@ function selected(all) {
 	}
 }
 
-// Tells the main process to install a mod
+// Tells the main process to install a mod through the file selector
 function installmod() {
 	setButtons(false);
 	ipcRenderer.send("installmod")
+}
+
+// Tells the main process to directly install a mod from this path
+function installFromPath(path) {
+	setButtons(false);
+	ipcRenderer.send("installfrompath", path)
 }
 
 // Tells the main process to install a mod from a URL
@@ -241,6 +281,38 @@ ipcRenderer.on("wrongpath", () => {
 });
 
 setlang();
+
+let dragtimer;
+document.addEventListener("dragover", (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+	dragUI.classList.add("shown");
+
+	clearTimeout(dragtimer);
+	dragtimer = setTimeout(() => {
+		dragUI.classList.remove("shown");
+	}, 5000)
+});
+
+document.addEventListener("mouseover", (e) => {
+	clearTimeout(dragtimer);
+	dragUI.classList.remove("shown");
+});
+
+document.addEventListener("drop", (e) => {
+    event.preventDefault();
+    event.stopPropagation();
+
+	dragUI.classList.remove("shown");
+	installFromPath(event.dataTransfer.files[0].path)
+});
+
+document.body.addEventListener("keyup", (e) => {
+	if (e.key == "Escape") {
+		Browser.toggle(false);
+		Settings.toggle(false);
+	}
+})
 
 document.body.addEventListener("click", event => {
 	if (event.target.tagName.toLowerCase() === "a" && event.target.protocol != "file:") {

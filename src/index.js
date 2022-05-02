@@ -41,8 +41,11 @@ function start() {
 	win.removeMenu();
 	win.loadFile(__dirname + "/app/index.html");
 
+
 	ipcMain.on("exit", () => {process.exit(0)})
 	ipcMain.on("minimize", () => {win.minimize()})
+	ipcMain.on("relaunch", () => {app.relaunch();app.exit()})
+	ipcMain.on("installfrompath", (event, path) => {utils.mods.install(path)})
 	ipcMain.on("installfromurl", (event, url) => {utils.mods.installFromURL(url)})
 	ipcMain.on("winLog", (event, ...args) => {win.webContents.send("log", ...args)});
 	ipcMain.on("winAlert", (event, ...args) => {win.webContents.send("alert", ...args)});
@@ -52,11 +55,35 @@ function start() {
 	ipcMain.on("installedmod", (event, modname) => {win.webContents.send("installedmod", modname)});
 	ipcMain.on("guigetmods", (event, ...args) => {win.webContents.send("mods", utils.mods.list())});
 
+	let gamepathlost = false;
+	ipcMain.on("gamepathlost", (event, ...args) => {
+		if (! gamepathlost) {
+			gamepathlost = true;
+			win.webContents.send("gamepathlost");
+		}
+	});
+
+	ipcMain.on("savesettings", (event, obj) => {utils.saveSettings(obj)})
+
+	ipcMain.on("can-autoupdate", (event) => {
+		if (! require("electron-updater").autoUpdater.isUpdaterActive() || cli.hasParam("no-vp-updates")) {
+			win.webContents.send("cant-autoupdate")
+		}
+	})
+
 	win.webContents.on("dom-ready", () => {
 		win.webContents.send("mods", utils.mods.list());
 	});
 
-	if (utils.settings.autoupdate) {utils.updatevp(false)}
+	if (utils.settings.autoupdate) {
+		if (cli.hasParam("no-vp-updates")) {
+			utils.handleNorthstarUpdating();
+		} else {
+			utils.updatevp(false)
+		}
+	} else {
+		utils.handleNorthstarUpdating();
+	}
 
 	autoUpdater.on("update-downloaded", () => {
 		win.webContents.send("updateavailable")
@@ -76,7 +103,11 @@ ipcMain.on("installmod", () => {
 		utils.mods.install(cli.param("installmod"))
 	} else {
 		dialog.showOpenDialog({properties: ["openFile"]}).then(res => {
-			utils.mods.install(res.filePaths[0]);
+			if (res.filePaths.length != 0) {
+				utils.mods.install(res.filePaths[0]);
+			} else {
+				win.webContents.send("setbuttons", true);
+			}
 		}).catch(err => {console.error(err)})
 	}
 })
