@@ -424,7 +424,7 @@ const mods = {
 			return false;
 		}
 
-		let mods = [];
+		let enabled = [];
 		let disabled = [];
 
 		if (! fs.existsSync(modpath)) {
@@ -439,50 +439,41 @@ const mods = {
 		files = fs.readdirSync(modpath)
 		files.forEach((file) => {
 			if (fs.statSync(path.join(modpath, file)).isDirectory()) {
-				if (fs.existsSync(path.join(modpath, file, "mod.json"))) {
-					try {
-						mods.push({...require(path.join(modpath, file, "mod.json")), FolderName: file, Disabled: false})
-					}catch(err) {
-						if (cli.hasArgs()) {console.log("error: " + lang("cli.mods.improperjson"), file)}
-						mods.push({Name: file, FolderName: file, Version: "unknown", Disabled: false})
+				let modjson = path.join(modpath, file, "mod.json");
+				if (fs.existsSync(modjson)) {
+					let mod = JSON.parse(repair(fs.readFileSync(modjson, "utf8")));
+
+					let obj = {
+						Version: "unknown",
+						Name: "unknown",
+						FolderName: file,
+					...mod}
+
+					obj.Disabled = ! mods.modfile().get(obj.Name);
+
+					let manifestfile = path.join(modpath, file, "manifest.json");
+					if (fs.existsSync(manifestfile)) {
+						let manifest = JSON.parse(repair(fs.readFileSync(manifestfile, "utf8")));
+
+						obj.ManifestName = manifest.name;
+						if (obj.Version == "unknown") {
+							obj.Version = manifest.version_number;
+						}
 					}
 
-					let manifest = path.join(modpath, file, "manifest.json");
-					if (fs.existsSync(manifest)) {
-						try {mods[mods.length - 1].ManifestName = require(manifest).name}catch(err){}
+					if (obj.Disabled) {
+						disabled.push(obj);
+					} else {
+						enabled.push(obj);
 					}
-				}
-			}
-		})
-
-		let disabledPath = path.join(modpath, "disabled")
-		if (! fs.existsSync(disabledPath)) {
-			fs.mkdirSync(disabledPath)
-		}
-
-		files = fs.readdirSync(disabledPath)
-		files.forEach((file) => {
-			if (fs.statSync(path.join(disabledPath, file)).isDirectory()) {
-				if (fs.existsSync(path.join(disabledPath, file, "mod.json"))) {
-					try {
-						disabled.push({...require(path.join(disabledPath, file, "mod.json")), FolderName: file, Disabled: true})
-					}catch(err) {
-						if (cli.hasArgs()) {console.log("error: " + lang("cli.mods.improperjson"), file)}
-						disabled.push({Name: file, FolderName: file, Version: "unknown", Disabled: true})
-					}
-				}
-
-				let manifest = path.join(modpath, file, "manifest.json");
-				if (fs.existsSync(manifest)) {
-					try {mods[mods.length - 1].ManifestName = require(manifest).name}catch(err){}
 				}
 			}
 		})
 
 		return {
-			enabled: mods,
+			enabled: enabled,
 			disabled: disabled,
-			all: [...mods, ...disabled]
+			all: [...enabled, ...disabled]
 		};
 	},
 
@@ -512,7 +503,7 @@ const mods = {
 
 		return false;
 	},
-  
+
 	// Manages the enabledmods.json file
 	//
 	// It can both return info about the file, but also toggle mods in
@@ -554,73 +545,16 @@ const mods = {
 				data[mod] = ! data[mod];
 				fs.writeFileSync(file, JSON.stringify(data));
 			},
-			get: () => {
-				let enabled = [];
-				let disabled = [];
+			get: (mod) => {
 				let data = require(file);
 				let names = Object.keys(data);
 
-				for (let i = 0; i < names.length; i++) {
-					let manifest;
-					let name = names[i];
-					let folder = "unknown";
-					let version = "unknown";
-
-					if (fs.existsSync(path.join(modpath, name))) {
-						folder = name;
-					} else {
-						let files = fs.readdirSync(modpath);
-						for (let ii = 0; ii < files.length; ii++) {
-							let mod = path.join(modpath, files[ii], "mod.json");
-							if (fs.existsSync(mod)) {
-								mod = JSON.parse(repair(fs.readFileSync(mod, "utf8")));
-
-								version = mod.Version;
-								if (mod.Name == name) {
-									folder = files[ii];
-									break
-								}
-							}
-
-						}
-					}
-
-					let manifestfile = path.join(modpath, folder, "manifest.json");
-					if (fs.existsSync(manifestfile)) {
-						manifest = JSON.parse(repair(fs.readFileSync(manifestfile, "utf8")));
-
-						if (version == "unknown" || version == "") {
-							if (manifest != false) {
-								console.log(name)
-								version = manifest.version_number;
-								console.log(version + name)
-							}
-						}
-					}
-
-					if (folder == "unknown") {continue}
-					console.log(manifest)
-
-					let obj = {
-						Name: name,
-						Version: version,
-						FolderName: folder,
-						Disabled: data[name]
-					}
-
-					if (manifest) {
-						obj = {...obj, ManifestName: manifest.name}
-					}
-
-					if (data[name]) {
-						enabled.push(obj);
-					} else {disabled.push(obj)}
-				}
-
-				return {
-					enabled: enabled,
-					disabled: disabled,
-					all: [...enabled, ...disabled]
+				if (data[mod]) {
+					return true;
+				} else if (data[mod] === false) {
+					return false;
+				} else {
+					return true;
 				}
 			}
 		};
