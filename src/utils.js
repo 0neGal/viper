@@ -12,6 +12,7 @@ const requests = require("./extras/requests");
 const findgame = require("./extras/findgame");
 
 const unzip = require("unzipper");
+const repair = require("jsonrepair");
 const run = require("child_process").spawn;
 const exec = require("child_process").exec;
 const { https } = require("follow-redirects");
@@ -512,11 +513,12 @@ const mods = {
 		return false;
 	},
   
-  // Manages the enabledmods.json file
-  //
+	// Manages the enabledmods.json file
+	//
 	// It can both return info about the file, but also toggle mods in
 	// it, generate the file itself, and so on.
 	modfile: () => {
+		let modpath = path.join(settings.gamepath, "R2Northstar/mods");
 		let file = path.join(modpath, "..", "enabledmods.json");
 
 		if (! fs.existsSync(modpath)) {
@@ -546,11 +548,63 @@ const mods = {
 				let enabled = [];
 				let disabled = [];
 				let data = require(file);
+				let names = Object.keys(data);
 
-				for (let i in data) {
-					if (data[i]) {
-						enabled.push(data[i])
-					} else {disabled.push(data[i])}
+				for (let i = 0; i < names.length; i++) {
+					let manifest;
+					let name = names[i];
+					let folder = "unknown";
+					let version = "unknown";
+
+					if (fs.existsSync(path.join(modpath, name))) {
+						folder = name;
+					} else {
+						let files = fs.readdirSync(modpath);
+						for (let ii = 0; ii < files.length; ii++) {
+							let mod = path.join(modpath, files[ii], "mod.json");
+							if (fs.existsSync(mod)) {
+								mod = JSON.parse(repair(fs.readFileSync(mod, "utf8")));
+
+								version = mod.Version;
+								if (mod.Name == name) {
+									folder = files[ii];
+									break
+								}
+							}
+
+						}
+					}
+
+					let manifestfile = path.join(modpath, folder, "manifest.json");
+					if (fs.existsSync(manifestfile)) {
+						manifest = JSON.parse(repair(fs.readFileSync(manifestfile, "utf8")));
+
+						if (version == "unknown" || version == "") {
+							if (manifest != false) {
+								console.log(name)
+								version = manifest.version_number;
+								console.log(version + name)
+							}
+						}
+					}
+
+					if (folder == "unknown") {continue}
+					console.log(manifest)
+
+					let obj = {
+						Name: name,
+						Version: version,
+						FolderName: folder,
+						Disabled: data[name]
+					}
+
+					if (manifest) {
+						obj = {...obj, ManifestName: manifest.name}
+					}
+
+					if (data[name]) {
+						enabled.push(obj);
+					} else {disabled.push(obj)}
 				}
 
 				return {
@@ -847,7 +901,8 @@ const mods = {
 	}
 };
 
-console.log(mods.modfile().get())
+mods.modfile().gen();
+console.log(mods.modfile().toggle("EladNLG.HUDRevamp"))
 setInterval(() => {
 	if (gamepathExists()) {
 		ipcMain.emit("guigetmods");
