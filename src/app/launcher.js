@@ -19,39 +19,32 @@ function page(page) {
 	bgHolder.setAttribute("bg", page);
 }; page(1)
 
+function formatRelease(notes) {
+	let content = "";
+
+	for (let release of notes) {
+		if (release.prerelease) {continue}
+		content += "# " + release.name + "\n\n"	+ release.body + "\n\n\n";
+	}
+
+	return markdown(content, {
+		breaks: true
+	});
+}
 
 // Updates the Viper release notes
 ipcRenderer.on("vp-notes", (event, response) => {
-	let content = "";
+	vpReleaseNotes.innerHTML = formatRelease(response);
+});
 
-	for (const release of response) {
-		if (release.prerelease) {continue}
-
-		content += "# " + release.name + "\n\n"
-			+ release.body.replaceAll("\r\n", "\n") + "\n\n\n";
-	}
-
-	vpReleaseNotes.innerHTML = markdown(content);
+// Updates the Northstar release notes
+ipcRenderer.on("ns-notes", (event, response) => {
+	nsRelease.innerHTML = formatRelease(response);
 });
 
 async function loadVpReleases() {
 	ipcRenderer.send("get-vp-notes");	
 }; loadVpReleases();
-
-
-// Updates the Northstar release notes
-ipcRenderer.on("ns-notes", (event, response) => {
-	let content = "";
-
-	for (let release of response) {
-		if (release.prerelease) {continue}
-
-		content += "# " + release.name + "\n\n"
-			+ release.body.replaceAll("\r\n", "\nhtmlbreak") + "\n\n\n";
-	}
-
-	nsRelease.innerHTML = markdown(content).replaceAll("htmlbreak", "<br>");
-});
 
 async function loadNsReleases() {
 	ipcRenderer.send("get-ns-notes");
