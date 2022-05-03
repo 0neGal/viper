@@ -52,6 +52,7 @@
 		"follow-redirects": "^1.14.8",
 		"fs-extra": "^10.0.0",
 		"fuse.js": "^6.5.3",
+		"jsonrepair": "^2.2.1",
 		"marked": "^4.0.10",
 		"marked-man": "^0.7.0",
 		"recursive-copy": "^2.0.13",

@@ -12,6 +12,7 @@ const requests = require("./extras/requests");
 const findgame = require("./extras/findgame");
 
 const unzip = require("unzipper");
+const repair = require("jsonrepair");
 const run = require("child_process").spawn;
 const exec = require("child_process").exec;
 const { https } = require("follow-redirects");
@@ -423,7 +424,7 @@ const mods = {
 			return false;
 		}
 
-		let mods = [];
+		let enabled = [];
 		let disabled = [];
 
 		if (! fs.existsSync(modpath)) {
@@ -438,50 +439,41 @@ const mods = {
 		files = fs.readdirSync(modpath)
 		files.forEach((file) => {
 			if (fs.statSync(path.join(modpath, file)).isDirectory()) {
-				if (fs.existsSync(path.join(modpath, file, "mod.json"))) {
-					try {
-						mods.push({...require(path.join(modpath, file, "mod.json")), FolderName: file, Disabled: false})
-					}catch(err) {
-						if (cli.hasArgs()) {console.log("error: " + lang("cli.mods.improperjson"), file)}
-						mods.push({Name: file, FolderName: file, Version: "unknown", Disabled: false})
+				let modjson = path.join(modpath, file, "mod.json");
+				if (fs.existsSync(modjson)) {
+					let mod = JSON.parse(repair(fs.readFileSync(modjson, "utf8")));
+
+					let obj = {
+						Version: "unknown",
+						Name: "unknown",
+						FolderName: file,
+					...mod}
+
+					obj.Disabled = ! mods.modfile().get(obj.Name);
+
+					let manifestfile = path.join(modpath, file, "manifest.json");
+					if (fs.existsSync(manifestfile)) {
+						let manifest = JSON.parse(repair(fs.readFileSync(manifestfile, "utf8")));
+
+						obj.ManifestName = manifest.name;
+						if (obj.Version == "unknown") {
+							obj.Version = manifest.version_number;
+						}
 					}
 
-					let manifest = path.join(modpath, file, "manifest.json");
-					if (fs.existsSync(manifest)) {
-						try {mods[mods.length - 1].ManifestName = require(manifest).name}catch(err){}
+					if (obj.Disabled) {
+						disabled.push(obj);
+					} else {
+						enabled.push(obj);
 					}
-				}
-			}
-		})
-
-		let disabledPath = path.join(modpath, "disabled")
-		if (! fs.existsSync(disabledPath)) {
-			fs.mkdirSync(disabledPath)
-		}
-
-		files = fs.readdirSync(disabledPath)
-		files.forEach((file) => {
-			if (fs.statSync(path.join(disabledPath, file)).isDirectory()) {
-				if (fs.existsSync(path.join(disabledPath, file, "mod.json"))) {
-					try {
-						disabled.push({...require(path.join(disabledPath, file, "mod.json")), FolderName: file, Disabled: true})
-					}catch(err) {
-						if (cli.hasArgs()) {console.log("error: " + lang("cli.mods.improperjson"), file)}
-						disabled.push({Name: file, FolderName: file, Version: "unknown", Disabled: true})
-					}
-				}
-
-				let manifest = path.join(modpath, file, "manifest.json");
-				if (fs.existsSync(manifest)) {
-					try {mods[mods.length - 1].ManifestName = require(manifest).name}catch(err){}
 				}
 			}
 		})
 
 		return {
-			enabled: mods,
+			enabled: enabled,
 			disabled: disabled,
-			all: [...mods, ...disabled]
+			all: [...enabled, ...disabled]
 		};
 	},
 
@@ -510,6 +502,67 @@ const mods = {
 		}
 
 		return false;
+	},
+
+	// Manages the enabledmods.json file
+	//
+	// It can both return info about the file, but also toggle mods in
+	// it, generate the file itself, and so on.
+	modfile: () => {
+		let modpath = path.join(settings.gamepath, "R2Northstar/mods");
+		let file = path.join(modpath, "..", "enabledmods.json");
+
+		if (! fs.existsSync(modpath)) {
+			fs.mkdirSync(path.join(modpath), {recursive: true})
+		}
+
+		if (! fs.existsSync(file)) {
+			fs.writeFileSync(file, "{}")
+		}
+
+		return {
+			gen: () => {
+				let names = {};
+				let list = mods.list().all;
+				for (let i = 0; i < list.length; i++) {
+					names[list[i].Name] = true
+				}
+
+				fs.writeFileSync(file, JSON.stringify(names))
+			},
+			disable: (mod) => {
+				let data = require(file);
+				data[mod] = false;
+				fs.writeFileSync(file, JSON.stringify(data));
+			},
+			enable: (mod) => {
+				let data = require(file);
+				data[mod] = true;
+				fs.writeFileSync(file, JSON.stringify(data));
+			},
+			toggle: (mod) => {
+				let data = require(file);
+				if (data[mod] != undefined) {
+					data[mod] = ! data[mod];
+				} else {
+					data[mod] = false;
+				}
+
+				fs.writeFileSync(file, JSON.stringify(data));
+			},
+			get: (mod) => {
+				let data = require(file);
+				let names = Object.keys(data);
+
+				if (data[mod]) {
+					return true;
+				} else if (data[mod] === false) {
+					return false;
+				} else {
+					return true;
+				}
+			}
+		};
 	},
 
 	// Installs mods from a file path
@@ -748,8 +801,6 @@ const mods = {
 	// you checked for if a mod is already disable and if not run the
 	// function. However we currently have no need for that.
 	toggle: (mod, fork) => {
-		let modpath = path.join(settings.gamepath, "R2Northstar/mods");
-
 		if (getNSVersion() == "unknown") {
 			winLog(lang("general.notinstalled"))
 			console.log("error: " + lang("general.notinstalled"))
@@ -768,27 +819,7 @@ const mods = {
 			return
 		}
 
-		let disabled = path.join(modpath, "disabled");
-		if (! fs.existsSync(disabled)) {
-			fs.mkdirSync(disabled)
-		}
-
-		let modName = mods.get(mod).FolderName;
-		if (! modName) {
-			console.log("error: " + lang("cli.mods.cantfind"))
-			cli.exit(1);
-			return;
-		}
-
-		let modPath = path.join(modpath, modName);
-		let dest = path.join(disabled, modName);
-
-		if (mods.get(mod).Disabled) {
-			modPath = path.join(disabled, modName);
-			dest = path.join(modpath, modName);
-		}
-
-		fs.moveSync(modPath, dest)
+		mods.modfile().toggle(mod);
 		if (! fork) {
 			console.log(lang("cli.mods.toggled"));
 			cli.exit();
