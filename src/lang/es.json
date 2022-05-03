@@ -145,5 +145,6 @@
 	"general.mods.installed": "Modificiaciones intaladas:",
 	"general.missingpath": "¡La ruta del jueno no se ha podido encontrar automaticamente! ¡Por favor, elige la ruta manualmente!",
 	"general.notinstalled": "¡Northstar no se ha instalado!",
-	"general.launching": "Ejecutando"
+	"general.launching": "Ejecutando",
+	"general.invalidconfig": "Su archivo de configuración está formateado de forma incorrecta, si ha sido editado manualmente, por favor valide que ha sido escrito correctamente. \n\nSi no ha editado manualmente el archivo de configuración, es recomendado que simplemente restaure la configuración. \n\nPara restaurar tu configuración simplemente de click en \"OK\" a continuación. \n\nMas detalles:\n"
 }

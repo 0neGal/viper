@@ -145,5 +145,6 @@
 	"general.mods.installed": "Mods installés :",
 	"general.missingpath": "Le chemin du client n'a pu être trouvé automatiquement, merci de le sélectionner manuellement.",
 	"general.notinstalled": "Northstar n'est pas installé !",
-	"general.launching": "Lancement"
+	"general.launching": "Lancement",
+	"general.invalidconfig": "Votre fichier de configuration n'est pas formaté correctement ; si vous l'avez manuellement édité, veuillez vérifier son contenu.\n\nSinon, il est recommandé de remettre la configuration à zéro.\n\nPour cela, cliquez sur le bouton \"Ok\" en-dessous de ce message.\n\nPlus d'informations :\n"
 }
