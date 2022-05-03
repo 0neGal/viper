@@ -428,7 +428,7 @@ const mods = {
 		let disabled = [];
 
 		if (! fs.existsSync(modpath)) {
-			fs.mkdirSync(path.join(modpath, "disabled"), {recursive: true})
+			fs.mkdirSync(path.join(modpath), {recursive: true})
 			return {
 				enabled: [],
 				disabled: [],
@@ -531,17 +531,17 @@ const mods = {
 				fs.writeFileSync(file, JSON.stringify(names))
 			},
 			disable: (mod) => {
-				let data = require(file);
+				let data = JSON.parse(repair(fs.readFileSync(file, "utf8")));
 				data[mod] = false;
 				fs.writeFileSync(file, JSON.stringify(data));
 			},
 			enable: (mod) => {
-				let data = require(file);
+				let data = JSON.parse(repair(fs.readFileSync(file, "utf8")));
 				data[mod] = true;
 				fs.writeFileSync(file, JSON.stringify(data));
 			},
 			toggle: (mod) => {
-				let data = require(file);
+				let data = JSON.parse(repair(fs.readFileSync(file, "utf8")));
 				if (data[mod] != undefined) {
 					data[mod] = ! data[mod];
 				} else {
@@ -551,7 +551,7 @@ const mods = {
 				fs.writeFileSync(file, JSON.stringify(data));
 			},
 			get: (mod) => {
-				let data = require(file);
+				let data = JSON.parse(repair(fs.readFileSync(file, "utf8")));
 				let names = Object.keys(data);
 
 				if (data[mod]) {
