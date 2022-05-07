@@ -1,6 +1,10 @@
 <p align="center">
 	<img src="src/assets/icons/512x512.png" width="200px"><br>
 	<a href="https://github.com/0neGal/viper/releases/download/v1.4.0/Viper-Setup-1.4.0.exe"><img src="assets/download.png" width="300px"></a><br>
+	<a href="https://github.com/0neGal/viper/releases"><img src="https://img.shields.io/github/v/release/0neGal/viper" alt="GitHub release (latest by date)"></a>
+	<img src="https://img.shields.io/github/downloads/0neGal/viper/latest/total" alt="GitHub release downloads (latest by date)"></img>
+	<img src="https://img.shields.io/github/downloads/0neGal/viper/total" alt="GitHub release (Total)"></img>
+	<br>
 	<a href="FAQ.md">FAQ</a> | 
 	<a href="https://github.com/0neGal/viper/releases">Releases</a><br>
 </p>
