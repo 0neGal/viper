@@ -69,6 +69,7 @@ Some of the existing launchers are listed below:
  * [Ronin](https://github.com/MindSwipe/ronin) - a CLI only updater
  * [laundmo's updater](https://github.com/laundmo/northstar-updater) - another CLI only updater
  * [VTOL](https://github.com/BigSpice/VTOL) - an updater and manager for mods, very feature rich
+ * [r2modman](https://github.com/ebkr/r2modmanPlus) - General purpose mod manager, which has support for Northstar
 
 ## Development
 
