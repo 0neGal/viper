@@ -171,7 +171,8 @@ function BrowserElFromObj(obj) {
 		download: pkg.download_url,
 		version: pkg.version_number,
 		categories: pkg.categories,
-		description: pkg.description
+		description: pkg.description,
+		dependencies: pkg.dependencies,
 	})
 }
 
@@ -240,7 +241,7 @@ function BrowserEl(properties) {
 			<div class="text">
 				<div class="title">${properties.title}</div>
 				<div class="description">${properties.description}</div>
-				<button class="install" onclick="installFromURL('${properties.download}')">${installstr}</button>
+				<button class="install" onclick='installFromURL("${properties.download}", ${JSON.stringify(properties.dependencies)}, true)'>${installstr}</button>
 				<button class="info" onclick="require('electron').shell.openExternal('${properties.url}')">${lang('gui.browser.info')}</button>
 				<button class="visual">${properties.version}</button>
 				<button class="visual">${lang("gui.browser.madeby")} ${properties.author}</button>
@@ -285,6 +286,11 @@ ipcRenderer.on("installedmod", (event, mod) => {
 		title: lang("gui.toast.title.installed"),
 		description: mod.name + " " + lang("gui.toast.desc.installed")
 	})
+
+	if (installqueue.length != 0) {
+		installFromURL("https://thunderstore.io/package/download/" + installqueue[0]);
+		installqueue.shift();
+	}
 })
 
 function normalize(items) {

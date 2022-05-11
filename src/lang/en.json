@@ -68,6 +68,7 @@
 	"gui.mods.installing": "Installing mod...",
 	"gui.mods.installedmod": "Installed mod!",
 	"gui.mods.dragdrop": "Drag and drop a mod to install",
+	"gui.mods.confirmdependencies": "This package has dependencies, shown below, clicking \"Ok\" will install the package and the dependencies.\n\n",
 
 	"gui.browser.info": "Info",
 	"gui.browser.madeby": "by",

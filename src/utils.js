@@ -720,14 +720,6 @@ const mods = {
 			let stream = fs.createWriteStream(modlocation);
 			res.pipe(stream);
 
-			// let received = 0;
-			// // Progress messages, we should probably switch this to
-			// // percentage instead of how much is downloaded.
-			// res.on("data", (chunk) => {
-			// 	received += chunk.length;
-			// 	ipcMain.emit("ns-update-event", lang("gui.update.downloading") + " " + (received / 1024 / 1024).toFixed(1) + "mb");
-			// })
-
 			stream.on("finish", () => {
 				stream.close();
 				mods.install(modlocation);
