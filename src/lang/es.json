@@ -68,6 +68,7 @@
 	"gui.mods.installing": "Instalando modificación...",
 	"gui.mods.installedmod": "¡Modificación instalada!",
 	"gui.mods.dragdrop": "Arrastra y suelta una modificación para instalarla",
+	"gui.mods.confirmdependencies": "Este paquete tiene dependencias, se muestran abajo. Presionar \"Ok\" instalará el paquete y las dependencias.\n\n",
 
 	"gui.browser.info": "Información",
 	"gui.browser.madeby": "por",
