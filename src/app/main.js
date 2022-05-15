@@ -190,6 +190,8 @@ function selected(all) {
 	}
 }
 
+let installqueue = [];
+
 // Tells the main process to install a mod through the file selector
 function installmod() {
 	setButtons(false);
@@ -203,9 +205,58 @@ function installFromPath(path) {
 }
 
 // Tells the main process to install a mod from a URL
-function installFromURL(url) {
+function installFromURL(url, dependencies, clearqueue) {
+	if (clearqueue) {installqueue = []};
+	console.log(installqueue)
+
+	let prettydepends = [];
+
+	if (dependencies) {
+		let newdepends = [];
+		for (let i = 0; i < dependencies.length; i++) {
+			let depend = dependencies[i].toLowerCase();
+			console.log(depend)
+			if (! depend.match(/northstar-northstar-.*/)) {
+				depend = dependencies[i].replaceAll("-", "/");
+				let pkg = depend.split("/");
+				if (! isModInstalled(pkg[1])) {
+					newdepends.push(depend);
+					prettydepends.push(`${pkg[1]} v${pkg[2]} - ${lang("gui.browser.madeby")} ${pkg[0]}`);
+				}
+			}
+		}
+
+		dependencies = newdepends;
+	} 
+
+	if (dependencies && dependencies.length != 0) {
+		let confirminstall = confirm(lang("gui.mods.confirmdependencies") + prettydepends.join("\n"));
+		if (! confirminstall) {
+			return
+		}
+	}
+
 	setButtons(false);
-	ipcRenderer.send("installfromurl", url)
+	ipcRenderer.send("installfromurl", url, dependencies)
+
+	if (dependencies) {
+		installqueue = dependencies;
+	}
+}
+
+function isModInstalled(modname) {
+	for (let i = 0; i < modsobj.all.length; i++) {
+		let mod = modsobj.all[i];
+		if (mod.ManifestName) {
+			if (mod.ManifestName.match(modname)) {
+				return true;
+			}
+		} else if (mod.Name.match(modname)) {
+			return true;
+		}
+	}
+
+	return false;
 }
 
 // Frontend part of settings a new game path
