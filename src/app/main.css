@@ -120,9 +120,14 @@ button {
 	100% {opacity: 1.0}
 }
 
+#browserEntries {
+	display: flex;
+	flex-wrap: wrap;
+}
+
 .popup .el, .popup .misc, .popup .loading {
 	--spacing: calc(var(--padding) / 2);
-	--height: calc(var(--padding) * 3);
+	--height: calc(var(--padding) * 3.5);
 	--mischeight: calc(var(--padding) * 1.5);
 
 	animation-duration: 0.15s;
@@ -144,7 +149,7 @@ button {
 	padding: var(--spacing);
 	background: var(--selbg);
 	border-radius: var(--spacing);
-	width: calc(100% - var(--spacing) * 4);
+	width: calc(50% - var(--spacing) * 4);
 }
 
 .popup .misc, .popup #search, .option .actions input {
@@ -196,6 +201,7 @@ button {
 	width: 100%;
 	color: white;
 	display: flex;
+	position: absolute;
 	text-align: center;
 	align-items: center;
 	justify-content: center;
