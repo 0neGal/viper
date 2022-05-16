@@ -437,10 +437,17 @@ events.forEach((event) => {
 });
 
 view.addEventListener("dom-ready", () => {
-	view.insertCSS(fs.readFileSync(__dirname + "/css/webview.css", "utf8"));
+	let css = [
+		fs.readFileSync(__dirname + "/css/theming.css", "utf8"),
+		fs.readFileSync(__dirname + "/css/webview.css", "utf8")
+	]
+
+	view.insertCSS(css.join(" "));
 })
 
 let checks = document.querySelectorAll(".check");
 for (let i = 0; i < checks.length; i++) {
 	checks[i].setAttribute("onclick", "this.classList.toggle('checked');Browser.loadfront();search.value = ''")
 }
+
+Preview.set("https://northstar.thunderstore.io/package/odds/DamageFlyout/")
