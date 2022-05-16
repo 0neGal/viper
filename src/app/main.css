@@ -245,6 +245,10 @@ button {
 	font-weight: 700;
 }
 
+.popup .message #loadmore {
+	background: rgb(var(--blue2));
+}
+
 .popup .el .description {font-size: 0.8em}
 .popup .el button {
 	background: rgb(var(--blue));

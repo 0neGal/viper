@@ -2,9 +2,21 @@ const Fuse = require("fuse.js");
 var fuse;
 var packages = [];
 
+var packagecount = 0;
+
 var Browser = {
 	maxentries: 50,
 	filters: {
+		getpkgs: () => {
+			let pkgs = [];
+			for (let i in packages) {
+				if (! Browser.filters.isfiltered(packages[i].categories)) {
+					pkgs.push(packages[i]);
+				}
+			}
+
+			return pkgs;
+		},
 		get: () => {
 			let filtered = [];
 			let unfiltered = [];
@@ -81,6 +93,8 @@ var Browser = {
 	},
 	loadfront: async () => {
 		Browser.loading();
+
+		packagecount = 0;
 		
 		if (packages.length < 1) {
 			packages = await (await fetch("https://northstar.thunderstore.io/api/v1/package/")).json();
@@ -90,8 +104,15 @@ var Browser = {
 			})
 		}
 		
-		for (let i in packages) {
-			new BrowserElFromObj(packages[i]);
+		let pkgs = Browser.filters.getpkgs();
+		for (let i in pkgs) {
+			if (packagecount >= Browser.maxentries) {
+				Browser.endoflist();
+				break
+			}
+
+			new BrowserElFromObj(pkgs[i]);
+			packagecount++;
 		}
 	},
 	loading: (string) => {
@@ -107,9 +128,31 @@ var Browser = {
 			browserEntries.innerHTML = `<div class="loading">${lang('gui.browser.loading')}</div>`;
 		}
 	},
-	endoflist: () => {
-		if (browserEntries.querySelector(".message")) {return}
-		browserEntries.innerHTML += `<div class="message">${lang('gui.browser.endoflist')}</div>`
+	endoflist: (isEnd) => {
+		let pkgs = [];
+		let filtered = Browser.filters.getpkgs();
+		for (let i = 0; i < filtered.length; i++) {
+			if ([packagecount + i]) {
+				pkgs.push(filtered[packagecount + i]);
+			} else {
+				break
+			}
+		}
+
+		if (browserEntries.querySelector(".message")) {
+			browserEntries.querySelector(".message").remove();
+		}
+
+		if (pkgs.length == 0 || isEnd) {
+			browserEntries.innerHTML += `<div class="message">${lang('gui.browser.endoflist')}</div>`
+			return
+		}
+
+		browserEntries.innerHTML += `<div class="message"><button id="loadmore">${lang("gui.browser.loadmore")}</button></div>`
+		loadmore.addEventListener("click", () => {
+			Browser.loadpkgs(pkgs);
+			Browser.endoflist(pkgs);
+		})
 	},
 	search: (string) => {
 		Browser.loading();
@@ -120,8 +163,14 @@ var Browser = {
 			return
 		}
 
+		packagecount = 0;
+
+		let count = 0;
 		for (let i = 0; i < res.length; i++) {
+			if (count >= Browser.maxentries) {break}
+			if (Browser.filters.isfiltered(res[i].item.categories)) {continue}
 			new BrowserElFromObj(res[i].item);
+			count++;
 		}
 	},
 	setbutton: (mod, string) => {
@@ -157,6 +206,33 @@ var Browser = {
 				}
 			}, 1501)
 		}
+	},
+	loadpkgs: (pkgs, clear) => {
+		if (clear) {packagecount = 0}
+
+		if (browserEntries.querySelector(".message")) {
+			browserEntries.querySelector(".message").remove();
+		}
+
+		let count = 0;
+		for (let i in pkgs) {
+			if (count >= Browser.maxentries) {
+				if (pkgs[i] === undefined) {
+					Browser.endoflist(true);
+				}
+
+				Browser.endoflist();
+				console.log(pkgs)
+				break
+			}
+
+			try {
+				new BrowserElFromObj(pkgs[i])
+			}catch(e) {}
+
+			count++;
+			packagecount++;
+		}
 	}
 }
 
@@ -179,9 +255,6 @@ function BrowserElFromObj(obj) {
 function BrowserEl(properties) {
 	if (Browser.filters.isfiltered(properties.categories)) {return}
 
-	let entries = browser.querySelectorAll(".el").length;
-	if (entries == Browser.maxentries) {Browser.endoflist();return}
-	
 	properties = {
 		title: "No name",
 		version: "1.0.0",
