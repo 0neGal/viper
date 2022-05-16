@@ -144,11 +144,11 @@ var Browser = {
 		}
 
 		if (pkgs.length == 0 || isEnd) {
-			browserEntries.innerHTML += `<div class="message">${lang('gui.browser.endoflist')}</div>`
+			Browser.msg(`${lang('gui.browser.endoflist')}`)
 			return
 		}
 
-		browserEntries.innerHTML += `<div class="message"><button id="loadmore">${lang("gui.browser.loadmore")}</button></div>`
+		Browser.msg(`<button id="loadmore">${lang("gui.browser.loadmore")}</button>`)
 		loadmore.addEventListener("click", () => {
 			Browser.loadpkgs(pkgs);
 			Browser.endoflist(pkgs);
@@ -233,6 +233,13 @@ var Browser = {
 			count++;
 			packagecount++;
 		}
+	},
+	msg: (html) => {
+		let msg = document.createElement("div");
+		msg.classList.add("message");
+		msg.innerHTML = html;
+		
+		browserEntries.appendChild(msg);
 	}
 }
 
@@ -304,23 +311,27 @@ function BrowserEl(properties) {
 			}
 		}
 	}
+	
+	let entry = document.createElement("div");
+	entry.classList.add("el");
+	entry.id = `mod-${normalize(properties.title)}`;
 
-	browserEntries.innerHTML += `
-		<div class="el" id="mod-${normalize(properties.title)}">
-			<div class="image">
-				<img src="${properties.image}">
-				<img class="blur" src="${properties.image}">
-			</div>
-			<div class="text">
-				<div class="title">${properties.title}</div>
-				<div class="description">${properties.description}</div>
-				<button class="install" onclick='installFromURL("${properties.download}", ${JSON.stringify(properties.dependencies)}, true)'>${installstr}</button>
-				<button class="info" onclick="require('electron').shell.openExternal('${properties.url}')">${lang('gui.browser.info')}</button>
-				<button class="visual">${properties.version}</button>
-				<button class="visual">${lang("gui.browser.madeby")} ${properties.author}</button>
-			</div>
+	entry.innerHTML = `
+		<div class="image">
+			<img src="${properties.image}">
+			<img class="blur" src="${properties.image}">
+		</div>
+		<div class="text">
+			<div class="title">${properties.title}</div>
+			<div class="description">${properties.description}</div>
+			<button class="install" onclick='installFromURL("${properties.download}", ${JSON.stringify(properties.dependencies)}, true)'>${installstr}</button>
+			<button class="info" onclick="require('electron').shell.openExternal('${properties.url}')">${lang('gui.browser.info')}</button>
+			<button class="visual">${properties.version}</button>
+			<button class="visual">${lang("gui.browser.madeby")} ${properties.author}</button>
 		</div>
 	`
+
+	browserEntries.appendChild(entry);
 }
 
 ipcRenderer.on("removedmod", (event, mod) => {
