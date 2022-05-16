@@ -97,6 +97,13 @@ button {
 	transform: scale(1.0);
 }
 
+.popup.small {
+	left: 30vw;
+	right: 30vw;
+	top: calc(var(--padding) * 2);
+	bottom: calc(var(--padding) * 2);
+}
+
 #overlay {
 	top: 0;
 	left: 0;
@@ -123,6 +130,11 @@ button {
 #browserEntries {
 	display: flex;
 	flex-wrap: wrap;
+}
+
+.popup webview {
+	width: 100%;
+	height: 100%;
 }
 
 .popup .el, .popup .misc, .popup .loading {
@@ -152,12 +164,21 @@ button {
 	width: calc(50% - var(--spacing) * 4);
 }
 
+.popup#preview #close {
+	margin: var(--spacing) var(--spacing) 0 auto !important;
+}
+
 .popup .misc, .popup #search, .option .actions input {
 	--height: var(--mischeight);
 }
 
 .popup .misc {
 	display: flex;
+}
+
+.popup .misc.fixed {
+	width: 100%;
+	position: fixed;
 }
 
 .popup #search, .option .actions input, .option .actions select {
