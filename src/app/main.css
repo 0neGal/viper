@@ -123,16 +123,16 @@ button {
 	width: calc(50% - var(--spacing) * 4);
 }
 
-.popup#preview #close {
-	margin: var(--spacing) var(--spacing) 0 auto !important;
-}
-
 .popup .misc, .popup #search, .option .actions input {
 	--height: var(--mischeight);
 }
 
 .popup .misc {
 	display: flex;
+}
+
+.popup .misc.vertical {
+	display: block;
 }
 
 .popup .misc.fixed {
@@ -175,6 +175,11 @@ button {
 
 .popup .misc button:last-child {
 	margin-left: 0px !important;
+}
+
+.popup#preview #close,
+.popup .misc.vertical button {
+	margin: var(--spacing) var(--spacing) 0 auto !important;
 }
 
 .popup .loading {

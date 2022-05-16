@@ -244,6 +244,10 @@ var Browser = {
 	}
 }
 
+function openExternal(url) {
+	require("electron").shell.openExternal(url);
+}
+
 var view = document.querySelector(".popup#preview webview");
 var Preview = {
 	show: () => {
@@ -255,6 +259,7 @@ var Preview = {
 	set: (url, autoshow) => {
 		if (autoshow != false) {Preview.show()}
 		view.src = url;
+		document.querySelector("#preview #external").setAttribute("onclick", `openExternal("${url}")`);
 	}
 }
 
@@ -340,7 +345,7 @@ function BrowserEl(properties) {
 			<div class="title">${properties.title}</div>
 			<div class="description">${properties.description}</div>
 			<button class="install" onclick='installFromURL("${properties.download}", ${JSON.stringify(properties.dependencies)}, true)'>${installstr}</button>
-			<button class="info" onclick="Preview.set('${properties.url}')">${lang('gui.browser.info')}</button>
+			<button class="info" onclick="Preview.set('${properties.url}')">${lang('gui.browser.view')}</button>
 			<button class="visual">${properties.version}</button>
 			<button class="visual">${lang("gui.browser.madeby")} ${properties.author}</button>
 		</div>

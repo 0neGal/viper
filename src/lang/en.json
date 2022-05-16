@@ -71,6 +71,7 @@
 	"gui.mods.confirmdependencies": "This package has dependencies, shown below, clicking \"Ok\" will install the package and the dependencies.\n\n",
 
 	"gui.browser.info": "Info",
+	"gui.browser.view": "View",
 	"gui.browser.madeby": "by",
 	"gui.browser.search": "Search...",
 	"gui.browser.update": "Update",
