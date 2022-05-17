@@ -251,10 +251,10 @@ function openExternal(url) {
 var view = document.querySelector(".popup#preview webview");
 var Preview = {
 	show: () => {
-		preview.classList.add("shown")
+		preview.classList.add("shown");
 	},
 	hide: () => {
-		preview.classList.remove("shown")
+		preview.classList.remove("shown");
 	},
 	set: (url, autoshow) => {
 		if (autoshow != false) {Preview.show()}
@@ -448,6 +448,18 @@ view.addEventListener("dom-ready", () => {
 	]
 
 	view.insertCSS(css.join(" "));
+})
+
+view.addEventListener("did-stop-loading", () => {
+	view.style.display = "flex";
+	setTimeout(() => {
+		view.classList.remove("loading");
+	}, 200)
+})
+
+view.addEventListener("did-start-loading", () => {
+	view.style.display = "none";
+	view.classList.add("loading");
 })
 
 let checks = document.querySelectorAll(".check");

@@ -92,8 +92,15 @@ button {
 .popup webview {
 	width: 78%;
 	margin: 0 auto;
+	filter: opacity(1.0);
+	transition: filter 0.15s ease-in-out;
 	margin-top: calc(var(--spacing) / 2);
 	height: calc(100% - calc(var(--spacing) / 2));
+}
+
+.popup webview.loading {
+	filter: opacity(0.0);
+	pointer-events: none;
 }
 
 .popup .el, .popup .misc, .popup .loading {
