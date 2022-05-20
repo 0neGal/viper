@@ -1,56 +1,13 @@
-:root {
-	--red: 199, 119, 127;
-	--red2: 181 97 105;
-
-	--blue: 129, 161, 193;
-	--blue2: 139, 143, 185;
-
-	--orange: 213, 151, 131;
-	--orange2: 197 129 107;
-
-
-	--padding: 25px;
-
-	--bg: rgba(0, 0, 0, 0.5);
-	--selbg: rgba(80, 80, 80, 0.5);
-	--redbg: linear-gradient(45deg, rgb(var(--red)), #FA4343);
-	--bluebg: linear-gradient(45deg, rgb(var(--blue)), #7380ED);
-}
+@import "css/theming.css";
 
 .popup, #modsdiv {
 	outline: 1px solid #444444;
 	border: 3px solid var(--bg);
 }
 
-::-webkit-scrollbar {
-	width: 8px;
-}
- 
-::-webkit-scrollbar-track {
-	border-radius: 10px;
-	background: transparent;
-}
- 
-::-webkit-scrollbar-thumb {
-	border-radius: 10px;
-	background: rgb(var(--red));
-}
-
-::selection {
-	color: black;
-	background: rgb(var(--red));
-}
-
 body {
 	margin: 0;
 	overflow: hidden;
-}
-
-body, button, input {font-family: "Roboto", sans-serif}
-
-body, button, img, a {
-	-webkit-user-drag: none;
-	user-select: none;
 }
 
 button {outline: none}
@@ -97,6 +54,13 @@ button {
 	transform: scale(1.0);
 }
 
+.popup.small {
+	left: 20vw;
+	right: 20vw;
+	top: calc(var(--padding) * 2);
+	bottom: calc(var(--padding) * 2);
+}
+
 #overlay {
 	top: 0;
 	left: 0;
@@ -120,9 +84,28 @@ button {
 	100% {opacity: 1.0}
 }
 
+#browserEntries {
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.popup webview {
+	width: 78%;
+	margin: 0 auto;
+	filter: opacity(1.0);
+	transition: filter 0.15s ease-in-out;
+	margin-top: calc(var(--spacing) / 2);
+	height: calc(100% - calc(var(--spacing) / 2));
+}
+
+.popup webview.loading {
+	filter: opacity(0.0);
+	pointer-events: none;
+}
+
 .popup .el, .popup .misc, .popup .loading {
 	--spacing: calc(var(--padding) / 2);
-	--height: calc(var(--padding) * 3);
+	--height: calc(var(--padding) * 3.5);
 	--mischeight: calc(var(--padding) * 1.5);
 
 	animation-duration: 0.15s;
@@ -144,7 +127,7 @@ button {
 	padding: var(--spacing);
 	background: var(--selbg);
 	border-radius: var(--spacing);
-	width: calc(100% - var(--spacing) * 4);
+	width: calc(50% - var(--spacing) * 4);
 }
 
 .popup .misc, .popup #search, .option .actions input {
@@ -153,6 +136,15 @@ button {
 
 .popup .misc {
 	display: flex;
+}
+
+.popup .misc.vertical {
+	display: block;
+}
+
+.popup .misc.fixed {
+	width: 100%;
+	position: fixed;
 }
 
 .popup #search, .option .actions input, .option .actions select {
@@ -192,10 +184,16 @@ button {
 	margin-left: 0px !important;
 }
 
+.popup#preview #close,
+.popup .misc.vertical button {
+	margin: var(--spacing) var(--spacing) 0 auto !important;
+}
+
 .popup .loading {
 	width: 100%;
 	color: white;
 	display: flex;
+	position: absolute;
 	text-align: center;
 	align-items: center;
 	justify-content: center;
@@ -237,6 +235,10 @@ button {
 .popup .el .title {
 	font-size: 1.2em;
 	font-weight: 700;
+}
+
+.popup .message #loadmore {
+	background: rgb(var(--blue2));
 }
 
 .popup .el .description {font-size: 0.8em}
@@ -596,16 +598,6 @@ img {pointer-events: none}
 
 .contentContainer #nsMain .playBtn {
 	background: var(--bluebg);
-}
-
-a {
-	color: rgb(var(--red));
-	text-decoration: none;
-	transition: filter 0.2s ease-in;
-}
-
-a:hover {
-	filter: brightness(80%);
 }
 
 #nsContent .contentMenu {

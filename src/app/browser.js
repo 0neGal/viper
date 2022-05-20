@@ -2,9 +2,21 @@ const Fuse = require("fuse.js");
 var fuse;
 var packages = [];
 
+var packagecount = 0;
+
 var Browser = {
 	maxentries: 50,
 	filters: {
+		getpkgs: () => {
+			let pkgs = [];
+			for (let i in packages) {
+				if (! Browser.filters.isfiltered(packages[i].categories)) {
+					pkgs.push(packages[i]);
+				}
+			}
+
+			return pkgs;
+		},
 		get: () => {
 			let filtered = [];
 			let unfiltered = [];
@@ -71,6 +83,7 @@ var Browser = {
 				Browser.filters.toggle(false);
 				overlay.classList.remove("shown")
 				browser.classList.remove("shown")
+				preview.classList.remove("shown")
 				return
 			}
 		}
@@ -81,6 +94,8 @@ var Browser = {
 	},
 	loadfront: async () => {
 		Browser.loading();
+
+		packagecount = 0;
 		
 		if (packages.length < 1) {
 			packages = await (await fetch("https://northstar.thunderstore.io/api/v1/package/")).json();
@@ -90,8 +105,15 @@ var Browser = {
 			})
 		}
 		
-		for (let i in packages) {
-			new BrowserElFromObj(packages[i]);
+		let pkgs = Browser.filters.getpkgs();
+		for (let i in pkgs) {
+			if (packagecount >= Browser.maxentries) {
+				Browser.endoflist();
+				break
+			}
+
+			new BrowserElFromObj(pkgs[i]);
+			packagecount++;
 		}
 	},
 	loading: (string) => {
@@ -107,9 +129,31 @@ var Browser = {
 			browserEntries.innerHTML = `<div class="loading">${lang('gui.browser.loading')}</div>`;
 		}
 	},
-	endoflist: () => {
-		if (browserEntries.querySelector(".message")) {return}
-		browserEntries.innerHTML += `<div class="message">${lang('gui.browser.endoflist')}</div>`
+	endoflist: (isEnd) => {
+		let pkgs = [];
+		let filtered = Browser.filters.getpkgs();
+		for (let i = 0; i < filtered.length; i++) {
+			if ([packagecount + i]) {
+				pkgs.push(filtered[packagecount + i]);
+			} else {
+				break
+			}
+		}
+
+		if (browserEntries.querySelector(".message")) {
+			browserEntries.querySelector(".message").remove();
+		}
+
+		if (pkgs.length == 0 || isEnd) {
+			Browser.msg(`${lang('gui.browser.endoflist')}`)
+			return
+		}
+
+		Browser.msg(`<button id="loadmore">${lang("gui.browser.loadmore")}</button>`)
+		loadmore.addEventListener("click", () => {
+			Browser.loadpkgs(pkgs);
+			Browser.endoflist(pkgs);
+		})
 	},
 	search: (string) => {
 		Browser.loading();
@@ -120,8 +164,14 @@ var Browser = {
 			return
 		}
 
+		packagecount = 0;
+
+		let count = 0;
 		for (let i = 0; i < res.length; i++) {
+			if (count >= Browser.maxentries) {break}
+			if (Browser.filters.isfiltered(res[i].item.categories)) {continue}
 			new BrowserElFromObj(res[i].item);
+			count++;
 		}
 	},
 	setbutton: (mod, string) => {
@@ -157,6 +207,59 @@ var Browser = {
 				}
 			}, 1501)
 		}
+	},
+	loadpkgs: (pkgs, clear) => {
+		if (clear) {packagecount = 0}
+
+		if (browserEntries.querySelector(".message")) {
+			browserEntries.querySelector(".message").remove();
+		}
+
+		let count = 0;
+		for (let i in pkgs) {
+			if (count >= Browser.maxentries) {
+				if (pkgs[i] === undefined) {
+					Browser.endoflist(true);
+				}
+
+				Browser.endoflist();
+				console.log(pkgs)
+				break
+			}
+
+			try {
+				new BrowserElFromObj(pkgs[i])
+			}catch(e) {}
+
+			count++;
+			packagecount++;
+		}
+	},
+	msg: (html) => {
+		let msg = document.createElement("div");
+		msg.classList.add("message");
+		msg.innerHTML = html;
+		
+		browserEntries.appendChild(msg);
+	}
+}
+
+function openExternal(url) {
+	require("electron").shell.openExternal(url);
+}
+
+var view = document.querySelector(".popup#preview webview");
+var Preview = {
+	show: () => {
+		preview.classList.add("shown");
+	},
+	hide: () => {
+		preview.classList.remove("shown");
+	},
+	set: (url, autoshow) => {
+		if (autoshow != false) {Preview.show()}
+		view.src = url;
+		document.querySelector("#preview #external").setAttribute("onclick", `openExternal("${url}")`);
 	}
 }
 
@@ -179,9 +282,6 @@ function BrowserElFromObj(obj) {
 function BrowserEl(properties) {
 	if (Browser.filters.isfiltered(properties.categories)) {return}
 
-	let entries = browser.querySelectorAll(".el").length;
-	if (entries == Browser.maxentries) {Browser.endoflist();return}
-	
 	properties = {
 		title: "No name",
 		version: "1.0.0",
@@ -231,23 +331,27 @@ function BrowserEl(properties) {
 			}
 		}
 	}
+	
+	let entry = document.createElement("div");
+	entry.classList.add("el");
+	entry.id = `mod-${normalize(properties.title)}`;
 
-	browserEntries.innerHTML += `
-		<div class="el" id="mod-${normalize(properties.title)}">
-			<div class="image">
-				<img src="${properties.image}">
-				<img class="blur" src="${properties.image}">
-			</div>
-			<div class="text">
-				<div class="title">${properties.title}</div>
-				<div class="description">${properties.description}</div>
-				<button class="install" onclick='installFromURL("${properties.download}", ${JSON.stringify(properties.dependencies)}, true)'>${installstr}</button>
-				<button class="info" onclick="require('electron').shell.openExternal('${properties.url}')">${lang('gui.browser.info')}</button>
-				<button class="visual">${properties.version}</button>
-				<button class="visual">${lang("gui.browser.madeby")} ${properties.author}</button>
-			</div>
+	entry.innerHTML = `
+		<div class="image">
+			<img src="${properties.image}">
+			<img class="blur" src="${properties.image}">
+		</div>
+		<div class="text">
+			<div class="title">${properties.title}</div>
+			<div class="description">${properties.description}</div>
+			<button class="install" onclick='installFromURL("${properties.download}", ${JSON.stringify(properties.dependencies)}, true)'>${installstr}</button>
+			<button class="info" onclick="Preview.set('${properties.url}')">${lang('gui.browser.view')}</button>
+			<button class="visual">${properties.version}</button>
+			<button class="visual">${lang("gui.browser.madeby")} ${properties.author}</button>
 		</div>
 	`
+
+	browserEntries.appendChild(entry);
 }
 
 ipcRenderer.on("removedmod", (event, mod) => {
@@ -329,8 +433,33 @@ search.addEventListener("keyup", () => {
 	}
 })
 
-browser.addEventListener("scroll", () => {
-	Browser.filters.toggle(false);
+let events = ["scroll", "mousedown", "touchdown"];
+events.forEach((event) => {
+    browser.addEventListener(event, () => {
+		Preview.hide();
+		Browser.filters.toggle(false);
+	})
+});
+
+view.addEventListener("dom-ready", () => {
+	let css = [
+		fs.readFileSync(__dirname + "/css/theming.css", "utf8"),
+		fs.readFileSync(__dirname + "/css/webview.css", "utf8")
+	]
+
+	view.insertCSS(css.join(" "));
+})
+
+view.addEventListener("did-stop-loading", () => {
+	view.style.display = "flex";
+	setTimeout(() => {
+		view.classList.remove("loading");
+	}, 200)
+})
+
+view.addEventListener("did-start-loading", () => {
+	view.style.display = "none";
+	view.classList.add("loading");
 })
 
 let checks = document.querySelectorAll(".check");

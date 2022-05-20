@@ -133,6 +133,17 @@
 				<div class="loading">%%gui.browser.loading%%</div>
 			</div>
 		</div>
+		<div class="popup small" id="preview">
+			<div class="misc fixed vertical">
+				<button id="close" onclick="Preview.hide()">
+					<img src="icons/close.png">
+				</button>
+				<button id="external" onclick="">
+					<img src="icons/external.png">
+				</button>
+			</div>
+			<webview></webview>
+		</div>
 		
 		<nav class="gamesContainer">
 			<button id="vpBtn" onclick="page(0)"></button>

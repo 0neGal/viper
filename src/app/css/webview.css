@@ -1,0 +1,14 @@
+body {
+	overflow-x: hidden;
+	background: transparent !important;
+	background-color: transparent !important;
+}
+
+.navbar, .bottom-padding,
+.card-header, .breadcrumb,
+.list-group, .mb-4, .my-2, .mt-2 {
+	display: none !important;
+}
+
+.mt-2.mb-2 {display: block !important}
+.card {transform: translateY(-1.0rem)}

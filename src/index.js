@@ -29,6 +29,7 @@ function start() {
 		frame: false,
 		icon: path.join(__dirname, "assets/icons/512x512.png"),
 		webPreferences: {
+			webviewTag: true,
 			nodeIntegration: true,
 			contextIsolation: false,
 		},
