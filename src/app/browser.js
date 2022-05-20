@@ -437,7 +437,11 @@ let events = ["scroll", "mousedown", "touchdown"];
 events.forEach((event) => {
     browser.addEventListener(event, () => {
 		Preview.hide();
-		Browser.filters.toggle(false);
+
+		let mouseAt = document.elementsFromPoint(mouseX, mouseY);
+		if (! mouseAt.includes(document.querySelector("#filter"))) {
+			Browser.filters.toggle(false);
+		}
 	})
 });
 
@@ -460,6 +464,13 @@ view.addEventListener("did-stop-loading", () => {
 view.addEventListener("did-start-loading", () => {
 	view.style.display = "none";
 	view.classList.add("loading");
+})
+
+let mouseY = 0;
+let mouseX = 0;
+browser.addEventListener("mousemove", (event) => {
+	mouseY = event.clientY;
+	mouseX = event.clientX;
 })
 
 let checks = document.querySelectorAll(".check");
