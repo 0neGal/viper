@@ -466,5 +466,3 @@ let checks = document.querySelectorAll(".check");
 for (let i = 0; i < checks.length; i++) {
 	checks[i].setAttribute("onclick", "this.classList.toggle('checked');Browser.loadfront();search.value = ''")
 }
-
-Preview.set("https://northstar.thunderstore.io/package/odds/DamageFlyout/")
