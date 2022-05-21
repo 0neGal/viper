@@ -173,6 +173,10 @@ var Browser = {
 			new BrowserElFromObj(res[i].item);
 			count++;
 		}
+
+		if (count < 1) {
+			Browser.loading(lang("gui.browser.noresults"));
+		}
 	},
 	setbutton: (mod, string) => {
 		mod = normalize(mod);
