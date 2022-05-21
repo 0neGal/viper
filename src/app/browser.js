@@ -9,12 +9,16 @@ var Browser = {
 	filters: {
 		getpkgs: () => {
 			let pkgs = [];
+			let other = [];
 			for (let i in packages) {
 				if (! Browser.filters.isfiltered(packages[i].categories)) {
 					pkgs.push(packages[i]);
+				} else {
+					other.push(packages[i]);
 				}
 			}
 
+			console.log(other)
 			return pkgs;
 		},
 		get: () => {
@@ -39,6 +43,19 @@ var Browser = {
 			let filtered = Browser.filters.get().filtered;
 			let unfiltered = Browser.filters.get().unfiltered;
 			let state = false;
+
+			let filters = [
+				"Mods", "Skins",
+				"Client-side", "Server-side",
+			];
+
+			let newcategories = [];
+			for (let i = 0; i < categories.length; i++) {
+				if (filters.includes(categories[i])) {
+					newcategories.push(categories[i]);
+				}
+			}; categories = newcategories;
+
 			if (categories.length == 0) {return true}
 			for (let i = 0; i < categories.length; i++) {
 				if (filtered.includes(categories[i])) {
