@@ -439,7 +439,9 @@ events.forEach((event) => {
 		Preview.hide();
 
 		let mouseAt = document.elementsFromPoint(mouseX, mouseY);
-		if (! mouseAt.includes(document.querySelector("#filter"))) {
+		if (! mouseAt.includes(document.querySelector("#filter"))
+			&& ! mouseAt.includes(document.querySelector(".overlay"))) {
+			console.log(mouseAt)
 			Browser.filters.toggle(false);
 		}
 	})
