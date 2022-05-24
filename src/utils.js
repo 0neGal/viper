@@ -220,15 +220,19 @@ function saveSettings(obj = {}) {
 // Returns the current Northstar version
 // If not installed it'll return "unknown"
 function getNSVersion() {
-	var versionFilePath = path.join(settings.gamepath, "ns_version.txt");
+	var versionFile = path.join(settings.gamepath, "R2Northstar/mods/Northstar.Client/mod.json");
 
-	if (fs.existsSync(versionFilePath)) {
-		return fs.readFileSync(versionFilePath, "utf8");
-	} else {
-		if (gamepathExists()) {
-			fs.writeFileSync(versionFilePath, "unknown");
+	if (fs.existsSync(versionFile)) {
+		if (! fs.statSync(versionFile).isFile()) {
+			return "unknown"
 		}
 
+		try {
+			return "v" + JSON.parse(fs.readFileSync(versionFile, "utf8")).Version;
+		}catch(err) {
+			return "unknown";
+		}
+	} else {
 		return "unknown";
 	}
 }
@@ -278,6 +282,7 @@ async function update() {
 	var version = getNSVersion();
 
 	const latestAvailableVersion = await requests.getLatestNsVersion();
+	console.log(latestAvailableVersion)
 
 	// Makes sure it is not already the latest version
 	if (version === latestAvailableVersion) {
@@ -325,7 +330,6 @@ async function update() {
 			// installing Northstar.
 			fs.createReadStream(settings.zip).pipe(unzip.Extract({path: settings.gamepath}))
 			.on("finish", () => {
-				fs.writeFileSync(path.join(settings.gamepath, "ns_version.txt"), latestAvailableVersion);
 				ipcMain.emit("getversion");
 
 				restoreExcludedFiles();
