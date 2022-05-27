@@ -113,6 +113,10 @@
 	"gui.nsupdate.gaming.title": "Northstar update available!",
 	"gui.nsupdate.gaming.body": "An update for Northstar is available.\nYou can force its installation after closing the game.",
 
+	"gui.server.servers": "servers",
+	"gui.server.players": "players",
+	"gui.server.offline": "Masterserver is Offline",
+
 	"gui.launch": "Launch",
 	"gui.launchvanilla": "Vanilla",
 	"gui.launchnorthstar": "Northstar",

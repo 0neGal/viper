@@ -1,5 +1,9 @@
 const markdown = require("marked").parse;
 
+var servercount;
+var playercount;
+var masterserver;
+
 // Changes the main page
 // This is the tabs in the sidebar
 function page(page) {
@@ -107,3 +111,39 @@ function showNsSection(section) {
 			break;
 	}
 }
+
+async function loadServers() {
+	serverstatus.classList.add("checking");
+
+	try {
+		let servers = await (await fetch("https://northstar.tf/client/servers/")).json();
+		masterserver = true;
+	}catch (err) {
+		playercount = 0;
+		servercount = 0;
+		masterserver = false;
+	}
+
+	serverstatus.classList.remove("checking");
+
+	if (servercount == 0) {masterserver = false}
+
+	if (masterserver) {
+		serverstatus.classList.add("up");
+		// servercount and playercount don't actually get set anywhere,
+		// the reason for this is, while writing this code, the master
+		// server is down so I don't have anyway to test the code...
+		//
+		// it'll be added whenever the masterserver comes online again.
+		serverstatus.innerHTML = `${servercount} ${lang("gui.server.servers")} - ${playercount} ${lang("gui.server.players")}`;
+	} else {
+		serverstatus.classList.add("down");
+		serverstatus.innerHTML = lang("gui.server.offline");
+
+	}
+}; loadServers()
+
+// Refreshes every 5 minutes
+setInterval(() => {
+	loadServers();
+}, 300000)
