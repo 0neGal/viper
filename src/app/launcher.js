@@ -116,8 +116,15 @@ async function loadServers() {
 	serverstatus.classList.add("checking");
 
 	try {
-		let servers = await (await fetch("https://northstar.tf/client/servers/")).json();
+		let servers = await (await fetch("https://northstar.tf/client/servers")).json();
 		masterserver = true;
+
+		playercount = 0;
+		servercount = servers.length;
+
+		for (let i = 0; i < servers.length; i++) {
+			playercount += servers[i].playerCount
+		}
 	}catch (err) {
 		playercount = 0;
 		servercount = 0;
@@ -126,7 +133,7 @@ async function loadServers() {
 
 	serverstatus.classList.remove("checking");
 
-	if (servercount == 0) {masterserver = false}
+	if (servercount == 0 || ! servercount || ! playercount) {masterserver = false}
 
 	if (masterserver) {
 		serverstatus.classList.add("up");
