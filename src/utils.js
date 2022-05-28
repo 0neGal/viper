@@ -380,8 +380,10 @@ function updatevp(autoinstall) {
 // however it'll be added at some point.
 function launch(version) {
 	if (process.platform == "linux") {
+		winAlert(lang("cli.launch.linuxerror"))
 		console.error("error:", lang("cli.launch.linuxerror"))
 		cli.exit(1);
+		return;
 	}
 
 	process.chdir(settings.gamepath);
