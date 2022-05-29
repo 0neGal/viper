@@ -220,21 +220,49 @@ function saveSettings(obj = {}) {
 // Returns the current Northstar version
 // If not installed it'll return "unknown"
 function getNSVersion() {
-	var versionFile = path.join(settings.gamepath, "R2Northstar/mods/Northstar.Client/mod.json");
+	var versionFiles = [
+		"Northstar.Client",
+		"Northstar.Custom",
+		"Northstar.CustomServers"
+	]
 
-	if (fs.existsSync(versionFile)) {
-		if (! fs.statSync(versionFile).isFile()) {
-			return "unknown"
-		}
+	var versions = [];
 
-		try {
-			return "v" + JSON.parse(fs.readFileSync(versionFile, "utf8")).Version;
-		}catch(err) {
-			return "unknown";
-		}
-	} else {
-		return "unknown";
+
+	let add = (version) => {
+		versions.push(version)
 	}
+
+	for (let i = 0; i < versionFiles.length; i++) {
+		var versionFile = path.join(settings.gamepath, "R2Northstar/mods/", versionFiles[i],"/mod.json");
+		if (fs.existsSync(versionFile)) {
+			if (! fs.statSync(versionFile).isFile()) {
+				add("unknown");
+			}
+
+			try {
+				add("v" + JSON.parse(fs.readFileSync(versionFile, "utf8")).Version);
+			}catch(err) {
+				add("unknown");
+			}
+		} else {
+			add("unknown");
+		}
+	}
+
+	if (versions.includes("unknown")) {return "unknown"}
+
+	let mismatch = false;
+	let baseVersion = versions[0];
+	for (let i = 0; i < versions.length; i++) {
+		if (versions[i] != baseVersion) {
+			mismatch = true;
+			break
+		}
+	}
+
+	if (mismatch) {return "unknown"}
+	return baseVersion;
 }
 
 
