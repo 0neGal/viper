@@ -42,12 +42,12 @@ var settings = {
 
 // Logs into the dev tools of the renderer
 function winLog(msg) {
-	ipcMain.emit("winLog", msg, msg);
+	ipcMain.emit("win-log", msg, msg);
 }
 
 // Sends an alert to the renderer
 function winAlert(msg) {
-	ipcMain.emit("winAlert", msg, msg);
+	ipcMain.emit("win-alert", msg, msg);
 }
 
 // Creates the settings file with the base settings if it doesn't exist.
@@ -187,7 +187,7 @@ async function setpath(win, forcedialog) {
 				return;
 			}
 			if (! fs.existsSync(path.join(res.filePaths[0], "Titanfall2.exe"))) {
-				ipcMain.emit("wrongpath");
+				ipcMain.emit("wrong-path");
 				return;
 			}
 
@@ -326,11 +326,11 @@ async function update() {
 			fs.createReadStream(settings.zip).pipe(unzip.Extract({path: settings.gamepath}))
 			.on("finish", () => {
 				fs.writeFileSync(path.join(settings.gamepath, "ns_version.txt"), latestAvailableVersion);
-				ipcMain.emit("getversion");
+				ipcMain.emit("get-version");
 
 				restoreExcludedFiles();
 
-				ipcMain.emit("guigetmods");
+				ipcMain.emit("gui-getmods");
 				ipcMain.emit("ns-update-event", "cli.update.uptodate.short");
 				winLog(lang("gui.update.finished"));
 				console.log(lang("cli.update.finished"));
@@ -603,11 +603,11 @@ const mods = {
 				}
 			}
 
-			ipcMain.emit("installedmod", "", {
+			ipcMain.emit("installed-mod", "", {
 				name: modname,
 				malformed: malformed,
 			});
-			ipcMain.emit("guigetmods");
+			ipcMain.emit("gui-getmods");
 			return true;
 		}
 
@@ -679,7 +679,7 @@ const mods = {
 									}
 
 									if (files.length == 0) {
-										ipcMain.emit("failedmod");
+										ipcMain.emit("failed-mod");
 										return notamod();
 									}
 								}
@@ -778,8 +778,8 @@ const mods = {
 			fs.rmSync(modPath, {recursive: true});
 			console.log(lang("cli.mods.removed"));
 			cli.exit();
-			ipcMain.emit("guigetmods");
-			ipcMain.emit("removedmod", "", {
+			ipcMain.emit("gui-getmods");
+			ipcMain.emit("removed-mod", "", {
 				name: mod.replace(/^.*(\\|\/|\:)/, ""),
 				manifestname: manifestname
 			});
@@ -818,17 +818,17 @@ const mods = {
 			console.log(lang("cli.mods.toggled"));
 			cli.exit();
 		}
-		ipcMain.emit("guigetmods");
+		ipcMain.emit("gui-getmods");
 	}
 };
 
 setInterval(() => {
 	if (gamepathExists()) {
-		ipcMain.emit("guigetmods");
+		ipcMain.emit("gui-getmods");
 	} else {
 		if (fs.existsSync("viper.json")) {
 			if (settings.gamepath != "") {
-				ipcMain.emit("gamepathlost");
+				ipcMain.emit("gamepath-lost");
 			}
 		}
 	}

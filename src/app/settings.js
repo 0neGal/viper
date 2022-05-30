@@ -22,7 +22,7 @@ var Settings = {
 	},
 	apply: () => {
 		settings = {...settings, ...Settings.get()};
-		ipcRenderer.send("savesettings", Settings.get());
+		ipcRenderer.send("save-settings", Settings.get());
 	},
 	reloadSwitches: () => {
 		let switches = document.querySelectorAll(".switch");

@@ -373,7 +373,7 @@ function BrowserEl(properties) {
 	browserEntries.appendChild(entry);
 }
 
-ipcRenderer.on("removedmod", (event, mod) => {
+ipcRenderer.on("removed-mod", (event, mod) => {
 	setButtons(true);
 	Browser.setbutton(mod.name, lang("gui.browser.install"));
 	if (mod.manifestname) {
@@ -381,7 +381,7 @@ ipcRenderer.on("removedmod", (event, mod) => {
 	}
 })
 
-ipcRenderer.on("failedmod", (event, modname) => {
+ipcRenderer.on("failed-mod", (event, modname) => {
 	setButtons(true);
 	new Toast({
 		timeout: 10000,
@@ -391,7 +391,7 @@ ipcRenderer.on("failedmod", (event, modname) => {
 	})
 })
 
-ipcRenderer.on("installedmod", (event, mod) => {
+ipcRenderer.on("installed-mod", (event, mod) => {
 	setButtons(true);
 	Browser.setbutton(mod.name, lang("gui.browser.reinstall"));
 
