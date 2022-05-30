@@ -113,6 +113,11 @@
 	"gui.nsupdate.gaming.title": "Mise à jour Northstar disponible !",
 	"gui.nsupdate.gaming.body": "Une mise à jour pour Northstar est disponible.\nVous pourrez l'installer après avoir fermé le jeu.",
 
+	"gui.server.player": "joueur",
+	"gui.server.players": "joueurs",
+	"gui.server.servers": "serveurs",
+	"gui.server.offline": "Le serveur maître est hors-ligne",
+
 	"gui.launch": "Jouer",
 	"gui.launchvanilla": "Vanilla",
 	"gui.launchnorthstar": "Northstar",
