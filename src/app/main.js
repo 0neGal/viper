@@ -36,9 +36,9 @@ if (fs.existsSync("viper.json")) {
 	}catch (e) {
 		let reset = confirm(lang("general.invalidconfig", navigator.language) + e);
 		if (! reset) {
-			ipcRenderer.send("exit")
+			ipcRenderer.send("exit");
 		} else {
-			fs.writeFileSync("viper.json", "{}")
+			fs.writeFileSync("viper.json", "{}");
 			ipcRenderer.send("relaunch");
 		}
 		
@@ -100,12 +100,15 @@ function setButtons(state) {
 		}
 	}
 
-	disablearray(document.querySelectorAll(".playBtnContainer .playBtn"))
-	disablearray(document.querySelectorAll("#nsMods .buttons.modbtns button"))
-	disablearray(document.querySelectorAll("#browser #browserEntries .text button"))
+	disablearray(document.querySelectorAll(".playBtnContainer .playBtn"));
+	disablearray(document.querySelectorAll("#nsMods .buttons.modbtns button"));
+	disablearray(document.querySelectorAll("#browser #browserEntries .text button"));
 }
 
-ipcRenderer.on("setbuttons", (event, state) => {setButtons(state)})
+ipcRenderer.on("setbuttons", (event, state) => {
+	setButtons(state);
+})
+
 ipcRenderer.on("gamepathlost", (event, state) => {
 	page(0);
 	setButtons(false);
@@ -172,7 +175,7 @@ function selected(all) {
 				}
 			}
 
-			ipcRenderer.send("removemod", selected)
+			ipcRenderer.send("removemod", selected);
 		},
 		toggle: () => {
 			if (selected.match(/^Northstar\./)) {
@@ -185,7 +188,7 @@ function selected(all) {
 				}
 			}
 
-			ipcRenderer.send("togglemod", selected)
+			ipcRenderer.send("togglemod", selected);
 		}
 	}
 }
@@ -195,19 +198,18 @@ let installqueue = [];
 // Tells the main process to install a mod through the file selector
 function installmod() {
 	setButtons(false);
-	ipcRenderer.send("installmod")
+	ipcRenderer.send("installmod");
 }
 
 // Tells the main process to directly install a mod from this path
 function installFromPath(path) {
 	setButtons(false);
-	ipcRenderer.send("installfrompath", path)
+	ipcRenderer.send("installfrompath", path);
 }
 
 // Tells the main process to install a mod from a URL
 function installFromURL(url, dependencies, clearqueue) {
 	if (clearqueue) {installqueue = []};
-	console.log(installqueue)
 
 	let prettydepends = [];
 
@@ -215,7 +217,6 @@ function installFromURL(url, dependencies, clearqueue) {
 		let newdepends = [];
 		for (let i = 0; i < dependencies.length; i++) {
 			let depend = dependencies[i].toLowerCase();
-			console.log(depend)
 			if (! depend.match(/northstar-northstar-.*/)) {
 				depend = dependencies[i].replaceAll("-", "/");
 				let pkg = depend.split("/");
@@ -237,7 +238,7 @@ function installFromURL(url, dependencies, clearqueue) {
 	}
 
 	setButtons(false);
-	ipcRenderer.send("installfromurl", url, dependencies)
+	ipcRenderer.send("installfromurl", url, dependencies);
 
 	if (dependencies) {
 		installqueue = dependencies;
@@ -355,7 +356,7 @@ document.addEventListener("drop", (e) => {
     event.stopPropagation();
 
 	dragUI.classList.remove("shown");
-	installFromPath(event.dataTransfer.files[0].path)
+	installFromPath(event.dataTransfer.files[0].path);
 });
 
 document.body.addEventListener("keyup", (e) => {

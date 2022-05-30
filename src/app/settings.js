@@ -3,22 +3,22 @@ var Settings = {
 		if (state) {
 			Settings.load();
 			options.scrollTo(0, 0);
-			overlay.classList.add("shown")
-			options.classList.add("shown")
+			overlay.classList.add("shown");
+			options.classList.add("shown");
 
 			return
 		} else if (! state) {
 			if (state != undefined) {
-				overlay.classList.remove("shown")
-				options.classList.remove("shown")
+				overlay.classList.remove("shown");
+				options.classList.remove("shown");
 				return
 			}
 		}
 
 		Settings.load();
 		options.scrollTo(0, 0);
-		overlay.classList.toggle("shown")
-		options.classList.toggle("shown")
+		overlay.classList.toggle("shown");
+		options.classList.toggle("shown");
 	},
 	apply: () => {
 		settings = {...settings, ...Settings.get()};

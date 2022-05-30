@@ -3,8 +3,8 @@ const markdown = require("marked").parse;
 // Changes the main page
 // This is the tabs in the sidebar
 function page(page) {
-	let pages = document.querySelectorAll(".mainContainer .contentContainer")
-	let btns = document.querySelectorAll(".gamesContainer button")
+	let btns = document.querySelectorAll(".gamesContainer button");
+	let pages = document.querySelectorAll(".mainContainer .contentContainer");
 
 	for (let i = 0; i < pages.length; i++) {
 		pages[i].classList.add("hidden");
@@ -82,7 +82,10 @@ function showVpSection(section) {
 }
 
 function showNsSection(section) {
-	if (!["main", "release", "mods"].includes(section)) throw new Error("unknown ns section");
+	if (!["main", "release", "mods"].includes(section)) {
+		throw new Error("unknown ns section");
+	}
+
 	nsMainBtn.removeAttribute("active");
 	nsModsBtn.removeAttribute("active");
 	nsReleaseBtn.removeAttribute("active");

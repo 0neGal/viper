@@ -129,7 +129,7 @@ function handleNorthstarUpdating() {
 				update();
 			}
 		} else {
-			console.log(lang("cli.autoupdates.noupdate"))
+			console.log(lang("cli.autoupdates.noupdate"));
 		}
 
 		setTimeout(
@@ -191,7 +191,7 @@ async function setpath(win, forcedialog) {
 				return;
 			}
 
-			setGamepath(res.filePaths[0])
+			setGamepath(res.filePaths[0]);
 
 			cli.exit();
 			return;
@@ -254,7 +254,7 @@ function restoreExcludedFiles() {
 	for (let i = 0; i < settings.excludes.length; i++) {
 		let exclude = path.join(settings.gamepath + "/" + settings.excludes[i]);
 		if (fs.existsSync(exclude + ".excluded")) {
-			fs.renameSync(exclude + ".excluded", exclude)
+			fs.renameSync(exclude + ".excluded", exclude);
 		}
 	}
 }
@@ -299,7 +299,7 @@ async function update() {
 	for (let i = 0; i < settings.excludes.length; i++) {
 		let exclude = path.join(settings.gamepath + "/" + settings.excludes[i]);
 		if (fs.existsSync(exclude)) {
-			fs.renameSync(exclude, exclude + ".excluded")
+			fs.renameSync(exclude, exclude + ".excluded");
 		}
 	}
 
@@ -380,8 +380,8 @@ function updatevp(autoinstall) {
 // however it'll be added at some point.
 function launch(version) {
 	if (process.platform == "linux") {
-		winAlert(lang("cli.launch.linuxerror"))
-		console.error("error:", lang("cli.launch.linuxerror"))
+		winAlert(lang("cli.launch.linuxerror"));
+		console.error("error:", lang("cli.launch.linuxerror"));
 		cli.exit(1);
 		return;
 	}
@@ -389,12 +389,12 @@ function launch(version) {
 	process.chdir(settings.gamepath);
 	switch(version) {
 		case "vanilla":
-			console.log(lang("general.launching"), "Vanilla...")
-			run(path.join(settings.gamepath + "/Titanfall2.exe"))
+			console.log(lang("general.launching"), "Vanilla...");
+			run(path.join(settings.gamepath + "/Titanfall2.exe"));
 			break;
 		default:
-			console.log(lang("general.launching"), "Northstar...")
-			run(path.join(settings.gamepath + "/NorthstarLauncher.exe"))
+			console.log(lang("general.launching"), "Northstar...");
+			run(path.join(settings.gamepath + "/NorthstarLauncher.exe"));
 			break;
 	}
 }
@@ -420,8 +420,8 @@ const mods = {
 		let modpath = path.join(settings.gamepath, "R2Northstar/mods");
 
 		if (getNSVersion() == "unknown") {
-			winLog(lang("general.notinstalled"))
-			console.log("error: " + lang("general.notinstalled"))
+			winLog(lang("general.notinstalled"));
+			console.log("error: " + lang("general.notinstalled"));
 			cli.exit(1);
 			return false;
 		}
@@ -430,7 +430,7 @@ const mods = {
 		let disabled = [];
 
 		if (! fs.existsSync(modpath)) {
-			fs.mkdirSync(path.join(modpath), {recursive: true})
+			fs.mkdirSync(path.join(modpath), {recursive: true});
 			return {
 				enabled: [],
 				disabled: [],
@@ -438,7 +438,7 @@ const mods = {
 			};
 		}
 
-		files = fs.readdirSync(modpath)
+		files = fs.readdirSync(modpath);
 		files.forEach((file) => {
 			if (fs.statSync(path.join(modpath, file)).isDirectory()) {
 				let modjson = path.join(modpath, file, "mod.json");
@@ -489,8 +489,8 @@ const mods = {
 		let modpath = path.join(settings.gamepath, "R2Northstar/mods");
 
 		if (getNSVersion() == "unknown") {
-			winLog(lang("general.notinstalled"))
-			console.log("error: " + lang("general.notinstalled"))
+			winLog(lang("general.notinstalled"));
+			console.log("error: " + lang("general.notinstalled"));
 			cli.exit(1);
 			return false;
 		}
@@ -515,11 +515,11 @@ const mods = {
 		let file = path.join(modpath, "..", "enabledmods.json");
 
 		if (! fs.existsSync(modpath)) {
-			fs.mkdirSync(path.join(modpath), {recursive: true})
+			fs.mkdirSync(path.join(modpath), {recursive: true});
 		}
 
 		if (! fs.existsSync(file)) {
-			fs.writeFileSync(file, "{}")
+			fs.writeFileSync(file, "{}");
 		}
 
 		return {
@@ -530,7 +530,7 @@ const mods = {
 					names[list[i].Name] = true
 				}
 
-				fs.writeFileSync(file, JSON.stringify(names))
+				fs.writeFileSync(file, JSON.stringify(names));
 			},
 			disable: (mod) => {
 				let data = JSON.parse(repair(fs.readFileSync(file, "utf8")));
@@ -576,15 +576,15 @@ const mods = {
 		let modname = mod.replace(/^.*(\\|\/|\:)/, "");
 
 		if (getNSVersion() == "unknown") {
-			winLog(lang("general.notinstalled"))
-			console.log("error: " + lang("general.notinstalled"))
+			winLog(lang("general.notinstalled"));
+			console.log("error: " + lang("general.notinstalled"));
 			cli.exit(1);
 			return false;
 		}
 
 		let notamod = () => {
-			winLog(lang("gui.mods.notamod"))
-			console.log("error: " + lang("cli.mods.notamod"))
+			winLog(lang("gui.mods.notamod"));
+			console.log("error: " + lang("cli.mods.notamod"));
 			cli.exit(1);
 			return false;
 		}
@@ -593,10 +593,10 @@ const mods = {
 			console.log(lang("cli.mods.installed"));
 			cli.exit();
 
-			winLog(lang("gui.mods.installedmod"))
+			winLog(lang("gui.mods.installedmod"));
 
 			if (modname == "mods") {
-				let manifest = path.join(app.getPath("userData"), "Archives/manifest.json")
+				let manifest = path.join(app.getPath("userData"), "Archives/manifest.json");
 
 				if (fs.existsSync(manifest)) {
 					modname = require(manifest).name;
@@ -614,7 +614,7 @@ const mods = {
 		if (! fs.existsSync(mod)) {return notamod()}
 
 		if (fs.statSync(mod).isDirectory()) {
-			winLog(lang("gui.mods.installing"))
+			winLog(lang("gui.mods.installing"));
 			files = fs.readdirSync(mod);
 			if (fs.existsSync(path.join(mod, "mod.json")) && 
 				fs.statSync(path.join(mod, "mod.json")).isFile()) {
@@ -624,8 +624,8 @@ const mods = {
 				}
 				let copydest = path.join(modpath, modname);
 				if (typeof destname == "string") {copydest = path.join(modpath, destname)}
-				copy(mod, copydest)
-				copy(manifestfile, path.join(copydest, "manifest.json"))
+				copy(mod, copydest);
+				copy(manifestfile, path.join(copydest, "manifest.json"));
 
 				return installed();
 			} else {
@@ -636,7 +636,7 @@ const mods = {
 						if (fs.existsSync(path.join(mod, files[i], "mod.json")) &&
 							fs.statSync(path.join(mod, files[i], "mod.json")).isFile()) {
 
-							mods.install(path.join(mod, files[i]))
+							mods.install(path.join(mod, files[i]));
 							if (mods.install(path.join(mod, files[i]))) {return true};
 						}
 					}
@@ -647,7 +647,7 @@ const mods = {
 
 			return notamod();
 		} else {
-			winLog(lang("gui.mods.extracting"))
+			winLog(lang("gui.mods.extracting"));
 			let cache = path.join(app.getPath("userData"), "Archives");
 			if (fs.existsSync(cache)) {
 				fs.rmSync(cache, {recursive: true});
@@ -710,12 +710,12 @@ const mods = {
 
 			if (fs.existsSync(tmp)) {
 				if (! fs.statSync(tmp).isDirectory()) {
-					fs.rmSync(tmp)
+					fs.rmSync(tmp);
 				}
 			} else {
-				fs.mkdirSync(tmp)
+				fs.mkdirSync(tmp);
 				if (fs.existsSync(modlocation)) {
-					fs.rmSync(modlocation)
+					fs.rmSync(modlocation);
 				}
 			}
 
@@ -737,8 +737,8 @@ const mods = {
 		let modpath = path.join(settings.gamepath, "R2Northstar/mods");
 
 		if (getNSVersion() == "unknown") {
-			winLog(lang("general.notinstalled"))
-			console.log("error: " + lang("general.notinstalled"))
+			winLog(lang("general.notinstalled"));
+			console.log("error: " + lang("general.notinstalled"));
 			cli.exit(1);
 			return false;
 		}
@@ -746,19 +746,19 @@ const mods = {
 		if (mod == "allmods") {
 			let modlist = mods.list().all;
 			for (let i = 0; i < modlist.length; i++) {
-				mods.remove(modlist[i].Name)
+				mods.remove(modlist[i].Name);
 			}
 			return
 		}
 
 		let disabled = path.join(modpath, "disabled");
 		if (! fs.existsSync(disabled)) {
-			fs.mkdirSync(disabled)
+			fs.mkdirSync(disabled);
 		}
 
 		let modName = mods.get(mod).FolderName;
 		if (! modName) {
-			console.log("error: " + lang("cli.mods.cantfind"))
+			console.log("error: " + lang("cli.mods.cantfind"));
 			cli.exit(1);
 			return;
 		}
@@ -796,8 +796,8 @@ const mods = {
 	// function. However we currently have no need for that.
 	toggle: (mod, fork) => {
 		if (getNSVersion() == "unknown") {
-			winLog(lang("general.notinstalled"))
-			console.log("error: " + lang("general.notinstalled"))
+			winLog(lang("general.notinstalled"));
+			console.log("error: " + lang("general.notinstalled"));
 			cli.exit(1);
 			return false;
 		}
@@ -805,7 +805,7 @@ const mods = {
 		if (mod == "allmods") {
 			let modlist = mods.list().all;
 			for (let i = 0; i < modlist.length; i++) {
-				mods.toggle(modlist[i].Name, true)
+				mods.toggle(modlist[i].Name, true);
 			}
 
 			console.log(lang("cli.mods.toggledall"));

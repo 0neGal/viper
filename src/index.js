@@ -3,9 +3,6 @@ const path = require("path");
 const { autoUpdater } = require("electron-updater");
 const { app, ipcMain, BrowserWindow, dialog } = require("electron");
 
-const Emitter = require("events");
-const events = new Emitter();
-
 const utils = require("./utils");
 const cli = require("./cli");
 const requests = require("./extras/requests");
@@ -16,17 +13,18 @@ function start() {
 	win = new BrowserWindow({
 		width: 1000,
 		height: 600,
+		title: "Viper",
 
 		// Hides the window initially, it'll be shown when the DOM is
 		// loaded, as to not cause visual issues.
 		show: false,
-		title: "Viper",
 
 		// In the future we may want to allow the user to resize the window,
 		// as it's fairly responsive, but for now we won't allow that.
 		resizable: false,
-		titleBarStyle: "hidden",
+
 		frame: false,
+		titleBarStyle: "hidden",
 		icon: path.join(__dirname, "assets/icons/512x512.png"),
 		webPreferences: {
 			webviewTag: true,
@@ -42,12 +40,11 @@ function start() {
 	win.removeMenu();
 	win.loadFile(__dirname + "/app/index.html");
 
-
-	ipcMain.on("exit", () => {process.exit(0)})
-	ipcMain.on("minimize", () => {win.minimize()})
-	ipcMain.on("relaunch", () => {app.relaunch();app.exit()})
-	ipcMain.on("installfrompath", (event, path) => {utils.mods.install(path)})
-	ipcMain.on("installfromurl", (event, url) => {utils.mods.installFromURL(url)})
+	ipcMain.on("exit", () => {process.exit(0)});
+	ipcMain.on("minimize", () => {win.minimize()});
+	ipcMain.on("relaunch", () => {app.relaunch();app.exit()});
+	ipcMain.on("installfrompath", (event, path) => {utils.mods.install(path)});
+	ipcMain.on("installfromurl", (event, url) => {utils.mods.installFromURL(url)});
 	ipcMain.on("winLog", (event, ...args) => {win.webContents.send("log", ...args)});
 	ipcMain.on("winAlert", (event, ...args) => {win.webContents.send("alert", ...args)});
 	ipcMain.on("ns-update-event", (event) => win.webContents.send("ns-update-event", event));
@@ -64,11 +61,11 @@ function start() {
 		}
 	});
 
-	ipcMain.on("savesettings", (event, obj) => {utils.saveSettings(obj)})
+	ipcMain.on("savesettings", (event, obj) => {utils.saveSettings(obj)});
 
-	ipcMain.on("can-autoupdate", (event) => {
-		if (! require("electron-updater").autoUpdater.isUpdaterActive() || cli.hasParam("no-vp-updates")) {
-			win.webContents.send("cant-autoupdate")
+	ipcMain.on("can-autoupdate", () => {
+		if (! autoUpdater.isUpdaterActive() || cli.hasParam("no-vp-updates")) {
+			win.webContents.send("cant-autoupdate");
 		}
 	})
 
@@ -87,7 +84,7 @@ function start() {
 	}
 
 	autoUpdater.on("update-downloaded", () => {
-		win.webContents.send("updateavailable")
+		win.webContents.send("updateavailable");
 	});
 
 	// Updates and restarts Viper, if user says yes to do so.
@@ -101,7 +98,7 @@ function start() {
 // module inside the file that sent the event. {
 ipcMain.on("installmod", () => {
 	if (cli.hasArgs()) {
-		utils.mods.install(cli.param("installmod"))
+		utils.mods.install(cli.param("installmod"));
 	} else {
 		dialog.showOpenDialog({properties: ["openFile"]}).then(res => {
 			if (res.filePaths.length != 0) {
@@ -109,19 +106,20 @@ ipcMain.on("installmod", () => {
 			} else {
 				win.webContents.send("setbuttons", true);
 			}
-		}).catch(err => {console.error(err)})
+		}).catch(err => {console.error(err)});
 	}
 })
 
-ipcMain.on("removemod", (event, mod) => {utils.mods.remove(mod)})
-ipcMain.on("togglemod", (event, mod) => {utils.mods.toggle(mod)})
+ipcMain.on("removemod", (event, mod) => {utils.mods.remove(mod)});
+ipcMain.on("togglemod", (event, mod) => {utils.mods.toggle(mod)});
 
-ipcMain.on("launch", (event) => {utils.launch()})
-ipcMain.on("setlang", (event, lang) => {utils.setlang(lang)})
-ipcMain.on("launchVanilla", (event) => {utils.launch("vanilla")})
+ipcMain.on("launch", () => {utils.launch()});
+ipcMain.on("launchVanilla", () => {utils.launch("vanilla")});
 
-ipcMain.on("update", (event) => {utils.update()})
-ipcMain.on("setpathcli", (event) => {utils.setpath()});
+ipcMain.on("setlang", (event, lang) => {utils.setlang(lang)});
+
+ipcMain.on("update", () => {utils.update()})
+ipcMain.on("setpathcli", () => {utils.setpath()});
 ipcMain.on("setpath", (event, value) => {
 	if (! value) {
 		if (! win.isVisible()) {
@@ -154,19 +152,19 @@ ipcMain.on("versioncli", () => {
 	cli.exit();
 })
 
-ipcMain.on("getmods", (event) => {
+ipcMain.on("getmods", () => {
 	let mods = utils.mods.list();
 	if (mods.all.length > 0) {
-		console.log(`${utils.lang("general.mods.installed")} ${mods.all.length}`)
-		console.log(`${utils.lang("general.mods.enabled")} ${mods.enabled.length}`)
+		console.log(`${utils.lang("general.mods.installed")} ${mods.all.length}`);
+		console.log(`${utils.lang("general.mods.enabled")} ${mods.enabled.length}`);
 		for (let i = 0; i < mods.enabled.length; i++) {
-			console.log(`  ${mods.enabled[i].Name} ${mods.enabled[i].Version}`)
+			console.log(`  ${mods.enabled[i].Name} ${mods.enabled[i].Version}`);
 		}
 
 		if (mods.disabled.length > 0) {
-			console.log(`${utils.lang("general.mods.disabled")} ${mods.disabled.length}`)
+			console.log(`${utils.lang("general.mods.disabled")} ${mods.disabled.length}`);
 			for (let i = 0; i < mods.disabled.length; i++) {
-				console.log(`  ${mods.disabled[i].Name} ${mods.disabled[i].Version}`)
+				console.log(`  ${mods.disabled[i].Name} ${mods.disabled[i].Version}`);
 			}
 		}
 		cli.exit(0);
@@ -186,7 +184,7 @@ ipcMain.on("newpath", (event, newpath) => {
 			win.show();
 		}
 	}
-}); ipcMain.on("wrongpath", (event) => {
+}); ipcMain.on("wrongpath", () => {
 	win.webContents.send("wrongpath");
 });
 
