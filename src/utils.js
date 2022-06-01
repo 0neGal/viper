@@ -101,6 +101,7 @@ async function isGameRunning() {
 	});
 }
 
+//Check if origin client is running
 async function isOriginRunning() {
     return new Promise(resolve => {
 	let procs = ["origin.exe"]; //check this, probably not right
@@ -121,6 +122,25 @@ async function isOriginRunning() {
 	    });
 	});
     });	    
+}
+
+//Kill origin client
+async function killOrigin() {
+    return Promise(resolve => {
+	let proc =  "origin.exe" ; //need to match above
+	let cmd = (() => {
+	    switch (process.platform) {
+	    case "linux": return "killall " + proc;
+	    case "win32": return "taskkill /IM " + proc + " /F";
+	    }
+	})();
+
+	exec(cmd, (err, stdout) => {
+	    //do some checking here maybe? idk we're going to be exiting so maybe we should
+	    //just try and fail silently if we don't find shit
+	    resolve(true);
+	});
+    });
 }
 
 // Handles auto updating Northstar.
