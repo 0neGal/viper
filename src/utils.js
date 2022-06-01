@@ -101,6 +101,28 @@ async function isGameRunning() {
 	});
 }
 
+async function isOriginRunning() {
+    return new Promise(resolve => {
+	let procs = ["origin.exe"]; //check this, probably not right
+	let cmd = (() => {
+	    switch (process.platform) {
+	    case "linux": return "ps -A";
+	    case "win32": return "tasklist";
+	    }
+	})();
+
+	exec(cmd, (err, stdout) => {
+	    procs.forEach( proc => {
+		if (stdout.includes(proc)) {
+		    resolve(true);
+		    return;
+		}
+		resolve(false);
+	    });
+	});
+    });	    
+}
+
 // Handles auto updating Northstar.
 //
 // It uses isGameRunning() to ensure it doesn't run while the game is
