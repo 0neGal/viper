@@ -297,3 +297,32 @@ code {
 	margin-top: calc(var(--spacing) / 2);
 	margin-bottom: calc(var(--spacing) / 2);
 }
+
+#serverstatus {
+	--spacing: calc(var(--padding) / 5);
+	
+	transition-duration: 0.2s;
+	transition-timing-function: ease-in-out;
+	transition-property: background, opacity;
+
+	opacity: 0.0;
+	display: block;
+	margin: 0 auto;
+	font-weight: 700;
+	width: fit-content;
+	color: transparent;
+	border-radius: 50px;
+	flex-basis: max-content;
+	background: transparent;
+	margin-top: calc(var(--spacing) * 2);
+	padding: var(--spacing) calc(var(--spacing) * 3);
+}
+
+#serverstatus.up,
+#serverstatus.down {
+	color: white;
+	opacity: 1.0;
+}
+
+#serverstatus.up {background: rgb(var(--blue));}
+#serverstatus.down {background: rgb(var(--red));}
