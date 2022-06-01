@@ -130,6 +130,11 @@
 	"gui.toast.desc.malformed": "tiene una estructura de carpetas incorrecta, si usted es el desarrollador, debe corregir esto.",
 	"gui.toast.desc.failed": "Se produjo un error desconocido al intentar instalar la modificación. Esto puede ser culpa del autor de la modificación, y también puede ser culpa de Viper.",
 
+	"gui.server.player": "jugador",
+	"gui.server.players": "jugadores",
+	"gui.server.servers": "servidores",
+	"gui.server.offline": "El servidor Master está desconectado",
+	
 	"viper.menu.main": "Viper",
 	"viper.menu.release": "Notas de la versión",
 	"viper.menu.info": "Extras",
