@@ -37,7 +37,7 @@ function start() {
 	});
 
 	// when --debug is added it'll open the dev tools
-	if (cli.hasParam("debug")) { win.openDevTools() }
+	if (cli.hasParam("debug")) {win.openDevTools()}
 
 	// general setup
 	win.removeMenu();
@@ -64,18 +64,18 @@ function start() {
 	ipcMain.on("relaunch", () => { app.relaunch(); app.exit() });
 
 	// passthrough to renderer from main
-	ipcMain.on("win-log", (event, ...args) => { send("log", ...args) });
-	ipcMain.on("win-alert", (event, ...args) => { send("alert", ...args) });
+	ipcMain.on("win-log", (event, ...args) => {send("log", ...args)});
+	ipcMain.on("win-alert", (event, ...args) => {send("alert", ...args)});
 
 	// mod states
-	ipcMain.on("failed-mod", (event, modname) => { send("failed-mod", modname) });
-	ipcMain.on("removed-mod", (event, modname) => { send("removed-mod", modname) });
-	ipcMain.on("gui-getmods", (event, ...args) => { send("mods", utils.mods.list()) });
-	ipcMain.on("installed-mod", (event, modname) => { send("installed-mod", modname) });
+	ipcMain.on("failed-mod", (event, modname) => {send("failed-mod", modname)});
+	ipcMain.on("removed-mod", (event, modname) => {send("removed-mod", modname)});
+	ipcMain.on("gui-getmods", (event, ...args) => {send("mods", utils.mods.list())});
+	ipcMain.on("installed-mod", (event, modname) => {send("installed-mod", modname)});
 
 	// install calls
-	ipcMain.on("install-from-path", (event, path) => { utils.mods.install(path) });
-	ipcMain.on("install-from-url", (event, url) => { utils.mods.installFromURL(url) });
+	ipcMain.on("install-from-path", (event, path) => {utils.mods.install(path)});
+	ipcMain.on("install-from-url", (event, url) => {utils.mods.installFromURL(url)});
 
 	win.webContents.on("dom-ready", () => {
 		send("mods", utils.mods.list());
@@ -84,18 +84,18 @@ function start() {
 	// ensures gamepath still exists and is valid on startup
 	let gamepathlost = false;
 	ipcMain.on("gamepath-lost", (event, ...args) => {
-		if (!gamepathlost) {
+		if (! gamepathlost) {
 			gamepathlost = true;
 			send("gamepath-lost");
 		}
 	});
 
-	ipcMain.on("save-settings", (event, obj) => { utils.saveSettings(obj) });
+	ipcMain.on("save-settings", (event, obj) => {utils.saveSettings(obj)});
 
 	// allows renderer to check for updates
-	ipcMain.on("ns-update-event", (event) => { send("ns-update-event", event) });
+	ipcMain.on("ns-update-event", (event) => {send("ns-update-event", event)});
 	ipcMain.on("can-autoupdate", () => {
-		if (!autoUpdater.isUpdaterActive() || cli.hasParam("no-vp-updates")) {
+		if (! autoUpdater.isUpdaterActive() || cli.hasParam("no-vp-updates")) {
 			send("cant-autoupdate");
 		}
 	})
@@ -128,34 +128,34 @@ ipcMain.on("install-mod", () => {
 	if (cli.hasArgs()) {
 		utils.mods.install(cli.param("installmod"));
 	} else {
-		dialog.showOpenDialog({ properties: ["openFile"] }).then(res => {
+		dialog.showOpenDialog({properties: ["openFile"]}).then(res => {
 			if (res.filePaths.length != 0) {
 				utils.mods.install(res.filePaths[0]);
 			} else {
 				send("set-buttons", true);
 			}
-		}).catch(err => { error(err) });
+		}).catch(err => {error(err)});
 	}
 })
 
-ipcMain.on("remove-mod", (event, mod) => { utils.mods.remove(mod) });
-ipcMain.on("toggle-mod", (event, mod) => { utils.mods.toggle(mod) });
+ipcMain.on("remove-mod", (event, mod) => {utils.mods.remove(mod)});
+ipcMain.on("toggle-mod", (event, mod) => {utils.mods.toggle(mod)});
 
-ipcMain.on("launch-ns", () => { utils.launch() });
-ipcMain.on("launch-vanilla", () => { utils.launch("vanilla") });
+ipcMain.on("launch-ns", () => {utils.launch()});
+ipcMain.on("launch-vanilla", () => {utils.launch("vanilla")});
 
-ipcMain.on("setlang", (event, lang) => { utils.setlang(lang) });
+ipcMain.on("setlang", (event, lang) => {utils.setlang(lang)});
 
-ipcMain.on("update", () => { utils.update() })
-ipcMain.on("setpath-cli", () => { utils.setpath() });
+ipcMain.on("update", () => {utils.update()})
+ipcMain.on("setpath-cli", () => {utils.setpath()});
 ipcMain.on("setpath", (event, value) => {
-	if (!value) {
-		if (!win.isVisible()) {
+	if (! value) {
+		if (! win.isVisible()) {
 			utils.setpath(win);
 		} else {
 			utils.setpath(win, true);
 		}
-	} else if (!win.isVisible()) {
+	} else if (! win.isVisible()) {
 		win.show();
 	}
 });
@@ -170,7 +170,7 @@ function sendVersionsInfo() {
 }
 
 // sends the version info back to the renderer
-ipcMain.on("get-version", () => { sendVersionsInfo() });
+ipcMain.on("get-version", () => {sendVersionsInfo()});
 
 // prints out version info for the CLI
 ipcMain.on("version-cli", () => {
@@ -207,7 +207,7 @@ ipcMain.on("getmods", () => {
 
 // allows renderer to set a new renderer
 ipcMain.on("newpath", (event, newpath) => {
-	if (newpath === false && !win.isVisible()) {
+	if (newpath === false && ! win.isVisible()) {
 		win.send("no-path-selected");
 	} else {
 		_sendVersionsInfo();

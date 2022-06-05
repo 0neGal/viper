@@ -60,11 +60,11 @@ if (fs.existsSync("viper.json")) {
 	// Validates viper.json
 	try {
 		json = JSON.parse(conf);
-	} catch (e) {
+	}catch (e) {
 		invalidsettings = true;
 	}
 
-	settings = { ...settings, ...json };
+	settings = {...settings, ...json};
 	settings.zip = path.join(settings.gamepath + "/northstar.zip");
 
 	let args = path.join(settings.gamepath, "ns_startup_args.txt");
@@ -97,7 +97,7 @@ async function isGameRunning() {
 					break
 				}
 
-				if (i == procs.length - 1) { resolve(false) }
+				if (i == procs.length - 1) {resolve(false)}
 			}
 		});
 	});
@@ -138,8 +138,7 @@ async function killOrigin() {
 		})();
 
 		exec(cmd, (err, stdout) => {
-			//do some checking here maybe? idk we're going to be exiting so maybe we should
-			//just try and fail silently if we don't find shit
+			//just try and fail silently if we don't find it w/e
 			resolve(true);
 		});
 	});
@@ -150,7 +149,7 @@ async function killOrigin() {
 // It uses isGameRunning() to ensure it doesn't run while the game is
 // running, as that may have all kinds of issues.
 function handleNorthstarUpdating() {
-	if (!settings.nsupdate || !fs.existsSync("viper.json") || settings.gamepath.length === 0) {
+	if (! settings.nsupdate || ! fs.existsSync("viper.json") || settings.gamepath.length === 0) {
 		return;
 	}
 
@@ -203,10 +202,10 @@ async function setpath(win, forcedialog) {
 		modpath = path.join(settings.gamepath, "R2Northstar/mods");
 	}
 
-	if (!win) { // CLI
+	if (! win) { // CLI
 		setGamepath(cli.param("setpath"));
 	} else { // GUI
-		if (!forcedialog) {
+		if (! forcedialog) {
 			function setGamepath(folder, forcedialog) {
 				settings.gamepath = folder;
 				settings.zip = path.join(settings.gamepath + "/northstar.zip");
@@ -225,12 +224,12 @@ async function setpath(win, forcedialog) {
 		}
 
 		// Fallback to manual selection
-		dialog.showOpenDialog({ properties: ["openDirectory"] }).then(res => {
+		dialog.showOpenDialog({properties: ["openDirectory"]}).then(res => {
 			if (res.canceled) {
 				ipcMain.emit("newpath", null, false);
 				return;
 			}
-			if (!fs.existsSync(path.join(res.filePaths[0], "Titanfall2.exe"))) {
+			if (! fs.existsSync(path.join(res.filePaths[0], "Titanfall2.exe"))) {
 				ipcMain.emit("wrong-path");
 				return;
 			}
@@ -239,7 +238,7 @@ async function setpath(win, forcedialog) {
 
 			cli.exit();
 			return;
-		}).catch(err => { console.error(err) })
+		}).catch(err => {console.error(err)})
 	}
 }
 
@@ -250,15 +249,15 @@ async function setpath(win, forcedialog) {
 // You can also pass a settings object to the function and it'll try and
 // merge it together with the already existing settings
 function saveSettings(obj = {}) {
-	if (invalidsettings) { return false }
+	if (invalidsettings) {return false}
 
-	settings = { ...settings, ...obj };
+	settings = {...settings, ...obj};
 
 	if (fs.existsSync(settings.gamepath)) {
 		fs.writeFileSync(path.join(settings.gamepath, "ns_startup_args.txt"), settings.nsargs);
 	}
 
-	fs.writeFileSync(app.getPath("appData") + "/viper.json", JSON.stringify({ ...settings, ...obj }));
+	fs.writeFileSync(app.getPath("appData") + "/viper.json", JSON.stringify({...settings, ...obj}));
 }
 
 // Returns the current Northstar version
@@ -315,7 +314,7 @@ restoreExcludedFiles();
 // <file>.excluded, then rename them back after the extraction. The
 // unzip module does not support excluding files directly.
 async function update() {
-	if (!gamepathExists()) { return }
+	if (! gamepathExists()) {return}
 
 	ipcMain.emit("ns-update-event", "cli.update.checking");
 	console.log(lang("cli.update.checking"));
@@ -367,19 +366,19 @@ async function update() {
 			console.log(lang("cli.update.downloaddone"));
 			// Extracts the zip, this is the part where we're actually
 			// installing Northstar.
-			fs.createReadStream(settings.zip).pipe(unzip.Extract({ path: settings.gamepath }))
-				.on("finish", () => {
-					fs.writeFileSync(path.join(settings.gamepath, "ns_version.txt"), latestAvailableVersion);
-					ipcMain.emit("get-version");
+			fs.createReadStream(settings.zip).pipe(unzip.Extract({path: settings.gamepath}))
+			.on("finish", () => {
+				fs.writeFileSync(path.join(settings.gamepath, "ns_version.txt"), latestAvailableVersion);
+				ipcMain.emit("get-version");
 
-					restoreExcludedFiles();
+				restoreExcludedFiles();
 
-					ipcMain.emit("gui-getmods");
-					ipcMain.emit("ns-update-event", "cli.update.uptodate.short");
-					winLog(lang("gui.update.finished"));
-					console.log(lang("cli.update.finished"));
-					cli.exit();
-				})
+				ipcMain.emit("gui-getmods");
+				ipcMain.emit("ns-update-event", "cli.update.uptodate.short");
+				winLog(lang("gui.update.finished"));
+				console.log(lang("cli.update.finished"));
+				cli.exit();
+			})
 		})
 	})
 }
@@ -392,7 +391,7 @@ async function update() {
 function updatevp(autoinstall) {
 	const { autoUpdater } = require("electron-updater");
 
-	if (!autoUpdater.isUpdaterActive()) {
+	if (! autoUpdater.isUpdaterActive()) {
 		if (settings.nsupdate) {
 			handleNorthstarUpdating();
 		}
@@ -405,7 +404,7 @@ function updatevp(autoinstall) {
 		});
 	}
 
-	autoUpdater.on("error", (info) => { cli.exit(1) });
+	autoUpdater.on("error", (info) => {cli.exit(1)});
 	autoUpdater.on("update-not-available", (info) => {
 		// only check for NS updates if Viper itself has no updates and
 		// if NS auto updates is enabled.
@@ -431,7 +430,7 @@ function launch(version) {
 	}
 
 	process.chdir(settings.gamepath);
-	switch (version) {
+	switch(version) {
 		case "vanilla":
 			console.log(lang("general.launching"), "Vanilla...");
 			run(path.join(settings.gamepath + "/Titanfall2.exe"));
@@ -473,8 +472,8 @@ const mods = {
 		let enabled = [];
 		let disabled = [];
 
-		if (!fs.existsSync(modpath)) {
-			fs.mkdirSync(path.join(modpath), { recursive: true });
+		if (! fs.existsSync(modpath)) {
+			fs.mkdirSync(path.join(modpath), {recursive: true});
 			return {
 				enabled: [],
 				disabled: [],
@@ -493,10 +492,9 @@ const mods = {
 						Version: "unknown",
 						Name: "unknown",
 						FolderName: file,
-						...mod
-					}
+					...mod}
 
-					obj.Disabled = !mods.modfile().get(obj.Name);
+					obj.Disabled = ! mods.modfile().get(obj.Name);
 
 					let manifestfile = path.join(modpath, file, "manifest.json");
 					if (fs.existsSync(manifestfile)) {
@@ -545,7 +543,7 @@ const mods = {
 		for (let i = 0; i < list.length; i++) {
 			if (list[i].Name == mod) {
 				return list[i];
-			} else { continue }
+			} else {continue}
 		}
 
 		return false;
@@ -559,11 +557,11 @@ const mods = {
 		let modpath = path.join(settings.gamepath, "R2Northstar/mods");
 		let file = path.join(modpath, "..", "enabledmods.json");
 
-		if (!fs.existsSync(modpath)) {
-			fs.mkdirSync(path.join(modpath), { recursive: true });
+		if (! fs.existsSync(modpath)) {
+			fs.mkdirSync(path.join(modpath), {recursive: true});
 		}
 
-		if (!fs.existsSync(file)) {
+		if (! fs.existsSync(file)) {
 			fs.writeFileSync(file, "{}");
 		}
 
@@ -590,7 +588,7 @@ const mods = {
 			toggle: (mod) => {
 				let data = JSON.parse(repair(fs.readFileSync(file, "utf8")));
 				if (data[mod] != undefined) {
-					data[mod] = !data[mod];
+					data[mod] = ! data[mod];
 				} else {
 					data[mod] = false;
 				}
@@ -656,7 +654,7 @@ const mods = {
 			return true;
 		}
 
-		if (!fs.existsSync(mod)) { return notamod() }
+		if (! fs.existsSync(mod)) {return notamod()}
 
 		if (fs.statSync(mod).isDirectory()) {
 			winLog(lang("gui.mods.installing"));
@@ -665,10 +663,10 @@ const mods = {
 				fs.statSync(path.join(mod, "mod.json")).isFile()) {
 
 				if (fs.existsSync(path.join(modpath, modname))) {
-					fs.rmSync(path.join(modpath, modname), { recursive: true });
+					fs.rmSync(path.join(modpath, modname), {recursive: true});
 				}
 				let copydest = path.join(modpath, modname);
-				if (typeof destname == "string") { copydest = path.join(modpath, destname) }
+				if (typeof destname == "string") {copydest = path.join(modpath, destname)}
 				copy(mod, copydest);
 				copy(manifestfile, path.join(copydest, "manifest.json"));
 
@@ -682,7 +680,7 @@ const mods = {
 							fs.statSync(path.join(mod, files[i], "mod.json")).isFile()) {
 
 							mods.install(path.join(mod, files[i]));
-							if (mods.install(path.join(mod, files[i]))) { return true };
+							if (mods.install(path.join(mod, files[i]))) {return true};
 						}
 					}
 				}
@@ -695,52 +693,52 @@ const mods = {
 			winLog(lang("gui.mods.extracting"));
 			let cache = path.join(app.getPath("userData"), "Archives");
 			if (fs.existsSync(cache)) {
-				fs.rmSync(cache, { recursive: true });
-				fs.mkdirSync(path.join(cache, "mods"), { recursive: true });
+				fs.rmSync(cache, {recursive: true});
+				fs.mkdirSync(path.join(cache, "mods"), {recursive: true});
 			} else {
-				fs.mkdirSync(path.join(cache, "mods"), { recursive: true });
+				fs.mkdirSync(path.join(cache, "mods"), {recursive: true});
 			}
 
 			try {
 				if (mod.replace(/.*\./, "").toLowerCase() == "zip") {
-					fs.createReadStream(mod).pipe(unzip.Extract({ path: cache }))
-						.on("finish", () => {
-							setTimeout(() => {
-								let manifest = path.join(cache, "manifest.json");
-								if (fs.existsSync(manifest)) {
-									files = fs.readdirSync(path.join(cache, "mods"));
-									if (fs.existsSync(path.join(cache, "mods/mod.json"))) {
-										if (mods.install(path.join(cache, "mods"), require(manifest).name, manifest, true)) {
-											return true;
-										}
-									} else {
-										for (let i = 0; i < files.length; i++) {
-											let mod = path.join(cache, "mods", files[i]);
-											if (fs.statSync(mod).isDirectory()) {
-												setTimeout(() => {
-													if (mods.install(mod, false, manifest)) { return true };
-												}, 1000)
-											}
-										}
-
-										if (files.length == 0) {
-											ipcMain.emit("failed-mod");
-											return notamod();
+					fs.createReadStream(mod).pipe(unzip.Extract({path: cache}))
+					.on("finish", () => {
+						setTimeout(() => {
+							let manifest = path.join(cache, "manifest.json");
+							if (fs.existsSync(manifest)) {
+								files = fs.readdirSync(path.join(cache, "mods"));
+								if (fs.existsSync(path.join(cache, "mods/mod.json"))) {
+									if (mods.install(path.join(cache, "mods"), require(manifest).name, manifest, true)) {
+										return true;
+									}
+								} else {
+									for (let i = 0; i < files.length; i++) {
+										let mod = path.join(cache, "mods", files[i]);
+										if (fs.statSync(mod).isDirectory()) {
+											setTimeout(() => {
+												if (mods.install(mod, false, manifest)) {return true};
+											}, 1000)
 										}
 									}
 
-									return notamod();
+									if (files.length == 0) {
+										ipcMain.emit("failed-mod");
+										return notamod();
+									}
 								}
 
-								if (mods.install(cache)) {
-									installed();
-								} else { return notamod() }
-							}, 1000)
-						});
+								return notamod();
+							}
+
+							if (mods.install(cache)) {
+								installed();
+							} else {return notamod()}
+						}, 1000)
+					});
 				} else {
 					return notamod();
 				}
-			} catch (err) { return notamod() }
+			}catch(err) {return notamod()}
 		}
 	},
 
@@ -754,7 +752,7 @@ const mods = {
 			let modlocation = path.join(tmp, "/mod.zip");
 
 			if (fs.existsSync(tmp)) {
-				if (!fs.statSync(tmp).isDirectory()) {
+				if (! fs.statSync(tmp).isDirectory()) {
 					fs.rmSync(tmp);
 				}
 			} else {
@@ -797,12 +795,12 @@ const mods = {
 		}
 
 		let disabled = path.join(modpath, "disabled");
-		if (!fs.existsSync(disabled)) {
+		if (! fs.existsSync(disabled)) {
 			fs.mkdirSync(disabled);
 		}
 
 		let modName = mods.get(mod).FolderName;
-		if (!modName) {
+		if (! modName) {
 			console.log("error: " + lang("cli.mods.cantfind"));
 			cli.exit(1);
 			return;
@@ -820,7 +818,7 @@ const mods = {
 				manifestname = require(path.join(modPath, "manifest.json")).name;
 			}
 
-			fs.rmSync(modPath, { recursive: true });
+			fs.rmSync(modPath, {recursive: true});
 			console.log(lang("cli.mods.removed"));
 			cli.exit();
 			ipcMain.emit("gui-getmods");
@@ -859,7 +857,7 @@ const mods = {
 		}
 
 		mods.modfile().toggle(mod);
-		if (!fork) {
+		if (! fork) {
 			console.log(lang("cli.mods.toggled"));
 			cli.exit();
 		}
