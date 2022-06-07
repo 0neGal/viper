@@ -29,6 +29,7 @@ var settings = {
 	autolang: true,
 	forcedlang: "en",
 	autoupdate: true,
+	originkill: false,
 	nsargs: "-multiple",
 	zip: "/northstar.zip",
 
@@ -37,9 +38,7 @@ var settings = {
 	excludes: [
 		"ns_startup_args.txt",
 		"ns_startup_args_dedi.txt"
-	],
-
-	originkill: false
+	]
 }
 
 // Logs into the dev tools of the renderer
@@ -103,7 +102,7 @@ async function isGameRunning() {
 	});
 }
 
-//Check if origin client is running
+// checks if any origin processes are running
 async function isOriginRunning() {
 	return new Promise(resolve => {
 		let procs = ["Origin.exe", "OriginClientService.exe"];
@@ -126,7 +125,7 @@ async function isOriginRunning() {
 	});
 }
 
-//Kill origin client
+// kill origin processes
 async function killOrigin() {
 	return new Promise(resolve => {
 		let proc = "Origin.exe"; //I'm pretty sure we only have to kill this one
@@ -138,7 +137,7 @@ async function killOrigin() {
 		})();
 
 		exec(cmd, (err, stdout) => {
-			//just try and fail silently if we don't find it w/e
+			// just try and fail silently if we don't find it w/e
 			resolve(true);
 		});
 	});
@@ -879,21 +878,27 @@ setInterval(() => {
 
 module.exports = {
 	mods,
-	lang,
 	winLog,
-	launch,
+
 	update,
-	setpath,
 	updatevp,
-	settings,
-	saveSettings,
 	getNSVersion,
 	getTF2Version,
+	handleNorthstarUpdating,
+
+	launch,
+	killOrigin,
 	isGameRunning,
 	isOriginRunning,
-	killOrigin,
+
+
+	settings,
+	saveSettings,
+
+	setpath,
 	gamepathExists,
-	handleNorthstarUpdating,
+
+	lang,
 	setlang: (lang) => {
 		settings.lang = lang;
 		saveSettings();

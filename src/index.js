@@ -6,7 +6,6 @@ const { app, ipcMain, BrowserWindow, dialog } = require("electron");
 const utils = require("./utils");
 const cli = require("./cli");
 const requests = require("./extras/requests");
-const { settings } = require("./utils");
 
 var log = console.log;
 
@@ -48,7 +47,7 @@ function start() {
 	}; send = win.send;
 
 	ipcMain.on("exit", () => {
-		if (settings.originkill) {
+		if (utils.settings.originkill) {
 			utils.isOriginRunning().then((running) => {
 				if (running) {
 					utils.killOrigin().then(process.exit(0))
@@ -60,8 +59,8 @@ function start() {
 			process.exit(0)
 		}
 	});
-	ipcMain.on("minimize", () => { win.minimize() });
-	ipcMain.on("relaunch", () => { app.relaunch(); app.exit() });
+	ipcMain.on("minimize", () => {win.minimize()});
+	ipcMain.on("relaunch", () => {app.relaunch(); app.exit()});
 
 	// passthrough to renderer from main
 	ipcMain.on("win-log", (event, ...args) => {send("log", ...args)});

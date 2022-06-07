@@ -105,7 +105,7 @@
 	"gui.settings.excludes.title": "Retain files on update",
 	"gui.settings.excludes.desc": "When Northstar is updated, files specified here will not be overwritten by files from the new Northstar update, unless you know what you're changing, you should probably not change anything here. Each file is separated with a space.",
 	"gui.settings.originkill.title": "Automatically quit Origin",
-	"gui.settings.originkill.desc": "When Viper exits, automatically quit Origin client too.  Mirrors behavior of launching the game through Steam.",
+	"gui.settings.originkill.desc": "When Viper exits, automatically quit Origin client too.",
 
 	"gui.update.downloading": "Downloading...",
 	"gui.update.extracting": "Extracting update...",
