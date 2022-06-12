@@ -29,6 +29,7 @@ var settings = {
 	autolang: true,
 	forcedlang: "en",
 	autoupdate: true,
+	originkill: false,
 	nsargs: "-multiple",
 	zip: "/northstar.zip",
 
@@ -101,6 +102,47 @@ async function isGameRunning() {
 	});
 }
 
+// checks if any origin processes are running
+async function isOriginRunning() {
+	return new Promise(resolve => {
+		let procs = ["Origin.exe", "OriginClientService.exe"];
+		let cmd = (() => {
+			switch (process.platform) {
+				case "linux": return "ps -A";
+				case "win32": return "tasklist";
+			}
+		})();
+
+		exec(cmd, (err, stdout) => {
+			procs.forEach(proc => {
+				if (stdout.includes(proc)) {
+					resolve(true);
+					return;
+				}
+				resolve(false);
+			});
+		});
+	});
+}
+
+// kill origin processes
+async function killOrigin() {
+	return new Promise(resolve => {
+		let proc = "Origin.exe"; //I'm pretty sure we only have to kill this one
+		let cmd = (() => {
+			switch (process.platform) {
+				case "linux": return "killall " + proc;
+				case "win32": return "taskkill /IM " + proc + " /F";
+			}
+		})();
+
+		exec(cmd, (err, stdout) => {
+			// just try and fail silently if we don't find it w/e
+			resolve(true);
+		});
+	});
+}
+
 // Handles auto updating Northstar.
 //
 // It uses isGameRunning() to ensure it doesn't run while the game is
@@ -121,7 +163,7 @@ function handleNorthstarUpdating() {
 			if (await isGameRunning()) {
 				console.log(lang("cli.autoupdates.gamerunning"));
 				new Notification({
-					title: lang("gui.nsupdate.gaming.title"), 
+					title: lang("gui.nsupdate.gaming.title"),
 					body: lang("gui.nsupdate.gaming.body")
 				}).show();
 			} else {
@@ -133,7 +175,7 @@ function handleNorthstarUpdating() {
 		}
 
 		setTimeout(
-			_checkForUpdates, 
+			_checkForUpdates,
 			15 * 60 * 1000
 			// interval in between each update check
 			// by default 15 minutes.
@@ -290,7 +332,7 @@ async function update() {
 	} else {
 		if (version != "unknown") {
 			console.log(lang("cli.update.current"), version);
-		}; 
+		};
 		console.log(lang("cli.update.downloading") + ":", latestAvailableVersion);
 		ipcMain.emit("ns-update-event", "cli.update.downloading");
 	}
@@ -616,7 +658,7 @@ const mods = {
 		if (fs.statSync(mod).isDirectory()) {
 			winLog(lang("gui.mods.installing"));
 			files = fs.readdirSync(mod);
-			if (fs.existsSync(path.join(mod, "mod.json")) && 
+			if (fs.existsSync(path.join(mod, "mod.json")) &&
 				fs.statSync(path.join(mod, "mod.json")).isFile()) {
 
 				if (fs.existsSync(path.join(modpath, modname))) {
@@ -836,19 +878,27 @@ setInterval(() => {
 
 module.exports = {
 	mods,
-	lang,
 	winLog,
-	launch,
+
 	update,
-	setpath,
 	updatevp,
-	settings,
-	saveSettings,
 	getNSVersion,
 	getTF2Version,
-	isGameRunning,
-	gamepathExists,
 	handleNorthstarUpdating,
+
+	launch,
+	killOrigin,
+	isGameRunning,
+	isOriginRunning,
+
+
+	settings,
+	saveSettings,
+
+	setpath,
+	gamepathExists,
+
+	lang,
 	setlang: (lang) => {
 		settings.lang = lang;
 		saveSettings();

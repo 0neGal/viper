@@ -14,6 +14,7 @@ var settings = {
 	autolang: true,
 	forcedlang: "en",
 	autoupdate: true,
+	originkill: false,
 	zip: "/northstar.zip",
 	lang: navigator.language,
 	excludes: [

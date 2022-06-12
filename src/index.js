@@ -33,7 +33,7 @@ function start() {
 			nodeIntegration: true,
 			contextIsolation: false,
 		},
-	}); 
+	});
 
 	// when --debug is added it'll open the dev tools
 	if (cli.hasParam("debug")) {win.openDevTools()}
@@ -46,9 +46,21 @@ function start() {
 		win.webContents.send(channel, data);
 	}; send = win.send;
 
-	ipcMain.on("exit", () => {process.exit(0)});
+	ipcMain.on("exit", () => {
+		if (utils.settings.originkill) {
+			utils.isOriginRunning().then((running) => {
+				if (running) {
+					utils.killOrigin().then(process.exit(0))
+				} else {
+					process.exit(0)	
+				}
+			})
+		} else {
+			process.exit(0)
+		}
+	});
 	ipcMain.on("minimize", () => {win.minimize()});
-	ipcMain.on("relaunch", () => {app.relaunch();app.exit()});
+	ipcMain.on("relaunch", () => {app.relaunch(); app.exit()});
 
 	// passthrough to renderer from main
 	ipcMain.on("win-log", (event, ...args) => {send("log", ...args)});
