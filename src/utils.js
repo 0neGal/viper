@@ -401,13 +401,26 @@ async function update() {
 
 		stream.on("finish", () => {
 			stream.close();
+			let extract = fs.createReadStream(settings.zip);
+
 			winLog(lang("gui.update.extracting"));
 			ipcMain.emit("ns-update-event", "gui.update.extracting");
 			console.log(lang("cli.update.downloaddone"));
 			// Extracts the zip, this is the part where we're actually
 			// installing Northstar.
-			fs.createReadStream(settings.zip).pipe(unzip.Extract({path: settings.gamepath}))
-			.on("finish", () => {
+			extract.pipe(unzip.Extract({path: settings.gamepath}))
+
+			let max = received;
+			received = 0;
+
+			extract.on("data", (chunk) => {
+				received += chunk.length;
+				let percent = Math.floor(received / max * 100);
+				ipcMain.emit("ns-update-event", lang("gui.update.extracting") + " " + percent + "%");
+			})
+
+			extract.on("end", () => {
+				extract.close();
 				ipcMain.emit("getversion");
 
 				restoreExcludedFiles();
