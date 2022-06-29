@@ -220,6 +220,12 @@ function saveSettings(obj = {}) {
 // Returns the current Northstar version
 // If not installed it'll return "unknown"
 function getNSVersion() {
+	// if NorthstarLauncher.exe doesn't exist, always return "unknown"
+	if (! fs.existsSync(path.join(settings.gamepath, "NorthstarLauncher.exe"))) {
+		return "unknown";
+	}
+
+	// mods to check version of
 	var versionFiles = [
 		"Northstar.Client",
 		"Northstar.Custom",
@@ -233,6 +239,7 @@ function getNSVersion() {
 		versions.push(version)
 	}
 
+	// checks version of mods
 	for (let i = 0; i < versionFiles.length; i++) {
 		var versionFile = path.join(settings.gamepath, "R2Northstar/mods/", versionFiles[i],"/mod.json");
 		if (fs.existsSync(versionFile)) {
@@ -252,6 +259,7 @@ function getNSVersion() {
 
 	if (versions.includes("unknown")) {return "unknown"}
 
+	// verifies all mods have the same version number
 	let mismatch = false;
 	let baseVersion = versions[0];
 	for (let i = 0; i < versions.length; i++) {
