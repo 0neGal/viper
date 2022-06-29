@@ -1,9 +1,6 @@
 <p align="center">
 	<img src="src/assets/icons/512x512.png" width="200px"><br>
 	<a href="https://github.com/0neGal/viper/releases/download/v1.4.0/Viper-Setup-1.4.0.exe"><img src="assets/download.png" width="300px"></a><br>
-	<a href="https://github.com/0neGal/viper/releases"><img src="https://img.shields.io/github/v/release/0neGal/viper" alt="GitHub release (latest by date)"></a>
-	<img src="https://img.shields.io/github/downloads/0neGal/viper/latest/total" alt="GitHub release downloads (latest by date)"></img>
-	<img src="https://img.shields.io/github/downloads/0neGal/viper/total" alt="GitHub release (Total)"></img>
 	<br>
 	<a href="FAQ.md">FAQ</a> | 
 	<a href="https://github.com/0neGal/viper/releases">Releases</a><br>
@@ -22,6 +19,10 @@ Please note that some versions will update themselves automatically when a new r
 **Windows:** [`Viper Setup [x.y.z].exe`](https://github.com/0neGal/viper/releases/download/v1.4.0/Viper-Setup-1.4.0.exe) (auto-updates, and is recommanded), [`Viper [x.y.z].exe`](https://github.com/0neGal/viper/releases/download/v1.4.0/Viper-1.4.0.exe) (single executable, no fuss)
 
 **Linux:** [`.AppImage`](https://github.com/0neGal/viper/releases/download/v1.4.0/Viper-1.4.0.AppImage) or [Flatpak](https://flathub.org/apps/details/com.github._0negal.Viper) (auto-updates), [AUR (unofficial)](https://aur.archlinux.org/packages/viper-bin), [`.deb`](https://github.com/0neGal/viper/releases/download/v1.4.0/viper-1.4.0_amd64.deb), [`.rpm`](https://github.com/0neGal/viper/releases/download/v1.4.0/Viper-1.4.0.x86_64.rpm), [`.tar.gz`](https://github.com/0neGal/viper/releases/download/v1.4.0/Viper-1.4.0.tar.gz)
+
+<a href="https://github.com/0neGal/viper/releases"><img src="https://img.shields.io/github/v/release/0neGal/viper" alt="GitHub release (latest by date)"></a>
+<img src="https://img.shields.io/github/downloads/0neGal/viper/latest/total" alt="GitHub release downloads (latest by date)">
+<img src="https://img.shields.io/github/downloads/0neGal/viper/total" alt="GitHub release (Total)">
 
 ## What can it do specifically?
 
