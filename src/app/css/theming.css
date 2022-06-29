@@ -1,0 +1,62 @@
+/*
+   the only reason some of these properties have an !important property
+   is for it to overwrite Thunderstore's CSS in the preview <webview>
+*/
+
+:root {
+	--red: 199, 119, 127 !important;
+	--red2: 181 97 105;
+
+	--blue: 129, 161, 193;
+	--blue2: 139, 143, 185;
+
+	--orange: 213, 151, 131;
+	--orange2: 197 129 107;
+
+
+	--padding: 25px;
+
+	--bg: rgba(0, 0, 0, 0.5);
+	--selbg: rgba(80, 80, 80, 0.5);
+	--redbg: linear-gradient(45deg, rgb(var(--red)), #FA4343);
+	--bluebg: linear-gradient(45deg, rgb(var(--blue)), #7380ED);
+}
+
+body, button, input {
+	font-family: "Roboto", sans-serif !important;
+}
+
+body, button, img, a {
+	user-select: none;
+	-webkit-user-drag: none;
+}
+
+a {
+	text-decoration: none !important;
+	color: rgb(var(--red)) !important;
+	transition: filter 0.2s ease-in !important;
+}
+
+a:hover {
+	filter: brightness(80%) !important;
+}
+
+
+::-webkit-scrollbar {
+	width: 8px !important;
+}
+ 
+::-webkit-scrollbar-track {
+	border-radius: 10px !important;
+	background: transparent !important;
+}
+ 
+::-webkit-scrollbar-thumb {
+	border-radius: 10px !important;
+	background: rgb(var(--red)) !important;
+}
+
+::selection {
+	color: black !important;
+	background: rgb(var(--red)) !important;
+}

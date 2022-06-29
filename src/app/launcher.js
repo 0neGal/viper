@@ -1,10 +1,14 @@
 const markdown = require("marked").parse;
 
+var servercount;
+var playercount;
+var masterserver;
+
 // Changes the main page
 // This is the tabs in the sidebar
 function page(page) {
-	let pages = document.querySelectorAll(".mainContainer .contentContainer")
-	let btns = document.querySelectorAll(".gamesContainer button")
+	let btns = document.querySelectorAll(".gamesContainer button");
+	let pages = document.querySelectorAll(".mainContainer .contentContainer");
 
 	for (let i = 0; i < pages.length; i++) {
 		pages[i].classList.add("hidden");
@@ -82,7 +86,10 @@ function showVpSection(section) {
 }
 
 function showNsSection(section) {
-	if (!["main", "release", "mods"].includes(section)) throw new Error("unknown ns section");
+	if (!["main", "release", "mods"].includes(section)) {
+		throw new Error("unknown ns section");
+	}
+
 	nsMainBtn.removeAttribute("active");
 	nsModsBtn.removeAttribute("active");
 	nsReleaseBtn.removeAttribute("active");
@@ -107,3 +114,46 @@ function showNsSection(section) {
 			break;
 	}
 }
+
+async function loadServers() {
+	serverstatus.classList.add("checking");
+
+	try {
+		let servers = await (await fetch("https://northstar.tf/client/servers")).json();
+		masterserver = true;
+
+		playercount = 0;
+		servercount = servers.length;
+
+		for (let i = 0; i < servers.length; i++) {
+			playercount += servers[i].playerCount
+		}
+	}catch (err) {
+		playercount = 0;
+		servercount = 0;
+		masterserver = false;
+	}
+
+	serverstatus.classList.remove("checking");
+
+	if (servercount == 0 || ! servercount || ! playercount) {masterserver = false}
+
+	let playerstr = lang("gui.server.players");
+	if (playercount == 1) {
+		playerstr = lang("gui.server.player");
+	}
+
+	if (masterserver) {
+		serverstatus.classList.add("up");
+		serverstatus.innerHTML = `${servercount} ${lang("gui.server.servers")} - ${playercount} ${playerstr}`;
+	} else {
+		serverstatus.classList.add("down");
+		serverstatus.innerHTML = lang("gui.server.offline");
+
+	}
+}; loadServers()
+
+// Refreshes every 5 minutes
+setInterval(() => {
+	loadServers();
+}, 300000)

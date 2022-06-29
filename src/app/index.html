@@ -36,7 +36,10 @@
 				</button>
 			</div>
 			<div class="options">
-				<h2>%%gui.settings.title.ns%%</h2>
+				<div class="title">
+					<img src="icons/game.png">
+					<h2>%%gui.settings.title.ns%%</h2>
+				</div>
 				<div class="option" name="nsargs">
 					<div class="text">
 						%%gui.settings.nsargs.title%%
@@ -48,7 +51,10 @@
 						<input>
 					</div>
 				</div>
-				<h2>%%gui.settings.title.language%%</h2>
+				<div class="title">
+					<img src="icons/language.png">
+					<h2>%%gui.settings.title.language%%</h2>
+				</div>
 				<div class="option" name="autolang">
 					<div class="text">
 						%%gui.settings.autolang.title%%
@@ -73,7 +79,10 @@
 						</select>
 					</div>
 				</div>
-				<h2>%%gui.settings.title.updates%%</h2>
+				<div class="title">
+					<img src="icons/updates.png">
+					<h2>%%gui.settings.title.updates%%</h2>
+				</div>
 				<div class="option" name="autoupdate">
 					<div class="text">
 						%%gui.settings.autoupdate.title%%
@@ -107,6 +116,21 @@
 						<input type="text">
 					</div>
 				</div>
+				<div class="title">
+					<img src="icons/settings.png">
+					<h2>%%gui.settings.title.misc%%</h2>
+				</div>
+				<div class="option" name="originkill">
+					<div class="text">
+						%%gui.settings.originkill.title%%
+						<div class="desc">
+							%%gui.settings.originkill.desc%%
+						</div>
+					</div>
+					<div class="actions">
+						<button class="switch off"></button>
+					</div>
+				</div>
 			</div>
 		</div>
 
@@ -132,6 +156,17 @@
 			<div id="browserEntries">
 				<div class="loading">%%gui.browser.loading%%</div>
 			</div>
+		</div>
+		<div class="popup small" id="preview">
+			<div class="misc fixed vertical">
+				<button id="close" onclick="Preview.hide()">
+					<img src="icons/close.png">
+				</button>
+				<button id="external" onclick="">
+					<img src="icons/external.png">
+				</button>
+			</div>
+			<webview></webview>
 		</div>
 		
 		<nav class="gamesContainer">
@@ -186,6 +221,7 @@
 							<div class="inline">
 								<div id="nsversion"></div>
 								<a id="update" href="#" onclick="update()">(%%gui.update.check%%)</a>
+								<div id="serverstatus" class="checking"></div>
 							</div>
 						</div>
 					</div>
@@ -229,4 +265,4 @@
 		<script src="settings.js"></script>
 		<script src="launcher.js"></script>
 	</body>
-</html>
+<

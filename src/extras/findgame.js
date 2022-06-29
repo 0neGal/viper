@@ -38,13 +38,13 @@ module.exports = async () => {
 		
 		// `.length - 1` This is because the last value is `contentstatsid`
 		for (let i = 0; i < values.length; i++) {
-			let data_array = Object.values(values[i])
+			let data_array = Object.values(values[i]);
 			
 			if (fs.existsSync(data_array[0] + "/steamapps/common/Titanfall2/Titanfall2.exe")) {
-				console.log("Found game in:", data_array[0])
+				console.log("Found game in:", data_array[0]);
 				return data_array[0] + "/steamapps/common/Titanfall2";
 			} else {
-				console.log("Game not in:", data_array[0])
+				console.log("Game not in:", data_array[0]);
 			}
 		}
 	}
@@ -69,10 +69,10 @@ module.exports = async () => {
 	if (folders.length > 0) {
 		for (let i = 0; i < folders.length; i++) {
 			if (! fs.existsSync(folders[i])) {continue}
-			console.log("Searching VDF file at:", folders[i])
+			console.log("Searching VDF file at:", folders[i]);
 
-			let data = fs.readFileSync(folders[i])
-			let read_vdf = readvdf(data.toString())
+			let data = fs.readFileSync(folders[i]);
+			let read_vdf = readvdf(data.toString());
 			if (read_vdf) {return read_vdf}
 		}
 	}
