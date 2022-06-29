@@ -262,17 +262,57 @@ function saveSettings(obj = {}) {
 // Returns the current Northstar version
 // If not installed it'll return "unknown"
 function getNSVersion() {
-	var versionFilePath = path.join(settings.gamepath, "ns_version.txt");
-
-	if (fs.existsSync(versionFilePath)) {
-		return fs.readFileSync(versionFilePath, "utf8");
-	} else {
-		if (gamepathExists()) {
-			fs.writeFileSync(versionFilePath, "unknown");
-		}
-
+	// if NorthstarLauncher.exe doesn't exist, always return "unknown"
+	if (! fs.existsSync(path.join(settings.gamepath, "NorthstarLauncher.exe"))) {
 		return "unknown";
 	}
+
+	// mods to check version of
+	var versionFiles = [
+		"Northstar.Client",
+		"Northstar.Custom",
+		"Northstar.CustomServers"
+	]
+
+	var versions = [];
+
+
+	let add = (version) => {
+		versions.push(version)
+	}
+
+	// checks version of mods
+	for (let i = 0; i < versionFiles.length; i++) {
+		var versionFile = path.join(settings.gamepath, "R2Northstar/mods/", versionFiles[i],"/mod.json");
+		if (fs.existsSync(versionFile)) {
+			if (! fs.statSync(versionFile).isFile()) {
+				add("unknown");
+			}
+
+			try {
+				add("v" + JSON.parse(fs.readFileSync(versionFile, "utf8")).Version);
+			}catch(err) {
+				add("unknown");
+			}
+		} else {
+			add("unknown");
+		}
+	}
+
+	if (versions.includes("unknown")) {return "unknown"}
+
+	// verifies all mods have the same version number
+	let mismatch = false;
+	let baseVersion = versions[0];
+	for (let i = 0; i < versions.length; i++) {
+		if (versions[i] != baseVersion) {
+			mismatch = true;
+			break
+		}
+	}
+
+	if (mismatch) {return "unknown"}
+	return baseVersion;
 }
 
 
@@ -320,6 +360,7 @@ async function update() {
 	var version = getNSVersion();
 
 	const latestAvailableVersion = await requests.getLatestNsVersion();
+	console.log(latestAvailableVersion)
 
 	// Makes sure it is not already the latest version
 	if (version === latestAvailableVersion) {
@@ -367,8 +408,7 @@ async function update() {
 			// installing Northstar.
 			fs.createReadStream(settings.zip).pipe(unzip.Extract({path: settings.gamepath}))
 			.on("finish", () => {
-				fs.writeFileSync(path.join(settings.gamepath, "ns_version.txt"), latestAvailableVersion);
-				ipcMain.emit("get-version");
+				ipcMain.emit("getversion");
 
 				restoreExcludedFiles();
 
