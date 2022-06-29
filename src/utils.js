@@ -413,6 +413,7 @@ async function update() {
 				restoreExcludedFiles();
 
 				ipcMain.emit("gui-getmods");
+				ipcMain.emit("get-version");
 				ipcMain.emit("ns-update-event", "cli.update.uptodate.short");
 				winLog(lang("gui.update.finished"));
 				console.log(lang("cli.update.finished"));
