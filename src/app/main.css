@@ -59,6 +59,10 @@ button:active {filter: brightness(90%)}
 #winbtns #minimize {background-image: url("icons/minimize.png")}
 #winbtns #settings {background-image: url("icons/settings.png")}
 
+#winbtns #settings:hover {
+	transform: rotate(90deg);
+}
+
 #winbtns div:hover {opacity: 1.0}
 #winbtns div:active {transform: scale(0.95)}
 /* } */

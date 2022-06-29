@@ -14,6 +14,7 @@ var settings = {
 	autolang: true,
 	forcedlang: "en",
 	autoupdate: true,
+	originkill: false,
 	zip: "/northstar.zip",
 	lang: navigator.language,
 	excludes: [
@@ -36,9 +37,9 @@ if (fs.existsSync("viper.json")) {
 	}catch (e) {
 		let reset = confirm(lang("general.invalidconfig", navigator.language) + e);
 		if (! reset) {
-			ipcRenderer.send("exit")
+			ipcRenderer.send("exit");
 		} else {
-			fs.writeFileSync("viper.json", "{}")
+			fs.writeFileSync("viper.json", "{}");
 			ipcRenderer.send("relaunch");
 		}
 		
@@ -76,12 +77,12 @@ function launch() {
 		update();
 		shouldInstallNorthstar = false;
 	} else {
-		ipcRenderer.send("launch");
+		ipcRenderer.send("launch-ns");
 	}
 }
 
 // Tells the main process to launch the vanilla game
-function launchVanilla() {ipcRenderer.send("launchVanilla")}
+function launchVanilla() {ipcRenderer.send("launch-vanilla")}
 
 // In conjunction with utils.js' winLog(), it'll send log messages in
 // the devTools from utils.js
@@ -100,13 +101,16 @@ function setButtons(state) {
 		}
 	}
 
-	disablearray(document.querySelectorAll(".playBtnContainer .playBtn"))
-	disablearray(document.querySelectorAll("#nsMods .buttons.modbtns button"))
-	disablearray(document.querySelectorAll("#browser #browserEntries .text button"))
+	disablearray(document.querySelectorAll(".playBtnContainer .playBtn"));
+	disablearray(document.querySelectorAll("#nsMods .buttons.modbtns button"));
+	disablearray(document.querySelectorAll("#browser #browserEntries .text button"));
 }
 
-ipcRenderer.on("setbuttons", (event, state) => {setButtons(state)})
-ipcRenderer.on("gamepathlost", (event, state) => {
+ipcRenderer.on("set-buttons", (event, state) => {
+	setButtons(state);
+})
+
+ipcRenderer.on("gamepath-lost", (event, state) => {
 	page(0);
 	setButtons(false);
 	alert(lang("gui.gamepath.lost"));
@@ -172,7 +176,7 @@ function selected(all) {
 				}
 			}
 
-			ipcRenderer.send("removemod", selected)
+			ipcRenderer.send("remove-mod", selected);
 		},
 		toggle: () => {
 			if (selected.match(/^Northstar\./)) {
@@ -185,7 +189,7 @@ function selected(all) {
 				}
 			}
 
-			ipcRenderer.send("togglemod", selected)
+			ipcRenderer.send("toggle-mod", selected);
 		}
 	}
 }
@@ -195,19 +199,18 @@ let installqueue = [];
 // Tells the main process to install a mod through the file selector
 function installmod() {
 	setButtons(false);
-	ipcRenderer.send("installmod")
+	ipcRenderer.send("install-mod");
 }
 
 // Tells the main process to directly install a mod from this path
 function installFromPath(path) {
 	setButtons(false);
-	ipcRenderer.send("installfrompath", path)
+	ipcRenderer.send("install-from-path", path);
 }
 
 // Tells the main process to install a mod from a URL
 function installFromURL(url, dependencies, clearqueue) {
 	if (clearqueue) {installqueue = []};
-	console.log(installqueue)
 
 	let prettydepends = [];
 
@@ -215,7 +218,6 @@ function installFromURL(url, dependencies, clearqueue) {
 		let newdepends = [];
 		for (let i = 0; i < dependencies.length; i++) {
 			let depend = dependencies[i].toLowerCase();
-			console.log(depend)
 			if (! depend.match(/northstar-northstar-.*/)) {
 				depend = dependencies[i].replaceAll("-", "/");
 				let pkg = depend.split("/");
@@ -237,7 +239,7 @@ function installFromURL(url, dependencies, clearqueue) {
 	}
 
 	setButtons(false);
-	ipcRenderer.send("installfromurl", url, dependencies)
+	ipcRenderer.send("install-from-url", url, dependencies);
 
 	if (dependencies) {
 		installqueue = dependencies;
@@ -262,7 +264,7 @@ function isModInstalled(modname) {
 // Frontend part of settings a new game path
 ipcRenderer.on("newpath", (event, newpath) => {
 	settings.gamepath = newpath;
-	ipcRenderer.send("guigetmods");
+	ipcRenderer.send("gui-getmods");
 })
 
 // Continuation of log()
@@ -310,23 +312,23 @@ ipcRenderer.on("version", (event, versions) => {
 		shouldInstallNorthstar = true;
 		playNsBtn.innerText = lang("gui.installnorthstar");
 	}
-}); ipcRenderer.send("getversion");
+}); ipcRenderer.send("get-version");
 
 // When an update is available it'll ask the user about it
-ipcRenderer.on("updateavailable", () => {
+ipcRenderer.on("update-available", () => {
 	if (confirm(lang("gui.update.available"))) {
-		ipcRenderer.send("updatenow");
+		ipcRenderer.send("update-now");
 	}
 })
 
 // Error out when no game path is set
-ipcRenderer.on("nopathselected", () => {
+ipcRenderer.on("no-path-selected", () => {
 	alert(lang("gui.gamepath.must"));
 	exit();
 });
 
 // Error out when game path is wrong
-ipcRenderer.on("wrongpath", () => {
+ipcRenderer.on("wrong-path", () => {
 	alert(lang("gui.gamepath.wrong"));
 	setpath(false);
 });
@@ -355,7 +357,7 @@ document.addEventListener("drop", (e) => {
     event.stopPropagation();
 
 	dragUI.classList.remove("shown");
-	installFromPath(event.dataTransfer.files[0].path)
+	installFromPath(event.dataTransfer.files[0].path);
 });
 
 document.body.addEventListener("keyup", (e) => {

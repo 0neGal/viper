@@ -350,4 +350,22 @@
 	background: rgb(var(--red));
 }
 
+.switch.on:hover::after {
+	transform: scale(1.2);
+}
+
+.title {
+	display: flex;
+}
+
+.title img {
+	width: 30px;
+	height: 30px;
+	margin: auto 0;
+}
+
+.title h2 {
+	margin-left: calc(var(--padding) / 3);
+}
+
 /* } */

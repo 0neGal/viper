@@ -10,7 +10,7 @@ function setlang() {
 		if (html[i][0] != " " && 
 			html[i][html[i].length - 1] != " ") {
 			// Replaces it with it's string
-			html[i] = lang(html[i])
+			html[i] = lang(html[i]);
 		}
 	}
 	

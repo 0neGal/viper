@@ -18,7 +18,6 @@ var Browser = {
 				}
 			}
 
-			console.log(other)
 			return pkgs;
 		},
 		get: () => {
@@ -88,8 +87,8 @@ var Browser = {
 	toggle: (state) => {
 		if (state) {
 			browser.scrollTo(0, 0);
-			overlay.classList.add("shown")
-			browser.classList.add("shown")
+			overlay.classList.add("shown");
+			browser.classList.add("shown");
 
 			if (browserEntries.querySelectorAll(".el").length == 0) {
 				Browser.loadfront();
@@ -98,16 +97,16 @@ var Browser = {
 		} else if (! state) {
 			if (state != undefined) {
 				Browser.filters.toggle(false);
-				overlay.classList.remove("shown")
-				browser.classList.remove("shown")
-				preview.classList.remove("shown")
+				overlay.classList.remove("shown");
+				browser.classList.remove("shown");
+				preview.classList.remove("shown");
 				return
 			}
 		}
 
 		browser.scrollTo(0, 0);
-		overlay.classList.toggle("shown")
-		browser.classList.toggle("shown")
+		overlay.classList.toggle("shown");
+		browser.classList.toggle("shown");
 	},
 	loadfront: async () => {
 		Browser.loading();
@@ -162,11 +161,11 @@ var Browser = {
 		}
 
 		if (pkgs.length == 0 || isEnd) {
-			Browser.msg(`${lang('gui.browser.endoflist')}`)
+			Browser.msg(`${lang('gui.browser.endoflist')}`);
 			return
 		}
 
-		Browser.msg(`<button id="loadmore">${lang("gui.browser.loadmore")}</button>`)
+		Browser.msg(`<button id="loadmore">${lang("gui.browser.loadmore")}</button>`);
 		loadmore.addEventListener("click", () => {
 			Browser.loadpkgs(pkgs);
 			Browser.endoflist(pkgs);
@@ -177,7 +176,7 @@ var Browser = {
 		let res = fuse.search(string);
 
 		if (res.length < 1) {
-			Browser.loading(lang("gui.browser.noresults"))
+			Browser.loading(lang("gui.browser.noresults"));
 			return
 		}
 
@@ -244,12 +243,11 @@ var Browser = {
 				}
 
 				Browser.endoflist();
-				console.log(pkgs)
 				break
 			}
 
 			try {
-				new BrowserElFromObj(pkgs[i])
+				new BrowserElFromObj(pkgs[i]);
 			}catch(e) {}
 
 			count++;
@@ -375,7 +373,7 @@ function BrowserEl(properties) {
 	browserEntries.appendChild(entry);
 }
 
-ipcRenderer.on("removedmod", (event, mod) => {
+ipcRenderer.on("removed-mod", (event, mod) => {
 	setButtons(true);
 	Browser.setbutton(mod.name, lang("gui.browser.install"));
 	if (mod.manifestname) {
@@ -383,7 +381,7 @@ ipcRenderer.on("removedmod", (event, mod) => {
 	}
 })
 
-ipcRenderer.on("failedmod", (event, modname) => {
+ipcRenderer.on("failed-mod", (event, modname) => {
 	setButtons(true);
 	new Toast({
 		timeout: 10000,
@@ -393,7 +391,7 @@ ipcRenderer.on("failedmod", (event, modname) => {
 	})
 })
 
-ipcRenderer.on("installedmod", (event, mod) => {
+ipcRenderer.on("installed-mod", (event, mod) => {
 	setButtons(true);
 	Browser.setbutton(mod.name, lang("gui.browser.reinstall"));
 
@@ -420,10 +418,12 @@ ipcRenderer.on("installedmod", (event, mod) => {
 
 function normalize(items) {
 	let main = (string) => {
-		return string.replaceAll(" ", "").replaceAll(".", "").replaceAll("-", "").replaceAll("_", "").toLowerCase()
+		return string.replaceAll(" ", "")
+			.replaceAll(".", "").replaceAll("-", "")
+			.replaceAll("_", "").toLowerCase();
 	}
 	if (typeof items == "string") {
-		return main(items)
+		return main(items);
 	} else {
 		let newArray = [];
 		for (let i = 0; i < items.length; i++) {
@@ -462,7 +462,6 @@ events.forEach((event) => {
 		let mouseAt = document.elementsFromPoint(mouseX, mouseY);
 		if (! mouseAt.includes(document.querySelector("#filter"))
 			&& ! mouseAt.includes(document.querySelector(".overlay"))) {
-			console.log(mouseAt)
 			Browser.filters.toggle(false);
 		}
 	})
@@ -498,5 +497,7 @@ browser.addEventListener("mousemove", (event) => {
 
 let checks = document.querySelectorAll(".check");
 for (let i = 0; i < checks.length; i++) {
-	checks[i].setAttribute("onclick", "this.classList.toggle('checked');Browser.loadfront();search.value = ''")
+	checks[i].setAttribute("onclick", 
+		"this.classList.toggle('checked');Browser.loadfront();search.value = ''"
+	)
 }

@@ -29,6 +29,7 @@ var settings = {
 	autolang: true,
 	forcedlang: "en",
 	autoupdate: true,
+	originkill: false,
 	nsargs: "-multiple",
 	zip: "/northstar.zip",
 
@@ -42,12 +43,12 @@ var settings = {
 
 // Logs into the dev tools of the renderer
 function winLog(msg) {
-	ipcMain.emit("winLog", msg, msg);
+	ipcMain.emit("win-log", msg, msg);
 }
 
 // Sends an alert to the renderer
 function winAlert(msg) {
-	ipcMain.emit("winAlert", msg, msg);
+	ipcMain.emit("win-alert", msg, msg);
 }
 
 // Creates the settings file with the base settings if it doesn't exist.
@@ -101,6 +102,47 @@ async function isGameRunning() {
 	});
 }
 
+// checks if any origin processes are running
+async function isOriginRunning() {
+	return new Promise(resolve => {
+		let procs = ["Origin.exe", "OriginClientService.exe"];
+		let cmd = (() => {
+			switch (process.platform) {
+				case "linux": return "ps -A";
+				case "win32": return "tasklist";
+			}
+		})();
+
+		exec(cmd, (err, stdout) => {
+			procs.forEach(proc => {
+				if (stdout.includes(proc)) {
+					resolve(true);
+					return;
+				}
+				resolve(false);
+			});
+		});
+	});
+}
+
+// kill origin processes
+async function killOrigin() {
+	return new Promise(resolve => {
+		let proc = "Origin.exe"; //I'm pretty sure we only have to kill this one
+		let cmd = (() => {
+			switch (process.platform) {
+				case "linux": return "killall " + proc;
+				case "win32": return "taskkill /IM " + proc + " /F";
+			}
+		})();
+
+		exec(cmd, (err, stdout) => {
+			// just try and fail silently if we don't find it w/e
+			resolve(true);
+		});
+	});
+}
+
 // Handles auto updating Northstar.
 //
 // It uses isGameRunning() to ensure it doesn't run while the game is
@@ -121,7 +163,7 @@ function handleNorthstarUpdating() {
 			if (await isGameRunning()) {
 				console.log(lang("cli.autoupdates.gamerunning"));
 				new Notification({
-					title: lang("gui.nsupdate.gaming.title"), 
+					title: lang("gui.nsupdate.gaming.title"),
 					body: lang("gui.nsupdate.gaming.body")
 				}).show();
 			} else {
@@ -129,11 +171,11 @@ function handleNorthstarUpdating() {
 				update();
 			}
 		} else {
-			console.log(lang("cli.autoupdates.noupdate"))
+			console.log(lang("cli.autoupdates.noupdate"));
 		}
 
 		setTimeout(
-			_checkForUpdates, 
+			_checkForUpdates,
 			15 * 60 * 1000
 			// interval in between each update check
 			// by default 15 minutes.
@@ -187,11 +229,11 @@ async function setpath(win, forcedialog) {
 				return;
 			}
 			if (! fs.existsSync(path.join(res.filePaths[0], "Titanfall2.exe"))) {
-				ipcMain.emit("wrongpath");
+				ipcMain.emit("wrong-path");
 				return;
 			}
 
-			setGamepath(res.filePaths[0])
+			setGamepath(res.filePaths[0]);
 
 			cli.exit();
 			return;
@@ -294,7 +336,7 @@ function restoreExcludedFiles() {
 	for (let i = 0; i < settings.excludes.length; i++) {
 		let exclude = path.join(settings.gamepath + "/" + settings.excludes[i]);
 		if (fs.existsSync(exclude + ".excluded")) {
-			fs.renameSync(exclude + ".excluded", exclude)
+			fs.renameSync(exclude + ".excluded", exclude);
 		}
 	}
 }
@@ -331,7 +373,7 @@ async function update() {
 	} else {
 		if (version != "unknown") {
 			console.log(lang("cli.update.current"), version);
-		}; 
+		};
 		console.log(lang("cli.update.downloading") + ":", latestAvailableVersion);
 		ipcMain.emit("ns-update-event", "cli.update.downloading");
 	}
@@ -340,7 +382,7 @@ async function update() {
 	for (let i = 0; i < settings.excludes.length; i++) {
 		let exclude = path.join(settings.gamepath + "/" + settings.excludes[i]);
 		if (fs.existsSync(exclude)) {
-			fs.renameSync(exclude, exclude + ".excluded")
+			fs.renameSync(exclude, exclude + ".excluded");
 		}
 	}
 
@@ -370,7 +412,7 @@ async function update() {
 
 				restoreExcludedFiles();
 
-				ipcMain.emit("guigetmods");
+				ipcMain.emit("gui-getmods");
 				ipcMain.emit("ns-update-event", "cli.update.uptodate.short");
 				winLog(lang("gui.update.finished"));
 				console.log(lang("cli.update.finished"));
@@ -420,19 +462,21 @@ function updatevp(autoinstall) {
 // however it'll be added at some point.
 function launch(version) {
 	if (process.platform == "linux") {
-		console.error("error:", lang("cli.launch.linuxerror"))
+		winAlert(lang("cli.launch.linuxerror"));
+		console.error("error:", lang("cli.launch.linuxerror"));
 		cli.exit(1);
+		return;
 	}
 
 	process.chdir(settings.gamepath);
 	switch(version) {
 		case "vanilla":
-			console.log(lang("general.launching"), "Vanilla...")
-			run(path.join(settings.gamepath + "/Titanfall2.exe"))
+			console.log(lang("general.launching"), "Vanilla...");
+			run(path.join(settings.gamepath + "/Titanfall2.exe"));
 			break;
 		default:
-			console.log(lang("general.launching"), "Northstar...")
-			run(path.join(settings.gamepath + "/NorthstarLauncher.exe"))
+			console.log(lang("general.launching"), "Northstar...");
+			run(path.join(settings.gamepath + "/NorthstarLauncher.exe"));
 			break;
 	}
 }
@@ -458,8 +502,8 @@ const mods = {
 		let modpath = path.join(settings.gamepath, "R2Northstar/mods");
 
 		if (getNSVersion() == "unknown") {
-			winLog(lang("general.notinstalled"))
-			console.log("error: " + lang("general.notinstalled"))
+			winLog(lang("general.notinstalled"));
+			console.log("error: " + lang("general.notinstalled"));
 			cli.exit(1);
 			return false;
 		}
@@ -468,7 +512,7 @@ const mods = {
 		let disabled = [];
 
 		if (! fs.existsSync(modpath)) {
-			fs.mkdirSync(path.join(modpath), {recursive: true})
+			fs.mkdirSync(path.join(modpath), {recursive: true});
 			return {
 				enabled: [],
 				disabled: [],
@@ -476,7 +520,7 @@ const mods = {
 			};
 		}
 
-		files = fs.readdirSync(modpath)
+		files = fs.readdirSync(modpath);
 		files.forEach((file) => {
 			if (fs.statSync(path.join(modpath, file)).isDirectory()) {
 				let modjson = path.join(modpath, file, "mod.json");
@@ -527,8 +571,8 @@ const mods = {
 		let modpath = path.join(settings.gamepath, "R2Northstar/mods");
 
 		if (getNSVersion() == "unknown") {
-			winLog(lang("general.notinstalled"))
-			console.log("error: " + lang("general.notinstalled"))
+			winLog(lang("general.notinstalled"));
+			console.log("error: " + lang("general.notinstalled"));
 			cli.exit(1);
 			return false;
 		}
@@ -553,11 +597,11 @@ const mods = {
 		let file = path.join(modpath, "..", "enabledmods.json");
 
 		if (! fs.existsSync(modpath)) {
-			fs.mkdirSync(path.join(modpath), {recursive: true})
+			fs.mkdirSync(path.join(modpath), {recursive: true});
 		}
 
 		if (! fs.existsSync(file)) {
-			fs.writeFileSync(file, "{}")
+			fs.writeFileSync(file, "{}");
 		}
 
 		return {
@@ -568,7 +612,7 @@ const mods = {
 					names[list[i].Name] = true
 				}
 
-				fs.writeFileSync(file, JSON.stringify(names))
+				fs.writeFileSync(file, JSON.stringify(names));
 			},
 			disable: (mod) => {
 				let data = JSON.parse(repair(fs.readFileSync(file, "utf8")));
@@ -614,15 +658,15 @@ const mods = {
 		let modname = mod.replace(/^.*(\\|\/|\:)/, "");
 
 		if (getNSVersion() == "unknown") {
-			winLog(lang("general.notinstalled"))
-			console.log("error: " + lang("general.notinstalled"))
+			winLog(lang("general.notinstalled"));
+			console.log("error: " + lang("general.notinstalled"));
 			cli.exit(1);
 			return false;
 		}
 
 		let notamod = () => {
-			winLog(lang("gui.mods.notamod"))
-			console.log("error: " + lang("cli.mods.notamod"))
+			winLog(lang("gui.mods.notamod"));
+			console.log("error: " + lang("cli.mods.notamod"));
 			cli.exit(1);
 			return false;
 		}
@@ -631,30 +675,30 @@ const mods = {
 			console.log(lang("cli.mods.installed"));
 			cli.exit();
 
-			winLog(lang("gui.mods.installedmod"))
+			winLog(lang("gui.mods.installedmod"));
 
 			if (modname == "mods") {
-				let manifest = path.join(app.getPath("userData"), "Archives/manifest.json")
+				let manifest = path.join(app.getPath("userData"), "Archives/manifest.json");
 
 				if (fs.existsSync(manifest)) {
 					modname = require(manifest).name;
 				}
 			}
 
-			ipcMain.emit("installedmod", "", {
+			ipcMain.emit("installed-mod", "", {
 				name: modname,
 				malformed: malformed,
 			});
-			ipcMain.emit("guigetmods");
+			ipcMain.emit("gui-getmods");
 			return true;
 		}
 
 		if (! fs.existsSync(mod)) {return notamod()}
 
 		if (fs.statSync(mod).isDirectory()) {
-			winLog(lang("gui.mods.installing"))
+			winLog(lang("gui.mods.installing"));
 			files = fs.readdirSync(mod);
-			if (fs.existsSync(path.join(mod, "mod.json")) && 
+			if (fs.existsSync(path.join(mod, "mod.json")) &&
 				fs.statSync(path.join(mod, "mod.json")).isFile()) {
 
 				if (fs.existsSync(path.join(modpath, modname))) {
@@ -662,8 +706,8 @@ const mods = {
 				}
 				let copydest = path.join(modpath, modname);
 				if (typeof destname == "string") {copydest = path.join(modpath, destname)}
-				copy(mod, copydest)
-				copy(manifestfile, path.join(copydest, "manifest.json"))
+				copy(mod, copydest);
+				copy(manifestfile, path.join(copydest, "manifest.json"));
 
 				return installed();
 			} else {
@@ -674,7 +718,7 @@ const mods = {
 						if (fs.existsSync(path.join(mod, files[i], "mod.json")) &&
 							fs.statSync(path.join(mod, files[i], "mod.json")).isFile()) {
 
-							mods.install(path.join(mod, files[i]))
+							mods.install(path.join(mod, files[i]));
 							if (mods.install(path.join(mod, files[i]))) {return true};
 						}
 					}
@@ -685,7 +729,7 @@ const mods = {
 
 			return notamod();
 		} else {
-			winLog(lang("gui.mods.extracting"))
+			winLog(lang("gui.mods.extracting"));
 			let cache = path.join(app.getPath("userData"), "Archives");
 			if (fs.existsSync(cache)) {
 				fs.rmSync(cache, {recursive: true});
@@ -717,7 +761,7 @@ const mods = {
 									}
 
 									if (files.length == 0) {
-										ipcMain.emit("failedmod");
+										ipcMain.emit("failed-mod");
 										return notamod();
 									}
 								}
@@ -748,12 +792,12 @@ const mods = {
 
 			if (fs.existsSync(tmp)) {
 				if (! fs.statSync(tmp).isDirectory()) {
-					fs.rmSync(tmp)
+					fs.rmSync(tmp);
 				}
 			} else {
-				fs.mkdirSync(tmp)
+				fs.mkdirSync(tmp);
 				if (fs.existsSync(modlocation)) {
-					fs.rmSync(modlocation)
+					fs.rmSync(modlocation);
 				}
 			}
 
@@ -775,8 +819,8 @@ const mods = {
 		let modpath = path.join(settings.gamepath, "R2Northstar/mods");
 
 		if (getNSVersion() == "unknown") {
-			winLog(lang("general.notinstalled"))
-			console.log("error: " + lang("general.notinstalled"))
+			winLog(lang("general.notinstalled"));
+			console.log("error: " + lang("general.notinstalled"));
 			cli.exit(1);
 			return false;
 		}
@@ -784,19 +828,19 @@ const mods = {
 		if (mod == "allmods") {
 			let modlist = mods.list().all;
 			for (let i = 0; i < modlist.length; i++) {
-				mods.remove(modlist[i].Name)
+				mods.remove(modlist[i].Name);
 			}
 			return
 		}
 
 		let disabled = path.join(modpath, "disabled");
 		if (! fs.existsSync(disabled)) {
-			fs.mkdirSync(disabled)
+			fs.mkdirSync(disabled);
 		}
 
 		let modName = mods.get(mod).FolderName;
 		if (! modName) {
-			console.log("error: " + lang("cli.mods.cantfind"))
+			console.log("error: " + lang("cli.mods.cantfind"));
 			cli.exit(1);
 			return;
 		}
@@ -816,8 +860,8 @@ const mods = {
 			fs.rmSync(modPath, {recursive: true});
 			console.log(lang("cli.mods.removed"));
 			cli.exit();
-			ipcMain.emit("guigetmods");
-			ipcMain.emit("removedmod", "", {
+			ipcMain.emit("gui-getmods");
+			ipcMain.emit("removed-mod", "", {
 				name: mod.replace(/^.*(\\|\/|\:)/, ""),
 				manifestname: manifestname
 			});
@@ -834,8 +878,8 @@ const mods = {
 	// function. However we currently have no need for that.
 	toggle: (mod, fork) => {
 		if (getNSVersion() == "unknown") {
-			winLog(lang("general.notinstalled"))
-			console.log("error: " + lang("general.notinstalled"))
+			winLog(lang("general.notinstalled"));
+			console.log("error: " + lang("general.notinstalled"));
 			cli.exit(1);
 			return false;
 		}
@@ -843,7 +887,7 @@ const mods = {
 		if (mod == "allmods") {
 			let modlist = mods.list().all;
 			for (let i = 0; i < modlist.length; i++) {
-				mods.toggle(modlist[i].Name, true)
+				mods.toggle(modlist[i].Name, true);
 			}
 
 			console.log(lang("cli.mods.toggledall"));
@@ -856,17 +900,17 @@ const mods = {
 			console.log(lang("cli.mods.toggled"));
 			cli.exit();
 		}
-		ipcMain.emit("guigetmods");
+		ipcMain.emit("gui-getmods");
 	}
 };
 
 setInterval(() => {
 	if (gamepathExists()) {
-		ipcMain.emit("guigetmods");
+		ipcMain.emit("gui-getmods");
 	} else {
 		if (fs.existsSync("viper.json")) {
 			if (settings.gamepath != "") {
-				ipcMain.emit("gamepathlost");
+				ipcMain.emit("gamepath-lost");
 			}
 		}
 	}
@@ -874,19 +918,27 @@ setInterval(() => {
 
 module.exports = {
 	mods,
-	lang,
 	winLog,
-	launch,
+
 	update,
-	setpath,
 	updatevp,
-	settings,
-	saveSettings,
 	getNSVersion,
 	getTF2Version,
-	isGameRunning,
-	gamepathExists,
 	handleNorthstarUpdating,
+
+	launch,
+	killOrigin,
+	isGameRunning,
+	isOriginRunning,
+
+
+	settings,
+	saveSettings,
+
+	setpath,
+	gamepathExists,
+
+	lang,
 	setlang: (lang) => {
 		settings.lang = lang;
 		saveSettings();
