@@ -2,6 +2,7 @@
 	<img src="src/assets/icons/512x512.png" width="200px"><br>
 	<a href="https://github.com/0neGal/viper/releases/download/v1.6.0/Viper-Setup-1.6.0.exe"><img src="assets/download.png" width="300px"></a><br>
 	<a href="FAQ.md">FAQ</a> | 
+	<a href="CONTRIBUTING.md">Contributing</a> | 
 	<a href="https://github.com/0neGal/viper/releases">Releases</a><br>
 </p>
 
