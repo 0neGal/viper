@@ -70,6 +70,7 @@ Some of the existing launchers are listed below:
  * [VTOL](https://github.com/BigSpice/VTOL) - an updater and manager for mods, very feature rich
  * [r2modman](https://github.com/ebkr/r2modmanPlus) - General purpose mod manager, which has support for Northstar
  * [Papa](https://github.com/AnActualEmerald/papa/) - a CLI only installer, updater, and mod manager
+ * [FIITE](https://github.com/EladNLG/FastestInstallerInTheEast) - a minimalistic CLI installer and updater.
 
 ## Development
 
