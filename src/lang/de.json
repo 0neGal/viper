@@ -2,9 +2,9 @@
 	"lang.title": "German - Deutsch",
 
 	"cli.help.help": "Zeigt die Hilfe Nachricht an.",
-	"cli.help.debug": "öffnet Entwickler/Debug Werkzeuge.",
+	"cli.help.debug": "Öffnet Entwickler/Debug Werkzeuge.",
 	"cli.help.version": "Gibt die Versions Informationen aus.",
-	"cli.help.cli": "zwingt die CLI Einstellung auf an.",
+	"cli.help.cli": "Zwingt die CLI Einstellung auf an.",
 	"cli.help.update": "Aktualisiert den Installationspfad von Northstar, durch den gegeben Installationspfad von Titanfall 2.",
 	"cli.help.setpath": "Setzt den Installationspfad von Titanfall 2.",
 	"cli.help.updatevp": "Aktualisiert Viper, falls dies unterstützt wird.",
