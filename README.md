@@ -20,6 +20,10 @@ Please note that some versions will update themselves automatically when a new r
 
 **Linux:** [`.AppImage`](https://github.com/0neGal/viper/releases/download/v1.6.1/Viper-1.6.1.AppImage) or [Flatpak](https://flathub.org/apps/details/com.github._0negal.Viper) (auto-updates), [AUR (unofficial)](https://aur.archlinux.org/packages/viper-bin), [`.deb`](https://github.com/0neGal/viper/releases/download/v1.6.1/viper-1.6.1_amd64.deb), [`.rpm`](https://github.com/0neGal/viper/releases/download/v1.6.1/Viper-1.6.1.x86_64.rpm), [`.tar.gz`](https://github.com/0neGal/viper/releases/download/v1.6.1/Viper-1.6.1.tar.gz)
 
+<a href="https://github.com/0neGal/viper/releases"><img src="https://img.shields.io/github/v/release/0neGal/viper" alt="GitHub release (latest by date)"></a>
+<img src="https://img.shields.io/github/downloads/0neGal/viper/latest/total" alt="GitHub release downloads (latest by date)">
+<img src="https://img.shields.io/flathub/downloads/com.github._0negal.Viper?label=Flathub%20installs" alt="Flathub installs (Total)">
+
 ## What can it do specifically?
 
 <p>
