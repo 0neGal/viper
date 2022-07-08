@@ -22,7 +22,7 @@ Please note that some versions will update themselves automatically when a new r
 
 <a href="https://github.com/0neGal/viper/releases"><img src="https://img.shields.io/github/v/release/0neGal/viper" alt="GitHub release (latest by date)"></a>
 <img src="https://img.shields.io/github/downloads/0neGal/viper/latest/total" alt="GitHub release downloads (latest by date)">
-<img src="https://img.shields.io/github/downloads/0neGal/viper/total" alt="GitHub release (Total)">
+<img src="https://img.shields.io/flathub/downloads/com.github._0negal.Viper?label=Flathub%20installs" alt="Flathub installs (Total)">
 
 ## What can it do specifically?
 
