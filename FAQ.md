@@ -1,3 +1,10 @@
+<p align="center">
+	<img src="src/assets/icons/512x512.png" width="200px"><br>
+	<a href="FAQ.md">FAQ</a> | 
+	<a href="CONTRIBUTING.md">Contributing</a> | 
+	<a href="https://github.com/0neGal/viper/releases">Releases</a><br>
+</p>
+
 ## Frequently Asked Questions (FAQ)
 
 ### How do I install Viper?

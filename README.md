@@ -1,7 +1,8 @@
 <p align="center">
 	<img src="src/assets/icons/512x512.png" width="200px"><br>
-	<a href="https://github.com/0neGal/viper/releases/download/v1.6.0/Viper-Setup-1.6.0.exe"><img src="assets/download.png" width="300px"></a><br>
+	<a href="https://github.com/0neGal/viper/releases/download/v1.6.1/Viper-Setup-1.6.1.exe"><img src="assets/download.png" width="300px"></a><br>
 	<a href="FAQ.md">FAQ</a> | 
+	<a href="CONTRIBUTING.md">Contributing</a> | 
 	<a href="https://github.com/0neGal/viper/releases">Releases</a><br>
 </p>
 
@@ -15,9 +16,9 @@ Downloads are available on the [releases page](https://github.com/0neGal/viper/r
 
 Please note that some versions will update themselves automatically when a new release is available (just like Origin or Steam) and some will NOT, so choose it accordingly. Only the AppImage, Flatpak and Windows Setup/Installer can auto-update.
 
-**Windows:** [`Viper Setup [x.y.z].exe`](https://github.com/0neGal/viper/releases/download/v1.6.0/Viper-Setup-1.6.0.exe) (auto-updates, and is recommanded), [`Viper [x.y.z].exe`](https://github.com/0neGal/viper/releases/download/v1.6.0/Viper-1.6.0.exe) (single executable, no fuss)
+**Windows:** [`Viper Setup [x.y.z].exe`](https://github.com/0neGal/viper/releases/download/v1.6.1/Viper-Setup-1.6.1.exe) (auto-updates, and is recommanded), [`Viper [x.y.z].exe`](https://github.com/0neGal/viper/releases/download/v1.6.1/Viper-1.6.1.exe) (single executable, no fuss)
 
-**Linux:** [`.AppImage`](https://github.com/0neGal/viper/releases/download/v1.6.0/Viper-1.6.0.AppImage) or [Flatpak](https://flathub.org/apps/details/com.github._0negal.Viper) (auto-updates), [AUR (unofficial)](https://aur.archlinux.org/packages/viper-bin), [`.deb`](https://github.com/0neGal/viper/releases/download/v1.6.0/viper-1.6.0_amd64.deb), [`.rpm`](https://github.com/0neGal/viper/releases/download/v1.6.0/Viper-1.6.0.x86_64.rpm), [`.tar.gz`](https://github.com/0neGal/viper/releases/download/v1.6.0/Viper-1.6.0.tar.gz)
+**Linux:** [`.AppImage`](https://github.com/0neGal/viper/releases/download/v1.6.1/Viper-1.6.1.AppImage) or [Flatpak](https://flathub.org/apps/details/com.github._0negal.Viper) (auto-updates), [AUR (unofficial)](https://aur.archlinux.org/packages/viper-bin), [`.deb`](https://github.com/0neGal/viper/releases/download/v1.6.1/viper-1.6.1_amd64.deb), [`.rpm`](https://github.com/0neGal/viper/releases/download/v1.6.1/Viper-1.6.1.x86_64.rpm), [`.tar.gz`](https://github.com/0neGal/viper/releases/download/v1.6.1/Viper-1.6.1.tar.gz)
 
 <a href="https://github.com/0neGal/viper/releases"><img src="https://img.shields.io/github/v/release/0neGal/viper" alt="GitHub release (latest by date)"></a>
 <img src="https://img.shields.io/github/downloads/0neGal/viper/latest/total" alt="GitHub release downloads (latest by date)">
@@ -70,9 +71,10 @@ Given that we already have so many Northstar updaters and launchers I urge peopl
 Some of the existing launchers are listed below:
  * Viper - A launcher, updater and mod manager with an easy to use GUI
  * [ViperSH](https://github.com/0neGal/viper-sh) - A Bourne Shell, CLI only, Northstar updater and mod manager
- * [Ronin](https://github.com/MindSwipe/ronin) - a CLI only updater
  * [VTOL](https://github.com/BigSpice/VTOL) - an updater and manager for mods, very feature rich
  * [r2modman](https://github.com/ebkr/r2modmanPlus) - General purpose mod manager, which has support for Northstar
+ * [Papa](https://github.com/AnActualEmerald/papa/) - a CLI only installer, updater, and mod manager
+ * [FIITE](https://github.com/EladNLG/FastestInstallerInTheEast) - a minimalistic CLI installer and updater.
 
 ## Development
 

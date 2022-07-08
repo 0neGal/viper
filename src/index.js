@@ -209,7 +209,7 @@ ipcMain.on("newpath", (event, newpath) => {
 	if (newpath === false && ! win.isVisible()) {
 		win.send("no-path-selected");
 	} else {
-		_sendVersionsInfo();
+		sendVersionsInfo();
 		if (!win.isVisible()) {
 			win.show();
 		}
