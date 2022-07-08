@@ -20,7 +20,7 @@ async function init() {
 		case "win-setup":
 			url = get(/Viper-Setup-.*\.exe$/);
 			break;
-		case "win-installer":
+		case "win-portable":
 			url = get(/Viper-.*\.exe$/);
 			break;
 		case "appimage":
