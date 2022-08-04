@@ -103,6 +103,20 @@ async function getNsReleaseNotes() {
                     _saveCache(cache);
                     resolve( cache[NORTHSTAR_RELEASE_NOTES_KEY]["body"] );
                 });
+            })
+            
+            // When GitHub cannot be reached (when user doesn't have Internet 
+            // access for instance), we return latest cache content even if 
+            // it's not up-to-date, or display an error message if cache
+            // is empty.
+            .on('error', () => {
+                if ( cache[NORTHSTAR_RELEASE_NOTES_KEY] ) {
+                    console.warn("Couldn't fetch Northstar release notes, returning data from cache.");
+                    resolve( cache[NORTHSTAR_RELEASE_NOTES_KEY]["body"] );
+                } else {
+                    console.error("Couldn't fetch Northstar release notes, cache is empty.");
+                    resolve( ["Couldn't fetch Northstar release notes.\nTry again later!"] );
+                }
             });
         }
     });
@@ -140,6 +154,20 @@ async function getVpReleaseNotes() {
                     _saveCache(cache);
                     resolve( cache[VIPER_RELEASE_NOTES_KEY]["body"] );
                 });
+            })
+
+            // When GitHub cannot be reached (when user doesn't have Internet 
+            // access for instance), we return latest cache content even if 
+            // it's not up-to-date, or display an error message if cache
+            // is empty.
+            .on('error', () => {
+                if ( cache[VIPER_RELEASE_NOTES_KEY] ) {
+                    console.warn("Couldn't fetch Viper release notes, returning data from cache.");
+                    resolve( cache[VIPER_RELEASE_NOTES_KEY]["body"] );
+                } else {
+                    console.error("Couldn't fetch Viper release notes, cache is empty.");
+                    resolve( ["Couldn't fetch Viper release notes.\nTry again later!"] );
+                }
             });
         }
     });
