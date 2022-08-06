@@ -24,4 +24,5 @@ jobs:
         with:
           name: dist
           path: |
-            dist
+            dist/latest.yml
+            dist/*.exe*
