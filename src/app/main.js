@@ -122,6 +122,7 @@ ipcRenderer.on("ns-update-event", (event, key) => {
 	console.log(lang(key));
 	switch(key) {
 		case "cli.update.uptodate.short":
+		case "cli.update.noInternet":
 			setButtons(true);
 			playNsBtn.innerText = lang("gui.launch");
 			break;

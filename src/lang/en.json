@@ -22,6 +22,7 @@
 	"cli.update.finished": "Installation/Update finished!",
 	"cli.update.uptodate": "Latest version (%s) is already installed, skipping update.",
 	"cli.update.uptodate.short": "Up-to-date",
+	"cli.update.noInternet": "No Internet connection",
 
 	"cli.autoupdates.checking": "Checking for Northstar updates...",
 	"cli.autoupdates.available": "Northstar update available!",
