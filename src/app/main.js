@@ -1,6 +1,6 @@
 const fs = require("fs");
 const path = require("path");
-const { ipcRenderer, shell } = require("electron");
+const { ipcRenderer, shell, ipcMain } = require("electron");
 
 const lang = require("../lang");
 var modsobj = {};
@@ -61,6 +61,11 @@ if (fs.existsSync("viper.json")) {
 } else {
 	setpath();
 }
+
+
+// Show a toast message if no Internet connection has been detected.
+if (!navigator.onLine) 
+	ipcRenderer.send("no-internet");
 
 function exit() {ipcRenderer.send("exit")}
 function update() {ipcRenderer.send("update")}

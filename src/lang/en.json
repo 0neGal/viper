@@ -139,6 +139,9 @@
 	"gui.toast.desc.malformed": "has an incorrect folder structure, if you're the developer, you should fix this.",
 	"gui.toast.desc.failed": "An unknown error occurred while trying to install the mod. This may be the author's fault, and it may also be Viper's fault.",
 
+	"gui.toast.noInternet.title": "No Internet",
+	"gui.toast.noInternet.desc": "Viper may not work properly.",
+
 	"viper.menu.main": "Viper",
 	"viper.menu.release": "Release Notes",
 	"viper.menu.info": "Extras",
