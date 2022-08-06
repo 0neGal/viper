@@ -2,6 +2,7 @@ const { app } = require("electron");
 const path = require("path");
 const fs = require("fs");
 const { https } = require("follow-redirects");
+const lang = require("../lang");
 
 
 // all requests results are stored in this file
@@ -120,7 +121,7 @@ async function getNsReleaseNotes() {
                     resolve( cache[NORTHSTAR_RELEASE_NOTES_KEY]["body"] );
                 } else {
                     console.error("Couldn't fetch Northstar release notes, cache is empty.");
-                    resolve( ["Couldn't fetch Northstar release notes.\nTry again later!"] );
+                    resolve( [lang("request.northstar.noReleaseNotes")] );
                 }
             });
         }
@@ -171,7 +172,7 @@ async function getVpReleaseNotes() {
                     resolve( cache[VIPER_RELEASE_NOTES_KEY]["body"] );
                 } else {
                     console.error("Couldn't fetch Viper release notes, cache is empty.");
-                    resolve( ["Couldn't fetch Viper release notes.\nTry again later!"] );
+                    resolve( [lang("request.viper.noReleaseNotes")] );
                 }
             });
         }
