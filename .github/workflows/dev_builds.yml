@@ -1,0 +1,27 @@
+name: Development builds CI
+on:
+  push:
+  pull_request:
+    types: [opened, reopened]
+
+jobs:
+  build:
+    name: "Create development builds"
+    runs-on: "windows-latest"
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - name: Setup Node environment
+        uses: actions/setup-node@v3
+          with:
+            node-version: 16
+      - name: Install dependencies
+        run: npm ci
+      - name: Create builds
+        run: npm run build
+      - name: Archive production artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: dist
+          path: |
+            dist
