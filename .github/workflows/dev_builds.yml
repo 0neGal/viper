@@ -6,7 +6,7 @@ on:
 
 jobs:
   build:
-    name: "Create development builds"
+    name: "Create Windows development builds"
     runs-on: "windows-latest"
     steps:
       - name: Checkout repository
@@ -18,7 +18,7 @@ jobs:
       - name: Install dependencies
         run: npm install --force
       - name: Create builds
-        run: npm run build
+        run: npm run build:windows
       - name: Archive production artifacts
         uses: actions/upload-artifact@v3
         with:
