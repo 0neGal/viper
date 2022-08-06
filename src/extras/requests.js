@@ -58,6 +58,11 @@ async function getLatestNsVersion() {
                     _saveCache(cache);
                     resolve( cache[NORTHSTAR_LATEST_RELEASE_KEY]["body"]["tag_name"] );
                 });
+            })
+            
+            .on('error', () => {
+                console.error('Failed to get latest Northstar version.');
+                resolve( false );
             });
         }
     });
