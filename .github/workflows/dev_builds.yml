@@ -25,3 +25,26 @@ jobs:
           name: viper-windows-builds
           path: |
             dist/*.exe
+  build-linux:
+    name: "Create Linux development builds"
+    runs-on: "ubuntu-latest"
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - name: Setup Node environment
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+      - name: Install dependencies
+        run: npm install --force
+      - name: Create builds
+        run: npm run build:linux
+      - name: Archive production artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: viper-linux-builds
+          path: |
+            dist/*.AppImage
+            dist/*.tar.gz
+            dist/*.deb
+            dist/*.rpm
