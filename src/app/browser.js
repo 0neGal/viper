@@ -392,7 +392,6 @@ ipcRenderer.on("failed-mod", (event, modname) => {
 })
 
 ipcRenderer.on("no-internet", (event, modname) => {
-	console.log('yo')
 	setButtons(true);
 	new Toast({
 		timeout: 10000,

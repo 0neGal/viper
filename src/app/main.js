@@ -64,8 +64,9 @@ if (fs.existsSync("viper.json")) {
 
 
 // Show a toast message if no Internet connection has been detected.
-if (!navigator.onLine) 
+if (!navigator.onLine) {
 	ipcRenderer.send("no-internet");
+}
 
 function exit() {ipcRenderer.send("exit")}
 function update() {ipcRenderer.send("update")}

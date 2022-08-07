@@ -155,7 +155,7 @@ function handleNorthstarUpdating() {
 	async function _checkForUpdates() {
 		let localVersion = getNSVersion();
 		let distantVersion = await requests.getLatestNsVersion();
-		if (distantVersion == false) return;
+		if (distantVersion == false) { return; }
 		console.log(lang("cli.autoupdates.checking"));
 
 		// Checks if NS is outdated
