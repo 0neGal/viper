@@ -5,7 +5,7 @@ on:
     types: [opened, reopened]
 
 jobs:
-  build:
+  build-windows:
     name: "Create Windows development builds"
     runs-on: "windows-latest"
     steps:
