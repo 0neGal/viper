@@ -1,6 +1,7 @@
 name: Release CI
 on:
-  release
+  release:
+    types: [published]
 jobs:
   build-windows:
     name: "Create Windows development builds"
