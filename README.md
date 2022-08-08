@@ -102,6 +102,10 @@ Keep in mind building all Linux builds may take a while on some systems as packa
 
 ## Credits
 
+<a href="https://github.com/0neGal/viper/graphs/contributors">
+	<img src="https://contrib.rocks/image?repo=0neGal/viper" />
+</a>
+
 **Logo:** Imply#9781<br>
 **Viper Background:** [Uber Panzerhund](https://www.reddit.com/r/titanfall/comments/fwuh2x/take_to_the_skies)<br>
 **Titanfall+Northstar Logo:** [Aftonstjarma](https://www.steamgriddb.com/logo/47851)
