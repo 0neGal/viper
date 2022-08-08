@@ -1,0 +1,24 @@
+name: Release CI
+on:
+  release
+jobs:
+  build-windows:
+    name: "Create Windows development builds"
+    runs-on: "windows-latest"
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - name: Setup Node environment
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+      - name: Install dependencies
+        run: npm install --force
+      - name: Create builds
+        run: npm run build:windows
+      - name: Upload production artifacts to release
+        uses: xresloader/upload-to-github-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          file: "dist/*.exe;dist/latest.yml"
