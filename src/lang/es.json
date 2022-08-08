@@ -24,6 +24,7 @@
 	"cli.update.finished": "Instalación/Actualización completada!",
 	"cli.update.uptodate": "La ultima versión (%s) ya está instalada, omitiendo actualización.",
 	"cli.update.uptodate.short": "Está actualizado",
+	"cli.update.noInternet": "Sin conexión a internet",
 
 	"cli.autoupdates.checking": "Buscando actualizaciones de Northstar...",
 	"cli.autoupdates.available": "¡Actualización de Northsar disponible!",
@@ -132,7 +133,10 @@
 	"gui.toast.desc.installed": "¡Ha sido instalado exitosamente!",
 	"gui.toast.desc.malformed": "tiene una estructura de carpetas incorrecta, si usted es el desarrollador, debe corregir esto.",
 	"gui.toast.desc.failed": "Se produjo un error desconocido al intentar instalar la modificación. Esto puede ser culpa del autor de la modificación, y también puede ser culpa de Viper.",
-
+	
+	"gui.toast.noInternet.title": "Sin Internet",
+	"gui.toast.noInternet.desc": "Viper puede funcionar de forma incorrecta.",
+	
 	"gui.server.player": "jugador",
 	"gui.server.players": "jugadores",
 	"gui.server.servers": "servidores",
@@ -158,4 +162,7 @@
 	"general.notinstalled": "¡Northstar no se ha instalado!",
 	"general.launching": "Ejecutando",
 	"general.invalidconfig": "Su archivo de configuración está formateado de forma incorrecta, si ha sido editado manualmente, por favor valide que ha sido escrito correctamente. \n\nSi no ha editado manualmente el archivo de configuración, es recomendado que simplemente restaure la configuración. \n\nPara restaurar tu configuración simplemente de click en \"OK\" a continuación. \n\nMas detalles:\n"
+	
+	"request.viper.noReleaseNotes": "No se pudo encontrar las notas de lanzamiento de Viper.\n¡Intenta mas tarde!",
+	"request.northstar.noReleaseNotes": "No se pudo encontrar las notas de lanzamiento de Northstar.\n¡Intenta mas tarde!"
 }
