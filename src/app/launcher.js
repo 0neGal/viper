@@ -26,12 +26,16 @@ function page(page) {
 function formatRelease(notes) {
 	let content = "";
 
-	for (let release of notes) {
-		if (release.prerelease) {continue}
-		content += "# " + release.name + "\n\n"	+ release.body + "\n\n\n";
+	if (notes.length === 1) {
+		content = notes[0];
+	} else {
+		for (let release of notes) {
+			if (release.prerelease) {continue}
+			content += "# " + release.name + "\n\n"	+ release.body + "\n\n\n";
+		}
+	
+		content = content.replaceAll(/\@(\S+)/g, `<a href="https://github.com/$1">@$1</a>`);
 	}
-
-	content = content.replaceAll(/\@(\S+)/g, `<a href="https://github.com/$1">@$1</a>`);
 
 	return markdown(content, {
 		breaks: true

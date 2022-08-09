@@ -391,6 +391,16 @@ ipcRenderer.on("failed-mod", (event, modname) => {
 	})
 })
 
+ipcRenderer.on("no-internet", (event, modname) => {
+	setButtons(true);
+	new Toast({
+		timeout: 10000,
+		scheme: "error",
+		title: lang("gui.toast.noInternet.title"),
+		description: lang("gui.toast.noInternet.desc")
+	})
+})
+
 ipcRenderer.on("installed-mod", (event, mod) => {
 	setButtons(true);
 	Browser.setbutton(mod.name, lang("gui.browser.reinstall"));
