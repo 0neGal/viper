@@ -22,6 +22,7 @@
 	"cli.update.finished": "Installation/Aktualisierung abeschlossen!",
 	"cli.update.uptodate": "Installation ist bereits auf dem neusten Stand (%s), aktualisieren wird übersprungen.",
 	"cli.update.uptodate.short": "Auf dem neusten stand",
+	"cli.update.noInternet": "Keine Internetverbindung",
 
 	"cli.autoupdates.checking": "Überprüfe Northstar auf Updates...",
 	"cli.autoupdates.available": "Ein Update für Northstar wurde gefunden!",
@@ -137,6 +138,9 @@
 	"gui.toast.desc.malformed": "hat eine fehlerhafte Ordnerstruktur, falls du der Entwickler bist, solltest du dies beheben.",
 	"gui.toast.desc.failed": "Ein unbekannter Fehler ist aufgetaucht beim Installieren, die Schuld kann beim Autor liegen oder bei Viper selbst!",
 
+	"gui.toast.noInternet.title": "Kein Internet",
+	"gui.toast.noInternet.desc": "Viper funktioniert möglicherweise nicht korrekt",
+
 	"viper.menu.main": "Viper",
 	"viper.menu.release": "Release Notes",
 	"viper.menu.info": "Extras",
@@ -156,5 +160,8 @@
 	"general.missingpath": "Installationspfad konnte nicht automatisch gefunden werden, bitte setze diesen manuell!",
 	"general.notinstalled": "Northstar ist nicht installiert!",
 	"general.launching": "Starte!",
-	"general.invalidconfig": "Deine Konfigurationsdatei ist nicht richtig formatiert, falls diese manuell verändert wurde bitte stelle sicher das alles korrekt ist.\n\nFalls du diese nicht manuell verändert hast, ist es empfohlen diese zurückzusetzen!\n\nUm sie zurückzusetzen drücke einfach auf \"Ok\".\n\nWeitere Informationen:\n"
+	"general.invalidconfig": "Deine Konfigurationsdatei ist nicht richtig formatiert, falls diese manuell verändert wurde bitte stelle sicher das alles korrekt ist.\n\nFalls du diese nicht manuell verändert hast, ist es empfohlen diese zurückzusetzen!\n\nUm sie zurückzusetzen drücke einfach auf \"Ok\".\n\nWeitere Informationen:\n",
+
+	"request.viper.noReleaseNotes": "Viper Release Notes konnten nicht geladen werden.\nVersuche es erneut später!",
+	"request.northstar.noReleaseNotes": "Northstar Release Notes konnten nicht geladen werden.\nVersuche es erneut später!"
 }

@@ -71,6 +71,7 @@ function start() {
 	ipcMain.on("removed-mod", (event, modname) => {send("removed-mod", modname)});
 	ipcMain.on("gui-getmods", (event, ...args) => {send("mods", utils.mods.list())});
 	ipcMain.on("installed-mod", (event, modname) => {send("installed-mod", modname)});
+	ipcMain.on("no-internet", () => {send("no-internet")});
 
 	// install calls
 	ipcMain.on("install-from-path", (event, path) => {utils.mods.install(path)});

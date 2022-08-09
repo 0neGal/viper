@@ -155,6 +155,7 @@ function handleNorthstarUpdating() {
 	async function _checkForUpdates() {
 		let localVersion = getNSVersion();
 		let distantVersion = await requests.getLatestNsVersion();
+		if (distantVersion == false) { return; }
 		console.log(lang("cli.autoupdates.checking"));
 
 		// Checks if NS is outdated
@@ -361,6 +362,10 @@ async function update() {
 
 	const latestAvailableVersion = await requests.getLatestNsVersion();
 	console.log(latestAvailableVersion)
+	if (latestAvailableVersion == false) {
+		ipcMain.emit("ns-update-event", "cli.update.noInternet");
+		return;
+	}
 
 	// Makes sure it is not already the latest version
 	if (version === latestAvailableVersion) {
