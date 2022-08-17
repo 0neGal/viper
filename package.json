@@ -29,7 +29,6 @@
 		"langs": "node build/langs.js",
 		"start": "npx electron src/index.js",
 		"debug": "npx electron src/index.js --debug",
-		"man": "npx marked-man docs/viper.1.md > docs/viper.1",
 		"build": "npx electron-builder --win nsis --win portable --linux",
 		"build:windows": "npx electron-builder --win nsis --win portable",
 		"build:linux": "npx electron-builder --linux",
@@ -54,7 +53,6 @@
 		"fuse.js": "^6.5.3",
 		"jsonrepair": "^2.2.1",
 		"marked": "^4.0.10",
-		"marked-man": "^0.7.0",
 		"recursive-copy": "^2.0.13",
 		"simple-vdf": "^1.1.1",
 		"unzipper": "^0.10.11"
