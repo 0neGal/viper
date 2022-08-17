@@ -24,6 +24,7 @@
 	"cli.update.finished": "Instalación/Actualización completada!",
 	"cli.update.uptodate": "La ultima versión (%s) ya está instalada, omitiendo actualización.",
 	"cli.update.uptodate.short": "Está actualizado",
+	"cli.update.noInternet": "Sin conexión a internet",
 
 	"cli.autoupdates.checking": "Buscando actualizaciones de Northstar...",
 	"cli.autoupdates.available": "¡Actualización de Northsar disponible!",
@@ -137,6 +138,9 @@
 	"gui.server.players": "jugadores",
 	"gui.server.servers": "servidores",
 	"gui.server.offline": "El servidor Master está desconectado",
+
+	"gui.toast.noInternet.title": "Sin Internet",
+	"gui.toast.noInternet.desc": "Viper puede funcionar de forma incorrecta.",
 	
 	"viper.menu.main": "Viper",
 	"viper.menu.release": "Notas de la versión",
@@ -157,5 +161,8 @@
 	"general.missingpath": "¡La ruta del jueno no se ha podido encontrar automaticamente! ¡Por favor, elige la ruta manualmente!",
 	"general.notinstalled": "¡Northstar no se ha instalado!",
 	"general.launching": "Ejecutando",
-	"general.invalidconfig": "Su archivo de configuración está formateado de forma incorrecta, si ha sido editado manualmente, por favor valide que ha sido escrito correctamente. \n\nSi no ha editado manualmente el archivo de configuración, es recomendado que simplemente restaure la configuración. \n\nPara restaurar tu configuración simplemente de click en \"OK\" a continuación. \n\nMas detalles:\n"
+	"general.invalidconfig": "Su archivo de configuración está formateado de forma incorrecta, si ha sido editado manualmente, por favor valide que ha sido escrito correctamente. \n\nSi no ha editado manualmente el archivo de configuración, es recomendado que simplemente restaure la configuración. \n\nPara restaurar tu configuración simplemente de click en \"OK\" a continuación. \n\nMas detalles:\n",
+
+	"request.viper.noReleaseNotes": "No se pudo encontrar las notas de lanzamiento de Viper.\n¡Intenta mas tarde!",
+	"request.northstar.noReleaseNotes": "No se pudo encontrar las notas de lanzamiento de Northstar.\n¡Intenta mas tarde!"
 }

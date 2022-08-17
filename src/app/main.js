@@ -1,6 +1,6 @@
 const fs = require("fs");
 const path = require("path");
-const { ipcRenderer, shell } = require("electron");
+const { ipcRenderer, shell, ipcMain } = require("electron");
 
 const lang = require("../lang");
 var modsobj = {};
@@ -60,6 +60,12 @@ if (fs.existsSync("viper.json")) {
 	}
 } else {
 	setpath();
+}
+
+
+// Show a toast message if no Internet connection has been detected.
+if (!navigator.onLine) {
+	ipcRenderer.send("no-internet");
 }
 
 function exit() {ipcRenderer.send("exit")}
@@ -122,6 +128,7 @@ ipcRenderer.on("ns-update-event", (event, key) => {
 	console.log(lang(key));
 	switch(key) {
 		case "cli.update.uptodate.short":
+		case "cli.update.noInternet":
 			setButtons(true);
 			playNsBtn.innerText = lang("gui.launch");
 			break;
