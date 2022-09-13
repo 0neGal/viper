@@ -13,7 +13,6 @@ const findgame = require("./extras/findgame");
 
 const unzip = require("unzipper");
 const repair = require("jsonrepair");
-const run = require("child_process").spawn;
 const exec = require("child_process").exec;
 const { https } = require("follow-redirects");
 
@@ -491,11 +490,11 @@ function launch(version) {
 	switch(version) {
 		case "vanilla":
 			console.log(lang("general.launching"), "Vanilla...");
-			run(path.join(settings.gamepath + "/Titanfall2.exe"));
+			exec("Titanfall2.exe", {cwd: settings.gamepath});
 			break;
 		default:
 			console.log(lang("general.launching"), "Northstar...");
-			run(path.join(settings.gamepath + "/NorthstarLauncher.exe"));
+			exec("NorthstarLauncher.exe", {cwd: settings.gamepath});
 			break;
 	}
 }
