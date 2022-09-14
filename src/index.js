@@ -105,7 +105,7 @@ function start() {
 		if (cli.hasParam("no-vp-updates")) {
 			utils.handleNorthstarUpdating();
 		} else {
-			utils.updatevp(false)
+			utils.updateViper(false)
 		}
 	} else {
 		utils.handleNorthstarUpdating();
@@ -146,7 +146,7 @@ ipcMain.on("launch-vanilla", () => {utils.launch("vanilla")});
 
 ipcMain.on("setlang", (event, lang) => {utils.setlang(lang)});
 
-ipcMain.on("update", () => {utils.update()})
+ipcMain.on("update-northstar", () => {utils.updateNorthstar()})
 ipcMain.on("setpath-cli", () => {utils.setpath()});
 ipcMain.on("setpath", (event, value) => {
 	if (! value) {
@@ -224,8 +224,8 @@ process.chdir(app.getPath("appData"));
 
 // starts the GUI or CLI
 if (cli.hasArgs()) {
-	if (cli.hasParam("updatevp")) {
-		utils.updatevp(true);
+	if (cli.hasParam("update-viper")) {
+		utils.updateViper(true);
 	} else {
 		cli.init();
 	}

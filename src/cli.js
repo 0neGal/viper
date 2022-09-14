@@ -18,11 +18,11 @@ function hasArgs() {
 		cli.hasSwitch("launch") ||
 		cli.hasSwitch("setpath") ||
 		cli.hasSwitch("version") ||
-		cli.hasSwitch("updatevp") ||
 		cli.hasSwitch("gamepath") ||
 		cli.hasSwitch("togglemod") ||
 		cli.hasSwitch("removemod") ||
-		cli.hasSwitch("installmod")) {
+		cli.hasSwitch("installmod") ||
+		cli.hasSwitch("update-viper")) {
 		return true;
 	} else {return false}
 }
@@ -64,7 +64,7 @@ async function init() {
 
   --cli           ${lang("cli.help.cli")}
   --update        ${lang("cli.help.update")}
-  --updatevp      ${lang("cli.help.updatevp")}
+  --update-viper  ${lang("cli.help.updatevp")}
   --setpath       ${lang("cli.help.setpath")}
   --no-vp-updates ${lang("cli.help.novpupdates")}
 
