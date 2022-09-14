@@ -22,7 +22,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          file: "dist/*.exe;dist/latest.yml"
+          file: "dist/*.exe*;dist/latest.yml"
           release_id: ${{ github.event.release.id }}
           draft: false
   build-linux:
