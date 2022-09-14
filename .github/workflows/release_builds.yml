@@ -24,6 +24,7 @@ jobs:
         with:
           file: "dist/*.exe;dist/latest.yml"
           release_id: ${{ github.event.release.id }}
+          draft: false
   build-linux:
     name: "Create Linux release builds"
     runs-on: "ubuntu-latest"
@@ -45,3 +46,4 @@ jobs:
         with:
           file: "dist/*.AppImage;dist/*.tar.gz;dist/*.deb;dist/*.rpm"
           release_id: ${{ github.event.release.id }}
+          draft: false
