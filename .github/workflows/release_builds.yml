@@ -24,3 +24,24 @@ jobs:
         with:
           file: "dist/*.exe;dist/latest.yml"
           release_id: ${{ github.event.release.id }}
+  build-linux:
+    name: "Create Linux release builds"
+    runs-on: "ubuntu-latest"
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - name: Setup Node environment
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+      - name: Install dependencies
+        run: npm install --force
+      - name: Create builds
+        run: npm run build:linux
+      - name: Upload production artifacts to release
+        uses: xresloader/upload-to-github-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          file: "dist/*.AppImage;dist/*.tar.gz;dist/*.deb;dist/*.rpm"
+          release_id: ${{ github.event.release.id }}
