@@ -4,7 +4,7 @@ on:
     types: [ created ]
 jobs:
   build-windows:
-    name: "Create Windows development builds"
+    name: "Create Windows release builds"
     runs-on: "windows-latest"
     steps:
       - name: Checkout repository
