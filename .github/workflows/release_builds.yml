@@ -44,6 +44,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          file: "dist/*.AppImage;dist/*.tar.gz;dist/*.deb;dist/*.rpm"
+          file: "dist/*.AppImage;dist/*.tar.gz;dist/*.deb;dist/*.rpm;dist/latest-linux.yml"
           release_id: ${{ github.event.release.id }}
           draft: false
