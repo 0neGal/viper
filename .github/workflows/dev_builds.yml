@@ -25,6 +25,11 @@ jobs:
           name: viper-windows-builds
           path: |
             dist/*.exe
+      - name: Upload installer executable
+        uses: actions/upload-artifact@v3
+        with:
+          path: |
+            dist/Viper-Setup*.exe
   build-linux:
     name: "Create Linux development builds"
     runs-on: "ubuntu-latest"
