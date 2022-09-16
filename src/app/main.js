@@ -69,7 +69,7 @@ if (!navigator.onLine) {
 }
 
 function exit() {ipcRenderer.send("exit")}
-function update() {ipcRenderer.send("update")}
+function updateNorthstar() {ipcRenderer.send("update-northstar")}
 
 // Reports to the main process about game path status.
 // @param {boolean} value is game path loaded
@@ -80,7 +80,7 @@ function setpath(value = false) {
 // Tells the main process to launch or install Northstar
 function launch() {
 	if (shouldInstallNorthstar) {
-		update();
+		updateNorthstar();
 		shouldInstallNorthstar = false;
 	} else {
 		ipcRenderer.send("launch-ns");

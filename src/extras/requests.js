@@ -6,7 +6,7 @@ const lang = require("../lang");
 
 
 // all requests results are stored in this file
-const cachePath = path.join(app.getPath("cache"), "requests.json");
+const cachePath = path.join(app.getPath("cache"), "viper-requests.json");
 const NORTHSTAR_LATEST_RELEASE_KEY = "nsLatestRelease";
 const NORTHSTAR_RELEASE_NOTES_KEY = "nsReleaseNotes";
 const VIPER_RELEASE_NOTES_KEY = "vpReleaseNotes";

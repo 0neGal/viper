@@ -13,7 +13,6 @@ const findgame = require("./extras/findgame");
 
 const unzip = require("unzipper");
 const repair = require("jsonrepair");
-const run = require("child_process").spawn;
 const exec = require("child_process").exec;
 const { https } = require("follow-redirects");
 
@@ -169,7 +168,7 @@ function handleNorthstarUpdating() {
 				}).show();
 			} else {
 				console.log(lang("cli.autoupdates.updatingns"));
-				update();
+				updateNorthstar();
 			}
 		} else {
 			console.log(lang("cli.autoupdates.noupdate"));
@@ -353,7 +352,7 @@ restoreExcludedFiles();
 // As to handle not overwriting files we rename certain files to
 // <file>.excluded, then rename them back after the extraction. The
 // unzip module does not support excluding files directly.
-async function update() {
+async function updateNorthstar() {
 	if (! gamepathExists()) {return}
 
 	ipcMain.emit("ns-update-event", "cli.update.checking");
@@ -446,7 +445,7 @@ async function update() {
 // This uses electron updater to easily update and publish releases, it
 // simply fetches it from GitHub and updates if it's outdated, very
 // useful. Not much we have to do on our side.
-function updatevp(autoinstall) {
+function updateViper(autoinstall) {
 	const { autoUpdater } = require("electron-updater");
 
 	if (! autoUpdater.isUpdaterActive()) {
@@ -491,11 +490,11 @@ function launch(version) {
 	switch(version) {
 		case "vanilla":
 			console.log(lang("general.launching"), "Vanilla...");
-			run(path.join(settings.gamepath + "/Titanfall2.exe"));
+			exec("Titanfall2.exe", {cwd: settings.gamepath});
 			break;
 		default:
 			console.log(lang("general.launching"), "Northstar...");
-			run(path.join(settings.gamepath + "/NorthstarLauncher.exe"));
+			exec("NorthstarLauncher.exe", {cwd: settings.gamepath});
 			break;
 	}
 }
@@ -939,10 +938,10 @@ module.exports = {
 	mods,
 	winLog,
 
-	update,
-	updatevp,
+	updateViper,
 	getNSVersion,
 	getTF2Version,
+	updateNorthstar,
 	handleNorthstarUpdating,
 
 	launch,
