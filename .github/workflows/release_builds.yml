@@ -14,7 +14,7 @@ jobs:
         with:
           node-version: 16
       - name: Install dependencies
-        run: npm install --force
+        run: npm install
       - name: Create builds
         run: npm run build:windows
       - name: Upload production artifacts to release
@@ -37,7 +37,7 @@ jobs:
         with:
           node-version: 16
       - name: Install dependencies
-        run: npm install --force
+        run: npm install
       - name: Create builds
         run: npm run build:linux
       - name: Upload production artifacts to release

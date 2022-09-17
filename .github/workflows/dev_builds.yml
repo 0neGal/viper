@@ -16,7 +16,7 @@ jobs:
         with:
           node-version: 16
       - name: Install dependencies
-        run: npm install --force
+        run: npm install
       - name: Create builds
         run: npm run build:windows
       - name: Archive production artifacts
@@ -36,7 +36,7 @@ jobs:
         with:
           node-version: 16
       - name: Install dependencies
-        run: npm install --force
+        run: npm install
       - name: Create builds
         run: npm run build:linux
       - name: Archive production artifacts
