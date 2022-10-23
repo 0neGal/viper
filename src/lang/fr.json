@@ -22,6 +22,7 @@
 	"cli.update.finished": "Mise à jour terminée !",
 	"cli.update.uptodate": "La dernière version (%s) est déjà installée.",
 	"cli.update.uptodate.short": "Votre client est à jour",
+	"cli.update.noInternet": "Pas de connexion Internet",
 
 	"cli.autoupdates.checking": "Vérifications des mises à jour de Northstar...",
 	"cli.autoupdates.available": "Une mise à jour de Northstar est disponible !",
@@ -68,14 +69,17 @@
 	"gui.mods.installing": "Installation du mod...",
 	"gui.mods.installedmod": "Mod installé !",
 	"gui.mods.dragdrop": "Glissez/déposez un mod pour l'installer",
+	"gui.mods.confirmdependencies": "Ce mod a des dépendances (affichées ci-dessous), cliquer \"Ok\" les installera en même temps que le mod.\n\n",
 
 	"gui.browser.info": "Info",
+	"gui.browser.view": "Voir",
 	"gui.browser.madeby": "par",
 	"gui.browser.search": "Rechercher",
 	"gui.browser.update": "Mise à jour",
 	"gui.browser.install": "Installer",
 	"gui.browser.reinstall": "Réinstaller",
 	"gui.browser.loading": "Chargement des mods...",
+	"gui.browser.loadmore": "Charger plus de mods...",
 	"gui.browser.endoflist": "Fin de la liste de mods.<br>Utilisez la barre de recherche pour en trouver davantage !",
 	"gui.browser.noresults": "Pas de résultat",
 	"gui.browser.filter.mods": "Mods",
@@ -89,6 +93,7 @@
 	"gui.settings.title.linux": "Linux",
 	"gui.settings.title.language": "Langue",
 	"gui.settings.title.updates": "Mises à jour",
+	"gui.settings.title.misc": "Divers",
 	"gui.settings.nsargs.title": "Options de lancement",
 	"gui.settings.nsargs.desc": "Vous pouvez ajouter ici des options de démarrage pour Northstar/Titanfall.",
 	"gui.settings.wineprefix.title": "Préfixe Wine",
@@ -105,6 +110,8 @@
 	"gui.settings.nsupdate.desc": "Viper tient automatiquement Northstar à jour (n'empêche pas de le mettre à jour manuellement via sa page dédiée).",
 	"gui.settings.excludes.title": "Fichiers à conserver",
 	"gui.settings.excludes.desc": "Lorsque Northstar est mis à jour, ces fichiers ne seront pas écrasés par ceux provenant de la mise à jour; les noms de fichiers sont séparés par un espace.",
+	"gui.settings.originkill.title": "Quitter automatiquement Origin",
+	"gui.settings.originkill.desc": "Lorsque Viper est fermé, Origin sera également automatiquement fermé.",
 
 	"gui.update.downloading": "Téléchargement de la mise à jour...",
 	"gui.update.extracting": "Extraction des fichiers...",
@@ -114,6 +121,11 @@
 
 	"gui.nsupdate.gaming.title": "Mise à jour Northstar disponible !",
 	"gui.nsupdate.gaming.body": "Une mise à jour pour Northstar est disponible.\nVous pourrez l'installer après avoir fermé le jeu.",
+
+	"gui.server.player": "joueur",
+	"gui.server.players": "joueurs",
+	"gui.server.servers": "serveurs",
+	"gui.server.offline": "Le serveur maître est hors-ligne",
 
 	"gui.launch": "Jouer",
 	"gui.running": "En cours d'exécution",
@@ -137,6 +149,9 @@
 	"wine.originnotfound": "Origin ne peut être trouvé dans le préfixe Wine sélectionné.",
 	"wine.cantfindprefix": "Viper n'a pas pu trouver et configurer votre préfixe Wine.",
 
+	"gui.toast.noInternet.title": "Pas de connexion Internet",
+	"gui.toast.noInternet.desc": "Viper ne fonctionnera pas correctement tant que la connexion n'est pas rétablie.",
+
 	"viper.menu.main": "Viper",
 	"viper.menu.release": "Notes de mises à jour",
 	"viper.menu.info": "Informations",
@@ -155,5 +170,9 @@
 	"general.mods.installed": "Mods installés :",
 	"general.missingpath": "Le chemin du client n'a pu être trouvé automatiquement, merci de le sélectionner manuellement.",
 	"general.notinstalled": "Northstar n'est pas installé !",
-	"general.launching": "Lancement"
+	"general.launching": "Lancement",
+	"general.invalidconfig": "Votre fichier de configuration n'est pas formaté correctement ; si vous l'avez manuellement édité, veuillez vérifier son contenu.\n\nSinon, il est recommandé de remettre la configuration à zéro.\n\nPour cela, cliquez sur le bouton \"Ok\" en-dessous de ce message.\n\nPlus d'informations :\n",
+
+	"request.viper.noReleaseNotes": "Impossible de récupérer les notes de mises à jour de Viper.\nVeuillez réessayer plus tard.",
+	"request.northstar.noReleaseNotes": "Impossible de récupérer les notes de mises à jour de Northstar.\nVeuillez réessayer plus tard."
 }

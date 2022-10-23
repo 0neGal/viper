@@ -22,6 +22,7 @@
 	"cli.update.finished": "Installation/Update finished!",
 	"cli.update.uptodate": "Latest version (%s) is already installed, skipping update.",
 	"cli.update.uptodate.short": "Up-to-date",
+	"cli.update.noInternet": "No Internet connection",
 
 	"cli.autoupdates.checking": "Checking for Northstar updates...",
 	"cli.autoupdates.available": "Northstar update available!",
@@ -68,15 +69,18 @@
 	"gui.mods.installing": "Installing mod...",
 	"gui.mods.installedmod": "Installed mod!",
 	"gui.mods.dragdrop": "Drag and drop a mod to install",
+	"gui.mods.confirmdependencies": "This package has dependencies, shown below, clicking \"Ok\" will install the package and the dependencies.\n\n",
 
 	"gui.browser.info": "Info",
+	"gui.browser.view": "View",
 	"gui.browser.madeby": "by",
 	"gui.browser.search": "Search...",
 	"gui.browser.update": "Update",
 	"gui.browser.install": "Install",
 	"gui.browser.reinstall": "Re-Install",
 	"gui.browser.loading": "Loading mods...",
-	"gui.browser.endoflist": "Maximum packages has been loaded.<br>Use the search for finding other packages!",
+	"gui.browser.loadmore": "Load more...",
+	"gui.browser.endoflist": "All packages have been loaded.",
 	"gui.browser.noresults": "No results...",
 	"gui.browser.filter.mods": "Mods",
 	"gui.browser.filter.skins": "Skins",
@@ -89,6 +93,7 @@
 	"gui.settings.title.ns": "Northstar",
 	"gui.settings.title.language": "Language",
 	"gui.settings.title.updates": "Updates",
+	"gui.settings.title.misc": "Miscellaneous",
 	"gui.settings.nsargs.title": "Launch options",
 	"gui.settings.nsargs.desc": "Here you can add launch options for Northstar/Titanfall.",
 	"gui.settings.wineprefix.title": "Wine Prefix",
@@ -105,6 +110,8 @@
 	"gui.settings.nsupdate.desc": "Viper will automatically keep Northstar up-to-date, however it can still manually be updated through the Northstar page.",
 	"gui.settings.excludes.title": "Retain files on update",
 	"gui.settings.excludes.desc": "When Northstar is updated, files specified here will not be overwritten by files from the new Northstar update, unless you know what you're changing, you should probably not change anything here. Each file is separated with a space.",
+	"gui.settings.originkill.title": "Automatically quit Origin",
+	"gui.settings.originkill.desc": "When Viper exits, automatically quit Origin as well.",
 
 	"gui.update.downloading": "Downloading...",
 	"gui.update.extracting": "Extracting update...",
@@ -114,6 +121,11 @@
 
 	"gui.nsupdate.gaming.title": "Northstar update available!",
 	"gui.nsupdate.gaming.body": "An update for Northstar is available.\nYou can force its installation after closing the game.",
+
+	"gui.server.player": "player",
+	"gui.server.players": "players",
+	"gui.server.servers": "servers",
+	"gui.server.offline": "Masterserver is Offline",
 
 	"gui.launch": "Launch",
 	"gui.running": "Running",
@@ -137,6 +149,9 @@
 	"wine.originnotfound": "Origin can't be found in the selected Wine prefix.",
 	"wine.cantfindprefix": "Viper was unable to automatically find and set your Wine prefix.",
 
+	"gui.toast.noInternet.title": "No Internet",
+	"gui.toast.noInternet.desc": "Viper may not work properly.",
+
 	"viper.menu.main": "Viper",
 	"viper.menu.release": "Release Notes",
 	"viper.menu.info": "Extras",
@@ -155,5 +170,9 @@
 	"general.mods.installed": "Installed mods:",
 	"general.missingpath": "Game location could not be found automatically! Please select it manually!",
 	"general.notinstalled": "Northstar is not installed!",
-	"general.launching": "Launching"
+	"general.launching": "Launching",
+	"general.invalidconfig": "Your config file is improperly formatted, if it's been manually edited, please validate that everything is typed correctly.\n\nIf you did not manually edit the config file, it is recommended to simply reset the config.\n\nTo reset your config file simply click \"Ok\" below.\n\nMore details:\n",
+
+	"request.viper.noReleaseNotes": "Couldn't fetch Viper release notes.\nTry again later!",
+	"request.northstar.noReleaseNotes": "Couldn't fetch Northstar release notes.\nTry again later!"
 }

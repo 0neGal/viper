@@ -1,7 +1,8 @@
 <p align="center">
 	<img src="src/assets/icons/512x512.png" width="200px"><br>
-	<a href="https://github.com/0neGal/viper/releases/download/v1.3.3/Viper-Setup-1.3.3.exe"><img src="assets/download.png" width="300px"></a><br>
-	<a href="https://github.com/0neGal/viper/projects/1">Overview</a> | 
+	<a href="https://0negal.github.io/viper/index.html?win-setup"><img src="assets/download.png" width="300px"></a><br>
+	<a href="FAQ.md">FAQ</a> | 
+	<a href="CONTRIBUTING.md">Contributing</a> | 
 	<a href="https://github.com/0neGal/viper/releases">Releases</a><br>
 </p>
 
@@ -15,9 +16,13 @@ Downloads are available on the [releases page](https://github.com/0neGal/viper/r
 
 Please note that some versions will update themselves automatically when a new release is available (just like Origin or Steam) and some will NOT, so choose it accordingly. Only the AppImage, Flatpak and Windows Setup/Installer can auto-update.
 
-**Windows:** [`Viper Setup [x.y.z].exe`](https://github.com/0neGal/viper/releases/download/v1.3.3/Viper-Setup-1.3.3.exe) (auto-updates, and is recommanded), [`Viper [x.y.z].exe`](https://github.com/0neGal/viper/releases/download/v1.3.3/Viper-1.3.3.exe) (single executable, no fuss)
+**Windows:** [`Viper Setup [x.y.z].exe`](https://0negal.github.io/viper/index.html?win-setup) (auto-updates, and is recommanded), [`Viper [x.y.z].exe`](https://0negal.github.io/viper/index.html?win-portable) (single executable, no fuss)
 
-**Linux:** [`.AppImage`](https://github.com/0neGal/viper/releases/download/v1.3.3/Viper-1.3.3.AppImage) or [Flatpak](https://flathub.org/apps/details/com.github._0negal.Viper) (auto-updates), [AUR (unofficial)](https://aur.archlinux.org/packages/viper-bin), [`.deb`](https://github.com/0neGal/viper/releases/download/v1.3.3/viper-1.3.3_amd64.deb), [`.rpm`](https://github.com/0neGal/viper/releases/download/v1.3.3/Viper-1.3.3.x86_64.rpm), [`.tar.gz`](https://github.com/0neGal/viper/releases/download/v1.3.3/Viper-1.3.3.tar.gz)
+**Linux:** [`.AppImage`](https://0negal.github.io/viper/index.html?appimage) or [Flatpak](https://flathub.org/apps/details/com.github._0negal.Viper) (auto-updates), [AUR (unofficial)](https://aur.archlinux.org/packages/viper-bin), [`.deb`](https://0negal.github.io/viper/index.html?deb), [`.rpm`](https://0negal.github.io/viper/index.html?rpm), [`.tar.gz`](https://0negal.github.io/viper/index.html?linux)
+
+<a href="https://github.com/0neGal/viper/releases"><img src="https://img.shields.io/github/v/release/0neGal/viper" alt="GitHub release (latest by date)"></a>
+<img src="https://img.shields.io/github/downloads/0neGal/viper/latest/total" alt="GitHub release downloads (latest by date)">
+<img src="https://img.shields.io/flathub/downloads/com.github._0negal.Viper?label=Flathub%20installs" alt="Flathub installs (Total)">
 
 ## What can it do specifically?
 
@@ -66,9 +71,10 @@ Given that we already have so many Northstar updaters and launchers I urge peopl
 Some of the existing launchers are listed below:
  * Viper - A launcher, updater and mod manager with an easy to use GUI
  * [ViperSH](https://github.com/0neGal/viper-sh) - A Bourne Shell, CLI only, Northstar updater and mod manager
- * [Ronin](https://github.com/MindSwipe/ronin) - a CLI only updater
- * [laundmo's updater](https://github.com/laundmo/northstar-updater) - another CLI only updater
  * [VTOL](https://github.com/BigSpice/VTOL) - an updater and manager for mods, very feature rich
+ * [r2modman](https://github.com/ebkr/r2modmanPlus) - General purpose mod manager, which has support for Northstar
+ * [Papa](https://github.com/AnActualEmerald/papa/) - a CLI only installer, updater, and mod manager
+ * [FIITE](https://github.com/EladNLG/FastestInstallerInTheEast) - a minimalistic CLI installer and updater.
 
 ## Development
 
@@ -95,6 +101,10 @@ $ GH_TOKEN="<your very long, private and wonderful token>" npm run publish
 Keep in mind building all Linux builds may take a while on some systems as packaging the `tar.gz` release can take a while on many CPU's, at least from my testing. All other builds should be done quickly. When using the `publish` command it also automatically uploads the needed files to deploy auto-updates, keep in mind you'd need to have the `repository` setting changed to your new fork's location, otherwise it'll fetch from the original.
 
 ## Credits
+
+<a href="https://github.com/0neGal/viper/graphs/contributors">
+	<img src="https://contrib.rocks/image?repo=0neGal/viper" />
+</a>
 
 **Logo:** Imply#9781<br>
 **Viper Background:** [Uber Panzerhund](https://www.reddit.com/r/titanfall/comments/fwuh2x/take_to_the_skies)<br>

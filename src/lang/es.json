@@ -24,6 +24,7 @@
 	"cli.update.finished": "Instalación/Actualización completada!",
 	"cli.update.uptodate": "La ultima versión (%s) ya está instalada, omitiendo actualización.",
 	"cli.update.uptodate.short": "Está actualizado",
+	"cli.update.noInternet": "Sin conexión a internet",
 
 	"cli.autoupdates.checking": "Buscando actualizaciones de Northstar...",
 	"cli.autoupdates.available": "¡Actualización de Northsar disponible!",
@@ -68,6 +69,7 @@
 	"gui.mods.installing": "Instalando modificación...",
 	"gui.mods.installedmod": "¡Modificación instalada!",
 	"gui.mods.dragdrop": "Arrastra y suelta una modificación para instalarla",
+	"gui.mods.confirmdependencies": "Este paquete tiene dependencias, se muestran abajo. Presionar \"Ok\" instalará el paquete y las dependencias.\n\n",
 
 	"gui.browser.info": "Información",
 	"gui.browser.madeby": "por",
@@ -76,18 +78,21 @@
 	"gui.browser.install": "Instalar",
 	"gui.browser.reinstall": "Re-Instalar",
 	"gui.browser.loading": "Cargando modificaciones...",
-	"gui.browser.endoflist": "Se ha cargado el máximo de paquetes.<br>¡Usa la búsqueda para encontrar otros paquetes!",
+	"gui.browser.endoflist": "Todos los paquetes han sido cargados",
 	"gui.browser.noresults": "Sin resultados...",
 	"gui.browser.filter.mods": "Modificaciones",
 	"gui.browser.filter.skins": "Skins",
 	"gui.browser.filter.client": "Del lado del cliente",
 	"gui.browser.filter.server": "Del lado del servidor",
+	"gui.browser.view": "Ver",
+	"gui.browser.loadmore": "Cargar más...",
 	
 	"gui.settings.save": "Guardar",
 	"gui.settings.discard": "Descartar",
 	"gui.settings.title.ns": "Northstar",
 	"gui.settings.title.linux": "Linux",
 	"gui.settings.title.updates": "Actualizaciones",
+	"gui.settings.title.misc": "Misceláneos",
 	"gui.settings.nsargs.title": "Opciones de lanzamiento",
 	"gui.settings.nsargs.desc": "Aqui puedes añadir opciones de lanzamiento para Northstar/Titanfall.",
 	"gui.settings.autoupdate.title": "Actualizaciones automáticas de Viper",
@@ -96,6 +101,8 @@
 	"gui.settings.nsupdate.desc": "Viper mantendrá Northstar actualizado automáticamente, sin embargo, todavía se puede actualizar manualmente a través de la sección de Northstar.",
 	"gui.settings.excludes.title": "Conservar archivos en la actualización",
 	"gui.settings.excludes.desc": "Cuando se actualice Northstar, los archivos especificados aquí no se sobrescribirán con archivos de la nueva actualización de Northstar. A menos que sepa lo que está cambiando, probablemente no debería cambiar nada aquí. Cada archivo se debe separar con un espacio.",
+	"gui.settings.originkill.title": "Cerrar Origin automáticamente",
+	"gui.settings.originkill.desc": "Cuando Viper se cierra, cerrar automáticamente Origin también.",
 	"gui.settings.title.language": "Idioma",
 	"gui.settings.autolang.title": "Detectar automáticamente el idioma",
 	"gui.settings.autolang.desc": "Cuando está habilitado, Viper intenta detectar automáticamente el idioma de su sistema, cuando está deshabilitado, puede cambiar manualmente el idioma a continuación.",
@@ -133,6 +140,13 @@
 	"gui.toast.desc.failed": "Se produjo un error desconocido al intentar instalar la modificación. Esto puede ser culpa del autor de la modificación, y también puede ser culpa de Viper.",
 
 	"gui.running": "Ejecutándose",
+	"gui.server.player": "jugador",
+	"gui.server.players": "jugadores",
+	"gui.server.servers": "servidores",
+	"gui.server.offline": "El servidor Master está desconectado",
+
+	"gui.toast.noInternet.title": "Sin Internet",
+	"gui.toast.noInternet.desc": "Viper puede funcionar de forma incorrecta.",
 	
 	"viper.menu.main": "Viper",
 	"viper.menu.release": "Notas de la versión",
@@ -152,9 +166,15 @@
 	"general.mods.installed": "Modificiaciones intaladas:",
 	"general.missingpath": "¡La ruta del jueno no se ha podido encontrar automáticamente! ¡Por favor, elige la ruta manualmente!",
 	"general.notinstalled": "¡Northstar no se ha instalado!",
-	"general.launching": "Ejecutando"
+	"general.launching": "Ejecutando",
 	
 	"wine.invalidprefix": "El prefijo seleccionado de Wine no existe, y por ende es inválido.",
 	"wine.originnotfound": "Origin no pudo ser encontrado en el prefijo de Wine seleccionado.",
 	"wine.cantfindprefix": "Viper no logró encontrar y establecer automáticamente el prefijo de Wine",
+
+	"general.launching": "Ejecutando",
+	"general.invalidconfig": "Su archivo de configuración está formateado de forma incorrecta, si ha sido editado manualmente, por favor valide que ha sido escrito correctamente. \n\nSi no ha editado manualmente el archivo de configuración, es recomendado que simplemente restaure la configuración. \n\nPara restaurar tu configuración simplemente de click en \"OK\" a continuación. \n\nMas detalles:\n",
+
+	"request.viper.noReleaseNotes": "No se pudo encontrar las notas de lanzamiento de Viper.\n¡Intenta mas tarde!",
+	"request.northstar.noReleaseNotes": "No se pudo encontrar las notas de lanzamiento de Northstar.\n¡Intenta mas tarde!"
 }

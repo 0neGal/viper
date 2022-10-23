@@ -18,11 +18,11 @@ function hasArgs() {
 		cli.hasSwitch("launch") ||
 		cli.hasSwitch("setpath") ||
 		cli.hasSwitch("version") ||
-		cli.hasSwitch("updatevp") ||
 		cli.hasSwitch("gamepath") ||
 		cli.hasSwitch("togglemod") ||
 		cli.hasSwitch("removemod") ||
-		cli.hasSwitch("installmod")) {
+		cli.hasSwitch("installmod") ||
+		cli.hasSwitch("update-viper")) {
 		return true;
 	} else {return false}
 }
@@ -36,7 +36,7 @@ function exit(code) {
 
 // Ensures the gamepath exists, it's called by options that require the
 // gamepath to be able to work.
-function gamepath() {
+function gamepathExists() {
 	if (fs.existsSync("viper.json")) {
 		gamepath = JSON.parse(fs.readFileSync("viper.json", "utf8")).gamepath;
 
@@ -64,7 +64,7 @@ async function init() {
 
   --cli           ${lang("cli.help.cli")}
   --update        ${lang("cli.help.update")}
-  --updatevp      ${lang("cli.help.updatevp")}
+  --update-viper  ${lang("cli.help.updatevp")}
   --setpath       ${lang("cli.help.setpath")}
   --no-vp-updates ${lang("cli.help.novpupdates")}
 
@@ -77,9 +77,9 @@ async function init() {
 	}
 
 	// --update
-	if (gamepath() && cli.hasSwitch("update")) {ipcMain.emit("update")}
+	if (cli.hasSwitch("update") && gamepathExists()) {ipcMain.emit("update")}
 	// --version
-	if (gamepath() && cli.hasSwitch("version")) {ipcMain.emit("versioncli")}
+	if (cli.hasSwitch("version") && gamepathExists()) {ipcMain.emit("versioncli")}
 
 	// --setpath
 	if (cli.hasSwitch("setpath")) {
@@ -93,7 +93,7 @@ async function init() {
 	}
 
 	// --launch
-	if (gamepath() && cli.hasSwitch("launch")) {
+	if (gamepathExists() && cli.hasSwitch("launch")) {
 		switch(cli.getSwitchValue("launch")) {
 			case "vanilla":
 				ipcMain.emit("launchVanilla");
@@ -105,12 +105,12 @@ async function init() {
 	}
 
 	// Mod related args, --installmod, --removemod, --togglemod
-	if (gamepath() && cli.hasSwitch("installmod")) {ipcMain.emit("installmod")}
-	if (gamepath() && cli.hasSwitch("removemod")) {ipcMain.emit("removemod", "", cli.getSwitchValue("removemod"))}
-	if (gamepath() && cli.hasSwitch("togglemod")) {ipcMain.emit("togglemod", "", cli.getSwitchValue("togglemod"))}
+	if (cli.hasSwitch("installmod") && gamepathExists()) {ipcMain.emit("installmod")}
+	if (cli.hasSwitch("removemod") && gamepathExists()) {ipcMain.emit("removemod", "", cli.getSwitchValue("removemod"))}
+	if (cli.hasSwitch("togglemod") && gamepathExists()) {ipcMain.emit("togglemod", "", cli.getSwitchValue("togglemod"))}
 
 	// Prints out the list of mods
-	if (gamepath() && cli.hasSwitch("mods")) {ipcMain.emit("getmods")}
+	if (cli.hasSwitch("mods") && gamepathExists()) {ipcMain.emit("getmods")}
 }
 
 module.exports = {

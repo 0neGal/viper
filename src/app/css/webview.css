@@ -1,0 +1,16 @@
+body {
+	overflow-x: hidden;
+	background: transparent !important;
+	background-color: transparent !important;
+}
+
+#ncmp_tool,
+.navbar, .bottom-padding,
+.card-header, .breadcrumb,
+.list-group, .mb-4, .my-2, .mt-2,
+#thunderstore-mod-manager-ad-alert {
+	display: none !important;
+}
+
+.mt-2.mb-2 {display: block !important}
+.card {transform: translateY(-1.0rem)}
