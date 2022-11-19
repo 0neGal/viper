@@ -543,7 +543,12 @@ const mods = {
 			if (fs.statSync(path.join(modpath, file)).isDirectory()) {
 				let modjson = path.join(modpath, file, "mod.json");
 				if (fs.existsSync(modjson)) {
-					let mod = JSON.parse(repair(fs.readFileSync(modjson, "utf8")));
+					let mod = {};
+					try {
+						mod = JSON.parse(repair(fs.readFileSync(modjson, "utf8")));
+					}catch(err) {
+						return;
+					}
 
 					let obj = {
 						Version: "unknown",
@@ -707,6 +712,7 @@ const mods = {
 				name: modname,
 				malformed: malformed,
 			});
+
 			ipcMain.emit("gui-getmods");
 			return true;
 		}
@@ -719,25 +725,35 @@ const mods = {
 			if (fs.existsSync(path.join(mod, "mod.json")) &&
 				fs.statSync(path.join(mod, "mod.json")).isFile()) {
 
+				try {
+					JSON.parse(fs.readFileSync(path.join(mod, "mod.json")));
+				}catch(err) {
+					console.log("json failed")
+					ipcMain.emit("failed-mod");
+					return notamod();
+				}
+
 				if (fs.existsSync(path.join(modpath, modname))) {
 					fs.rmSync(path.join(modpath, modname), {recursive: true});
 				}
+
 				let copydest = path.join(modpath, modname);
 				if (typeof destname == "string") {copydest = path.join(modpath, destname)}
+
 				copy(mod, copydest);
 				copy(manifestfile, path.join(copydest, "manifest.json"));
 
 				return installed();
 			} else {
-				files = fs.readdirSync(mod);
+				mod_files = fs.readdirSync(mod);
 
-				for (let i = 0; i < files.length; i++) {
-					if (fs.statSync(path.join(mod, files[i])).isDirectory()) {
-						if (fs.existsSync(path.join(mod, files[i], "mod.json")) &&
-							fs.statSync(path.join(mod, files[i], "mod.json")).isFile()) {
+				for (let i = 0; i < mod_files.length; i++) {
+					if (fs.statSync(path.join(mod, mod_files[i])).isDirectory()) {
+						if (fs.existsSync(path.join(mod, mod_files[i], "mod.json")) &&
+							fs.statSync(path.join(mod, mod_files[i], "mod.json")).isFile()) {
 
-							mods.install(path.join(mod, files[i]));
-							if (mods.install(path.join(mod, files[i]))) {return true};
+							mods.install(path.join(mod, mod_files[i]));
+							if (mods.install(path.join(mod, mod_files[i]))) {return true};
 						}
 					}
 				}
