@@ -373,6 +373,17 @@ function BrowserEl(properties) {
 	browserEntries.appendChild(entry);
 }
 
+let recent_toasts = {};
+function add_recent_toast(name, timeout = 3000) {
+	if (recent_toasts[name]) {return}
+
+	recent_toasts[name] = true;
+
+	setTimeout(() => {
+		delete recent_toasts[name];
+	}, timeout)
+}
+
 ipcRenderer.on("removed-mod", (event, mod) => {
 	setButtons(true);
 	Browser.setbutton(mod.name, lang("gui.browser.install"));
@@ -382,12 +393,28 @@ ipcRenderer.on("removed-mod", (event, mod) => {
 })
 
 ipcRenderer.on("failed-mod", (event, modname) => {
+	if (recent_toasts["failed" + modname]) {return}
+	add_recent_toast("failed" + modname);
+
 	setButtons(true);
 	new Toast({
 		timeout: 10000,
 		scheme: "error",
 		title: lang("gui.toast.title.failed"),
 		description: lang("gui.toast.desc.failed")
+	})
+})
+
+ipcRenderer.on("duped-mod", (event, modname) => {
+	if (recent_toasts["duped" + modname]) {return}
+	add_recent_toast("duped" + modname);
+
+	setButtons(true);
+	new Toast({
+		timeout: 10000,
+		scheme: "warning",
+		title: lang("gui.toast.title.duped"),
+		description: modname + " " + lang("gui.toast.desc.duped")
 	})
 })
 
@@ -402,6 +429,9 @@ ipcRenderer.on("no-internet", (event, modname) => {
 })
 
 ipcRenderer.on("installed-mod", (event, mod) => {
+	if (recent_toasts["installed" + mod.name]) {return}
+	add_recent_toast("installed" + mod.name);
+
 	setButtons(true);
 	Browser.setbutton(mod.name, lang("gui.browser.reinstall"));
 

@@ -67,6 +67,7 @@ function start() {
 	ipcMain.on("win-alert", (event, ...args) => {send("alert", ...args)});
 
 	// mod states
+	ipcMain.on("duped-mod", (event, modname) => {send("duped-mod", modname)});
 	ipcMain.on("failed-mod", (event, modname) => {send("failed-mod", modname)});
 	ipcMain.on("removed-mod", (event, modname) => {send("removed-mod", modname)});
 	ipcMain.on("gui-getmods", (event, ...args) => {send("mods", utils.mods.list())});

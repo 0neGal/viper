@@ -672,13 +672,29 @@ const mods = {
 		};
 	},
 
+	installing: [],
+	dupe_msg_sent: false,
+
 	// Installs mods from a file path
 	//
 	// Either a zip or folder is supported, we'll also try to search
 	// inside the zip or folder to see if buried in another folder or
 	// not, as sometimes that's the case.
-	install: (mod, destname, manifestfile, malformed = false) => {
+	install: (mod, opts ) => {
 		let modname = mod.replace(/^.*(\\|\/|\:)/, "");
+
+		opts = {
+			forked: false,
+			destname: false,
+			malformed: false,
+			manifest_file: false,
+			...opts
+		}
+
+		if (! opts.forked) {
+			mods.installing = [];
+			mods.dupe_msg_sent = false;
+		}
 
 		if (getNSVersion() == "unknown") {
 			winLog(lang("general.notinstalled"));
@@ -710,7 +726,7 @@ const mods = {
 
 			ipcMain.emit("installed-mod", "", {
 				name: modname,
-				malformed: malformed,
+				malformed: opts.malformed,
 			});
 
 			ipcMain.emit("gui-getmods");
@@ -728,7 +744,6 @@ const mods = {
 				try {
 					JSON.parse(fs.readFileSync(path.join(mod, "mod.json")));
 				}catch(err) {
-					console.log("json failed")
 					ipcMain.emit("failed-mod");
 					return notamod();
 				}
@@ -738,10 +753,12 @@ const mods = {
 				}
 
 				let copydest = path.join(modpath, modname);
-				if (typeof destname == "string") {copydest = path.join(modpath, destname)}
+				if (typeof opts.destname == "string") {
+					copydest = path.join(modpath, opts.destname)
+				}
 
 				copy(mod, copydest);
-				copy(manifestfile, path.join(copydest, "manifest.json"));
+				copy(opts.manifest_file, path.join(copydest, "manifest.json"));
 
 				return installed();
 			} else {
@@ -752,8 +769,34 @@ const mods = {
 						if (fs.existsSync(path.join(mod, mod_files[i], "mod.json")) &&
 							fs.statSync(path.join(mod, mod_files[i], "mod.json")).isFile()) {
 
-							mods.install(path.join(mod, mod_files[i]));
-							if (mods.install(path.join(mod, mod_files[i]))) {return true};
+							let mod_name = mod_files[i];
+							let use_mod_name = false;
+
+							while (mods.installing.includes(mod_name)) {
+								if (! mods.dupe_msg_sent) {
+									mods.dupe_msg_sent = true;
+									ipcMain.emit("duped-mod", "", mod_name);
+								}
+
+								use_mod_name = true;
+								mod_name = mod_name + " (dupe)";
+							}
+
+							mods.installing.push(mod_name);
+
+							let install = false;
+							if (use_mod_name) {
+								install = mods.install(path.join(mod, mod_files[i]), {
+									forked: true,
+									destname: mod_name,
+								})
+							} else {
+								install = mods.install(path.join(mod, mod_files[i]), {
+									forked: true
+								})
+							}
+
+							if (install) {return true};
 						}
 					}
 				}
@@ -781,7 +824,13 @@ const mods = {
 							if (fs.existsSync(manifest)) {
 								files = fs.readdirSync(path.join(cache, "mods"));
 								if (fs.existsSync(path.join(cache, "mods/mod.json"))) {
-									if (mods.install(path.join(cache, "mods"), require(manifest).name, manifest, true)) {
+									if (mods.install(path.join(cache, "mods"), {
+											forked: true,
+											malformed: true,
+											manifest_file: manifest,
+											destname: require(manifest).name
+										})) {
+
 										return true;
 									}
 								} else {
@@ -789,7 +838,14 @@ const mods = {
 										let mod = path.join(cache, "mods", files[i]);
 										if (fs.statSync(mod).isDirectory()) {
 											setTimeout(() => {
-												if (mods.install(mod, false, manifest)) {return true};
+												if (mods.install(mod, {
+														forked: true,
+														destname: false,
+														manifest_file: manifest
+													})) {
+
+													return true
+												}
 											}, 1000)
 										}
 									}
@@ -803,7 +859,7 @@ const mods = {
 								return notamod();
 							}
 
-							if (mods.install(cache)) {
+							if (mods.install(cache, { forked: true })) {
 								installed();
 							} else {return notamod()}
 						}, 1000)
