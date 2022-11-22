@@ -134,11 +134,11 @@
 	"gui.toast.title.installed": "Mod installiert!",
 	"gui.toast.title.failed": "Fehler beim Installieren des Mods!",
 	"gui.toast.title.malformed": "Fehlerhafte Ordnerstruktur!",
-	"gui.toast.title.duped": "",
+	"gui.toast.title.duped": "Duplizierter Ordner name!",
 	"gui.toast.desc.installed": "wurde installiert!",
 	"gui.toast.desc.malformed": "hat eine fehlerhafte Ordnerstruktur, falls du der Entwickler bist, solltest du dies beheben.",
 	"gui.toast.desc.failed": "Ein unbekannter Fehler ist aufgetaucht beim Installieren, die Schuld kann beim Autor liegen oder bei Viper selbst!",
-	"gui.toast.desc.duped": "",
+	"gui.toast.desc.duped": "hat multiple Ordner in sich mit dem selben Namen, wodurch ein duplizierter Ordner ensteht! Falls du der Entwickler bist solltest du dies beheben!",
 
 	"gui.toast.noInternet.title": "Kein Internet",
 	"gui.toast.noInternet.desc": "Viper funktioniert möglicherweise nicht korrekt",
