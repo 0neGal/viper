@@ -135,9 +135,11 @@
 	"gui.toast.title.installed": "Mod installé !",
 	"gui.toast.title.failed": "L'installation a échoué",
 	"gui.toast.title.malformed": "La structure du dossier du mod est incorrecte.",
+	"gui.toast.title.duped": "",
 	"gui.toast.desc.installed": "a été installé avec succès !",
 	"gui.toast.desc.malformed": "a une structure de dossier incorrecte ; si vous êtes son développeur, vous devriez réparer ça.",
 	"gui.toast.desc.failed": "Une erreur inconnue est survenue lors de l'installation du mod. Cela peut être du ressort de l'auteur du mod ou de Viper.",
+	"gui.toast.desc.duped": "",
 
 	"gui.toast.noInternet.title": "Pas de connexion Internet",
 	"gui.toast.noInternet.desc": "Viper ne fonctionnera pas correctement tant que la connexion n'est pas rétablie.",

@@ -130,9 +130,11 @@
 	"gui.toast.title.installed": "¡Modificación instalada!",
 	"gui.toast.title.failed": "¡Falló al instalar!",
 	"gui.toast.title.malformed": "¡Estructura de las carpetas incorrecta!",
+	"gui.toast.title.duped": "",
 	"gui.toast.desc.installed": "¡Ha sido instalado exitosamente!",
 	"gui.toast.desc.malformed": "tiene una estructura de carpetas incorrecta, si usted es el desarrollador, debe corregir esto.",
 	"gui.toast.desc.failed": "Se produjo un error desconocido al intentar instalar la modificación. Esto puede ser culpa del autor de la modificación, y también puede ser culpa de Viper.",
+	"gui.toast.desc.duped": "",
 
 	"gui.server.player": "jugador",
 	"gui.server.players": "jugadores",
