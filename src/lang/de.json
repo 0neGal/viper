@@ -134,11 +134,11 @@
 	"gui.toast.title.installed": "Mod installiert!",
 	"gui.toast.title.failed": "Fehler beim Installieren des Mods!",
 	"gui.toast.title.malformed": "Fehlerhafte Ordnerstruktur!",
-	"gui.toast.title.unknown_error": "",
+	"gui.toast.title.unknown_error": "Unbekannter Fehler!",
 	"gui.toast.desc.installed": "wurde installiert!",
 	"gui.toast.desc.malformed": "hat eine fehlerhafte Ordnerstruktur, falls du der Entwickler bist, solltest du dies beheben.",
 	"gui.toast.desc.failed": "Ein unbekannter Fehler ist aufgetaucht beim Installieren, die Schuld kann beim Autor liegen oder bei Viper selbst!",
-	"gui.toast.desc.unknown_error": "",
+	"gui.toast.desc.unknown_error": "Ein unbekannter Fehler ist aufgetreten für mehr details drücken! Es wird empfohlen einen Screenshot von der detalierten Fehlernachricht zu machen wenn ein Bug-Report erstellt wird!",
 
 	"gui.toast.noInternet.title": "Kein Internet",
 	"gui.toast.noInternet.desc": "Viper funktioniert möglicherweise nicht korrekt",
