@@ -136,10 +136,12 @@
 	"gui.toast.title.duped": "Duplicate folder names!",
 	"gui.toast.title.failed": "Failed to install",
 	"gui.toast.title.malformed": "Incorrect folder structure!",
+	"gui.toast.title.unknown_error": "Unknown Error!",
 	"gui.toast.desc.installed": "has been installed successfully!",
 	"gui.toast.desc.malformed": "has an incorrect folder structure, if you're the developer, you should fix this.",
 	"gui.toast.desc.failed": "An unknown error occurred while trying to install the mod. This may be the author's fault, and it may also be Viper's fault.",
 	"gui.toast.desc.duped": "has multiple mod folders in it, with the same name, causing duplicate folders, if you're the developer, you should fix this.",
+	"gui.toast.desc.unknown_error": "An unknown error occurred, click for more details. You may want to take a screenshot of the detailed error when filing a bug report.",
 
 	"gui.toast.noInternet.title": "No Internet",
 	"gui.toast.noInternet.desc": "Viper may not work properly.",

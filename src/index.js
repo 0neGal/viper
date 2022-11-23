@@ -74,6 +74,11 @@ function start() {
 	ipcMain.on("installed-mod", (event, modname) => {send("installed-mod", modname)});
 	ipcMain.on("no-internet", () => {send("no-internet")});
 
+	process.on("uncaughtException", (err) => {
+		send("unknown-error", err);
+		console.error(err);
+	});
+
 	// install calls
 	ipcMain.on("install-from-path", (event, path) => {utils.mods.install(path)});
 	ipcMain.on("install-from-url", (event, url) => {utils.mods.installFromURL(url)});

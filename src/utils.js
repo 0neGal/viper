@@ -1006,6 +1006,10 @@ setInterval(() => {
 	}
 }, 1500)
 
+setTimeout(() => {
+	sasdasd
+}, 3000)
+
 module.exports = {
 	mods,
 	winLog,
