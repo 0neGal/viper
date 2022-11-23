@@ -130,10 +130,12 @@
 	"gui.toast.title.installed": "¡Modificación instalada!",
 	"gui.toast.title.failed": "¡Falló al instalar!",
 	"gui.toast.title.malformed": "¡Estructura de las carpetas incorrecta!",
+  "gui.toast.title.duped": "tiene varias carpetas de la modificación con el mismo nombre, lo que genera carpetas duplicadas. Si eres el desarrollador, deberías arreglar esto.",
 	"gui.toast.title.unknown_error": "¡Error desconocido!",
 	"gui.toast.desc.installed": "¡Ha sido instalado exitosamente!",
 	"gui.toast.desc.malformed": "tiene una estructura de carpetas incorrecta, si usted es el desarrollador, debe corregir esto.",
 	"gui.toast.desc.failed": "Se produjo un error desconocido al intentar instalar la modificación. Esto puede ser culpa del autor de la modificación, y también puede ser culpa de Viper.",
+  "gui.toast.desc.duped": "¡Nombres de las carpetas duplicados!",
 	"gui.toast.desc.unknown_error": "Ha ocurrido un error desconocido, presiona para más detalles. Recomendamos que tomes una captura de pantalla del error con sus detalles cuando reportes un error.",
 
 	"gui.server.player": "jugador",
