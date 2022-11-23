@@ -138,6 +138,25 @@ ipcRenderer.on("ns-update-event", (event, key) => {
 	}
 });
 
+ipcRenderer.on("unknown-error", (event, err) => {
+	new Toast({
+		timeout: 10000,
+		scheme: "error",
+		title: lang("gui.toast.title.unknown_error"),
+		description: lang("gui.toast.desc.unknown_error"),
+		callback: () => {
+			new Toast({
+				timeout: 15000,
+				scheme: "error",
+				title: "",
+				description: err.stack.replaceAll("\n", "<br>")
+			})
+		}
+	})
+
+	console.error(err.stack)
+})
+
 let lastselected = "";
 function select(entry) {
 	let entries = document.querySelectorAll("#modsdiv .mod .modtext");

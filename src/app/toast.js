@@ -3,6 +3,7 @@ function Toast(properties) {
 		fg: "#000000",
 		bg: "#FFFFFF",
 		timeout: 3000,
+		callback: () => {},
 		title: "Untitled Toast",
 		description: "No description provided for toast",
 		...properties
@@ -34,7 +35,10 @@ function Toast(properties) {
 	el.style.background = toast.bg;
 
 	el.id = id;
-	el.setAttribute("onclick", `dismissToast(${id})`);
+	el.addEventListener("click", () => {
+		dismissToast(id);
+		toast.callback();
+	})
 
 	el.innerHTML = `
 		<div class="title">${toast.title}</div>
