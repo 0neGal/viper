@@ -129,17 +129,19 @@
 
 	"gui.selectpath": "Veuillez sélectionner le dossier où se trouve le client Titanfall 2.",
 	"gui.gamepath.must": "Vous devez sélectionner le chemin du dossier du jeu Titanfall 2 pour pouvoir lancer Viper.",
-	"gui.gamepath.wrong": "Ce dossier ne contient pas le jeu Titanfall 2, et n'est donc pas valide.",	
+	"gui.gamepath.wrong": "Ce dossier ne contient pas le jeu Titanfall 2, et n'est donc pas valide.",
 	"gui.gamepath.lost": "Le chemin du jeu ne peut être trouvé / n'existe plus !\n\nVeuillez vérifier que votre disqué est correctement monté, ou, si vous avez déplacé votre jeu, que vous avez mis à jour le chemin du dossier.\n\nViper ne fonctionnera pas correctement jusqu'au prochain redémarrage.",
 
 	"gui.toast.title.installed": "Mod installé !",
+	"gui.toast.title.duped": "Nom de dossier dupliqué !",
 	"gui.toast.title.failed": "L'installation a échoué",
 	"gui.toast.title.malformed": "La structure du dossier du mod est incorrecte.",
-	"gui.toast.title.unknown_error": "",
+	"gui.toast.title.unknown_error": "Erreur inconnue",
 	"gui.toast.desc.installed": "a été installé avec succès !",
 	"gui.toast.desc.malformed": "a une structure de dossier incorrecte ; si vous êtes son développeur, vous devriez réparer ça.",
 	"gui.toast.desc.failed": "Une erreur inconnue est survenue lors de l'installation du mod. Cela peut être du ressort de l'auteur du mod ou de Viper.",
-	"gui.toast.desc.unknown_error": "",
+	"gui.toast.desc.duped": "contient plusieurs dossiers ayant le même nom ; si vous êtes le développer, vous devriez réparer ceci.",
+	"gui.toast.desc.unknown_error": "Une erreur inconnue est survenue, cliquez pour plus de détails. Vous devriez prendre une capture d'écran de l'erreur si vous comptez créer un ticket.",
 
 	"gui.toast.noInternet.title": "Pas de connexion Internet",
 	"gui.toast.noInternet.desc": "Viper ne fonctionnera pas correctement tant que la connexion n'est pas rétablie.",
