@@ -58,7 +58,7 @@
 		"unzipper": "^0.10.11"
 	},
 	"devDependencies": {
-		"electron": "^18.3.7",
-		"electron-builder": "^22.5.1"
+		"electron": "^22.0.0",
+		"electron-builder": "^23.6.0"
 	}
 }
