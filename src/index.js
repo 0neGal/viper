@@ -81,7 +81,7 @@ function start() {
 
 	// install calls
 	ipcMain.on("install-from-path", (event, path) => {utils.mods.install(path)});
-	ipcMain.on("install-from-url", (event, url) => {utils.mods.installFromURL(url)});
+	ipcMain.on("install-from-url", (event, url, author) => {utils.mods.installFromURL(url, author)});
 
 	win.webContents.on("dom-ready", () => {
 		send("mods", utils.mods.list());

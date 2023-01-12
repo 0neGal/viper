@@ -680,11 +680,12 @@ const mods = {
 	// Either a zip or folder is supported, we'll also try to search
 	// inside the zip or folder to see if buried in another folder or
 	// not, as sometimes that's the case.
-	install: (mod, opts ) => {
+	install: (mod, opts) => {
 		let modname = mod.replace(/^.*(\\|\/|\:)/, "");
 
 		opts = {
 			forked: false,
+			author: false,
 			destname: false,
 			malformed: false,
 			manifest_file: false,
@@ -757,10 +758,30 @@ const mods = {
 					copydest = path.join(modpath, opts.destname)
 				}
 
-				copy(mod, copydest);
-				copy(opts.manifest_file, path.join(copydest, "manifest.json"));
+				copy(mod, copydest, (err, res) => {
+					if (err) {
+						ipcMain.emit("failed-mod");
+						return;
+					}
 
-				return installed();
+					copy(opts.manifest_file, path.join(copydest, "manifest.json"), (err, res) => {
+						if (err) {
+							ipcMain.emit("failed-mod");
+							return;
+						}
+
+						if (opts.author) {
+							fs.writeFileSync(
+								path.join(copydest, "thunderstore_author.txt"),
+								opts.author
+							)
+						}
+
+						return installed();
+					});
+				});
+
+				return;
 			} else {
 				mod_files = fs.readdirSync(mod);
 
@@ -787,11 +808,13 @@ const mods = {
 							let install = false;
 							if (use_mod_name) {
 								install = mods.install(path.join(mod, mod_files[i]), {
+									...opts,
 									forked: true,
 									destname: mod_name,
 								})
 							} else {
 								install = mods.install(path.join(mod, mod_files[i]), {
+									...opts,
 									forked: true
 								})
 							}
@@ -825,6 +848,8 @@ const mods = {
 								files = fs.readdirSync(path.join(cache, "mods"));
 								if (fs.existsSync(path.join(cache, "mods/mod.json"))) {
 									if (mods.install(path.join(cache, "mods"), {
+											...opts,
+
 											forked: true,
 											malformed: true,
 											manifest_file: manifest,
@@ -839,6 +864,7 @@ const mods = {
 										if (fs.statSync(mod).isDirectory()) {
 											setTimeout(() => {
 												if (mods.install(mod, {
+														...opts,
 														forked: true,
 														destname: false,
 														manifest_file: manifest
@@ -859,7 +885,10 @@ const mods = {
 								return notamod();
 							}
 
-							if (mods.install(cache, { forked: true })) {
+							if (mods.install(cache, {
+								...opts,
+								forked: true
+							})) {
 								installed();
 							} else {return notamod()}
 						}, 1000)
@@ -875,7 +904,7 @@ const mods = {
 	//
 	// This'll simply download the file that the URL points to and then
 	// install it with mods.install()
-	installFromURL: (url) => {
+	installFromURL: (url, author) => {
 		https.get(url, (res) => {
 			let tmp = path.join(app.getPath("cache"), "vipertmp");
 			let modlocation = path.join(tmp, "/mod.zip");
@@ -896,7 +925,9 @@ const mods = {
 
 			stream.on("finish", () => {
 				stream.close();
-				mods.install(modlocation);
+				mods.install(modlocation, {
+					author: author
+				})
 			})
 		})
 	},

@@ -363,12 +363,20 @@ function BrowserEl(properties) {
 		<div class="text">
 			<div class="title">${properties.title}</div>
 			<div class="description">${properties.description}</div>
-			<button class="install" onclick='installFromURL("${properties.download}", ${JSON.stringify(properties.dependencies)}, true)'>${installstr}</button>
+			<button class="install" onclick=''>${installstr}</button>
 			<button class="info" onclick="Preview.set('${properties.url}')">${lang('gui.browser.view')}</button>
 			<button class="visual">${properties.version}</button>
 			<button class="visual">${lang("gui.browser.madeby")} ${properties.author}</button>
 		</div>
 	`
+
+	entry.querySelector("button.install").addEventListener("click", () => {
+		installFromURL(
+			properties.download,
+			JSON.stringify(properties.dependencies),
+			true, properties.author
+		)
+	})
 
 	browserEntries.appendChild(entry);
 }
@@ -451,7 +459,11 @@ ipcRenderer.on("installed-mod", (event, mod) => {
 	})
 
 	if (installqueue.length != 0) {
-		installFromURL("https://thunderstore.io/package/download/" + installqueue[0]);
+		installFromURL(
+			"https://thunderstore.io/package/download/" + installqueue[0].pkg,
+			false, false, installqueue[0].author
+		)
+
 		installqueue.shift();
 	}
 })
