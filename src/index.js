@@ -8,6 +8,7 @@ process.chdir(app.getPath("appData"));
 
 const utils = require("./utils");
 const cli = require("./cli");
+const mods = require("./modules/mods");
 const settings = require("./modules/settings");
 const requests = require("./modules/requests");
 
@@ -74,7 +75,7 @@ function start() {
 	ipcMain.on("duped-mod", (event, modname) => {send("duped-mod", modname)});
 	ipcMain.on("failed-mod", (event, modname) => {send("failed-mod", modname)});
 	ipcMain.on("removed-mod", (event, modname) => {send("removed-mod", modname)});
-	ipcMain.on("gui-getmods", (event, ...args) => {send("mods", utils.mods.list())});
+	ipcMain.on("gui-getmods", (event, ...args) => {send("mods", mods.list())});
 	ipcMain.on("installed-mod", (event, modname) => {send("installed-mod", modname)});
 	ipcMain.on("no-internet", () => {send("no-internet")});
 
@@ -84,11 +85,11 @@ function start() {
 	});
 
 	// install calls
-	ipcMain.on("install-from-path", (event, path) => {utils.mods.install(path)});
-	ipcMain.on("install-from-url", (event, url, author) => {utils.mods.installFromURL(url, author)});
+	ipcMain.on("install-from-path", (event, path) => {mods.install(path)});
+	ipcMain.on("install-from-url", (event, url, author) => {mods.installFromURL(url, author)});
 
 	win.webContents.on("dom-ready", () => {
-		send("mods", utils.mods.list());
+		send("mods", mods.list());
 	});
 
 	// ensures gamepath still exists and is valid on startup
@@ -136,11 +137,11 @@ function start() {
 // module inside the file that sent the event. {
 ipcMain.on("install-mod", () => {
 	if (cli.hasArgs()) {
-		utils.mods.install(cli.param("installmod"));
+		mods.install(cli.param("installmod"));
 	} else {
 		dialog.showOpenDialog({properties: ["openFile"]}).then(res => {
 			if (res.filePaths.length != 0) {
-				utils.mods.install(res.filePaths[0]);
+				mods.install(res.filePaths[0]);
 			} else {
 				send("set-buttons", true);
 			}
@@ -148,8 +149,8 @@ ipcMain.on("install-mod", () => {
 	}
 })
 
-ipcMain.on("remove-mod", (event, mod) => {utils.mods.remove(mod)});
-ipcMain.on("toggle-mod", (event, mod) => {utils.mods.toggle(mod)});
+ipcMain.on("remove-mod", (event, mod) => {mods.remove(mod)});
+ipcMain.on("toggle-mod", (event, mod) => {mods.toggle(mod)});
 
 ipcMain.on("launch-ns", () => {utils.launch()});
 ipcMain.on("launch-vanilla", () => {utils.launch("vanilla")});
@@ -193,7 +194,7 @@ ipcMain.on("version-cli", () => {
 
 // sends installed mods info to renderer
 ipcMain.on("getmods", () => {
-	let mods = utils.mods.list();
+	let mods = mods.list();
 	if (mods.all.length > 0) {
 		log(`${utils.lang("general.mods.installed")} ${mods.all.length}`);
 		log(`${utils.lang("general.mods.enabled")} ${mods.enabled.length}`);
