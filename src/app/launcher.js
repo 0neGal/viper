@@ -31,11 +31,17 @@ function formatRelease(notes) {
 	} else {
 		for (let release of notes) {
 			if (release.prerelease) {continue}
-			content += "# " + release.name + "\n\n"	+ release.body + "\n\n\n";
+			let new_content = "# " + release.name + "\n\n"	+ release.body + "\n\n\n";
+			content +=
+				"<div class='release-block'>\n"
+					+ markdown(new_content, {breaks: true}) + "\n" +
+				"</div>";
 		}
 	
 		content = content.replaceAll(/\@(\S+)/g, `<a href="https://github.com/$1">@$1</a>`);
 	}
+
+	console.log(markdown(content, {breaks: true}))
 
 	return markdown(content, {
 		breaks: true

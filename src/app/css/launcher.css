@@ -151,6 +151,15 @@
 	pointer-events: none;
 }
 
+.section .release-block {
+	margin-top: 0px;
+	border-radius: 5px;
+	background: var(--bg);
+	padding: var(--padding);
+	backdrop-filter: blur(15px);
+	margin-bottom: var(--padding);
+}
+
 .contentBody img {max-width: 100%}
 .contentBody .img {text-align: center}
 
