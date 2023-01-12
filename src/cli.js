@@ -6,6 +6,7 @@ const events = new Emitter();
 
 const cli = app.commandLine;
 const lang = require("./lang");
+const json = require("./modules/json");
 
 function hasArgs() {
 	// Makes sure the GUI isn't launched.
@@ -38,7 +39,7 @@ function exit(code) {
 // gamepath to be able to work.
 function gamepathExists() {
 	if (fs.existsSync("viper.json")) {
-		gamepath = JSON.parse(fs.readFileSync("viper.json", "utf8")).gamepath;
+		gamepath = json("viper.json").gamepath;
 
 		if (! fs.existsSync(gamepath)) {
 			console.error(`error: ${lang("cli.gamepath.lost")}`);

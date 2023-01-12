@@ -1,6 +1,8 @@
 const fs = require("fs");
 
-const enLang = JSON.parse(fs.readFileSync(__dirname + `/lang/en.json`, "utf8"));
+const json = require("./modules/json");
+
+const enLang = json(__dirname + "/lang/en.json");
 let lang = "";
 var langObj = {};
 
@@ -14,7 +16,7 @@ function _loadTranslation(forcedlang) {
 		}
 
 		try {
-			opts = JSON.parse(fs.readFileSync("viper.json", "utf8"));
+			opts = json("viper.json");
 		}catch (e) {}
 
 		lang = opts.lang;
@@ -39,7 +41,7 @@ function _loadTranslation(forcedlang) {
 		lang = "en";
 	}
 
-	langObj = JSON.parse(fs.readFileSync(__dirname + `/lang/${lang}.json`, "utf8"));
+	langObj = json(__dirname + `/lang/${lang}.json`);
 }
 
 

@@ -2,6 +2,7 @@ const fs = require("fs");
 const path = require("path");
 const app = require("electron").app;
 
+const json = require("./json");
 const lang = require("../lang");
 
 var invalid_settings = false;
@@ -28,17 +29,14 @@ var settings = {
 
 // Creates the settings file with the base settings if it doesn't exist.
 if (fs.existsSync("viper.json")) {
-	let conf = fs.readFileSync("viper.json", "utf8");
-	let json = "{}";
+	let conf = json("viper.json");
 
 	// Validates viper.json
-	try {
-		json = JSON.parse(conf);
-	}catch (e) {
+	if (! conf) {
 		invalid_settings = true;
 	}
 
-	settings = {...settings, ...json};
+	settings = {...settings, ...conf};
 	settings.zip = path.join(settings.gamepath + "/northstar.zip");
 
 	let args = path.join(settings.gamepath, "ns_startup_args.txt");

@@ -8,12 +8,12 @@ const events = new Emitter();
 
 const cli = require("./cli");
 const lang = require("./lang");
+const json = require("./modules/json");
 const settings = require("./modules/settings");
 const requests = require("./modules/requests");
 const findgame = require("./modules/findgame");
 
 const unzip = require("unzipper");
-const repair = require("jsonrepair");
 const exec = require("child_process").exec;
 const { https } = require("follow-redirects");
 
@@ -226,7 +226,7 @@ function getNSVersion() {
 			}
 
 			try {
-				add("v" + JSON.parse(fs.readFileSync(versionFile, "utf8")).Version);
+				add("v" + json(versionFile).Version);
 			}catch(err) {
 				add("unknown");
 			}
@@ -479,12 +479,8 @@ const mods = {
 			if (fs.statSync(path.join(modpath, file)).isDirectory()) {
 				let modjson = path.join(modpath, file, "mod.json");
 				if (fs.existsSync(modjson)) {
-					let mod = {};
-					try {
-						mod = JSON.parse(repair(fs.readFileSync(modjson, "utf8")));
-					}catch(err) {
-						return;
-					}
+					let mod = json(modjson);
+					if (! mod) {return}
 
 					let obj = {
 						Version: "unknown",
@@ -496,11 +492,12 @@ const mods = {
 
 					let manifestfile = path.join(modpath, file, "manifest.json");
 					if (fs.existsSync(manifestfile)) {
-						let manifest = JSON.parse(repair(fs.readFileSync(manifestfile, "utf8")));
-
-						obj.ManifestName = manifest.name;
-						if (obj.Version == "unknown") {
-							obj.Version = manifest.version_number;
+						let manifest = json(manifestfile);
+						if (manifest != false) {
+							obj.ManifestName = manifest.name;
+							if (obj.Version == "unknown") {
+								obj.Version = manifest.version_number;
+							}
 						}
 					}
 
@@ -574,17 +571,17 @@ const mods = {
 				fs.writeFileSync(file, JSON.stringify(names));
 			},
 			disable: (mod) => {
-				let data = JSON.parse(repair(fs.readFileSync(file, "utf8")));
+				let data = json(file);
 				data[mod] = false;
 				fs.writeFileSync(file, JSON.stringify(data));
 			},
 			enable: (mod) => {
-				let data = JSON.parse(repair(fs.readFileSync(file, "utf8")));
+				let data = json(file);
 				data[mod] = true;
 				fs.writeFileSync(file, JSON.stringify(data));
 			},
 			toggle: (mod) => {
-				let data = JSON.parse(repair(fs.readFileSync(file, "utf8")));
+				let data = json(file);
 				if (data[mod] != undefined) {
 					data[mod] = ! data[mod];
 				} else {
@@ -594,7 +591,7 @@ const mods = {
 				fs.writeFileSync(file, JSON.stringify(data));
 			},
 			get: (mod) => {
-				let data = JSON.parse(repair(fs.readFileSync(file, "utf8")));
+				let data = json(file);
 				let names = Object.keys(data);
 
 				if (data[mod]) {
@@ -678,9 +675,8 @@ const mods = {
 			if (fs.existsSync(path.join(mod, "mod.json")) &&
 				fs.statSync(path.join(mod, "mod.json")).isFile()) {
 
-				try {
-					JSON.parse(fs.readFileSync(path.join(mod, "mod.json")));
-				}catch(err) {
+
+				if (! json(path.join(mod, "mod.json"))) {
 					ipcMain.emit("failed-mod");
 					return notamod();
 				}
