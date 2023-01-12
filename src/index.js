@@ -35,8 +35,8 @@ function start() {
 		},
 	});
 
-	// when --debug is added it'll open the dev tools
-	if (cli.hasParam("debug")) {win.openDevTools()}
+	// when --devtools is added it'll open the dev tools
+	if (cli.hasParam("devtools")) {win.openDevTools()}
 
 	// general setup
 	win.removeMenu();

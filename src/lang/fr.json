@@ -2,7 +2,7 @@
 	"lang.title": "French - Français",
 
 	"cli.help.help": "affiche ce message d'aide",
-	"cli.help.debug": "affiche les outils de développement",
+	"cli.help.devtools": "affiche les outils de développement",
 	"cli.help.version": "retourne des informations sur la version du logiciel",
 	"cli.help.cli": "force l'activation de la CLI",
 	"cli.help.update": "met à jour Northstar sur le chemin du jeu précisé",

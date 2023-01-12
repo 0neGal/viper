@@ -2,7 +2,7 @@
 	"lang.title": "Spanish - Español",
 
 	"cli.help.help": "muestra este mensaje de ayuda",
-	"cli.help.debug": "habre las herramientas de desarrollador/depuración ",
+	"cli.help.devtools": "habre las herramientas de desarrollador/depuración ",
 	"cli.help.version": "muestra la información de la versión",
 	"cli.help.cli": "obliga la linea de comandos a habilitarse",
 	"cli.help.update": "actualiza Northstar desde la ruta de juego establecida",

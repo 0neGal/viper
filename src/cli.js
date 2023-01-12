@@ -59,8 +59,8 @@ async function init() {
 	if (cli.hasSwitch("help")) {
 	console.log(`options:
   --help          ${lang("cli.help.help")}
-  --debug         ${lang("cli.help.debug")}
   --version       ${lang("cli.help.version")}
+  --devtools      ${lang("cli.help.devtools")}
 
   --cli           ${lang("cli.help.cli")}
   --update        ${lang("cli.help.update")}

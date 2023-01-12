@@ -28,7 +28,8 @@
 	"scripts": {
 		"langs": "node build/langs.js",
 		"start": "npx electron src/index.js",
-		"debug": "npx electron src/index.js --debug",
+		"debug": "npm run devtools",
+		"devtools": "npx electron src/index.js --devtools",
 		"build": "npx electron-builder --win nsis --win portable --linux --publish never",
 		"build:windows": "npx electron-builder --win nsis --win portable --publish never",
 		"build:linux": "npx electron-builder --linux --publish never",
