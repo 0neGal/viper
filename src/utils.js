@@ -8,6 +8,7 @@ const events = new Emitter();
 
 const cli = require("./cli");
 const lang = require("./lang");
+const settings = require("./modules/settings");
 const requests = require("./modules/requests");
 const findgame = require("./modules/findgame");
 
@@ -15,30 +16,6 @@ const unzip = require("unzipper");
 const repair = require("jsonrepair");
 const exec = require("child_process").exec;
 const { https } = require("follow-redirects");
-
-process.chdir(app.getPath("appData"));
-
-var invalidsettings = false;
-
-// Base settings
-var settings = {
-	gamepath: "",
-	lang: "en-US",
-	nsupdate: true,
-	autolang: true,
-	forcedlang: "en",
-	autoupdate: true,
-	originkill: false,
-	nsargs: "-multiple",
-	zip: "/northstar.zip",
-
-	// These files won't be overwritten when installing/updating
-	// Northstar, useful for config files
-	excludes: [
-		"ns_startup_args.txt",
-		"ns_startup_args_dedi.txt"
-	]
-}
 
 // Logs into the dev tools of the renderer
 function winLog(msg) {
@@ -48,29 +25,6 @@ function winLog(msg) {
 // Sends an alert to the renderer
 function winAlert(msg) {
 	ipcMain.emit("win-alert", msg, msg);
-}
-
-// Creates the settings file with the base settings if it doesn't exist.
-if (fs.existsSync("viper.json")) {
-	let conf = fs.readFileSync("viper.json", "utf8");
-	let json = "{}";
-
-	// Validates viper.json
-	try {
-		json = JSON.parse(conf);
-	}catch (e) {
-		invalidsettings = true;
-	}
-
-	settings = {...settings, ...json};
-	settings.zip = path.join(settings.gamepath + "/northstar.zip");
-
-	let args = path.join(settings.gamepath, "ns_startup_args.txt");
-	if (fs.existsSync(args)) {
-		settings.nsargs = fs.readFileSync(args, "utf8");
-	}
-} else {
-	console.log(lang("general.missingpath"));
 }
 
 // A simple function that checks if the game is running, which we use to
@@ -194,7 +148,7 @@ async function setpath(win, forcedialog) {
 	function setGamepath(folder) {
 		settings.gamepath = folder;
 		settings.zip = path.join(settings.gamepath + "/northstar.zip");
-		saveSettings();
+		settings.save();
 		win.webContents.send("newpath", settings.gamepath);
 		ipcMain.emit("newpath", null, settings.gamepath);
 
@@ -208,7 +162,7 @@ async function setpath(win, forcedialog) {
 			function setGamepath(folder, forcedialog) {
 				settings.gamepath = folder;
 				settings.zip = path.join(settings.gamepath + "/northstar.zip");
-				saveSettings();
+				settings.save();
 				win.webContents.send("newpath", settings.gamepath);
 				ipcMain.emit("newpath", null, settings.gamepath);
 			}
@@ -239,24 +193,6 @@ async function setpath(win, forcedialog) {
 			return;
 		}).catch(err => {console.error(err)})
 	}
-}
-
-// As to not have to do the same one liner a million times, this
-// function exists, as the name suggests, it simply writes the current
-// settings to the disk.
-//
-// You can also pass a settings object to the function and it'll try and
-// merge it together with the already existing settings
-function saveSettings(obj = {}) {
-	if (invalidsettings) {return false}
-
-	settings = {...settings, ...obj};
-
-	if (fs.existsSync(settings.gamepath)) {
-		fs.writeFileSync(path.join(settings.gamepath, "ns_startup_args.txt"), settings.nsargs);
-	}
-
-	fs.writeFileSync(app.getPath("appData") + "/viper.json", JSON.stringify({...settings, ...obj}));
 }
 
 // Returns the current Northstar version
@@ -1052,16 +988,12 @@ module.exports = {
 	isGameRunning,
 	isOriginRunning,
 
-
-	settings,
-	saveSettings,
-
 	setpath,
 	gamepathExists,
 
 	lang,
 	setlang: (lang) => {
 		settings.lang = lang;
-		saveSettings();
+		settings.save();
 	},
 }

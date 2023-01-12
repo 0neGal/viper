@@ -3,8 +3,12 @@ const path = require("path");
 const { autoUpdater } = require("electron-updater");
 const { app, ipcMain, BrowserWindow, dialog } = require("electron");
 
+// ensures PWD/CWD is the config folder where viper.json is located
+process.chdir(app.getPath("appData"));
+
 const utils = require("./utils");
 const cli = require("./cli");
+const settings = require("./modules/settings");
 const requests = require("./modules/requests");
 
 var log = console.log;
@@ -47,7 +51,7 @@ function start() {
 	}; send = win.send;
 
 	ipcMain.on("exit", () => {
-		if (utils.settings.originkill) {
+		if (settings.originkill) {
 			utils.isOriginRunning().then((running) => {
 				if (running) {
 					utils.killOrigin().then(process.exit(0))
@@ -96,7 +100,7 @@ function start() {
 		}
 	});
 
-	ipcMain.on("save-settings", (event, obj) => {utils.saveSettings(obj)});
+	ipcMain.on("save-settings", (event, obj) => {settings.save(obj)});
 
 	// allows renderer to check for updates
 	ipcMain.on("ns-update-event", (event) => {send("ns-update-event", event)});
@@ -107,7 +111,7 @@ function start() {
 	})
 
 	// start auto-update process
-	if (utils.settings.autoupdate) {
+	if (settings.autoupdate) {
 		if (cli.hasParam("no-vp-updates")) {
 			utils.handleNorthstarUpdating();
 		} else {
@@ -224,9 +228,6 @@ ipcMain.on("newpath", (event, newpath) => {
 }); ipcMain.on("wrong-path", () => {
 	win.send("wrong-path");
 });
-
-// ensures PWD/CWD is the config folder where viper.json is located
-process.chdir(app.getPath("appData"));
 
 // starts the GUI or CLI
 if (cli.hasArgs()) {
