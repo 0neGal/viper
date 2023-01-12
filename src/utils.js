@@ -8,8 +8,8 @@ const events = new Emitter();
 
 const cli = require("./cli");
 const lang = require("./lang");
-const requests = require("./extras/requests");
-const findgame = require("./extras/findgame");
+const requests = require("./modules/requests");
+const findgame = require("./modules/findgame");
 
 const unzip = require("unzipper");
 const repair = require("jsonrepair");

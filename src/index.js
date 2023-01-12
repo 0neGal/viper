@@ -5,7 +5,7 @@ const { app, ipcMain, BrowserWindow, dialog } = require("electron");
 
 const utils = require("./utils");
 const cli = require("./cli");
-const requests = require("./extras/requests");
+const requests = require("./modules/requests");
 
 var log = console.log;
 
