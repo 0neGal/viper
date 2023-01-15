@@ -1,9 +1,10 @@
 const { app } = require("electron");
 const path = require("path");
 const fs = require("fs");
-const { https } = require("follow-redirects");
+const { https, http } = require("follow-redirects");
 const lang = require("../lang");
 
+const json = require("./json");
 
 // all requests results are stored in this file
 const cachePath = path.join(app.getPath("cache"), "viper-requests.json");
@@ -11,6 +12,7 @@ const NORTHSTAR_LATEST_RELEASE_KEY = "nsLatestRelease";
 const NORTHSTAR_RELEASE_NOTES_KEY = "nsReleaseNotes";
 const VIPER_RELEASE_NOTES_KEY = "vpReleaseNotes";
 
+const user_agent = "viper/" + json(path.join(__dirname, "../../package.json")).version;
 
 function _saveCache(data) {
     fs.writeFileSync(cachePath, JSON.stringify(data));
@@ -40,7 +42,7 @@ async function getLatestNsVersion() {
                 port: 443,
                 path: "/repos/R2Northstar/Northstar/releases/latest",
                 method: "GET",
-                headers: { "User-Agent": "viper" }
+                headers: { "User-Agent": user_agent }
             }, 
             
             response => {
@@ -90,7 +92,7 @@ async function getNsReleaseNotes() {
                 port: 443,
                 path: "/repos/R2Northstar/Northstar/releases",
                 method: "GET",
-                headers: { "User-Agent": "viper" }
+                headers: { "User-Agent": user_agent }
             }, 
             
             response => {
@@ -141,7 +143,7 @@ async function getVpReleaseNotes() {
                 port: 443,
                 path: "/repos/0negal/viper/releases",
                 method: "GET",
-                headers: { "User-Agent": "viper" }
+                headers: { "User-Agent": user_agent }
             }, 
             
             response => {
