@@ -26,7 +26,7 @@
 		}
 	},
 	"scripts": {
-		"langs": "node build/langs.js",
+		"langs": "node scripts/langs.js",
 		"start": "npx electron src/index.js",
 		"debug": "npm run devtools",
 		"devtools": "npx electron src/index.js --devtools",
