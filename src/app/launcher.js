@@ -41,8 +41,6 @@ function formatRelease(notes) {
 		content = content.replaceAll(/\@(\S+)/g, `<a href="https://github.com/$1">@$1</a>`);
 	}
 
-	console.log(markdown(content, {breaks: true}))
-
 	return markdown(content, {
 		breaks: true
 	});
