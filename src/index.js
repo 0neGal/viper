@@ -8,6 +8,7 @@ process.chdir(app.getPath("appData"));
 
 const utils = require("./utils");
 const cli = require("./cli");
+const json = require("./modules/json");
 const mods = require("./modules/mods");
 const settings = require("./modules/settings");
 const requests = require("./modules/requests");
@@ -30,6 +31,8 @@ function start() {
 		// as it's fairly responsive, but for now we won't allow that.
 		resizable: false,
 
+		userAgent: "test",
+
 		frame: false,
 		titleBarStyle: "hidden",
 		icon: path.join(__dirname, "assets/icons/512x512.png"),
@@ -45,7 +48,9 @@ function start() {
 
 	// general setup
 	win.removeMenu();
-	win.loadFile(__dirname + "/app/index.html");
+	win.loadURL("file://" + __dirname + "/app/index.html", {
+		userAgent: "viper/" + json(path.join(__dirname, "../package.json")).version,
+	});
 
 	win.send = (channel, data) => {
 		win.webContents.send(channel, data);
