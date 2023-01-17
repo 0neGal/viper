@@ -70,10 +70,11 @@ Given that we already have so many Northstar updaters and launchers I urge peopl
 
 Some of the existing launchers are listed below:
  * Viper - A launcher, updater and mod manager with an easy to use GUI
+ * [FlightCore](https://github.com/R2NorthstarTools/FlightCore) - A more minimal GUI manager and updater, with similar features to Viper
  * [ViperSH](https://github.com/0neGal/viper-sh) - A Bourne Shell, CLI only, Northstar updater and mod manager
  * [VTOL](https://github.com/BigSpice/VTOL) - an updater and manager for mods, very feature rich
  * [r2modman](https://github.com/ebkr/r2modmanPlus) - General purpose mod manager, which has support for Northstar
- * [Papa](https://github.com/AnActualEmerald/papa/) - a CLI only installer, updater, and mod manager
+ * [Papa](https://github.com/AnActualEmerald/papa) - a CLI only installer, updater, and mod manager
  * [FIITE](https://github.com/EladNLG/FastestInstallerInTheEast) - a minimalistic CLI installer and updater.
 
 ## Development
