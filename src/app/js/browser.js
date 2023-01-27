@@ -319,8 +319,13 @@ function BrowserEl(properties) {
 	}
 
 	let installstr = lang("gui.browser.install");
+	let normalized_mods = [];
 
-	if (normalize(modsdiv.innerText.split("\n")).includes(normalize(properties.title))) {
+	for (let i = 0; i < modsobj.all; i++) {
+		normalized_mods.push(normalize(mods_list[i].Name));
+	}
+
+	if (normalized_mods.includes(normalize(properties.title))) {
 		installstr = lang("gui.browser.reinstall");
 
 		for (let i = 0; i < modsobj.all.length; i++) {
