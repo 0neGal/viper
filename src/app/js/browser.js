@@ -328,12 +328,8 @@ function BrowserEl(properties) {
 	if (normalized_mods.includes(normalize(properties.title))) {
 		installstr = lang("gui.browser.reinstall");
 
-		for (let i = 0; i < modsobj.all.length; i++) {
-			if (normalize(modsobj.all[i].Name) == normalize(properties.title)
-				&& "v" + modsobj.all[i].Version != properties.version) {
-				
-				installstr = lang("gui.browser.update");
-			}
+		if (version.is_newer(properties.version, modsobj.all[i].Version)) {
+			installstr = lang("gui.browser.update");
 		}
 	} else {
 		for (let i = 0; i < modsobj.all.length; i++) {
@@ -347,9 +343,7 @@ function BrowserEl(properties) {
 			if (title.includes(folder) || title.includes(manifestname)) {
 				installstr = lang("gui.browser.reinstall");
 
-				if (folder == title
-					&& "v" + modsobj.all[i].Version != properties.version) {
-					
+				if (version.is_newer(properties.version, modsobj.all[i].Version)) {
 					installstr = lang("gui.browser.update");
 				}
 			}
