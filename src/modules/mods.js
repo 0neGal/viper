@@ -57,6 +57,7 @@ mods.list = () => {
 				if (! mod) {return}
 
 				let obj = {
+					Author: false,
 					Version: "unknown",
 					Name: "unknown",
 					FolderName: file,
@@ -64,15 +65,20 @@ mods.list = () => {
 
 				obj.Disabled = ! mods.modfile.get(obj.Name);
 
-				let manifestfile = path.join(mods.path, file, "manifest.json");
-				if (fs.existsSync(manifestfile)) {
-					let manifest = json(manifestfile);
+				let manifest_file = path.join(mods.path, file, "manifest.json");
+				if (fs.existsSync(manifest_file)) {
+					let manifest = json(manifest_file);
 					if (manifest != false) {
 						obj.ManifestName = manifest.name;
 						if (obj.Version == "unknown") {
 							obj.Version = manifest.version_number;
 						}
 					}
+				}
+
+				let author_file = path.join(mods.path, file, "thunderstore_author.txt");
+				if (fs.existsSync(author_file)) {
+					obj.Author = fs.readFileSync(author_file, "utf8");
 				}
 
 				if (obj.Disabled) {
