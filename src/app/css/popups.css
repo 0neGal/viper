@@ -203,6 +203,12 @@
 
 .title {
 	display: flex;
+	margin-top: calc(var(--padding) * 2);
+	margin-bottom: calc(var(--padding) / 2);
+}
+
+.title:first-child {
+	margin-top: 0px;
 }
 
 .title img {
@@ -212,6 +218,7 @@
 }
 
 .title h2 {
+	margin: 0px;
 	margin-left: calc(var(--padding) / 3);
 }
 
