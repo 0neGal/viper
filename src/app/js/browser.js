@@ -319,16 +319,17 @@ function BrowserEl(properties) {
 	}
 
 	let installstr = lang("gui.browser.install");
+	let normalized_mods = [];
 
-	if (normalize(modsdiv.innerText.split("\n")).includes(normalize(properties.title))) {
+	for (let i = 0; i < modsobj.all; i++) {
+		normalized_mods.push(normalize(mods_list[i].Name));
+	}
+
+	if (normalized_mods.includes(normalize(properties.title))) {
 		installstr = lang("gui.browser.reinstall");
 
-		for (let i = 0; i < modsobj.all.length; i++) {
-			if (normalize(modsobj.all[i].Name) == normalize(properties.title)
-				&& "v" + modsobj.all[i].Version != properties.version) {
-				
-				installstr = lang("gui.browser.update");
-			}
+		if (version.is_newer(properties.version, modsobj.all[i].Version)) {
+			installstr = lang("gui.browser.update");
 		}
 	} else {
 		for (let i = 0; i < modsobj.all.length; i++) {
@@ -342,9 +343,7 @@ function BrowserEl(properties) {
 			if (title.includes(folder) || title.includes(manifestname)) {
 				installstr = lang("gui.browser.reinstall");
 
-				if (folder == title
-					&& "v" + modsobj.all[i].Version != properties.version) {
-					
+				if (version.is_newer(properties.version, modsobj.all[i].Version)) {
 					installstr = lang("gui.browser.update");
 				}
 			}
@@ -363,14 +362,33 @@ function BrowserEl(properties) {
 		<div class="text">
 			<div class="title">${properties.title}</div>
 			<div class="description">${properties.description}</div>
-			<button class="install" onclick='installFromURL("${properties.download}", ${JSON.stringify(properties.dependencies)}, true)'>${installstr}</button>
+			<button class="install" onclick=''>${installstr}</button>
 			<button class="info" onclick="Preview.set('${properties.url}')">${lang('gui.browser.view')}</button>
 			<button class="visual">${properties.version}</button>
 			<button class="visual">${lang("gui.browser.madeby")} ${properties.author}</button>
 		</div>
 	`
 
+	entry.querySelector("button.install").addEventListener("click", () => {
+		installFromURL(
+			properties.download,
+			JSON.stringify(properties.dependencies),
+			true, properties.author
+		)
+	})
+
 	browserEntries.appendChild(entry);
+}
+
+let recent_toasts = {};
+function add_recent_toast(name, timeout = 3000) {
+	if (recent_toasts[name]) {return}
+
+	recent_toasts[name] = true;
+
+	setTimeout(() => {
+		delete recent_toasts[name];
+	}, timeout)
 }
 
 ipcRenderer.on("removed-mod", (event, mod) => {
@@ -382,12 +400,28 @@ ipcRenderer.on("removed-mod", (event, mod) => {
 })
 
 ipcRenderer.on("failed-mod", (event, modname) => {
+	if (recent_toasts["failed" + modname]) {return}
+	add_recent_toast("failed" + modname);
+
 	setButtons(true);
 	new Toast({
 		timeout: 10000,
 		scheme: "error",
 		title: lang("gui.toast.title.failed"),
 		description: lang("gui.toast.desc.failed")
+	})
+})
+
+ipcRenderer.on("duped-mod", (event, modname) => {
+	if (recent_toasts["duped" + modname]) {return}
+	add_recent_toast("duped" + modname);
+
+	setButtons(true);
+	new Toast({
+		timeout: 10000,
+		scheme: "warning",
+		title: lang("gui.toast.title.duped"),
+		description: modname + " " + lang("gui.toast.desc.duped")
 	})
 })
 
@@ -402,6 +436,9 @@ ipcRenderer.on("no-internet", (event, modname) => {
 })
 
 ipcRenderer.on("installed-mod", (event, mod) => {
+	if (recent_toasts["installed" + mod.name]) {return}
+	add_recent_toast("installed" + mod.name);
+
 	setButtons(true);
 	Browser.setbutton(mod.name, lang("gui.browser.reinstall"));
 
@@ -421,7 +458,11 @@ ipcRenderer.on("installed-mod", (event, mod) => {
 	})
 
 	if (installqueue.length != 0) {
-		installFromURL("https://thunderstore.io/package/download/" + installqueue[0]);
+		installFromURL(
+			"https://thunderstore.io/package/download/" + installqueue[0].pkg,
+			false, false, installqueue[0].author
+		)
+
 		installqueue.shift();
 	}
 })

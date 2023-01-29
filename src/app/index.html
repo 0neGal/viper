@@ -179,7 +179,7 @@
 					<img src="icons/close.png">
 				</button>
 			</div>
-			<div id="browserEntries">
+			<div id="browserEntries" class="grid">
 				<div class="loading">%%gui.browser.loading%%</div>
 			</div>
 		</div>
@@ -252,18 +252,17 @@
 						</div>
 					</div>
 					<div id="nsMods" class="hidden section">
-						<div id="modsdiv">
-						</div>
+						<div id="modsdiv" class="grid">
 						<div class="line">
 							<div class="text" id="modcount">%%gui.mods%%</div>
 							<div class="buttons modbtns">
-								<button id="removemod" onclick="selected().remove()">%%gui.mods.remove%%</button>
-								<button id="removeall" onclick="selected(true).remove()">%%gui.mods.removeall%%</button>
-								<button id="togglemod" onclick="selected().toggle()">%%gui.mods.toggle%%</button>
-								<button id="toggleall" onclick="selected(true).toggle(true)">%%gui.mods.toggleall%%</button>
-								<button id="installmod" onclick="installmod()">%%gui.mods.install%%</button>
-								<button id="findmod" onclick="Browser.toggle(true)">%%gui.mods.find%%</button>
+								<button id="removeall" class="red2" onclick="mods.remove('allmods')">%%gui.mods.removeall%%</button>
+								<button id="toggleall" class="orange2" onclick="selected(true).toggle(true)">%%gui.mods.toggleall%%</button>
+								<button id="installmod" class="blue" onclick="installmod()">%%gui.mods.install%%</button>
+								<button id="findmod" class="blue2" onclick="Browser.toggle(true)">%%gui.mods.find%%</button>
 							</div>
+						</div>
+
 						</div>
 					</div>
 					<div id="nsRelease" class="hidden section"></div>
@@ -286,9 +285,11 @@
 
 		<script src="lang.js"></script>
 		<script src="main.js"></script>
-		<script src="toast.js"></script>
-		<script src="browser.js"></script>
-		<script src="settings.js"></script>
-		<script src="launcher.js"></script>
+		<script src="js/misc.js"></script>
+		<script src="js/mods.js"></script>
+		<script src="js/toast.js"></script>
+		<script src="js/browser.js"></script>
+		<script src="js/settings.js"></script>
+		<script src="js/launcher.js"></script>
 	</body>
-<
+</html>

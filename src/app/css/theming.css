@@ -60,3 +60,12 @@ a:hover {
 	color: black !important;
 	background: rgb(var(--red)) !important;
 }
+
+.blue {background: rgb(var(--blue)) !important}
+.blue2 {background: rgb(var(--blue2)) !important}
+
+.orange {background: rgb(var(--orange)) !important}
+.orange2 {background: rgb(var(--orange2)) !important}
+
+.red {background: rgb(var(--red)) !important}
+.red2 {background: rgb(var(--red2)) !important}

@@ -1,3 +1,4 @@
+@import "css/grid.css";
 @import "css/dragui.css";
 @import "css/toasts.css";
 @import "css/popups.css";
@@ -27,7 +28,7 @@ button {
 button:hover {filter: brightness(110%)}
 button:active {filter: brightness(90%)}
 
-.popup, #modsdiv {
+.popup, #modsdiv, .release-block {
 	outline: 1px solid #444444;
 	border: 3px solid var(--bg);
 }
@@ -105,3 +106,11 @@ a, button, #close, #nsRelease, #vpReleaseNotes,
 .mod, #overlay, #modsdiv, #winbtns, .contentMenu {
 	-webkit-app-region: no-drag;
 }
+
+/* grids */
+
+.grid {
+	display: flex;
+	flex-wrap: wrap;
+}
+

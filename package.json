@@ -1,7 +1,7 @@
 {
 	"name": "viper",
 	"productName": "Viper",
-	"version": "1.6.2",
+	"version": "1.6.3",
 	"description": "Launcher+Updater for TF|2 Northstar",
 	"main": "src/index.js",
 	"build": {
@@ -26,15 +26,16 @@
 		}
 	},
 	"scripts": {
-		"langs": "node build/langs.js",
+		"langs": "node scripts/langs.js",
 		"start": "npx electron src/index.js",
-		"debug": "npx electron src/index.js --debug",
-		"build": "npx electron-builder --win nsis --win portable --linux",
-		"build:windows": "npx electron-builder --win nsis --win portable",
-		"build:linux": "npx electron-builder --linux",
-		"publish": "npx electron-builder --win nsis --win portable --linux -p always",
-		"publish:windows": "npx electron-builder --win nsis --win portable -p always",
-		"publish:linux": "npx electron-builder --linux -p always"
+		"debug": "npm run devtools",
+		"devtools": "npx electron src/index.js --devtools",
+		"build": "npx electron-builder --win nsis --win portable --linux --publish never",
+		"build:windows": "npx electron-builder --win nsis --win portable --publish never",
+		"build:linux": "npx electron-builder --linux --publish never",
+		"publish": "npx electron-builder --win nsis --win portable --linux --publish always",
+		"publish:windows": "npx electron-builder --win nsis --win portable --publish always",
+		"publish:linux": "npx electron-builder --linux --publish always"
 	},
 	"repository": {
 		"type": "git",
@@ -58,7 +59,7 @@
 		"unzipper": "^0.10.11"
 	},
 	"devDependencies": {
-		"electron": "^16.2.6",
-		"electron-builder": "^22.5.1"
+		"electron": "^22.0.0",
+		"electron-builder": "^23.6.0"
 	}
 }

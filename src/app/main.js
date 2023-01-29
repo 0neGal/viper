@@ -153,68 +153,24 @@ ipcRenderer.on("ns-update-event", (event, key) => {
 	}
 });
 
-let lastselected = "";
-function select(entry) {
-	let entries = document.querySelectorAll("#modsdiv .mod .modtext");
-
-	for (let i = 0; i < entries.length; i++) {
-		if (entries[i].innerHTML == entry) {
-			lastselected = entry;
-			entries[i].parentElement.classList.add("selected");
-		} else {
-			entries[i].parentElement.classList.remove("selected");
+ipcRenderer.on("unknown-error", (event, err) => {
+	new Toast({
+		timeout: 10000,
+		scheme: "error",
+		title: lang("gui.toast.title.unknown_error"),
+		description: lang("gui.toast.desc.unknown_error"),
+		callback: () => {
+			new Toast({
+				timeout: 15000,
+				scheme: "error",
+				title: "",
+				description: err.stack.replaceAll("\n", "<br>")
+			})
 		}
-	}
-}
+	})
 
-// Mod selection
-function selected(all) {
-	let selected = "";
-	if (all) {
-		selected = "allmods"
-	} else {
-		selected = document.querySelector(".mod.selected .modtext");
-		if (selected != null) {
-			selected = selected.innerHTML;
-		} else {
-			alert(lang("gui.mods.nothingselected"));
-			return {
-				remove: () => {},
-				toggle: () => {},
-			}
-		}
-	}
-
-	return {
-		remove: () => {
-
-			if (selected.match(/^Northstar\./)) {
-				if (! confirm(lang("gui.mods.required.confirm"))) {
-					return;
-				}
-			} else if (selected == "allmods") {
-				if (! confirm(lang("gui.mods.removeall.confirm"))) {
-					return;
-				}
-			}
-
-			ipcRenderer.send("remove-mod", selected);
-		},
-		toggle: () => {
-			if (selected.match(/^Northstar\./)) {
-				if (! confirm(lang("gui.mods.required.confirm"))) {
-					return;
-				}
-			} else if (selected == "allmods") {
-				if (! confirm(lang("gui.mods.toggleall.confirm"))) {
-					return;
-				}
-			}
-
-			ipcRenderer.send("toggle-mod", selected);
-		}
-	}
-}
+	console.error(err.stack)
+})
 
 let installqueue = [];
 
@@ -231,7 +187,7 @@ function installFromPath(path) {
 }
 
 // Tells the main process to install a mod from a URL
-function installFromURL(url, dependencies, clearqueue) {
+function installFromURL(url, dependencies, clearqueue, author) {
 	if (clearqueue) {installqueue = []};
 
 	let prettydepends = [];
@@ -244,7 +200,11 @@ function installFromURL(url, dependencies, clearqueue) {
 				depend = dependencies[i].replaceAll("-", "/");
 				let pkg = depend.split("/");
 				if (! isModInstalled(pkg[1])) {
-					newdepends.push(depend);
+					newdepends.push({
+						pkg: depend,
+						author: pkg[0]
+					});
+
 					prettydepends.push(`${pkg[1]} v${pkg[2]} - ${lang("gui.browser.madeby")} ${pkg[0]}`);
 				}
 			}
@@ -261,7 +221,7 @@ function installFromURL(url, dependencies, clearqueue) {
 	}
 
 	setButtons(false);
-	ipcRenderer.send("install-from-url", url, dependencies);
+	ipcRenderer.send("install-from-url", url, author);
 
 	if (dependencies) {
 		installqueue = dependencies;
@@ -294,27 +254,11 @@ ipcRenderer.on("log", (event, msg) => {log(msg)})
 ipcRenderer.on("alert", (event, msg) => {alert(msg)})
 
 // Updates the installed mods
-ipcRenderer.on("mods", (event, mods) => {
-	modsobj = mods;
-	if (! mods) {return}
+ipcRenderer.on("mods", (event, mods_obj) => {
+	modsobj = mods_obj;
+	if (! mods_obj) {return}
 
-	modcount.innerHTML = `${lang("gui.mods.count")} ${mods.all.length}`;
-	modsdiv.innerHTML = "";
-	
-	let newmod = (name, disabled) => {
-		if (disabled) {
-			disabled  = `<span class="disabled">${lang("gui.mods.disabledtag")}</span>`
-		} else {
-			disabled  = ""
-		}
-
-		modsdiv.innerHTML += `<div onclick="select('${name}')" class="mod"><span class="modtext">${name}</span>${disabled}</div>`;
-	}
-
-	for (let i = 0; i < mods.enabled.length; i++) {newmod(mods.enabled[i].Name)}
-	for (let i = 0; i < mods.disabled.length; i++) {newmod(mods.disabled[i].Name, " - Disabled")}
-
-	select(lastselected);
+	mods.load(mods_obj);
 })
 
 // Updates version numbers

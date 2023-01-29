@@ -3,9 +3,15 @@ const path = require("path");
 const { autoUpdater } = require("electron-updater");
 const { app, ipcMain, BrowserWindow, dialog } = require("electron");
 
+// ensures PWD/CWD is the config folder where viper.json is located
+process.chdir(app.getPath("appData"));
+
 const utils = require("./utils");
 const cli = require("./cli");
-const requests = require("./extras/requests");
+const json = require("./modules/json");
+const mods = require("./modules/mods");
+const settings = require("./modules/settings");
+const requests = require("./modules/requests");
 
 var log = console.log;
 
@@ -25,6 +31,8 @@ function start() {
 		// as it's fairly responsive, but for now we won't allow that.
 		resizable: false,
 
+		userAgent: "test",
+
 		frame: false,
 		titleBarStyle: "hidden",
 		icon: path.join(__dirname, "assets/icons/512x512.png"),
@@ -35,19 +43,21 @@ function start() {
 		},
 	});
 
-	// when --debug is added it'll open the dev tools
-	if (cli.hasParam("debug")) {win.openDevTools()}
+	// when --devtools is added it'll open the dev tools
+	if (cli.hasParam("devtools")) {win.openDevTools()}
 
 	// general setup
 	win.removeMenu();
-	win.loadFile(__dirname + "/app/index.html");
+	win.loadURL("file://" + __dirname + "/app/index.html", {
+		userAgent: "viper/" + json(path.join(__dirname, "../package.json")).version,
+	});
 
 	win.send = (channel, data) => {
 		win.webContents.send(channel, data);
 	}; send = win.send;
 
 	ipcMain.on("exit", () => {
-		if (utils.settings.originkill) {
+		if (settings.originkill) {
 			utils.isOriginRunning().then((running) => {
 				if (running) {
 					utils.killOrigin().then(process.exit(0))
@@ -71,18 +81,24 @@ function start() {
 	ipcMain.on("win-alert", (event, ...args) => {send("alert", ...args)});
 
 	// mod states
+	ipcMain.on("duped-mod", (event, modname) => {send("duped-mod", modname)});
 	ipcMain.on("failed-mod", (event, modname) => {send("failed-mod", modname)});
 	ipcMain.on("removed-mod", (event, modname) => {send("removed-mod", modname)});
-	ipcMain.on("gui-getmods", (event, ...args) => {send("mods", utils.mods.list())});
+	ipcMain.on("gui-getmods", (event, ...args) => {send("mods", mods.list())});
 	ipcMain.on("installed-mod", (event, modname) => {send("installed-mod", modname)});
 	ipcMain.on("no-internet", () => {send("no-internet")});
 
+	process.on("uncaughtException", (err) => {
+		send("unknown-error", err);
+		console.error(err);
+	});
+
 	// install calls
-	ipcMain.on("install-from-path", (event, path) => {utils.mods.install(path)});
-	ipcMain.on("install-from-url", (event, url) => {utils.mods.installFromURL(url)});
+	ipcMain.on("install-from-path", (event, path) => {mods.install(path)});
+	ipcMain.on("install-from-url", (event, url, author) => {mods.installFromURL(url, author)});
 
 	win.webContents.on("dom-ready", () => {
-		send("mods", utils.mods.list());
+		send("mods", mods.list());
 	});
 
 	// ensures gamepath still exists and is valid on startup
@@ -94,7 +110,7 @@ function start() {
 		}
 	});
 
-	ipcMain.on("save-settings", (event, obj) => {utils.saveSettings(obj)});
+	ipcMain.on("save-settings", (event, obj) => {settings.save(obj)});
 
 	// allows renderer to check for updates
 	ipcMain.on("ns-update-event", (event) => {send("ns-update-event", event)});
@@ -105,7 +121,7 @@ function start() {
 	})
 
 	// start auto-update process
-	if (utils.settings.autoupdate) {
+	if (settings.autoupdate) {
 		if (cli.hasParam("no-vp-updates")) {
 			utils.handleNorthstarUpdating();
 		} else {
@@ -130,11 +146,11 @@ function start() {
 // module inside the file that sent the event. {
 ipcMain.on("install-mod", () => {
 	if (cli.hasArgs()) {
-		utils.mods.install(cli.param("installmod"));
+		mods.install(cli.param("installmod"));
 	} else {
 		dialog.showOpenDialog({properties: ["openFile"]}).then(res => {
 			if (res.filePaths.length != 0) {
-				utils.mods.install(res.filePaths[0]);
+				mods.install(res.filePaths[0]);
 			} else {
 				send("set-buttons", true);
 			}
@@ -142,8 +158,8 @@ ipcMain.on("install-mod", () => {
 	}
 })
 
-ipcMain.on("remove-mod", (event, mod) => {utils.mods.remove(mod)});
-ipcMain.on("toggle-mod", (event, mod) => {utils.mods.toggle(mod)});
+ipcMain.on("remove-mod", (event, mod) => {mods.remove(mod)});
+ipcMain.on("toggle-mod", (event, mod) => {mods.toggle(mod)});
 
 ipcMain.on("launch-ns", () => {utils.launch()});
 ipcMain.on("launch-vanilla", () => {utils.launch("vanilla")});
@@ -187,7 +203,7 @@ ipcMain.on("version-cli", () => {
 
 // sends installed mods info to renderer
 ipcMain.on("getmods", () => {
-	let mods = utils.mods.list();
+	let mods = mods.list();
 	if (mods.all.length > 0) {
 		log(`${utils.lang("general.mods.installed")} ${mods.all.length}`);
 		log(`${utils.lang("general.mods.enabled")} ${mods.enabled.length}`);
@@ -222,9 +238,6 @@ ipcMain.on("newpath", (event, newpath) => {
 }); ipcMain.on("wrong-path", () => {
 	win.send("wrong-path");
 });
-
-// ensures PWD/CWD is the config folder where viper.json is located
-process.chdir(app.getPath("appData"));
 
 // starts the GUI or CLI
 if (cli.hasArgs()) {

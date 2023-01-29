@@ -151,6 +151,15 @@
 	pointer-events: none;
 }
 
+.section .release-block {
+	margin-top: 0px;
+	border-radius: 5px;
+	background: var(--bg);
+	padding: var(--padding);
+	backdrop-filter: blur(15px);
+	margin-bottom: var(--padding);
+}
+
 .contentBody img {max-width: 100%}
 .contentBody .img {text-align: center}
 
@@ -233,14 +242,6 @@
 	background: rgb(var(--red)) !important;
 }
 
-#installmod {background: rgb(var(--blue))}
-#findmod {background: rgb(var(--blue2))}
-
-#togglemod {background: rgb(var(--orange))}
-#toggleall {background: rgb(var(--orange2))}
-
-#removemod {background: rgb(var(--red))}
-#removeall {background: rgb(var(--red2))}
 button:disabled {
 	opacity: 0.5;
 	pointer-events: none;
@@ -261,13 +262,15 @@ code {
 }
 
 #nsMods .line {
+	width: 100%;
 	display: flex;
 	align-items: center;
+	margin: calc(var(--padding) / 2);
 	margin-top: calc(var(--padding) / 2);
 }
 
 #modsdiv {
-	height: 50vh;
+	height: 80vh;
 	overflow-y: scroll;
 	border-radius: 5px;
 	background: var(--bg);
