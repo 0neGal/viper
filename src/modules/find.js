@@ -46,6 +46,12 @@ module.exports = {
 		let protonpath = false;
 
 		for (let i = 0; i < libraries.length; i++) {
+			if (! fs.existsSync(libraries[i])
+				|| fs.statSync(libraries[i]).isDirectory()) {
+
+				continue;
+			}
+
 			let files = fs.readdirSync(libraries[i]);
 			for (let ii = 0; ii < files.length; ii++) {
 				if (files[ii].match(/^Proton [0-9]+\.[0-9]+/)) {
