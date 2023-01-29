@@ -9,6 +9,7 @@ let shouldInstallNorthstar = false;
 // Base settings
 var settings = {
 	nsargs: "",
+	nsmethod: "direct",
 	gamepath: "",
 	nsupdate: true,
 	autolang: true,

@@ -14,6 +14,7 @@ const findgame = require("./modules/findgame");
 
 const unzip = require("unzipper");
 const exec = require("child_process").exec;
+const execFile = require("child_process").execFile;
 const { https } = require("follow-redirects");
 
 // Logs into the dev tools of the renderer
@@ -410,10 +411,31 @@ function updateViper(autoinstall) {
 }
 
 // Launches the game
-//
-// Either Northstar or Vanilla. Linux support is not currently a thing,
-// however it'll be added at some point.
 function launch(version) {
+	console.log(settings.nsmethod);
+	var method = settings.nsmethod;
+
+	if (process.platform == "linux" && method == "direct") {
+		// there is no directly launching on Linux, so try the next best thing.
+		method = "steam";
+	}
+
+	switch(method) {
+		default:
+		case "direct":
+			launchDirect(version);
+			break;
+
+		case "steam":
+			launchSteam(version);
+			break;
+	}
+}
+
+// Launch the game directly
+//
+// Windows only
+function launchDirect(version) {
 	if (process.platform == "linux") {
 		winAlert(lang("cli.launch.linuxerror"));
 		console.error("error:", lang("cli.launch.linuxerror"));
@@ -432,6 +454,25 @@ function launch(version) {
 			exec("NorthstarLauncher.exe", {cwd: settings.gamepath});
 			break;
 	}
+}
+
+// Launch the game via Steam
+function launchSteam(version) {
+	const isVanilla = version == "vanilla"
+	const args = ["-applaunch", "1237970", isVanilla ? "-vanilla" : "-northstar" ]
+
+	process.chdir(settings.gamepath);
+	if (process.platform == "linux") {
+		switch(version) {
+			case "vanilla":
+				fs.writeFileSync("run_northstar.txt", "0");
+				break;
+			default:
+				fs.writeFileSync("run_northstar.txt", "1");
+				break;
+		}
+	}
+	execFile("/usr/bin/steam", args)
 }
 
 // Returns true/false depending on if the gamepath currently exists/is

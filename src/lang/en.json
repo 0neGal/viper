@@ -30,7 +30,7 @@
 	"cli.autoupdates.updatingns": "Launching update process...",
 	"cli.autoupdates.noupdate": "No Northstar update available.",
 
-	"cli.launch.linuxerror": "Launching the game is not currently supported on Linux",
+	"cli.launch.linuxerror": "Launching the game directly is not supported on Linux",
 
 	"cli.gamepath.lost": "Gamepath not found, make sure it's mounted!",
 
@@ -93,6 +93,8 @@
 	"gui.settings.title.misc": "Miscellaneous",
 	"gui.settings.nsargs.title": "Launch options",
 	"gui.settings.nsargs.desc": "Here you can add launch options for Northstar/Titanfall.",
+	"gui.settings.nsmethod.title": "Launch Method",
+	"gui.settings.nsmethod.desc": "Choose how to launch Northstar/Titanfall",
 	"gui.settings.autolang.title": "Auto-Detect Language",
 	"gui.settings.autolang.desc": "When enabled, Viper tries to automatically detect your system language, when disabled you can manually change the language below.",
 	"gui.settings.forcedlang.title": "Language",

@@ -17,6 +17,7 @@ var settings = {
 	autoupdate: true,
 	originkill: false,
 	nsargs: "-multiple",
+	nsmethod: "direct",
 	zip: "/northstar.zip",
 
 	// These files won't be overwritten when installing/updating

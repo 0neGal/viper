@@ -86,7 +86,28 @@ var Settings = {
 
 		for (let i = 0; i < options.length; i++) {
 			let optName = options[i].getAttribute("name");
-			if (optName == "forcedlang") {
+			if (optName == "nsmethod") {
+				let div = options[i].querySelector("select");
+
+				var launch_methods = {
+					direct: "Direct",
+					steam: "Steam",
+				};
+
+				if (process.platform == "linux") {
+					// No direct launching under Linux
+					delete launch_methods["direct"]
+				}
+
+				div.innerHTML = "";
+				for (let i in launch_methods) {
+					div.innerHTML += `<option value="${i}">${launch_methods[i]}</option>`				
+				}
+
+				div.value = settings.nsmethod;
+				continue;
+			}
+			else if (optName == "forcedlang") {
 				let div = options[i].querySelector("select");
 
 				div.innerHTML = "";
