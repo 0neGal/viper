@@ -1,3 +1,5 @@
+@import "theming.css";
+
 .grid .el, .popup .misc, .popup .loading {
 	--spacing: calc(var(--padding) / 2);
 	--height: calc(var(--padding) * 3.5);
@@ -138,7 +140,6 @@
 
 .grid .el .description {font-size: 0.8em}
 .grid .el button {
-	background: rgb(var(--blue));
 	margin-top: var(--spacing);
 }
 
@@ -146,3 +147,12 @@
 	background: rgb(var(--blue2));
 }
 
+.grid .el .switch {
+	top: 3px;
+	position: relative;
+	background: var(--bg);
+}
+
+.grid .el .switch:not(.grid .el .switch.on)::after {
+	background: var(--selbg);
+}

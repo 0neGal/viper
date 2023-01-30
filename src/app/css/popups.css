@@ -167,40 +167,6 @@
 	background: var(--selbg);
 }
 
-.switch {
-	width: 50px;
-	height: 25px;
-	border-radius: 50px;
-}
-
-.switch.on {
-	background: rgba(var(--red), 0.2) !important;
-}
-
-.switch::after {
-	left: -5px;
-	width: 15px;
-	height: 15px;
-	content: " ";
-	display: block;
-	background: red;
-	position: relative;
-	border-radius: 50px;
-	background: var(--bg);
-	transition: 0.2s ease-in-out;
-}
-
-.switch.on::after {
-	left: 15px;
-	width: 20px;
-	opacity: 0.5;
-	background: rgb(var(--red));
-}
-
-.switch.on:hover::after {
-	transform: scale(1.2);
-}
-
 .title {
 	display: flex;
 	margin-top: calc(var(--padding) * 2);

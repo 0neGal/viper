@@ -11,7 +11,14 @@ mods.load = (mods_obj) => {
 
 		normalized_names.push(normalized_name);
 
-		if (document.getElementById(normalized_name)) {
+		let el = document.getElementById(normalized_name);
+		if (el) {
+			if (mod.Disabled) {
+				el.querySelector(".switch").classList.remove("on");
+			} else {
+				el.querySelector(".switch").classList.add("on");
+			}
+
 			return;
 		}
 
@@ -27,11 +34,20 @@ mods.load = (mods_obj) => {
 			<div class="text">
 				<div class="title">${mod.Name}</div>
 				<div class="description">${mod.Description}</div>
+				<button class="switch on"></button>
 				<button class="red" onclick="mods.remove('${mod.Name}')">Remove</button>
 				<button class="visual">${mod.Version}</button>
 				<button class="visual">by ${mod.Author || "Unknown"}</button>
 			</div>
 		`;
+
+		if (mod.Disabled) {
+			div.querySelector(".switch").classList.remove("on");
+		}
+
+		div.querySelector(".switch").addEventListener("click", () => {
+			mods.toggle(mod.Name);
+		})
 
 		if (! image_url) {
 			div.querySelector(".image").remove();
