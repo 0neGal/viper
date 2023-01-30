@@ -120,7 +120,8 @@ a, button, #close, #nsRelease, #vpReleaseNotes,
 }
 
 .switch.on {
-	background: rgba(var(--red), 0.2) !important;
+	--on-color: var(--red);
+	background: rgba(var(--on-color), 0.4) !important;
 }
 
 .switch::after {
@@ -139,9 +140,15 @@ a, button, #close, #nsRelease, #vpReleaseNotes,
 .switch.on::after {
 	left: 15px;
 	width: 20px;
-	opacity: 0.5;
-	background: rgb(var(--red));
+	opacity: 0.8;
+	background: rgb(var(--on-color));
 }
+
+.switch.on.red2 {--on-color: var(--red2)}
+.switch.on.blue {--on-color: var(--blue)}
+.switch.on.blue2 {--on-color: var(--blue2)}
+.switch.on.orange {--on-color: var(--orange)}
+.switch.on.orange2 {--on-color: var(--orange2)}
 
 .switch.on:hover::after {
 	transform: scale(1.2);

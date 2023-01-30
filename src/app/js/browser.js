@@ -263,6 +263,10 @@ var Browser = {
 	}
 }
 
+if (navigator.onLine) {
+	Browser.loadfront();
+}
+
 function openExternal(url) {
 	require("electron").shell.openExternal(url);
 }
@@ -362,7 +366,7 @@ function BrowserEl(properties) {
 		<div class="text">
 			<div class="title">${properties.title}</div>
 			<div class="description">${properties.description}</div>
-			<button class="install blue" onclick=''>${installstr}</button>
+			<button class="install bg-blue" onclick=''>${installstr}</button>
 			<button class="info" onclick="Preview.set('${properties.url}')">${lang('gui.browser.view')}</button>
 			<button class="visual">${properties.version}</button>
 			<button class="visual">${lang("gui.browser.madeby")} ${properties.author}</button>

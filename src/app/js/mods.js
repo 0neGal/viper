@@ -34,8 +34,8 @@ mods.load = (mods_obj) => {
 			<div class="text">
 				<div class="title">${mod.Name}</div>
 				<div class="description">${mod.Description}</div>
-				<button class="switch on"></button>
-				<button class="red" onclick="mods.remove('${mod.Name}')">Remove</button>
+				<button class="switch on orange"></button>
+				<button class="bg-red" onclick="mods.remove('${mod.Name}')">Remove</button>
 				<button class="visual">${mod.Version}</button>
 				<button class="visual">by ${mod.Author || "Unknown"}</button>
 			</div>

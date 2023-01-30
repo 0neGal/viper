@@ -61,11 +61,11 @@ a:hover {
 	background: rgb(var(--red)) !important;
 }
 
-.blue {background: rgb(var(--blue)) !important}
-.blue2 {background: rgb(var(--blue2)) !important}
+.bg-blue {background: rgb(var(--blue)) !important}
+.bg-blue2 {background: rgb(var(--blue2)) !important}
 
-.orange {background: rgb(var(--orange)) !important}
-.orange2 {background: rgb(var(--orange2)) !important}
+.bg-orange {background: rgb(var(--orange)) !important}
+.bg-orange2 {background: rgb(var(--orange2)) !important}
 
-.red {background: rgb(var(--red)) !important}
-.red2 {background: rgb(var(--red2)) !important}
+.bg-red {background: rgb(var(--red)) !important}
+.bg-red2 {background: rgb(var(--red2)) !important}
