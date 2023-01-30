@@ -64,7 +64,7 @@ if (fs.existsSync("viper.json")) {
 
 
 // Show a toast message if no Internet connection has been detected.
-if (!navigator.onLine) {
+if (! navigator.onLine) {
 	ipcRenderer.send("no-internet");
 }
 
@@ -107,6 +107,7 @@ function setButtons(state) {
 		}
 	}
 
+	disablearray(document.querySelectorAll("#modsdiv .el button"));
 	disablearray(document.querySelectorAll(".playBtnContainer .playBtn"));
 	disablearray(document.querySelectorAll("#nsMods .buttons.modbtns button"));
 	disablearray(document.querySelectorAll("#browser #browserEntries .text button"));
