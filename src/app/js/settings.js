@@ -24,37 +24,6 @@ var Settings = {
 		settings = {...settings, ...Settings.get()};
 		ipcRenderer.send("save-settings", Settings.get());
 	},
-	reloadSwitches: () => {
-		let switches = document.querySelectorAll(".switch");
-
-		for (let i = 0; i < switches.length; i++) {
-			switches[i].setAttribute("onclick", `Settings.switch(${i})`); 
-		}
-	},
-	switch: (element, state) => {
-		let switches = document.querySelectorAll(".switch");
-		if (switches[element]) {
-			element = switches[element];
-		}
-
-		let on = () => {
-			element.classList.add("on");
-			element.classList.remove("off");
-		}
-
-		let off = () => {
-			element.classList.add("off");
-			element.classList.remove("on");
-		}
-
-		if (state != undefined) {
-			if (state) {on()} else {off()}
-		} else {
-			if (element.classList.contains("on")) {off()} else {on()}
-		}
-
-		Settings.reloadSwitches();
-	},
 	get: () => {
 		let opts = {};
 		let options = document.querySelectorAll(".option");
@@ -133,5 +102,11 @@ var Settings = {
 	}
 }
 
-Settings.reloadSwitches();
+document.body.addEventListener("click", (e) => {
+	let el = document.elementFromPoint(e.clientX, e.clientY);
+	if (el.classList.contains("switch") && el.tagName == "BUTTON") {
+		el.classList.toggle("on");
+	}
+})
+
 Settings.load();
