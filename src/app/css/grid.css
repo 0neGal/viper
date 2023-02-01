@@ -15,6 +15,13 @@
 	transition: 0.15s ease-in-out;
 }
 
+.grid .el.no-animation,
+.popup .misc.no-animation,
+.popup .loading.no-animation {
+	opacity: 1.0;
+	animation-name: none;
+}
+
 .grid .el, .popup #search,
 .popup #close, .popup .misc button,
 .option .actions select, .option .actions input {

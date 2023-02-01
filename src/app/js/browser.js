@@ -4,6 +4,8 @@ var packages = [];
 
 var packagecount = 0;
 
+var mod_versions = {};
+
 var Browser = {
 	maxentries: 50,
 	filters: {
@@ -108,6 +110,51 @@ var Browser = {
 		overlay.classList.toggle("shown");
 		browser.classList.toggle("shown");
 	},
+	install: (package_obj, clear_queue = false) => {
+		console.log(package_obj)
+		return installFromURL(
+			package_obj.download || package_obj.versions[0].download_url,
+			package_obj.dependencies || package_obj.versions[0].dependencies,
+			clear_queue, package_obj.owner
+		)
+	},
+	add_pkg_properties: () => {
+		for (let i = 0; i < packages.length; i++) {
+			let properties = packages[i];
+			let normalized = normalize(packages[i].name);
+
+			let has_update = false;
+			let local_version = false;
+			let remote_version = packages[i].versions[0].version_number;
+			remote_version = version.format(remote_version);
+
+			for (let ii = 0; ii < modsobj.all.length; ii++) {
+				let mod = modsobj.all[ii];
+				if (normalize(mod.Name) === normalized) {
+					local_version = version.format(mod.Version);
+					if (version.is_newer(remote_version, local_version)) {
+						has_update = true;
+					}
+				}
+			}
+
+			let install = () => {
+				return Browser.install({...properties});
+			}
+
+			packages[i].install = install;
+			packages[i].has_update = has_update;
+			packages[i].local_version = local_version;
+
+			if (local_version) {
+				mod_versions[normalized] = {
+					install: install,
+					has_update: has_update,
+					local_version: local_version
+				}
+			}
+		}
+	},
 	loadfront: async () => {
 		Browser.loading();
 
@@ -115,6 +162,8 @@ var Browser = {
 		
 		if (packages.length < 1) {
 			packages = await (await fetch("https://northstar.thunderstore.io/api/v1/package/")).json();
+
+			Browser.add_pkg_properties();
 
 			fuse = new Fuse(packages, {
 				keys: ["full_name"]
@@ -263,6 +312,8 @@ var Browser = {
 	}
 }
 
+setInterval(Browser.add_pkg_properties, 1500);
+
 if (navigator.onLine) {
 	Browser.loadfront();
 }
@@ -290,6 +341,7 @@ function BrowserElFromObj(obj) {
 	let pkg = {...obj, ...obj.versions[0]};
 
 	new BrowserEl({
+		pkg: pkg,
 		title: pkg.name,
 		image: pkg.icon,
 		author: pkg.owner,
@@ -329,31 +381,14 @@ function BrowserEl(properties) {
 		normalized_mods.push(normalize(mods_list[i].Name));
 	}
 
-	if (normalized_mods.includes(normalize(properties.title))) {
+	if (properties.pkg.local_version) {
 		installstr = lang("gui.browser.reinstall");
 
-		if (version.is_newer(properties.version, modsobj.all[i].Version)) {
+		if (properties.pkg.has_update) {
 			installstr = lang("gui.browser.update");
 		}
-	} else {
-		for (let i = 0; i < modsobj.all.length; i++) {
-			let title = normalize(properties.title);
-			let folder = normalize(modsobj.all[i].FolderName);
-			let manifestname = null;
-			if (modsobj.all[i].ManifestName) {
-				manifestname = normalize(modsobj.all[i].ManifestName);
-			}
-
-			if (title.includes(folder) || title.includes(manifestname)) {
-				installstr = lang("gui.browser.reinstall");
-
-				if (version.is_newer(properties.version, modsobj.all[i].Version)) {
-					installstr = lang("gui.browser.update");
-				}
-			}
-		}
 	}
-	
+
 	let entry = document.createElement("div");
 	entry.classList.add("el");
 	entry.id = `mod-${normalize(properties.title)}`;
@@ -374,11 +409,7 @@ function BrowserEl(properties) {
 	`
 
 	entry.querySelector("button.install").addEventListener("click", () => {
-		installFromURL(
-			properties.download,
-			JSON.stringify(properties.dependencies),
-			true, properties.author
-		)
+		Browser.install(properties);
 	})
 
 	browserEntries.appendChild(entry);

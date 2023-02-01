@@ -35,6 +35,7 @@ mods.load = (mods_obj) => {
 				<div class="title">${mod.Name}</div>
 				<div class="description">${mod.Description}</div>
 				<button class="switch on orange"></button>
+				<button class="update bg-blue">${lang("gui.browser.update")}</button>
 				<button class="bg-red" onclick="mods.remove('${mod.Name}')">Remove</button>
 				<button class="visual">${mod.Version}</button>
 				<button class="visual">by ${mod.Author || "Unknown"}</button>
@@ -61,9 +62,47 @@ mods.load = (mods_obj) => {
 	}
 
 	let mod_els = document.querySelectorAll("#modsdiv .el");
+	let mod_update_els = [];
+
 	for (let i = 0; i < mod_els.length; i++) {
+		let update_btn = mod_els[i].querySelector(".update");
+
+		if (update_btn && update_btn.style.display != "none") {
+			mod_update_els.push(mod_els[i].id);
+		} else {
+			break;
+		}
+	}
+
+	for (let i = 0; i < mod_els.length; i++) {
+		let mod = mod_els[i].id.replace(/^mod-list-/, "");
+
 		if (! normalized_names.includes(mod_els[i].id)) {
 			mod_els[i].remove();
+			return;
+		}
+
+		if (mod_versions[mod]
+			&& mod_versions[mod].has_update) {
+
+			mod_els[i].querySelector(".update").style.display = null;
+
+			mod_els[i].querySelector(".update").setAttribute(
+				"onclick", `mod_versions["${mod}"].install()`
+			)
+
+			if (mod_update_els.includes(mod_els[i].id)) {
+				continue;
+			}
+
+			let mod_el = mod_els[i].cloneNode(true);
+
+			mod_el.classList.add("no-animation");
+			
+			mod_els[i].remove();
+			modsdiv.querySelector(".line").after(mod_el);
+		} else {
+			mod_els[i].querySelector(".update").style.display = "none";
 		}
 	}
 }
@@ -83,15 +122,15 @@ mods.remove = (mod) => {
 }
 
 mods.toggle = (mod) => {
-			if (mod.match(/^Northstar\./)) {
-				if (! confirm(lang("gui.mods.required.confirm"))) {
-					return;
-				}
-			} else if (mod == "allmods") {
-				if (! confirm(lang("gui.mods.toggleall.confirm"))) {
-					return;
-				}
-			}
+	if (mod.match(/^Northstar\./)) {
+		if (! confirm(lang("gui.mods.required.confirm"))) {
+			return;
+		}
+	} else if (mod == "allmods") {
+		if (! confirm(lang("gui.mods.toggleall.confirm"))) {
+			return;
+		}
+	}
 
-			ipcRenderer.send("toggle-mod", mod);
+	ipcRenderer.send("toggle-mod", mod);
 }
