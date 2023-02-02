@@ -35,10 +35,18 @@ mods.load = (mods_obj) => {
 				<div class="title">${mod.Name}</div>
 				<div class="description">${mod.Description}</div>
 				<button class="switch on orange"></button>
-				<button class="update bg-blue">${lang("gui.browser.update")}</button>
-				<button class="bg-red" onclick="mods.remove('${mod.Name}')">Remove</button>
+				<button class="update bg-blue">
+					${lang("gui.browser.update")}
+				</button>
+				<button class="bg-red" onclick="mods.remove('${mod.Name}')">
+					${lang("gui.mods.remove")}
+				</button>
+
 				<button class="visual">${mod.Version}</button>
-				<button class="visual">by ${mod.Author || "Unknown"}</button>
+				<button class="visual">
+					${lang("gui.browser.madeby")}
+					${mod.Author || lang("gui.mods.unknown_author")}
+				</button>
 			</div>
 		`;
 
