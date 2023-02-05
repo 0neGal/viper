@@ -126,7 +126,10 @@
 }
 
 .grid .el .text {
+	height: inherit;
 	overflow: hidden;
+	overflow-x: scroll;
+	padding: var(--padding) 0px;
 }
 
 .grid .el .title, .grid .el .description {
