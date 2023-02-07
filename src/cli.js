@@ -80,7 +80,7 @@ async function init() {
 	// --update
 	if (cli.hasSwitch("update") && gamepathExists()) {ipcMain.emit("update")}
 	// --version
-	if (cli.hasSwitch("version") && gamepathExists()) {ipcMain.emit("versioncli")}
+	if (cli.hasSwitch("version") && gamepathExists()) {ipcMain.emit("version-cli")}
 
 	// --setpath
 	if (cli.hasSwitch("setpath")) {
