@@ -69,6 +69,10 @@ function start() {
 			process.exit(0)
 		}
 	});
+
+	ipcMain.on("gamestarted", (event) => {win.webContents.send("gamestate", true)});
+	ipcMain.on("gamestopped", (event) => {win.webContents.send("gamestate", false)});
+
 	ipcMain.on("minimize", () => {win.minimize()});
 	ipcMain.on("relaunch", () => {app.relaunch(); app.exit()});
 

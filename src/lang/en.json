@@ -89,12 +89,17 @@
 
 	"gui.settings.save": "Save",
 	"gui.settings.discard": "Discard",
+	"gui.settings.title.linux": "Linux",
 	"gui.settings.title.ns": "Northstar",
 	"gui.settings.title.language": "Language",
 	"gui.settings.title.updates": "Updates",
 	"gui.settings.title.misc": "Miscellaneous",
 	"gui.settings.nsargs.title": "Launch options",
 	"gui.settings.nsargs.desc": "Here you can add launch options for Northstar/Titanfall.",
+	"gui.settings.wineprefix.title": "Wine Prefix",
+	"gui.settings.wineprefix.desc": "The prefix which Wine/Proton will use, if left empty, it'll try to find your Steam prefix automatically.",
+	"gui.settings.winebin.title": "Wine Executable",
+	"gui.settings.winebin.desc": "The version of Wine/Proton to use to run the game, if set to \"/usr/bin/wine64\", Viper will try to find the latest installed version of Proton automatically, if it can't find anything it'll fallback to wine64",
 	"gui.settings.autolang.title": "Auto-Detect Language",
 	"gui.settings.autolang.desc": "When enabled, Viper tries to automatically detect your system language, when disabled you can manually change the language below.",
 	"gui.settings.forcedlang.title": "Language",
@@ -123,6 +128,7 @@
 	"gui.server.offline": "Masterserver is Offline",
 
 	"gui.launch": "Launch",
+	"gui.running": "Running",
 	"gui.launchvanilla": "Vanilla",
 	"gui.launchnorthstar": "Northstar",
 	"gui.installnorthstar": "Install",
@@ -142,6 +148,10 @@
 	"gui.toast.desc.failed": "An unknown error occurred while trying to install the mod. This may be the author's fault, and it may also be Viper's fault.",
 	"gui.toast.desc.duped": "has multiple mod folders in it, with the same name, causing duplicate folders, if you're the developer, you should fix this.",
 	"gui.toast.desc.unknown_error": "An unknown error occurred, click for more details. You may want to take a screenshot of the detailed error when filing a bug report.",
+
+	"wine.invalidprefix": "The selected Wine prefix doesn't exist, and is therefore invalid.",
+	"wine.originnotfound": "Origin can't be found in the selected Wine prefix.",
+	"wine.cantfindprefix": "Viper was unable to automatically find and set your Wine prefix.",
 
 	"gui.toast.noInternet.title": "No Internet",
 	"gui.toast.noInternet.desc": "Viper may not work properly.",

@@ -7,10 +7,11 @@ const events = new Emitter();
 
 const cli = require("./cli");
 const lang = require("./lang");
+
+const find = require("./modules/find");
 const json = require("./modules/json");
 const settings = require("./modules/settings");
 const requests = require("./modules/requests");
-const findgame = require("./modules/findgame");
 
 const unzip = require("unzipper");
 const exec = require("child_process").exec;
@@ -166,7 +167,7 @@ async function setpath(win, forcedialog) {
 				ipcMain.emit("newpath", null, settings.gamepath);
 			}
 
-			let gamepath = await findgame();
+			let gamepath = await find.game();
 			if (gamepath) {
 				setGamepath(gamepath);
 				return;
@@ -414,24 +415,71 @@ function updateViper(autoinstall) {
 // Either Northstar or Vanilla. Linux support is not currently a thing,
 // however it'll be added at some point.
 function launch(version) {
-	if (process.platform == "linux") {
-		winAlert(lang("cli.launch.linuxerror"));
-		console.error("error:", lang("cli.launch.linuxerror"));
-		cli.exit(1);
-		return;
+	let cwd = process.cwd();
+	let prefix = {
+		path: settings.wineprefix,
+		origin: path.join(settings.wineprefix, "/drive_c/Program Files (x86)/Origin/Origin.exe")
 	}
 
 	process.chdir(settings.gamepath);
+
+	let winebin = settings.winebin;
+
+	if (process.platform != "win32") {
+		if (winebin == "/usr/bin/wine64") {
+			let proton = find.proton();
+			if (proton) {winebin = proton}
+		}
+
+		if (prefix.path == "") {
+			let foundprefix = find.prefix();
+			if (foundprefix) {
+				prefix = foundprefix;
+			} else {
+				winAlert(lang("wine.cantfindprefix"));
+				return false;
+			}
+		} else {
+
+		}
+
+		if (! fs.existsSync(prefix.path)) {
+			winAlert(lang("wine.invalidprefix") + "\n\n" + prefix.path);
+			return false;
+		} else {
+			process.env["WINEPREFIX"] = prefix.path;
+		}
+	}
+
 	switch(version) {
 		case "vanilla":
-			console.log(lang("general.launching"), "Vanilla...");
-			exec("Titanfall2.exe", {cwd: settings.gamepath});
+			console.log(lang("general.launching"), "Vanilla...")
+
+			if (process.platform != "win32") {
+				run(winebin, [path.join(settings.gamepath + "/Titanfall2.exe")])
+			} else {
+				exec("Titanfall2.exe", {cwd: settings.gamepath});
+			}
+
 			break;
 		default:
-			console.log(lang("general.launching"), "Northstar...");
-			exec("NorthstarLauncher.exe", {cwd: settings.gamepath});
+			console.log(lang("general.launching"), "Northstar...")
+
+			if (process.platform != "win32") {
+				if (! fs.existsSync(prefix.origin)) {
+					winAlert(lang("wine.originnotfound") + "\n\n" + prefix.origin);
+					return false;
+				}
+
+				run(winebin, [prefix.origin])
+				run(winebin, [path.join(settings.gamepath + "/NorthstarLauncher.exe")])
+			} else {
+				exec("NorthstarLauncher.exe", {cwd: settings.gamepath});
+			}
 			break;
 	}
+
+	process.chdir(cwd);
 }
 
 // Returns true/false depending on if the gamepath currently exists/is
@@ -440,7 +488,7 @@ function gamepathExists() {
 	return fs.existsSync(settings.gamepath);
 }
 
-setInterval(() => {
+setInterval(async () => {
 	if (gamepathExists()) {
 		ipcMain.emit("gui-getmods");
 	} else {
@@ -449,6 +497,12 @@ setInterval(() => {
 				ipcMain.emit("gamepath-lost");
 			}
 		}
+	}
+
+	if (await isGameRunning()) {
+		ipcMain.emit("gamestarted");
+	} else {
+		ipcMain.emit("gamestopped");
 	}
 }, 1500)
 
