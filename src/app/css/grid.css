@@ -132,6 +132,10 @@
 	padding: var(--padding) 0px;
 }
 
+.grid .el.has-icon .text {
+	width: calc(100% - var(--height));
+}
+
 .grid .el .title, .grid .el .description {
 	height: 1.2em;
 	overflow: hidden;

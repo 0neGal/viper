@@ -6,7 +6,6 @@ mods.load = (mods_obj) => {
 	let normalized_names = [];
 	
 	let set_mod = (mod) => {
-		let image_url = "";
 		let normalized_name = "mod-list-" + normalize(mod.Name);
 
 		normalized_names.push(normalized_name);
@@ -28,8 +27,8 @@ mods.load = (mods_obj) => {
 
 		div.innerHTML += `
 			<div class="image">
-				<img src="${image_url}">
-				<img class="blur" src="${image_url}">
+				<img src="">
+				<img class="blur" src="">
 			</div>
 			<div class="text">
 				<div class="title">${mod.Name}</div>
@@ -42,7 +41,7 @@ mods.load = (mods_obj) => {
 					${lang("gui.mods.remove")}
 				</button>
 
-				<button class="visual">${mod.Version}</button>
+				<button class="visual">${version.format(mod.Version)}</button>
 				<button class="visual">
 					${lang("gui.browser.madeby")}
 					${mod.Author || lang("gui.mods.unknown_author")}
@@ -58,9 +57,7 @@ mods.load = (mods_obj) => {
 			mods.toggle(mod.Name);
 		})
 
-		if (! image_url) {
-			div.querySelector(".image").remove();
-		}
+		div.querySelector(".image").style.display = "none";
 
 		modsdiv.append(div);
 	}
@@ -88,6 +85,22 @@ mods.load = (mods_obj) => {
 		if (! normalized_names.includes(mod_els[i].id)) {
 			mod_els[i].remove();
 			return;
+		}
+
+		if (mod_versions[mod]) {
+			let image_url = mod_versions[mod].package.versions[0].icon;
+
+			let image_container = mod_els[i].querySelector(".image");
+			let image_el = image_container.querySelector("img")
+			let image_blur_el = image_container.querySelector("img.blur")
+
+			if (image_url && ! image_el.getAttribute("src")) {
+				image_container.style.display = null;
+				image_el.src = image_url;
+				image_blur_el.src = image_url;
+
+				image_container.parentElement.classList.add("has-icon");
+			}
 		}
 
 		if (mod_versions[mod]

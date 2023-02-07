@@ -150,7 +150,9 @@ var Browser = {
 				mod_versions[normalized] = {
 					install: install,
 					has_update: has_update,
-					local_version: local_version
+					local_version: local_version,
+
+					package: packages[i]
 				}
 			}
 		}
