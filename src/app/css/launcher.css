@@ -93,11 +93,6 @@
 	margin-top: var(--padding);
 }
 
-/* some sections do not need space between them and menu */
-#nsMain, #nsRelease, #vpReleaseNotes, .playBtnContainer {
-	margin-top: 0 !important;
-}
-
 .contentMenu li {
 	opacity: 0.6;
 	margin: 0 26px;
@@ -163,7 +158,7 @@
 .contentBody img {max-width: 100%}
 .contentBody .img {text-align: center}
 
-.contentBody .section > :first-child:not(.img) {
+.contentBody .section > :first-child:not(.release-block) {
 	margin-top: 35px;
 }
 
@@ -214,11 +209,15 @@
 	text-align: center;
 }
 
+#nsMods {
+	height: 80vh;
+}
+
 #nsRelease, #vpReleaseNotes {
 	height: 80vh;
+	margin-top: 35px;
 	overflow-y: scroll;
 	flex-direction: column;
-	margin-top: 10px !important;
 }
 
 .inline * {
@@ -275,7 +274,6 @@ code {
 	border-radius: 5px;
 	background: var(--bg);
 	backdrop-filter: blur(15px);
-	padding: calc(var(--padding) / 4);
 }
 
 #modsdiv .mod {

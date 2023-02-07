@@ -30,7 +30,7 @@ button:active {filter: brightness(90%)}
 
 .popup, #modsdiv, .release-block {
 	outline: 1px solid #444444;
-	border: 3px solid var(--bg);
+	border: 3px solid var(--bg) inset;
 }
 
 .playBtn, .gamesContainer button, #winbtns div {
