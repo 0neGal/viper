@@ -63,7 +63,7 @@ update.northstar_autoupdate = () => {
 		if (await northstar_update_available()) {
 			console.log(lang("cli.autoupdates.available"));
 			if (await is_running.game()) {
-				console.log(lang("cli.autoupdates.gamerunning"));
+				console.log(lang("general.autoupdates.gamerunning"));
 				new Notification({
 					title: lang("gui.nsupdate.gaming.title"),
 					body: lang("gui.nsupdate.gaming.body")
@@ -150,7 +150,7 @@ update.viper = (autoinstall) => {
 // unzip module does not support excluding files directly.
 update.northstar = async () => {
 	if (await is_running.game()) {
-		console.log(lang("cli.autoupdates.gamerunning"));
+		console.log(lang("general.autoupdates.gamerunning"));
 		return false;
 	}
 

@@ -26,7 +26,6 @@
 
 	"cli.autoupdates.checking": "Vérifications des mises à jour de Northstar...",
 	"cli.autoupdates.available": "Une mise à jour de Northstar est disponible !",
-	"cli.autoupdates.gamerunning": "Le jeu est en cours d'exécution, impossible de lancer la mise à jour.",
 	"cli.autoupdates.updatingns": "Lancement de la mise à jour...",
 	"cli.autoupdates.noupdate": "Pas de mise à jour de Northstar disponible.",
 
@@ -159,6 +158,7 @@
 	"ns.menu.mods": "Mods",
 	"ns.menu.release": "Notes de mises à jour",
 
+	"general.autoupdates.gamerunning": "Le jeu est en cours d'exécution, impossible de lancer la mise à jour.",
 	"general.mods.enabled": "Mods activés :",
 	"general.mods.disabled": "Mods désactivés :",
 	"general.mods.installed": "Mods installés :",

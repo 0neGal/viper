@@ -28,7 +28,6 @@
 
 	"cli.autoupdates.checking": "Buscando actualizaciones de Northstar...",
 	"cli.autoupdates.available": "¡Actualización de Northsar disponible!",
-	"cli.autoupdates.gamerunning": "El juego se está ejecutando, no se puede actualizar Northstar",
 	"cli.autoupdates.updatingns": "Lanzando proceso de actualización...",
 	"cli.autoupdates.noupdate": "No hay actualizaciones de Northstar disponibles.",
 
@@ -159,6 +158,7 @@
 	"ns.menu.mods": "Modificiaciones",
 	"ns.menu.release": "Notas de actualización",
 
+	"general.autoupdates.gamerunning": "El juego se está ejecutando, no se puede actualizar Northstar",
 	"general.mods.enabled": "Modificaciones habilitadas:",
 	"general.mods.disabled": "Modificaciones deshabilitadas:",
 	"general.mods.installed": "Modificiaciones intaladas:",

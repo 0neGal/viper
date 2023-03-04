@@ -7,15 +7,19 @@ const { app, ipcMain, BrowserWindow, dialog } = require("electron");
 process.chdir(app.getPath("appData"));
 
 const cli = require("./cli");
+const lang = require("./lang");
+
 const json = require("./modules/json");
 const kill = require("./modules/kill");
 const mods = require("./modules/mods");
 const update = require("./modules/update");
 const launch = require("./modules/launch");
+const win_show = require("./modules/window");
 const version = require("./modules/version");
 const gamepath = require("./modules/gamepath");
 const settings = require("./modules/settings");
 const requests = require("./modules/requests");
+const is_running = require("./modules/is_running");
 
 var log = console.log;
 
@@ -169,7 +173,15 @@ ipcMain.on("setlang", (event, lang) => {
 	settings.save();
 });
 
-ipcMain.on("update-northstar", () => {update.northstar()})
+ipcMain.on("update-northstar", async () => {
+	console.log(await is_running.game())
+	if (await is_running.game()) {
+		return win_show.alert(lang("general.autoupdates.gamerunning"));
+	}
+
+	update.northstar();
+})
+
 ipcMain.on("setpath-cli", () => {gamepath.set()});
 ipcMain.on("setpath", (event, value) => {
 	if (! value) {

@@ -26,7 +26,6 @@
 
 	"cli.autoupdates.checking": "Überprüfe Northstar auf Updates...",
 	"cli.autoupdates.available": "Ein Update für Northstar wurde gefunden!",
-	"cli.autoupdates.gamerunning": "Spiel wird ausgeführt, Northstar wird nicht aktualisiert.",
 	"cli.autoupdates.updatingns": "Updateprozess wird gestartet...",
 	"cli.autoupdates.noupdate": "Kein Update für Northstar vorhanden.",
 
@@ -158,6 +157,7 @@
 	"ns.menu.mods": "Mods",
 	"ns.menu.release": "Release Notes",
 
+	"general.autoupdates.gamerunning": "Spiel wird ausgeführt, Northstar wird nicht aktualisiert.",
 	"general.mods.enabled": "Aktivierte Mods:",
 	"general.mods.disabled": "Deaktivierte Mods:",
 	"general.mods.installed": "Installierte Mods:",

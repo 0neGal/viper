@@ -20,7 +20,7 @@ async function check_processes(processes) {
 		// thing. And it's not much more clunky.
 		let cmd = (() => {
 			switch (process.platform) {
-				case "linux": return "ps -A";
+				case "linux": return "ps a";
 				case "win32": return "tasklist";
 			}
 		})();
@@ -28,37 +28,39 @@ async function check_processes(processes) {
 		exec(cmd, (err, stdout) => {
 			for (let i = 0; i < processes.length; i++) {
 				if (stdout.includes(processes[i])) {
+					console.log("running")
 					resolve(true);
 					break
 				}
 
+					console.log("not running")
 				if (i == processes.length - 1) {resolve(false)}
 			}
 		});
 	});
 }
 
-is_running.game = async () => {
-	return await check_processes([
+is_running.game = () => {
+	return check_processes([
 		"NorthstarLauncher.exe",
 		"Titanfall2.exe", "Titanfall2-unpacked.exe"
 	])
 }
 
-is_running.origin = async () => {
-	return await check_processes([
+is_running.origin = () => {
+	return check_processes([
 		"Origin.exe",
 	])
 }
 
-is_running.titanfall = async () => {
-	return await check_processes([
+is_running.titanfall = () => {
+	return check_processes([
 		"Titanfall2.exe", "Titanfall2-unpacked.exe"
 	])
 }
 
-is_running.northstar = async () => {
-	return await check_processes([
+is_running.northstar = () => {
+	return check_processes([
 		"NorthstarLauncher.exe",
 	])
 }
