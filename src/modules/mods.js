@@ -6,6 +6,7 @@ const { app, ipcMain } = require("electron");
 const { https } = require("follow-redirects");
 
 const json = require("./json");
+const version = require("./version");
 const settings = require("./settings");
 
 const cli = require("../cli");
@@ -29,7 +30,7 @@ function update_path() {
 mods.list = () => {
 	update_path();
 
-	if (utils.getNSVersion() == "unknown") {
+	if (version.northstar() == "unknown") {
 		utils.winLog(lang("general.notinstalled"));
 		console.log("error: " + lang("general.notinstalled"));
 		cli.exit(1);
@@ -106,7 +107,7 @@ mods.list = () => {
 mods.get = (mod) => {
 	update_path();
 
-	if (utils.getNSVersion() == "unknown") {
+	if (version.northstar() == "unknown") {
 		utils.winLog(lang("general.notinstalled"));
 		console.log("error: " + lang("general.notinstalled"));
 		cli.exit(1);
@@ -221,7 +222,7 @@ mods.install = (mod, opts) => {
 		mods.dupe_msg_sent = false;
 	}
 
-	if (utils.getNSVersion() == "unknown") {
+	if (version.northstar() == "unknown") {
 		utils.winLog(lang("general.notinstalled"));
 		console.log("error: " + lang("general.notinstalled"));
 		cli.exit(1);
@@ -462,7 +463,7 @@ mods.installFromURL = (url, author) => {
 mods.remove = (mod) => {
 	update_path();
 
-	if (utils.getNSVersion() == "unknown") {
+	if (version.northstar() == "unknown") {
 		utils.winLog(lang("general.notinstalled"));
 		console.log("error: " + lang("general.notinstalled"));
 		cli.exit(1);
@@ -523,7 +524,7 @@ mods.remove = (mod) => {
 mods.toggle = (mod, fork) => {
 	update_path();
 
-	if (utils.getNSVersion() == "unknown") {
+	if (version.northstar() == "unknown") {
 		utils.winLog(lang("general.notinstalled"));
 		console.log("error: " + lang("general.notinstalled"));
 		cli.exit(1);

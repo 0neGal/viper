@@ -8,6 +8,7 @@ const events = new Emitter();
 const cli = require("./cli");
 const lang = require("./lang");
 const json = require("./modules/json");
+const version = require("./modules/version");
 const settings = require("./modules/settings");
 const requests = require("./modules/requests");
 const findgame = require("./modules/findgame");
@@ -105,7 +106,7 @@ function handleNorthstarUpdating() {
 	}
 
 	async function _checkForUpdates() {
-		let localVersion = getNSVersion();
+		let localVersion = version.northstar();
 		let distantVersion = await requests.getLatestNsVersion();
 		if (distantVersion == false) { return; }
 		console.log(lang("cli.autoupdates.checking"));
@@ -194,78 +195,6 @@ async function setpath(win, forcedialog) {
 	}
 }
 
-// Returns the current Northstar version
-// If not installed it'll return "unknown"
-function getNSVersion() {
-	// if NorthstarLauncher.exe doesn't exist, always return "unknown"
-	if (! fs.existsSync(path.join(settings.gamepath, "NorthstarLauncher.exe"))) {
-		return "unknown";
-	}
-
-	// mods to check version of
-	var versionFiles = [
-		"Northstar.Client",
-		"Northstar.Custom",
-		"Northstar.CustomServers"
-	]
-
-	var versions = [];
-
-
-	let add = (version) => {
-		versions.push(version)
-	}
-
-	// checks version of mods
-	for (let i = 0; i < versionFiles.length; i++) {
-		var versionFile = path.join(settings.gamepath, "R2Northstar/mods/", versionFiles[i],"/mod.json");
-		if (fs.existsSync(versionFile)) {
-			if (! fs.statSync(versionFile).isFile()) {
-				add("unknown");
-			}
-
-			try {
-				add("v" + json(versionFile).Version);
-			}catch(err) {
-				add("unknown");
-			}
-		} else {
-			add("unknown");
-		}
-	}
-
-	if (versions.includes("unknown")) {return "unknown"}
-
-	// verifies all mods have the same version number
-	let mismatch = false;
-	let baseVersion = versions[0];
-	for (let i = 0; i < versions.length; i++) {
-		if (versions[i] != baseVersion) {
-			mismatch = true;
-			break
-		}
-	}
-
-	if (mismatch) {return "unknown"}
-	return baseVersion;
-}
-
-
-// Returns the Titanfall 2 version from gameversion.txt file.
-// If it fails it simply returns "unknown"
-//
-// TODO: This file is present on Origin install, should check if it's
-// present with Steam install as well.
-function getTF2Version() {
-	var versionFilePath = path.join(settings.gamepath, "gameversion.txt");
-	if (fs.existsSync(versionFilePath)) {
-		return fs.readFileSync(versionFilePath, "utf8");
-	} else {
-		return "unknown";
-	}
-}
-
-
 // Renames excluded files to their original name
 function restoreExcludedFiles() {
 	for (let i = 0; i < settings.excludes.length; i++) {
@@ -292,7 +221,7 @@ async function updateNorthstar() {
 
 	ipcMain.emit("ns-update-event", "cli.update.checking");
 	console.log(lang("cli.update.checking"));
-	var version = getNSVersion();
+	var ns_version = version.northstar();
 
 	const latestAvailableVersion = await requests.getLatestNsVersion();
 	console.log(latestAvailableVersion)
@@ -302,16 +231,16 @@ async function updateNorthstar() {
 	}
 
 	// Makes sure it is not already the latest version
-	if (version === latestAvailableVersion) {
+	if (ns_version === latestAvailableVersion) {
 		ipcMain.emit("ns-update-event", "cli.update.uptodate.short");
-		console.log(lang("cli.update.uptodate"), version);
+		console.log(lang("cli.update.uptodate"), ns_version);
 
 		winLog(lang("gui.update.uptodate"));
 		cli.exit();
 		return;
 	} else {
-		if (version != "unknown") {
-			console.log(lang("cli.update.current"), version);
+		if (ns_version != "unknown") {
+			console.log(lang("cli.update.current"), ns_version);
 		};
 		console.log(lang("cli.update.downloading") + ":", latestAvailableVersion);
 		ipcMain.emit("ns-update-event", "cli.update.downloading");
@@ -413,7 +342,7 @@ function updateViper(autoinstall) {
 //
 // Either Northstar or Vanilla. Linux support is not currently a thing,
 // however it'll be added at some point.
-function launch(version) {
+function launch(game_version) {
 	if (process.platform == "linux") {
 		winAlert(lang("cli.launch.linuxerror"));
 		console.error("error:", lang("cli.launch.linuxerror"));
@@ -422,7 +351,7 @@ function launch(version) {
 	}
 
 	process.chdir(settings.gamepath);
-	switch(version) {
+	switch(game_version) {
 		case "vanilla":
 			console.log(lang("general.launching"), "Vanilla...");
 			exec("Titanfall2.exe", {cwd: settings.gamepath});
@@ -456,8 +385,6 @@ module.exports = {
 	winLog,
 
 	updateViper,
-	getNSVersion,
-	getTF2Version,
 	updateNorthstar,
 	handleNorthstarUpdating,
 

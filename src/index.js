@@ -10,6 +10,7 @@ const utils = require("./utils");
 const cli = require("./cli");
 const json = require("./modules/json");
 const mods = require("./modules/mods");
+const version = require("./modules/version");
 const settings = require("./modules/settings");
 const requests = require("./modules/requests");
 
@@ -179,8 +180,8 @@ ipcMain.on("setpath", (event, value) => {
 // retrieves various local version numbers
 function sendVersionsInfo() {
 	send("version", {
-		ns: utils.getNSVersion(),
-		tf2: utils.getTF2Version(),
+		ns: version.northstar(),
+		tf2: version.titanfall(),
 		vp: "v" + require("../package.json").version
 	});
 }
@@ -191,7 +192,8 @@ ipcMain.on("get-version", () => {sendVersionsInfo()});
 // prints out version info for the CLI
 ipcMain.on("version-cli", () => {
 	log("Viper: v" + require("../package.json").version);
-	log("Northstar: " + utils.getNSVersion());
+	log("Titanfall 2: " + version.titanfall());
+	log("Northstar: " + version.northstar());
 	log("Node: " + process.version);
 	log("Electron: v" + process.versions.electron);
 	cli.exit();
