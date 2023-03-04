@@ -6,12 +6,12 @@ const { app, ipcMain } = require("electron");
 const { https } = require("follow-redirects");
 
 const json = require("./json");
+const win = require("./window");
 const version = require("./version");
 const settings = require("./settings");
 
 const cli = require("../cli");
 const lang = require("../lang");
-const utils = require("../utils");
 
 var mods = {
 	installing: [],
@@ -31,7 +31,7 @@ mods.list = () => {
 	update_path();
 
 	if (version.northstar() == "unknown") {
-		utils.winLog(lang("general.notinstalled"));
+		win.log(lang("general.notinstalled"));
 		console.log("error: " + lang("general.notinstalled"));
 		cli.exit(1);
 		return false;
@@ -108,7 +108,7 @@ mods.get = (mod) => {
 	update_path();
 
 	if (version.northstar() == "unknown") {
-		utils.winLog(lang("general.notinstalled"));
+		win.log(lang("general.notinstalled"));
 		console.log("error: " + lang("general.notinstalled"));
 		cli.exit(1);
 		return false;
@@ -223,14 +223,14 @@ mods.install = (mod, opts) => {
 	}
 
 	if (version.northstar() == "unknown") {
-		utils.winLog(lang("general.notinstalled"));
+		win.log(lang("general.notinstalled"));
 		console.log("error: " + lang("general.notinstalled"));
 		cli.exit(1);
 		return false;
 	}
 
 	let notamod = () => {
-		utils.winLog(lang("gui.mods.notamod"));
+		win.log(lang("gui.mods.notamod"));
 		console.log("error: " + lang("cli.mods.notamod"));
 		cli.exit(1);
 		return false;
@@ -240,7 +240,7 @@ mods.install = (mod, opts) => {
 		console.log(lang("cli.mods.installed"));
 		cli.exit();
 
-		utils.winLog(lang("gui.mods.installedmod"));
+		win.log(lang("gui.mods.installedmod"));
 
 		if (modname == "mods") {
 			let manifest = path.join(app.getPath("userData"), "Archives/manifest.json");
@@ -262,7 +262,7 @@ mods.install = (mod, opts) => {
 	if (! fs.existsSync(mod)) {return notamod()}
 
 	if (fs.statSync(mod).isDirectory()) {
-		utils.winLog(lang("gui.mods.installing"));
+		win.log(lang("gui.mods.installing"));
 		files = fs.readdirSync(mod);
 		if (fs.existsSync(path.join(mod, "mod.json")) &&
 			fs.statSync(path.join(mod, "mod.json")).isFile()) {
@@ -351,7 +351,7 @@ mods.install = (mod, opts) => {
 			return notamod();
 		}
 	} else {
-		utils.winLog(lang("gui.mods.extracting"));
+		win.log(lang("gui.mods.extracting"));
 		let cache = path.join(app.getPath("userData"), "Archives");
 		if (fs.existsSync(cache)) {
 			fs.rmSync(cache, {recursive: true});
@@ -464,7 +464,7 @@ mods.remove = (mod) => {
 	update_path();
 
 	if (version.northstar() == "unknown") {
-		utils.winLog(lang("general.notinstalled"));
+		win.log(lang("general.notinstalled"));
 		console.log("error: " + lang("general.notinstalled"));
 		cli.exit(1);
 		return false;
@@ -525,7 +525,7 @@ mods.toggle = (mod, fork) => {
 	update_path();
 
 	if (version.northstar() == "unknown") {
-		utils.winLog(lang("general.notinstalled"));
+		win.log(lang("general.notinstalled"));
 		console.log("error: " + lang("general.notinstalled"));
 		cli.exit(1);
 		return false;

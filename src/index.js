@@ -6,11 +6,14 @@ const { app, ipcMain, BrowserWindow, dialog } = require("electron");
 // ensures PWD/CWD is the config folder where viper.json is located
 process.chdir(app.getPath("appData"));
 
-const utils = require("./utils");
 const cli = require("./cli");
 const json = require("./modules/json");
+const kill = require("./modules/kill");
 const mods = require("./modules/mods");
+const update = require("./modules/update");
+const launch = require("./modules/launch");
 const version = require("./modules/version");
+const gamepath = require("./modules/gamepath");
 const settings = require("./modules/settings");
 const requests = require("./modules/requests");
 
@@ -61,7 +64,7 @@ function start() {
 		if (settings.originkill) {
 			utils.isOriginRunning().then((running) => {
 				if (running) {
-					utils.killOrigin().then(process.exit(0))
+					kill.origin().then(process.exit(0))
 				} else {
 					process.exit(0)	
 				}
@@ -120,12 +123,12 @@ function start() {
 	// start auto-update process
 	if (settings.autoupdate) {
 		if (cli.hasParam("no-vp-updates")) {
-			utils.handleNorthstarUpdating();
+			update.northstar_autoupdate();
 		} else {
-			utils.updateViper(false)
+			update.viper(false)
 		}
 	} else {
-		utils.handleNorthstarUpdating();
+		update.northstar_autoupdate();
 	}
 
 	autoUpdater.on("update-downloaded", () => {
@@ -158,19 +161,22 @@ ipcMain.on("install-mod", () => {
 ipcMain.on("remove-mod", (event, mod) => {mods.remove(mod)});
 ipcMain.on("toggle-mod", (event, mod) => {mods.toggle(mod)});
 
-ipcMain.on("launch-ns", () => {utils.launch()});
-ipcMain.on("launch-vanilla", () => {utils.launch("vanilla")});
+ipcMain.on("launch-ns", () => {launch()});
+ipcMain.on("launch-vanilla", () => {launch("vanilla")});
 
-ipcMain.on("setlang", (event, lang) => {utils.setlang(lang)});
+ipcMain.on("setlang", (event, lang) => {
+	settings.lang = lang;
+	settings.save();
+});
 
-ipcMain.on("update-northstar", () => {utils.updateNorthstar()})
-ipcMain.on("setpath-cli", () => {utils.setpath()});
+ipcMain.on("update-northstar", () => {update.northstar()})
+ipcMain.on("setpath-cli", () => {gamepath.set()});
 ipcMain.on("setpath", (event, value) => {
 	if (! value) {
 		if (! win.isVisible()) {
-			utils.setpath(win);
+			gamepath.set(win);
 		} else {
-			utils.setpath(win, true);
+			gamepath.set(win, true);
 		}
 	} else if (! win.isVisible()) {
 		win.show();
@@ -240,7 +246,7 @@ ipcMain.on("newpath", (event, newpath) => {
 // starts the GUI or CLI
 if (cli.hasArgs()) {
 	if (cli.hasParam("update-viper")) {
-		utils.updateViper(true);
+		update.viper(true);
 	} else {
 		cli.init();
 	}

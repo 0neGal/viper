@@ -1,6 +1,6 @@
 const fs = require("fs");
 const path = require("path");
-const { ipcRenderer, shell, ipcMain } = require("electron");
+const { ipcRenderer, shell } = require("electron");
 
 const lang = require("../lang");
 var modsobj = {};
@@ -90,11 +90,7 @@ function launch() {
 // Tells the main process to launch the vanilla game
 function launchVanilla() {ipcRenderer.send("launch-vanilla")}
 
-// In conjunction with utils.js' winLog(), it'll send log messages in
-// the devTools from utils.js
-function log(msg) {
-	console.log(msg);
-}
+let log = console.log;
 
 // Disables or enables certain buttons when for example
 // updating/installing Northstar.
