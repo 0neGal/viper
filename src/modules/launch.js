@@ -6,11 +6,12 @@ const lang = require("../lang");
 const win = require("./window");
 const settings = require("./settings");
 
-// Launches the game
+// launches the game
 //
-// Either Northstar or Vanilla. Linux support is not currently a thing,
+// either Northstar or Vanilla. Linux support is not currently a thing,
 // however it'll be added at some point.
 function launch(game_version) {
+	// return early, and show error message if on Linux
 	if (process.platform == "linux") {
 		win.alert(lang("cli.launch.linuxerror"));
 		console.error("error:", lang("cli.launch.linuxerror"));
@@ -18,7 +19,10 @@ function launch(game_version) {
 		return;
 	}
 
+	// change current directory to gamepath
 	process.chdir(settings.gamepath);
+
+	// launch the requested game version
 	switch(game_version) {
 		case "vanilla":
 			console.log(lang("general.launching"), "Vanilla...");

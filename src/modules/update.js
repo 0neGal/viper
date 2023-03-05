@@ -43,9 +43,9 @@ function exclude_files() {
 // whether update.northstar_auto_update() has already been run before
 let is_auto_updating = false;
 
-// Handles auto updating Northstar.
+// handles auto updating Northstar.
 //
-// It uses isGameRunning() to ensure it doesn't run while the game is
+// it uses isGameRunning() to ensure it doesn't run while the game is
 // running, as that may have all kinds of issues.
 update.northstar_autoupdate = () => {
 	if (! settings.nsupdate || ! fs.existsSync("viper.json") || settings.gamepath.length === 0) {
@@ -59,7 +59,7 @@ update.northstar_autoupdate = () => {
 
 		console.log(lang("cli.autoupdates.checking"));
 
-		// Checks if NS is outdated
+		// checks if NS is outdated
 		if (await northstar_update_available()) {
 			console.log(lang("cli.autoupdates.available"));
 			if (await is_running.game()) {
@@ -104,9 +104,9 @@ async function northstar_update_available() {
 	}
 }
 
-// Updates Viper itself
+// updates Viper itself
 //
-// This uses electron updater to easily update and publish releases, it
+// this uses electron updater to easily update and publish releases, it
 // simply fetches it from GitHub and updates if it's outdated, very
 // useful. Not much we have to do on our side.
 update.viper = (autoinstall) => {
@@ -139,13 +139,13 @@ update.viper = (autoinstall) => {
 	autoUpdater.checkForUpdatesAndNotify();
 }
 
-// Installs/Updates Northstar
+// installs/Updates Northstar
 //
-// If Northstar is already installed it'll be an update, otherwise it'll
+// if Northstar is already installed it'll be an update, otherwise it'll
 // install it. It simply downloads the Northstar archive from GitHub, if
 // it's outdated, then extracts it into the game path.
 //
-// As to handle not overwriting files we rename certain files to
+// as to handle not overwriting files we rename certain files to
 // <file>.excluded, then rename them back after the extraction. The
 // unzip module does not support excluding files directly.
 update.northstar = async () => {
@@ -186,13 +186,13 @@ update.northstar = async () => {
 
 	exclude_files();
 
-	// Start the download of the zip
+	// start the download of the zip
 	https.get(requests.getLatestNsVersionLink(), (res) => {
 		let stream = fs.createWriteStream(settings.zip);
 		res.pipe(stream);
 
 		let received = 0;
-		// Progress messages, we should probably switch this to
+		// progress messages, we should probably switch this to
 		// percentage instead of how much is downloaded.
 		res.on("data", (chunk) => {
 			received += chunk.length;
@@ -206,7 +206,7 @@ update.northstar = async () => {
 			win.log(lang("gui.update.extracting"));
 			ipcMain.emit("ns-update-event", "gui.update.extracting");
 			console.log(lang("cli.update.downloaddone"));
-			// Extracts the zip, this is the part where we're actually
+			// extracts the zip, this is the part where we're actually
 			// installing Northstar.
 			extract.pipe(unzip.Extract({path: settings.gamepath}))
 

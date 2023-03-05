@@ -15,7 +15,7 @@ async function check_processes(processes) {
 			reject(false);
 		}
 
-		// While we could use a Node module to do this instead, I
+		// while we could use a Node module to do this instead, I
 		// decided not to do so. As this achieves exactly the same
 		// thing. And it's not much more clunky.
 		let cmd = (() => {
@@ -28,12 +28,10 @@ async function check_processes(processes) {
 		exec(cmd, (err, stdout) => {
 			for (let i = 0; i < processes.length; i++) {
 				if (stdout.includes(processes[i])) {
-					console.log("running")
 					resolve(true);
 					break
 				}
 
-					console.log("not running")
 				if (i == processes.length - 1) {resolve(false)}
 			}
 		});

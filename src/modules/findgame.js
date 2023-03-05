@@ -9,14 +9,12 @@ const exec = util.promisify(require("child_process").exec);
 module.exports = async () => {
 	let gamepath = "";
 	
-	// Autodetect path
-	// Windows only using powershell and windows registery
-	// Get-Item -Path Registry::HKEY_LOCAL_MACHINE\SOFTWARE\Respawn\Titanfall2\
+	// autodetect path through Powershell and Windows registry
 	if (process.platform == "win32") {
 		try {
 			const {stdout} = await exec("Get-ItemProperty -Path Registry::HKEY_LOCAL_MACHINE\\SOFTWARE\\Respawn\\Titanfall2\\ -Name \"Install Dir\"", {"shell":"powershell.exe"});
 
-			const gamepath = stdout.split('\n')
+			gamepath = stdout.split('\n')
 				.filter(r => r.indexOf("Install Dir") !== -1)[0]
 				.replace(/\s+/g,' ')
 				.trim()
@@ -26,12 +24,13 @@ module.exports = async () => {
 		} catch (err) {}
 	}
 
-	// Detect using Steam VDF
+	// reads, then parses VDF files, to search for Titanfall
 	function readvdf(data) {
-		// Parse read_data
-		data = vdf.parse(data);
+		data = vdf.parse(data); // parse read_data
 
+		// list of folders where the game could possibly be installed at
 		let values = Object.values(data["libraryfolders"]);
+
 		if (typeof values[values.length - 1] != "object") {
 			values.pop(1);
 		}
@@ -49,16 +48,18 @@ module.exports = async () => {
 		}
 	}
 
-	let folders = [];
+	let vdf_files = [];
+
+	// set `folders` to paths where the VDF file can be
 	switch (process.platform) {
 		case "win32":
-			folders = ["C:\\Program Files (x86)\\Steam\\steamapps\\libraryfolders.vdf"];
+			vdf_files = ["C:\\Program Files (x86)\\Steam\\steamapps\\libraryfolders.vdf"];
 			break
 		case "linux":
 		case "openbsd":
 		case "freebsd":
 			let home = app.getPath("home");
-			folders = [
+			vdf_files = [
 				path.join(home, "/.steam/steam/steamapps/libraryfolders.vdf"),
 				path.join(home, ".var/app/com.valvesoftware.Steam/.steam/steam/steamapps/libraryfolders.vdf"),
 				path.join(home, ".var/app/com.valvesoftware.Steam/.local/share/Steam/steamapps/libraryfolders.vdf")
@@ -66,20 +67,15 @@ module.exports = async () => {
 			break
 	}
 
-	if (folders.length > 0) {
-		for (let i = 0; i < folders.length; i++) {
-			if (! fs.existsSync(folders[i])) {continue}
-			console.log("Searching VDF file at:", folders[i]);
+	// searches VDF files
+	for (let i = 0; i < vdf_files.length; i++) {
+		if (! fs.existsSync(vdf_files[i])) {continue}
+		console.log("Searching VDF file at:", vdf_files[i]);
 
-			let data = fs.readFileSync(folders[i]);
-			let read_vdf = readvdf(data.toString());
-			if (read_vdf) {return read_vdf}
-		}
+		let data = fs.readFileSync(vdf_files[i]);
+		let read_vdf = readvdf(data.toString());
+		if (read_vdf) {return read_vdf}
 	}
 
-	if (gamepath) {
-		return gamepath;
-	} else {
-		return false;
-	}
+	return gamepath || false;
 }

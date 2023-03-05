@@ -6,8 +6,8 @@ const settings = require("./settings");
 
 let version = {};
 
-// Returns the current Northstar version
-// If not installed it'll return "unknown"
+// returns the current Northstar version
+// if not installed it'll return "unknown"
 version.northstar = () => {
 	// if NorthstarLauncher.exe doesn't exist, always return "unknown"
 	if (! fs.existsSync(path.join(settings.gamepath, "NorthstarLauncher.exe"))) {
@@ -62,7 +62,7 @@ version.northstar = () => {
 	return baseVersion;
 }
 
-// Returns the Titanfall 2 version from gameversion.txt file.
+// returns the Titanfall 2 version from gameversion.txt file.
 // If it fails it simply returns "unknown"
 //
 // TODO: This file is present on Origin install, should check if it's

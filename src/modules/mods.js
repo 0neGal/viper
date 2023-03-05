@@ -22,14 +22,15 @@ function update_path() {
 	mods.path = path.join(settings.gamepath, "R2Northstar/mods");
 }; update_path();
 
-// Returns a list of mods
+// returns a list of mods
 //
-// It'll return 3 arrays, all, enabled, disabled. all being a
+// it'll return 3 arrays, all, enabled, disabled. all being a
 // combination of the other two, enabled being enabled mods, and you
 // guessed it, disabled being disabled mods.
 mods.list = () => {
 	update_path();
 
+	// make sure Northstar is actually installed
 	if (version.northstar() == "unknown") {
 		win.log(lang("general.notinstalled"));
 		console.log("error: " + lang("general.notinstalled"));
@@ -40,8 +41,11 @@ mods.list = () => {
 	let enabled = [];
 	let disabled = [];
 
+	// return early if the mods folder doesn't even exist
 	if (! fs.existsSync(mods.path)) {
+		// create the folder for later
 		fs.mkdirSync(path.join(mods.path), {recursive: true});
+
 		return {
 			enabled: [],
 			disabled: [],
@@ -51,43 +55,53 @@ mods.list = () => {
 
 	let files = fs.readdirSync(mods.path);
 	files.forEach((file) => {
-		if (fs.statSync(path.join(mods.path, file)).isDirectory()) {
-			let modjson = path.join(mods.path, file, "mod.json");
-			if (fs.existsSync(modjson)) {
-				let mod = json(modjson);
-				if (! mod) {return}
+		// return early if `file` isn't a folder
+		if (! fs.statSync(path.join(mods.path, file)).isDirectory()) {
+			return;
+		}
 
-				let obj = {
-					Author: false,
-					Version: "unknown",
-					Name: "unknown",
-					FolderName: file,
-				...mod}
+		let modjson = path.join(mods.path, file, "mod.json");
+		
+		// return early if mod.json doesn't exist or isn't a file
+		if (! fs.existsSync(modjson) || ! fs.statSync(modjson).isFile()) {
+			return;
+		}
 
-				obj.Disabled = ! mods.modfile.get(obj.Name);
+		let mod = json(modjson);
+		if (! mod) {return}
 
-				let manifest_file = path.join(mods.path, file, "manifest.json");
-				if (fs.existsSync(manifest_file)) {
-					let manifest = json(manifest_file);
-					if (manifest != false) {
-						obj.ManifestName = manifest.name;
-						if (obj.Version == "unknown") {
-							obj.Version = manifest.version_number;
-						}
-					}
-				}
+		let obj = {
+			Author: false,
+			Version: "unknown",
+			Name: "unknown",
+			FolderName: file,
+		...mod}
 
-				let author_file = path.join(mods.path, file, "thunderstore_author.txt");
-				if (fs.existsSync(author_file)) {
-					obj.Author = fs.readFileSync(author_file, "utf8");
-				}
+		obj.Disabled = ! mods.modfile.get(obj.Name);
 
-				if (obj.Disabled) {
-					disabled.push(obj);
-				} else {
-					enabled.push(obj);
+		// add manifest data from manifest.json, if it exists
+		let manifest_file = path.join(mods.path, file, "manifest.json");
+		if (fs.existsSync(manifest_file)) {
+			let manifest = json(manifest_file);
+			if (manifest != false) {
+				obj.ManifestName = manifest.name;
+				if (obj.Version == "unknown") {
+					obj.Version = manifest.version_number;
 				}
 			}
+		}
+
+		// add author data from author file, if it exists
+		let author_file = path.join(mods.path, file, "thunderstore_author.txt");
+		if (fs.existsSync(author_file)) {
+			obj.Author = fs.readFileSync(author_file, "utf8");
+		}
+
+		// add mod to their respective disabled or enabled Array
+		if (obj.Disabled) {
+			disabled.push(obj);
+		} else {
+			enabled.push(obj);
 		}
 	})
 
@@ -98,15 +112,16 @@ mods.list = () => {
 	};
 }
 
-// Gets information about a mod
+// gets information about a mod
 //
-// Folder name, version, name and whatever else is in the mod.json, keep
+// folder name, version, name and whatever else is in the mod.json, keep
 // in mind if the mod developer didn't format their JSON file the
 // absolute basics will be provided and we can't know the version or
 // similar.
 mods.get = (mod) => {
 	update_path();
 
+	// make sure Northstar is actually installed
 	if (version.northstar() == "unknown") {
 		win.log(lang("general.notinstalled"));
 		console.log("error: " + lang("general.notinstalled"));
@@ -114,63 +129,80 @@ mods.get = (mod) => {
 		return false;
 	}
 
+	// retrieve list of mods
 	let list = mods.list().all;
 
+	// search for mod in list
 	for (let i = 0; i < list.length; i++) {
 		if (list[i].Name == mod) {
+			// found mod, return data
 			return list[i];
 		} else {continue}
 	}
 
+	// mod wasn't found
 	return false;
 }
 
+// makes sure enabledmods.json exists
 function modfile_pre() {
 	mods.modfile.file = path.join(mods.path, "..", "enabledmods.json");
 
+	// check that the folder enabledmods.json is in exists, and create
+	// it if it doesn't exist
 	if (! fs.existsSync(mods.path)) {
 		fs.mkdirSync(path.join(mods.path), {recursive: true});
 	}
 
+	// check that enabledmods.json itself exists, and create it if not
 	if (! fs.existsSync(mods.modfile.file)) {
 		fs.writeFileSync(mods.modfile.file, "{}");
 	}
 }
 
-// Manages the enabledmods.json file
+// manages the enabledmods.json file
 //
-// It can both return info about the file, but also toggle mods in it,
+// it can both return info about the file, but also toggle mods in it,
 // generate the file itself, and so on.
 mods.modfile = {};
 
+// generate the enabledmods.json file
 mods.modfile.gen = () => {
 	modfile_pre();
 
 	let names = {};
-	let list = mods.list().all;
+	let list = mods.list().all; // get list of all mods
 	for (let i = 0; i < list.length; i++) {
+		// add every mod to the list
 		names[list[i].Name] = true
 	}
 
+	// write the actual file
 	fs.writeFileSync(mods.modfile.file, JSON.stringify(names));
 }
 
+// enable/disable a mod inside enabledmods.json
+mods.modfile.set = (mod, state) => {
+	modfile_pre();
+
+	let data = json(mods.modfile.file); // get current data
+	data[mod] = state; // set mod state
+
+	// write new data
+	fs.writeFileSync(mods.modfile.file, JSON.stringify(data));
+}
+
+// disable a mod inside enabledmods.json
 mods.modfile.disable = (mod) => {
-	modfile_pre();
-
-	let data = json(mods.modfile.file);
-	data[mod] = false;
-	fs.writeFileSync(mods.modfile.file, JSON.stringify(data));
+	return mods.modfile.set(mod, false);
 }
 
+// enable a mod inside enabledmods.json
 mods.modfile.enable = (mod) => {
-	modfile_pre();
-
-	let data = json(mods.modfile.file);
-	data[mod] = true;
-	fs.writeFileSync(mods.modfile.file, JSON.stringify(data));
+	return mods.modfile.set(mod, true);
 }
 
+// toggle a mod inside enabledmods.json
 mods.modfile.toggle = (mod) => {
 	modfile_pre();
 
@@ -184,23 +216,25 @@ mods.modfile.toggle = (mod) => {
 	fs.writeFileSync(mods.modfile.file, JSON.stringify(data));
 }
 
+// return whether a mod is disabled or enabled
 mods.modfile.get = (mod) => {
 	modfile_pre();
 
+	// read enabledmods.json
 	let data = json(mods.modfile.file);
 
-	if (data[mod]) {
+	if (data[mod]) { // enabled
 		return true;
-	} else if (data[mod] === false) {
+	} else if (data[mod] === false) { // disabled
 		return false;
-	} else {
+	} else { // fallback to enabled
 		return true;
 	}
 }
 
-// Installs mods from a file path
+// installs mods from a file path
 //
-// Either a zip or folder is supported, we'll also try to search inside
+// either a zip or folder is supported, we'll also try to search inside
 // the zip or folder to see if buried in another folder or not, as
 // sometimes that's the case.
 mods.install = (mod, opts) => {
@@ -422,17 +456,19 @@ mods.install = (mod, opts) => {
 	}
 }
 
-// Installs mods from URL's
+// installs mods from URL's
 //
-// This'll simply download the file that the URL points to and then
+// this'll simply download the file that the URL points to and then
 // install it with mods.install()
 mods.installFromURL = (url, author) => {
 	update_path();
 
+	// download mod to a temporary location
 	https.get(url, (res) => {
 		let tmp = path.join(app.getPath("cache"), "vipertmp");
 		let modlocation = path.join(tmp, "/mod.zip");
 
+		// make sure the temporary folder exists
 		if (fs.existsSync(tmp)) {
 			if (! fs.statSync(tmp).isDirectory()) {
 				fs.rmSync(tmp);
@@ -444,11 +480,14 @@ mods.installFromURL = (url, author) => {
 			}
 		}
 
+		// write out the file to the temporary location
 		let stream = fs.createWriteStream(modlocation);
 		res.pipe(stream);
 
 		stream.on("finish", () => {
 			stream.close();
+
+			// attempt to install the downloaded mod
 			mods.install(modlocation, {
 				author: author
 			})
@@ -456,13 +495,14 @@ mods.installFromURL = (url, author) => {
 	})
 }
 
-// Removes mods
+// removes mods
 //
-// Takes in the names of the mod then removes it, no confirmation,
+// takes in the names of the mod then removes it, no confirmation,
 // that'd be up to the GUI.
 mods.remove = (mod) => {
 	update_path();
 
+	// make sure Northstar is actually installed
 	if (version.northstar() == "unknown") {
 		win.log(lang("general.notinstalled"));
 		console.log("error: " + lang("general.notinstalled"));
@@ -470,17 +510,13 @@ mods.remove = (mod) => {
 		return false;
 	}
 
+	// removes all mods installed, no exceptions
 	if (mod == "allmods") {
 		let modlist = mods.list().all;
 		for (let i = 0; i < modlist.length; i++) {
 			mods.remove(modlist[i].Name);
 		}
 		return
-	}
-
-	let disabled = path.join(mods.path, "disabled");
-	if (! fs.existsSync(disabled)) {
-		fs.mkdirSync(disabled);
 	}
 
 	let mod_name = mods.get(mod).FolderName;
@@ -492,38 +528,45 @@ mods.remove = (mod) => {
 
 	let path_to_mod = path.join(mods.path, mod_name);
 
-	if (mods.get(mod).Disabled) {
-		path_to_mod = path.join(disabled, mod_name);
+	// return early if path_to_mod isn't a folder
+	if (! fs.statSync(path_to_mod).isDirectory()) {
+		return cli.exit(1);
 	}
 
-	if (fs.statSync(path_to_mod).isDirectory()) {
-		let manifestname = null;
-		if (fs.existsSync(path.join(path_to_mod, "manifest.json"))) {
-			manifestname = require(path.join(path_to_mod, "manifest.json")).name;
-		}
+	let manifestname = null;
 
-		fs.rmSync(path_to_mod, {recursive: true});
-		console.log(lang("cli.mods.removed"));
-		cli.exit();
-		ipcMain.emit("gui-getmods");
-		ipcMain.emit("removed-mod", "", {
-			name: mod.replace(/^.*(\\|\/|\:)/, ""),
-			manifestname: manifestname
-		});
-	} else {
-		cli.exit(1);
+	// if the mod has a manifest.json we want to save it now so we can
+	// send it later when telling the renderer about the deleted mod
+	if (fs.existsSync(path.join(path_to_mod, "manifest.json"))) {
+		manifestname = require(path.join(path_to_mod, "manifest.json")).name;
 	}
+
+	// actually remove the mod itself
+	fs.rmSync(path_to_mod, {recursive: true});
+
+	console.log(lang("cli.mods.removed"));
+	cli.exit();
+
+	ipcMain.emit("gui-getmods"); // send updated list to renderer
+
+	// tell the renderer that the mod has been removed, along with
+	// relevant info for it to properly update everything graphically
+	ipcMain.emit("removed-mod", "", {
+		name: mod.replace(/^.*(\\|\/|\:)/, ""),
+		manifestname: manifestname
+	});
 }
 
-// Toggles mods
+// toggles mods
 //
-// If a mod is enabled it'll disable it, vice versa it'll enable it if
+// if a mod is enabled it'll disable it, vice versa it'll enable it if
 // it's disabled. You could have a direct .disable() function if you
 // checked for if a mod is already disable and if not run the function.
 // However we currently have no need for that.
 mods.toggle = (mod, fork) => {
 	update_path();
 
+	// make sure Northstar is actually installed
 	if (version.northstar() == "unknown") {
 		win.log(lang("general.notinstalled"));
 		console.log("error: " + lang("general.notinstalled"));
@@ -531,10 +574,11 @@ mods.toggle = (mod, fork) => {
 		return false;
 	}
 
+	// toggles all mods, thereby inverting the current enabled states
 	if (mod == "allmods") {
-		let modlist = mods.list().all;
-		for (let i = 0; i < modlist.length; i++) {
-			mods.toggle(modlist[i].Name, true);
+		let modlist = mods.list().all; // get list of all mods
+		for (let i = 0; i < modlist.length; i++) { // run through list
+			mods.toggle(modlist[i].Name, true); // enable mod
 		}
 
 		console.log(lang("cli.mods.toggledall"));
@@ -542,11 +586,15 @@ mods.toggle = (mod, fork) => {
 		return
 	}
 
+	// toggle specific mod
 	mods.modfile.toggle(mod);
+
 	if (! fork) {
 		console.log(lang("cli.mods.toggled"));
 		cli.exit();
 	}
+
+	// send updated modlist to renderer
 	ipcMain.emit("gui-getmods");
 }
 

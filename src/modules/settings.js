@@ -7,7 +7,7 @@ const lang = require("../lang");
 
 var invalid_settings = false;
 
-// Base settings
+// base settings
 var settings = {
 	gamepath: "",
 	lang: "en-US",
@@ -19,7 +19,7 @@ var settings = {
 	nsargs: "-multiple",
 	zip: "/northstar.zip",
 
-	// These files won't be overwritten when installing/updating
+	// these files won't be overwritten when installing/updating
 	// Northstar, useful for config files
 	excludes: [
 		"ns_startup_args.txt",
@@ -27,16 +27,19 @@ var settings = {
 	]
 }
 
-// Creates the settings file with the base settings if it doesn't exist.
+// creates the settings file with the base settings if it doesn't exist.
 if (fs.existsSync("viper.json")) {
 	let conf = json("viper.json");
 
-	// Validates viper.json
+	// validates viper.json
 	if (! conf) {
 		invalid_settings = true;
 	}
 
-	settings = {...settings, ...conf};
+	settings = {
+		...settings, ...conf
+	}
+
 	settings.zip = path.join(settings.gamepath + "/northstar.zip");
 
 	let args = path.join(settings.gamepath, "ns_startup_args.txt");
@@ -47,24 +50,37 @@ if (fs.existsSync("viper.json")) {
 	console.log(lang("general.missingpath"));
 }
 
-// As to not have to do the same one liner a million times, this
+// as to not have to do the same one liner a million times, this
 // function exists, as the name suggests, it simply writes the current
 // settings to the disk.
 //
-// You can also pass a settings object to the function and it'll try and
+// you can also pass a settings object to the function and it'll try and
 // merge it together with the already existing settings
 settings.save = (obj = {}) => {
-	if (invalid_settings) {return false}
+	// refuse to save if settings aren't valid
+	if (invalid_settings) {
+		return false;
+	}
 
-	let settings_content = {...settings, ...obj};
+	let settings_content = {
+		...settings, ...obj
+	}
 
 	delete settings_content.save;
 
+	// write Northstar's startup argument file
 	if (fs.existsSync(settings.gamepath)) {
 		fs.writeFileSync(path.join(settings.gamepath, "ns_startup_args.txt"), settings.nsargs);
 	}
 
-	fs.writeFileSync(app.getPath("appData") + "/viper.json", JSON.stringify({...settings, ...obj}));
+	let stringified_settings = JSON.stringify({
+		...settings, ...obj
+	})
+
+	let settings_file = app.getPath("appData") + "/viper.json";
+
+	// write the settings file
+	fs.writeFileSync(settings_file, stringified_settings);
 }
 
 module.exports = settings;
