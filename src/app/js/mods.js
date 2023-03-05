@@ -119,6 +119,12 @@ mods.load = (mods_obj) => {
 			let mod_el = mod_els[i].cloneNode(true);
 
 			mod_el.classList.add("no-animation");
+
+			mod_el.querySelector(".switch").addEventListener("click", () => {
+				if (mod_versions[mod].local_name) {
+					mods.toggle(mod_versions[mod].local_name);
+				}
+			})
 			
 			mod_els[i].remove();
 			modsdiv.querySelector(".line").after(mod_el);

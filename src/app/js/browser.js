@@ -124,13 +124,16 @@ var Browser = {
 			let normalized = normalize(packages[i].name);
 
 			let has_update = false;
+			let local_name = false;
 			let local_version = false;
 			let remote_version = packages[i].versions[0].version_number;
 			remote_version = version.format(remote_version);
 
 			for (let ii = 0; ii < modsobj.all.length; ii++) {
 				let mod = modsobj.all[ii];
+
 				if (normalize(mod.Name) === normalized) {
+					local_name = mod.Name;
 					local_version = version.format(mod.Version);
 					if (version.is_newer(remote_version, local_version)) {
 						has_update = true;
@@ -150,6 +153,7 @@ var Browser = {
 				mod_versions[normalized] = {
 					install: install,
 					has_update: has_update,
+					local_name: local_name,
 					local_version: local_version,
 
 					package: packages[i]
