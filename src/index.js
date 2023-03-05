@@ -66,7 +66,7 @@ function start() {
 
 	ipcMain.on("exit", () => {
 		if (settings.originkill) {
-			utils.isOriginRunning().then((running) => {
+			is_running.origin().then((running) => {
 				if (running) {
 					kill.origin().then(process.exit(0))
 				} else {
@@ -146,8 +146,6 @@ function start() {
 	})
 }
 
-// General events used to handle utils.js stuff without requiring the
-// module inside the file that sent the event. {
 ipcMain.on("install-mod", () => {
 	if (cli.hasArgs()) {
 		mods.install(cli.param("installmod"));
@@ -221,14 +219,14 @@ ipcMain.on("version-cli", () => {
 ipcMain.on("getmods", () => {
 	let mods = mods.list();
 	if (mods.all.length > 0) {
-		log(`${utils.lang("general.mods.installed")} ${mods.all.length}`);
-		log(`${utils.lang("general.mods.enabled")} ${mods.enabled.length}`);
+		log(`${lang("general.mods.installed")} ${mods.all.length}`);
+		log(`${lang("general.mods.enabled")} ${mods.enabled.length}`);
 		for (let i = 0; i < mods.enabled.length; i++) {
 			log(`  ${mods.enabled[i].Name} ${mods.enabled[i].Version}`);
 		}
 
 		if (mods.disabled.length > 0) {
-			log(`${utils.lang("general.mods.disabled")} ${mods.disabled.length}`);
+			log(`${lang("general.mods.disabled")} ${mods.disabled.length}`);
 			for (let i = 0; i < mods.disabled.length; i++) {
 				log(`  ${mods.disabled[i].Name} ${mods.disabled[i].Version}`);
 			}

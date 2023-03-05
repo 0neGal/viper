@@ -52,9 +52,8 @@ function gamepathExists() {
 
 // General CLI initialization
 //
-// A lot of the CLI is handled through events sent back to the main
-// process or utils.js to handle, this is because we re-use these events
-// for the renderer as well.
+// A lot of the CLI is handled through events sent back to the main process for
+// it to handle, this is because we re-use these events for the renderer as.
 async function init() {
 	// --help menu/argument
 	if (cli.hasSwitch("help")) {
