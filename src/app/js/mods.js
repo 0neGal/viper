@@ -135,7 +135,7 @@ mods.load = (mods_obj) => {
 }
 
 mods.remove = (mod) => {
-	if (mod.match(/^northstar\./)) {
+	if (mod.toLowerCase().match(/^northstar\./)) {
 		if (! confirm(lang("gui.mods.required.confirm"))) {
 			return;
 		}
@@ -149,7 +149,7 @@ mods.remove = (mod) => {
 }
 
 mods.toggle = (mod) => {
-	if (mod.match(/^Northstar\./)) {
+	if (mod.toLowerCase().match(/^northstar\./)) {
 		if (! confirm(lang("gui.mods.required.confirm"))) {
 			return;
 		}
