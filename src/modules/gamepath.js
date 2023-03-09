@@ -4,8 +4,12 @@ const fs = require("fs-extra");
 const { dialog, ipcMain } = require("electron");
 
 const cli = require("../cli");
+const lang = require("../lang");
 
+const win_show = require("./window");
 const settings = require("./settings");
+const findgame = require("./findgame");
+
 
 let gamepath = {};
 
@@ -54,7 +58,7 @@ gamepath.set = async (win, force_dialog) => {
 				return;
 			}
 
-			win.alert(lang("general.missingpath"));
+			win_show.alert(lang("general.missingpath"));
 		}
 
 		// fallback to GUI/manual selection
