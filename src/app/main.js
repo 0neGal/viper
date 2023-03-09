@@ -1,6 +1,6 @@
 const fs = require("fs");
 const path = require("path");
-const { ipcRenderer, shell } = require("electron");
+const { app, ipcRenderer, shell } = require("electron");
 
 const lang = require("../lang");
 var modsobj = {};
@@ -46,7 +46,6 @@ if (fs.existsSync("viper.json")) {
 	}
 
 	settings = {...settings, ...json};
-	settings.zip = path.join(settings.gamepath + "/northstar.zip");
 
 	if (settings.gamepath.length === 0) {
 		setpath(false);

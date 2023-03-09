@@ -40,7 +40,7 @@ if (fs.existsSync("viper.json")) {
 		...settings, ...conf
 	}
 
-	settings.zip = path.join(settings.gamepath + "/northstar.zip");
+	settings.zip = path.join(app.getPath("cache"), "vipertmp/northstar.zip");
 
 	let args = path.join(settings.gamepath, "ns_startup_args.txt");
 	if (fs.existsSync(args)) {

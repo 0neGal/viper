@@ -161,7 +161,7 @@ update.northstar = async () => {
 	let ns_version = version.northstar();
 
 	const latest_version = await requests.getLatestNsVersion();
-	console.log(latest_version)
+
 	if (latest_version == false) {
 		ipcMain.emit("ns-update-event", "cli.update.noInternet");
 		return;
@@ -187,7 +187,20 @@ update.northstar = async () => {
 	exclude_files();
 
 	// start the download of the zip
-	https.get(requests.getLatestNsVersionLink(), (res) => {
+	https.get(requests.getLatestNsVersionLink() + "asd", (res) => {
+		let tmp = path.dirname(settings.zip);
+
+		if (fs.existsSync(tmp)) {
+			if (! fs.statSync(tmp).isDirectory()) {
+				fs.rmSync(tmp);
+			}
+		} else {
+			fs.mkdirSync(tmp);
+			if (fs.existsSync(settings.zip)) {
+				fs.rmSync(settings.zip);
+			}
+		}
+
 		let stream = fs.createWriteStream(settings.zip);
 		res.pipe(stream);
 
