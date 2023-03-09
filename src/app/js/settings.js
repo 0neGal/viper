@@ -99,14 +99,23 @@ var Settings = {
 		ipcRenderer.on("cant-autoupdate", () => {
 			document.querySelector(".option[name=autoupdate]").style.display = "none";
 		})
+	},
+	switch: (el, state) => {
+		if (state) {
+			return el.classList.add("on");
+		} else if (state === false) {
+			return el.classList.remove("on");
+		}
+
+		if (el.classList.contains("switch") && el.tagName == "BUTTON") {
+			el.classList.toggle("on");
+		}
 	}
 }
 
 document.body.addEventListener("click", (e) => {
 	let el = document.elementFromPoint(e.clientX, e.clientY);
-	if (el.classList.contains("switch") && el.tagName == "BUTTON") {
-		el.classList.toggle("on");
-	}
+	Settings.switch(el);
 })
 
 Settings.load();
