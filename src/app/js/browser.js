@@ -129,14 +129,16 @@ var Browser = {
 			let remote_version = packages[i].versions[0].version_number;
 			remote_version = version.format(remote_version);
 
-			for (let ii = 0; ii < modsobj.all.length; ii++) {
-				let mod = modsobj.all[ii];
+			if (modsobj) {
+				for (let ii = 0; ii < modsobj.all.length; ii++) {
+					let mod = modsobj.all[ii];
 
-				if (normalize(mod.Name) === normalized) {
-					local_name = mod.Name;
-					local_version = version.format(mod.Version);
-					if (version.is_newer(remote_version, local_version)) {
-						has_update = true;
+					if (normalize(mod.Name) === normalized) {
+						local_name = mod.Name;
+						local_version = version.format(mod.Version);
+						if (version.is_newer(remote_version, local_version)) {
+							has_update = true;
+						}
 					}
 				}
 			}
