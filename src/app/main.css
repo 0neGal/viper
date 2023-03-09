@@ -110,6 +110,7 @@ a, button, #close, #nsRelease, #vpReleaseNotes,
 .grid {
 	display: flex;
 	flex-wrap: wrap;
+	align-content: start;
 }
 
 .switch {
