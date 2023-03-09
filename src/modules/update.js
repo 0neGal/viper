@@ -179,15 +179,22 @@ update.northstar = async () => {
 		if (ns_version != "unknown") {
 			console.log(lang("cli.update.current"), ns_version);
 		};
-
-		console.log(lang("cli.update.downloading") + ":", latest_version);
-		ipcMain.emit("ns-update-event", "cli.update.downloading");
 	}
 
 	exclude_files();
 
 	// start the download of the zip
-	https.get(requests.getLatestNsVersionLink() + "asd", (res) => {
+	https.get(requests.getLatestNsVersionLink(), (res) => {
+		// cancel out if zip can't be retrieved and or found
+		if (res.statusCode !== 200) {
+			ipcMain.emit("ns-update-event", "cli.update.uptodate.short");
+			console.log(lang("cli.update.uptodate"), ns_version);
+			return false;
+		}
+
+		console.log(lang("cli.update.downloading") + ":", latest_version);
+		ipcMain.emit("ns-update-event", "cli.update.downloading");
+
 		let tmp = path.dirname(settings.zip);
 
 		if (fs.existsSync(tmp)) {
