@@ -172,7 +172,6 @@ ipcMain.on("setlang", (event, lang) => {
 });
 
 ipcMain.on("update-northstar", async () => {
-	console.log(await is_running.game())
 	if (await is_running.game()) {
 		return win_show.alert(lang("general.autoupdates.gamerunning"));
 	}
