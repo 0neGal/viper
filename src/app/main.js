@@ -39,7 +39,7 @@ if (fs.existsSync("viper.json")) {
 		if (! reset) {
 			ipcRenderer.send("exit");
 		} else {
-			fs.writeFileSync("viper.json", "{}");
+			fs.rmSync("viper.json");
 			ipcRenderer.send("relaunch");
 		}
 		
