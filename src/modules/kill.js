@@ -20,8 +20,15 @@ async function kill(process_name) {
 
 kill.process = kill;
 
-kill.origin = () => {
-	return kill("Origin.exe");
+kill.origin = async () => {
+	let origin = await kill("Origin.exe");
+	let eadesktop = await kill("EADesktop.exe");
+
+	if (origin || eadesktop) {
+		return true;
+	}
+
+	return false;
 }
 
 module.exports = kill;
