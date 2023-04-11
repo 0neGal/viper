@@ -104,8 +104,8 @@
 	"gui.settings.nsupdate.desc": "Viper wird Northstar automatisch aktualisieren, eine manuelle Aktualisierung ist trotzdem möglich.",
 	"gui.settings.excludes.title": "Behalte Datein beim aktualisieren.",
 	"gui.settings.excludes.desc": "Beim Aktualisieren von Northstar werden diese Datein nicht überschrieben. Solang du nicht weißt was du verändert solltest du diese Datein auch nicht berabeiten. Dateinamen sollte durch eine Lücke getrennt werden.",
-	"gui.settings.originkill.title": "Automatisch Origin schließen",
-	"gui.settings.originkill.desc": "When Viper sich schließt soll Origin sich auch schließen.",
+	"gui.settings.originkill.title": "Automatisch Origin und oder EA Desktop schließen",
+	"gui.settings.originkill.desc": "Wenn Viper sich schließt soll Origin und oder EA Desktop sich auch schließen.",
 
 	"gui.update.downloading": "Herunterladen...",
 	"gui.update.extracting": "Extrahiere update...",
