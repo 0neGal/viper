@@ -104,8 +104,8 @@
 	"gui.settings.nsupdate.desc": "Viper will automatically keep Northstar up-to-date, however it can still manually be updated through the Northstar page.",
 	"gui.settings.excludes.title": "Retain files on update",
 	"gui.settings.excludes.desc": "When Northstar is updated, files specified here will not be overwritten by files from the new Northstar update, unless you know what you're changing, you should probably not change anything here. Each file is separated with a space.",
-	"gui.settings.originkill.title": "Automatically quit Origin",
-	"gui.settings.originkill.desc": "When Viper exits, automatically quit Origin as well.",
+	"gui.settings.originkill.title": "Automatically quit Origin and or EA Desktop",
+	"gui.settings.originkill.desc": "When Viper exits, automatically quit Origin and or EA Desktop as well.",
 
 	"gui.update.downloading": "Downloading...",
 	"gui.update.extracting": "Extracting update...",
