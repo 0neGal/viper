@@ -232,7 +232,15 @@ ipcRenderer.on("newpath", (event, newpath) => {
 
 // Continuation of log()
 ipcRenderer.on("log", (event, msg) => {log(msg)})
-ipcRenderer.on("alert", (event, msg) => {alert(msg)})
+ipcRenderer.on("alert", (event, data) => {
+	alert(data.message);
+	ipcRenderer.send("alert-closed-" + data.id);
+})
+
+ipcRenderer.on("confirm", (event, data) => {
+	let confirmed = confirm(data.message);
+	ipcRenderer.send("confirm-closed-" + data.id, confirmed);
+})
 
 // Updates the installed mods
 ipcRenderer.on("mods", (event, mods_obj) => {

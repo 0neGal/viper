@@ -82,7 +82,19 @@ function start() {
 
 	// passthrough to renderer from main
 	ipcMain.on("win-log", (event, ...args) => {send("log", ...args)});
-	ipcMain.on("win-alert", (event, ...args) => {send("alert", ...args)});
+	ipcMain.on("win-alert", (event, msg, id) => {
+		send("alert", {
+			id: id,
+			message: msg,
+		})
+	});
+
+	ipcMain.on("win-confirm", (event, msg, id) => {
+		send("confirm", {
+			id: id,
+			message: msg,
+		})
+	});
 
 	// mod states
 	ipcMain.on("duped-mod", (event, modname) => {send("duped-mod", modname)});
