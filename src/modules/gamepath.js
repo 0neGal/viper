@@ -58,7 +58,7 @@ gamepath.set = async (win, force_dialog) => {
 				return;
 			}
 
-			win_show.alert(lang("general.missingpath"));
+			await win_show.alert(lang("general.missingpath"));
 		}
 
 		// fallback to GUI/manual selection
