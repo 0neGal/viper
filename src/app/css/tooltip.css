@@ -1,0 +1,21 @@
+@import "theming.css";
+
+#tooltip {
+	color: white;
+	opacity: 0.0;
+	position: fixed;
+	font-weight: 600;
+	font-size: 0.8em;
+	width: max-content;
+	z-index: 99999999999;
+	pointer-events: none;
+	background: var(--bg);
+	backdrop-filter: blur(15px);
+	transition: opacity 0.15s ease-in-out;
+	border-radius: calc(var(--padding) / 1);
+	padding: calc(var(--padding) / 2.8) calc(var(--padding) / 1.8);
+}
+
+#tooltip.visible {
+	opacity: 1.0;
+}

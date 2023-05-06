@@ -6,13 +6,15 @@
 		<meta charset="utf-8">
 	</head>
 	<body>
+		<div id="tooltip">Test</div>
+
 		<div id="bgHolder"></div>
 		<div id="toasts"></div>
 
 		<div id="winbtns">
-			<div id="settings" onclick="Settings.toggle(true)"></div>
-			<div id="minimize" onclick="ipcRenderer.send('minimize')"></div>
-			<div id="close" onclick="ipcRenderer.send('exit')"></div>
+			<div id="settings" tooltip="%%tooltip.settings%%" onclick="Settings.toggle(true)"></div>
+			<div id="minimize" tooltip="%%tooltip.minimize%%" onclick="ipcRenderer.send('minimize')"></div>
+			<div id="close" tooltip="%%tooltip.close%%" onclick="ipcRenderer.send('exit')"></div>
 		</div>
 
 		<div id="dragUI">
@@ -170,9 +172,9 @@
 		</div>
 		
 		<nav class="gamesContainer">
-			<button id="vpBtn" onclick="page(0)"></button>
-			<button id="nsBtn" onclick="page(1)"></button>
-			<button id="tfBtn" onclick="page(2)"></button>
+			<button id="vpBtn" tooltip="%%tooltip.pages.viper%%" tooltip-position="horizontal" onclick="page(0)"></button>
+			<button id="nsBtn" tooltip="%%tooltip.pages.northstar%%" tooltip-position="horizontal" onclick="page(1)"></button>
+			<button id="tfBtn" tooltip="%%tooltip.pages.titanfall%%" tooltip-position="horizontal" onclick="page(2)"></button>
 		</nav>
 
 		<div class="mainContainer">
@@ -261,6 +263,7 @@
 		<script src="js/misc.js"></script>
 		<script src="js/mods.js"></script>
 		<script src="js/toast.js"></script>
+		<script src="js/tooltip.js"></script>
 		<script src="js/browser.js"></script>
 		<script src="js/settings.js"></script>
 		<script src="js/launcher.js"></script>

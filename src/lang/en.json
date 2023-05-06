@@ -169,5 +169,12 @@
 	"general.invalidconfig": "Your config file is improperly formatted, if it's been manually edited, please validate that everything is typed correctly.\n\nIf you did not manually edit the config file, it is recommended to simply reset the config.\n\nTo reset your config file simply click \"Ok\" below.\n\nMore details:\n",
 
 	"request.viper.noReleaseNotes": "Couldn't fetch Viper release notes.\nTry again later!",
-	"request.northstar.noReleaseNotes": "Couldn't fetch Northstar release notes.\nTry again later!"
+	"request.northstar.noReleaseNotes": "Couldn't fetch Northstar release notes.\nTry again later!",
+
+	"tooltip.close": "Closes Viper",
+	"tooltip.minimize": "Minimizes the window",
+	"tooltip.settings": "Opens the settings popup",
+	"tooltip.pages.viper": "Viper",
+	"tooltip.pages.northstar": "Northstar",
+	"tooltip.pages.titanfall": "Titanfall 2"
 }
