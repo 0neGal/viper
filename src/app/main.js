@@ -242,6 +242,31 @@ ipcRenderer.on("confirm", (event, data) => {
 	ipcRenderer.send("confirm-closed-" + data.id, confirmed);
 })
 
+let is_running = false;
+ipcRenderer.on("is-running", (event, running) => {
+	let set_playbtns = (text) => {
+		let playbtns = document.querySelectorAll(".playBtn");
+		for (let i = 0; i < playbtns.length; i++) {
+			playbtns[i].innerHTML = text;
+		}
+	}
+
+	if (running && is_running != running) {
+		setButtons(false);
+		set_playbtns(lang("general.running"));
+
+		is_running = running;
+		return;
+	}
+
+	if (is_running != running) {
+		setButtons(true);
+		set_playbtns(lang("gui.launch"));
+
+		is_running = running;
+	}
+})
+
 // Updates the installed mods
 ipcRenderer.on("mods", (event, mods_obj) => {
 	modsobj = mods_obj;

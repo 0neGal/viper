@@ -156,6 +156,10 @@ function start() {
 	ipcMain.on("update-now", () => {
 		autoUpdater.quitAndInstall();
 	})
+
+	setInterval(async () => {
+		send("is-running", await is_running.game());
+	}, 1000)
 }
 
 ipcMain.on("install-mod", () => {
