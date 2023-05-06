@@ -57,11 +57,13 @@ button:active {filter: brightness(90%)}
 	margin-right: calc(var(--padding) / 2);
 }
 
-#winbtns #close {background-image: url("icons/close.png")}
-#winbtns #minimize {background-image: url("icons/minimize.png")}
-#winbtns #settings {background-image: url("icons/settings.png")}
+#winbtns div img {
+	width: 100%;
+	height: 100%;
+	transition: transform 0.25s ease-in-out;
+}
 
-#winbtns #settings:hover {
+#winbtns #settings:hover img {
 	transform: rotate(90deg);
 }
 

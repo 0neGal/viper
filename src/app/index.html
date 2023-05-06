@@ -12,9 +12,15 @@
 		<div id="toasts"></div>
 
 		<div id="winbtns">
-			<div id="settings" tooltip="%%tooltip.settings%%" onclick="Settings.toggle(true)"></div>
-			<div id="minimize" tooltip="%%tooltip.minimize%%" onclick="ipcRenderer.send('minimize')"></div>
-			<div id="close" tooltip="%%tooltip.close%%" onclick="ipcRenderer.send('exit')"></div>
+			<div id="settings" tooltip="%%tooltip.settings%%" onclick="Settings.toggle(true)">
+				<img src="icons/settings.png">
+			</div>
+			<div id="minimize" tooltip="%%tooltip.minimize%%" onclick="ipcRenderer.send('minimize')">
+				<img src="icons/minimize.png">
+			</div>
+			<div id="close" tooltip="%%tooltip.close%%" onclick="ipcRenderer.send('exit')">
+				<img src="icons/close.png">
+			</div>
 		</div>
 
 		<div id="dragUI">
