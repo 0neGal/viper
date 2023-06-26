@@ -39,7 +39,7 @@
 	"cli.mods.installed": "¡Modificiación instalada exitosamente!",
 	"cli.mods.cantfind": "¡No se encuentra una modificación con ese nombre!",
 	"cli.mods.notamod": "La carpeta o el archivo seleccionado no es una modificación",
-	"cli.mods.toggledall": "¡El estado de todas las modiciaciones ha sido cambiado exitosamente!",
+	"cli.mods.toggledall": "¡El estado de todas las modifiaciones ha sido cambiado exitosamente!",
 	"cli.mods.improperjson": "%s's mod.json tiene errores de formato",
 
 	"gui.welcome": "Bienvenido a Viper!",
