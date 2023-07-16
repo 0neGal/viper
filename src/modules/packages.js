@@ -4,6 +4,7 @@ const unzip = require("unzipper");
 const app = require("electron").app;
 const https = require("follow-redirects").https;
 
+const mods = require("./mods");
 const json = require("./json");
 const win = require("./window");
 const settings = require("./settings");
@@ -195,7 +196,19 @@ packages.install = async (url, author, package_name, version) => {
 
 	console.log("Verified package:", name);
 
-	console.log("Deleting older version, if it exists:", name);
+	console.log("Deleting older version(s), if it exists:", name);
+	// check and delete any mod with the name package details in the old
+	// `mods` folder, if there are any at all
+	let mods_list = mods.list().all;
+	for (let i = 0; i < mods_list.length; i++) {
+		let mod = mods_list[i];
+
+		if (mod.ManifestName == package_name) {
+			mods.remove(mod.Name);
+			continue;
+		}
+	}
+
 	packages.remove(author, package_name, version);
 
 	console.log("Moving package:", name);
@@ -217,7 +230,7 @@ packages.download = async (url, name) => {
 			let tmp = path.join(app.getPath("cache"), "vipertmp");
 
 			let zip_name = name || "package";
-			let zip_path = path.join(tmp, `/${zip_name}.zip`);
+			let zip_path = path.join(tmp, `${zip_name}.zip`);
 
 			// make sure the temporary folder exists
 			if (fs.existsSync(tmp)) {
