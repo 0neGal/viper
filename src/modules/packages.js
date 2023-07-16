@@ -268,7 +268,9 @@ packages.extract = async (zip_path, name) => {
 				path: extract_dir
 			}
 		)).on("finish", () => {
-			resolve(extract_dir);
+			setInterval(() => {
+				resolve(extract_dir);
+			}, 1000)
 		});
 	})
 }
