@@ -160,6 +160,7 @@ packages.install = async (url, author, package_name, version) => {
 	let verification = packages.verify(package_path);
 
 	switch(verification) {
+		case true: break;
 		case "has-plugins":
 			// if the package has plugins, then we want to prompt the
 			// user, and make absolutely certain that they do want to
