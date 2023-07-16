@@ -209,16 +209,19 @@ packages.install = async (url, author, package_name, version) => {
 		}
 	}
 
+	// removes older version of package inside the `packages` folder
 	packages.remove(author, package_name, version);
 
 	console.log("Moving package:", name);
 	let moved = packages.move(package_path);
 
-	if (moved) {
-		console.log("Installed package:", name);
-	} else {
+	if (! moved) {
 		console.log("Moving package failed:", name);
+		return false;
 	}
+
+	console.log("Installed package:", name);
+	return true;
 }
 
 packages.download = async (url, name) => {
