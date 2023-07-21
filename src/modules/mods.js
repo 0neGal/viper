@@ -53,57 +53,108 @@ mods.list = () => {
 		};
 	}
 
-	let files = fs.readdirSync(mods.path);
-	files.forEach((file) => {
-		// return early if `file` isn't a folder
-		if (! fs.statSync(path.join(mods.path, file)).isDirectory()) {
-			return;
-		}
+	let get_in_dir = (dir, package_obj) => {
+		let files = fs.readdirSync(dir);
+		files.forEach((file) => {
+			// return early if `file` isn't a folder
+			if (! fs.statSync(path.join(dir, file)).isDirectory()) {
+				return;
+			}
 
-		let modjson = path.join(mods.path, file, "mod.json");
-		
-		// return early if mod.json doesn't exist or isn't a file
-		if (! fs.existsSync(modjson) || ! fs.statSync(modjson).isFile()) {
-			return;
-		}
+			let modjson = path.join(dir, file, "mod.json");
 
-		let mod = json(modjson);
-		if (! mod) {return}
+			// return early if mod.json doesn't exist or isn't a file
+			if (! fs.existsSync(modjson) || ! fs.statSync(modjson).isFile()) {
+				return;
+			}
 
-		let obj = {
-			Author: false,
-			Version: "unknown",
-			Name: "unknown",
-			FolderName: file,
-		...mod}
+			let mod = json(modjson);
+			if (! mod) {return}
 
-		obj.Disabled = ! mods.modfile.get(obj.Name);
+			let obj = {
+				Author: mod.Author || false,
+				Version: mod.Version || "unknown",
+				Name: mod.Name || "unknown",
+				Description: mod.Description || "",
 
-		// add manifest data from manifest.json, if it exists
-		let manifest_file = path.join(mods.path, file, "manifest.json");
-		if (fs.existsSync(manifest_file)) {
-			let manifest = json(manifest_file);
-			if (manifest != false) {
-				obj.ManifestName = manifest.name;
-				if (obj.Version == "unknown") {
-					obj.Version = manifest.version_number;
+				FolderName: file,
+				FolderPath: path.join(dir, file),
+				Package: package_obj || false
+			}
+
+			// Electron's serializer for
+			// BrowserWindow.webContents.send() is quite broken, and for
+			// some reason cant serialize the output when `package_obj`
+			// is anywhere inside, trying to find a solution I
+			// discovered that simply `JSON.stringify()`'ing
+			// `package_obj` does let it be able to be parsed in
+			// `index.js` however, of course now it is a string.
+			//
+			// wanting to not have to add extra code to the renderer
+			// just to fix this, I had to try and look for a better
+			// solution, and apparently this just somehow works, I have
+			// literally 0% fucking clue why or how it works and fixes
+			// it, but I will quite frankly not complain.
+			//
+			// whether `obj` has been serialized here or not, the actual
+			// output is the exact same, but somehow Electron just cant
+			// handle sending it to the renderer, failing to serialize
+			// it, by itself...
+			//
+			// anyway, you can move along now. :')
+			obj = JSON.stringify(obj);
+			obj = JSON.parse(obj);
+
+			if (obj.Package) {
+				obj.Author = obj.Package.author;
+			}
+
+			obj.Disabled = ! mods.modfile.get(obj.Name);
+
+			// add manifest data from manifest.json, if it exists
+			let manifest_file = path.join(dir, file, "manifest.json");
+			if (fs.existsSync(manifest_file)) {
+				let manifest = json(manifest_file);
+				if (manifest != false) {
+					obj.ManifestName = manifest.name;
+					if (obj.Version == "unknown") {
+						obj.Version = manifest.version_number;
+					}
 				}
 			}
+
+			// add author data from author file, if it exists
+			let author_file = path.join(dir, file, "thunderstore_author.txt");
+			if (fs.existsSync(author_file)) {
+				obj.Author = fs.readFileSync(author_file, "utf8");
+			}
+
+			// add mod to their respective disabled or enabled Array
+			if (obj.Disabled) {
+				disabled.push(obj);
+			} else {
+				enabled.push(obj);
+			}
+		})
+	}
+
+	// get mods in `mods` folder
+	get_in_dir(mods.path);
+
+	// get mods in `packages` folder
+	let package_list = require("./packages").list();
+	for (let i in package_list) {
+		// make sure the package actually has mods
+		if (! package_list[i].has_mods) {
+			continue;
 		}
 
-		// add author data from author file, if it exists
-		let author_file = path.join(mods.path, file, "thunderstore_author.txt");
-		if (fs.existsSync(author_file)) {
-			obj.Author = fs.readFileSync(author_file, "utf8");
-		}
-
-		// add mod to their respective disabled or enabled Array
-		if (obj.Disabled) {
-			disabled.push(obj);
-		} else {
-			enabled.push(obj);
-		}
-	})
+		// search the package's `mods` folder
+		get_in_dir(
+			path.join(package_list[i].package_path, "mods"),
+			package_list[i]
+		)
+	}
 
 	return {
 		enabled: enabled,

@@ -4,7 +4,6 @@ const unzip = require("unzipper");
 const app = require("electron").app;
 const https = require("follow-redirects").https;
 
-const mods = require("./mods");
 const json = require("./json");
 const win = require("./window");
 const settings = require("./settings");
@@ -73,11 +72,25 @@ packages.list = (dir = packages.path) => {
 					// this is whether or not the package has plugins
 					has_plugins: (verification == "has-plugins"),
 
+					// this will be set later on
+					has_mods: false,
+
 					// contents of `manifest.json` or `false` if it can
 					// be parsed correctly
 					manifest: json(
 						path.join(package_path, "manifest.json")
 					),
+				}
+
+				// if the package has a `mods` folder, and it's not
+				// empty, then we can assume that the package does
+				// indeed have mods
+				let mods_dir = path.join(package_path, "mods");
+				if (fs.existsSync(mods_dir) &&
+					fs.lstatSync(mods_dir).isDirectory() &&
+					fs.readdirSync(mods_dir).length >= 1) {
+
+					package_list[files[i]].has_mods = true;
 				}
 
 				// add `.remove()` function, mostly just a shorthand
@@ -199,6 +212,7 @@ packages.install = async (url, author, package_name, version) => {
 	console.log("Deleting older version(s), if it exists:", name);
 	// check and delete any mod with the name package details in the old
 	// `mods` folder, if there are any at all
+	let mods = require("./mods");
 	let mods_list = mods.list().all;
 	for (let i = 0; i < mods_list.length; i++) {
 		let mod = mods_list[i];
@@ -313,13 +327,13 @@ packages.verify = (package_path) => {
 	}
 
 	// check if there are any plugins in the package
-	let mods = path.join(package_path, "mods");
+	let mods_path = path.join(package_path, "mods");
 	let plugins = path.join(package_path, "plugins");
 	if (fs.existsSync(plugins) && fs.lstatSync(plugins).isDirectory()) {
 		// package has plugins, the function calling `packages.verify()`
 		// will have to handle this at their own discretion
 		return "has-plugins";
-	} else if (! fs.existsSync(mods) || fs.lstatSync(mods).isFile()) {
+	} else if (! fs.existsSync(mods_path) || fs.lstatSync(mods_path).isFile()) {
 		// if there are no plugins, then we check if there are any mods,
 		// if not, then it means there are both no plugins and mods, so
 		// we signal that back
