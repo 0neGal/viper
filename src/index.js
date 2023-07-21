@@ -239,13 +239,13 @@ ipcMain.on("getmods", () => {
 		log(`${lang("general.mods.installed")} ${mods.all.length}`);
 		log(`${lang("general.mods.enabled")} ${mods.enabled.length}`);
 		for (let i = 0; i < mods.enabled.length; i++) {
-			log(`  ${mods.enabled[i].Name} ${mods.enabled[i].Version}`);
+			log(`  ${mods.enabled[i].name} ${mods.enabled[i].version}`);
 		}
 
 		if (mods.disabled.length > 0) {
 			log(`${lang("general.mods.disabled")} ${mods.disabled.length}`);
 			for (let i = 0; i < mods.disabled.length; i++) {
-				log(`  ${mods.disabled[i].Name} ${mods.disabled[i].Version}`);
+				log(`  ${mods.disabled[i].name} ${mods.disabled[i].version}`);
 			}
 		}
 		cli.exit(0);

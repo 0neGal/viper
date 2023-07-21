@@ -72,14 +72,15 @@ mods.list = () => {
 			if (! mod) {return}
 
 			let obj = {
-				Author: mod.Author || false,
-				Version: mod.Version || "unknown",
-				Name: mod.Name || "unknown",
-				Description: mod.Description || "",
+				author: mod.Author || false,
+				version: mod.Version || "unknown",
+				name: mod.Name || "unknown",
+				description: mod.Description || "",
 
-				FolderName: file,
-				FolderPath: path.join(dir, file),
-				Package: package_obj || false
+				folder_name: file,
+				folder_path: path.join(dir, file),
+
+				package: package_obj || false
 			}
 
 			// Electron's serializer for
@@ -105,20 +106,20 @@ mods.list = () => {
 			obj = JSON.stringify(obj);
 			obj = JSON.parse(obj);
 
-			if (obj.Package) {
-				obj.Author = obj.Package.author;
+			if (obj.package) {
+				obj.author = obj.package.author;
 			}
 
-			obj.Disabled = ! mods.modfile.get(obj.Name);
+			obj.disabled = ! mods.modfile.get(obj.name);
 
 			// add manifest data from manifest.json, if it exists
 			let manifest_file = path.join(dir, file, "manifest.json");
 			if (fs.existsSync(manifest_file)) {
 				let manifest = json(manifest_file);
 				if (manifest != false) {
-					obj.ManifestName = manifest.name;
-					if (obj.Version == "unknown") {
-						obj.Version = manifest.version_number;
+					obj.manifest_name = manifest.name;
+					if (obj.version == "unknown") {
+						obj.version = manifest.version_number;
 					}
 				}
 			}
@@ -126,11 +127,11 @@ mods.list = () => {
 			// add author data from author file, if it exists
 			let author_file = path.join(dir, file, "thunderstore_author.txt");
 			if (fs.existsSync(author_file)) {
-				obj.Author = fs.readFileSync(author_file, "utf8");
+				obj.author = fs.readFileSync(author_file, "utf8");
 			}
 
 			// add mod to their respective disabled or enabled Array
-			if (obj.Disabled) {
+			if (obj.disabled) {
 				disabled.push(obj);
 			} else {
 				enabled.push(obj);
@@ -185,7 +186,7 @@ mods.get = (mod) => {
 
 	// search for mod in list
 	for (let i = 0; i < list.length; i++) {
-		if (list[i].Name == mod) {
+		if (list[i].name == mod) {
 			// found mod, return data
 			return list[i];
 		} else {continue}
@@ -225,7 +226,7 @@ mods.modfile.gen = () => {
 	let list = mods.list().all; // get list of all mods
 	for (let i = 0; i < list.length; i++) {
 		// add every mod to the list
-		names[list[i].Name] = true
+		names[list[i].name] = true
 	}
 
 	// write the actual file
@@ -565,12 +566,12 @@ mods.remove = (mod) => {
 	if (mod == "allmods") {
 		let modlist = mods.list().all;
 		for (let i = 0; i < modlist.length; i++) {
-			mods.remove(modlist[i].Name);
+			mods.remove(modlist[i].name);
 		}
 		return
 	}
 
-	let mod_name = mods.get(mod).FolderName;
+	let mod_name = mods.get(mod).folder_name;
 	if (! mod_name) {
 		console.log("error: " + lang("cli.mods.cantfind"));
 		cli.exit(1);
@@ -584,12 +585,12 @@ mods.remove = (mod) => {
 		return cli.exit(1);
 	}
 
-	let manifestname = null;
+	let manifest_name = null;
 
 	// if the mod has a manifest.json we want to save it now so we can
 	// send it later when telling the renderer about the deleted mod
 	if (fs.existsSync(path.join(path_to_mod, "manifest.json"))) {
-		manifestname = require(path.join(path_to_mod, "manifest.json")).name;
+		manifest_name = require(path.join(path_to_mod, "manifest.json")).name;
 	}
 
 	// actually remove the mod itself
@@ -604,7 +605,7 @@ mods.remove = (mod) => {
 	// relevant info for it to properly update everything graphically
 	ipcMain.emit("removed-mod", "", {
 		name: mod.replace(/^.*(\\|\/|\:)/, ""),
-		manifestname: manifestname
+		manifest_name: manifest_name
 	});
 }
 
@@ -629,7 +630,7 @@ mods.toggle = (mod, fork) => {
 	if (mod == "allmods") {
 		let modlist = mods.list().all; // get list of all mods
 		for (let i = 0; i < modlist.length; i++) { // run through list
-			mods.toggle(modlist[i].Name, true); // enable mod
+			mods.toggle(modlist[i].name, true); // enable mod
 		}
 
 		console.log(lang("cli.mods.toggledall"));

@@ -3,7 +3,12 @@ const path = require("path");
 const { app, ipcRenderer, shell } = require("electron");
 
 const lang = require("../lang");
-var modsobj = {};
+var modsobj = {
+	all: [],
+	enabled: [],
+	disabled: []
+}
+
 let shouldInstallNorthstar = false;
 
 // Base settings
@@ -212,11 +217,11 @@ function installFromURL(url, dependencies, clearqueue, author) {
 function isModInstalled(modname) {
 	for (let i = 0; i < modsobj.all.length; i++) {
 		let mod = modsobj.all[i];
-		if (mod.ManifestName) {
-			if (mod.ManifestName.match(modname)) {
+		if (mod.manifest_name) {
+			if (mod.manifest_name.match(modname)) {
 				return true;
 			}
-		} else if (mod.Name.match(modname)) {
+		} else if (mod.name.match(modname)) {
 			return true;
 		}
 	}

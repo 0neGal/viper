@@ -133,9 +133,9 @@ var Browser = {
 				for (let ii = 0; ii < modsobj.all.length; ii++) {
 					let mod = modsobj.all[ii];
 
-					if (normalize(mod.Name) === normalized) {
-						local_name = mod.Name;
-						local_version = version.format(mod.Version);
+					if (normalize(mod.name) === normalized) {
+						local_name = mod.name;
+						local_version = version.format(mod.version);
 						if (version.is_newer(remote_version, local_version)) {
 							has_update = true;
 						}
@@ -270,13 +270,13 @@ var Browser = {
 
 			setTimeout(() => {
 				for (let i = 0; i < modsobj.all.length; i++) {
-					let modname = normalize(modsobj.all[i].Name);
-					let modfolder = normalize(modsobj.all[i].FolderName);
+					let modname = normalize(modsobj.all[i].name);
+					let modfolder = normalize(modsobj.all[i].folder_name);
 
 					if (mod.includes(modname)) {
 						if (! make(modname)) {
-							if (modsobj.all[i].ManifestName) {
-								make(normalize(modsobj.all[i].ManifestName));
+							if (modsobj.all[i].manifest_name) {
+								make(normalize(modsobj.all[i].manifest_name));
 							}
 						}
 					}
@@ -386,7 +386,7 @@ function BrowserEl(properties) {
 	let normalized_mods = [];
 
 	for (let i = 0; i < modsobj.all; i++) {
-		normalized_mods.push(normalize(mods_list[i].Name));
+		normalized_mods.push(normalize(mods_list[i].name));
 	}
 
 	if (properties.pkg.local_version) {
@@ -445,8 +445,8 @@ function add_recent_toast(name, timeout = 3000) {
 ipcRenderer.on("removed-mod", (event, mod) => {
 	setButtons(true);
 	Browser.setbutton(mod.name, lang("gui.browser.install"));
-	if (mod.manifestname) {
-		Browser.setbutton(mod.manifestname, lang("gui.browser.install"));
+	if (mod.manifest_name) {
+		Browser.setbutton(mod.manifest_name, lang("gui.browser.install"));
 	}
 })
 

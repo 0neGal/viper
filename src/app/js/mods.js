@@ -6,13 +6,13 @@ mods.load = (mods_obj) => {
 	let normalized_names = [];
 	
 	let set_mod = (mod) => {
-		let normalized_name = "mod-list-" + normalize(mod.Name);
+		let normalized_name = "mod-list-" + normalize(mod.name);
 
 		normalized_names.push(normalized_name);
 
 		let el = document.getElementById(normalized_name);
 		if (el) {
-			if (mod.Disabled) {
+			if (mod.disabled) {
 				el.querySelector(".switch").classList.remove("on");
 			} else {
 				el.querySelector(".switch").classList.add("on");
@@ -31,30 +31,30 @@ mods.load = (mods_obj) => {
 				<img class="blur" src="">
 			</div>
 			<div class="text">
-				<div class="title">${mod.Name}</div>
-				<div class="description">${mod.Description}</div>
+				<div class="title">${mod.name}</div>
+				<div class="description">${mod.description}</div>
 				<button class="switch on orange"></button>
 				<button class="update bg-blue">
 					${lang("gui.browser.update")}
 				</button>
-				<button class="bg-red" onclick="mods.remove('${mod.Name}')">
+				<button class="bg-red" onclick="mods.remove('${mod.name}')">
 					${lang("gui.mods.remove")}
 				</button>
 
-				<button class="visual">${version.format(mod.Version)}</button>
+				<button class="visual">${version.format(mod.version)}</button>
 				<button class="visual">
 					${lang("gui.browser.madeby")}
-					${mod.Author || lang("gui.mods.unknown_author")}
+					${mod.author || lang("gui.mods.unknown_author")}
 				</button>
 			</div>
 		`;
 
-		if (mod.Disabled) {
+		if (mod.disabled) {
 			div.querySelector(".switch").classList.remove("on");
 		}
 
 		div.querySelector(".switch").addEventListener("click", () => {
-			mods.toggle(mod.Name);
+			mods.toggle(mod.name);
 		})
 
 		div.querySelector(".image").style.display = "none";

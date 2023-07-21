@@ -217,8 +217,8 @@ packages.install = async (url, author, package_name, version) => {
 	for (let i = 0; i < mods_list.length; i++) {
 		let mod = mods_list[i];
 
-		if (mod.ManifestName == package_name) {
-			mods.remove(mod.Name);
+		if (mod.manifest_name == package_name) {
+			mods.remove(mod.name);
 			continue;
 		}
 	}
