@@ -1,7 +1,7 @@
 const path = require("path");
 const fs = require("fs-extra");
 const unzip = require("unzipper");
-const app = require("electron").app;
+const { app, ipcMain } = require("electron");
 const https = require("follow-redirects").https;
 
 const json = require("./json");
@@ -203,6 +203,8 @@ packages.install = async (url, author, package_name, version) => {
 			}
 			break;
 		default:
+			ipcMain.emit("failed-mod", name);
+
 			// other unhandled error
 			return console.log(
 				"Verification of package failed:", name,
@@ -233,9 +235,15 @@ packages.install = async (url, author, package_name, version) => {
 	let moved = packages.move(package_path);
 
 	if (! moved) {
+		ipcMain.emit("failed-mod", name);
 		console.log("Moving package failed:", name);
 		return false;
 	}
+
+	ipcMain.emit("installed-mod", "", {
+		name: name,
+		fancy_name: package_name
+	})
 
 	console.log("Installed package:", name);
 	return true;

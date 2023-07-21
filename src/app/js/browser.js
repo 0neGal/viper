@@ -115,7 +115,11 @@ var Browser = {
 		return installFromURL(
 			package_obj.download || package_obj.versions[0].download_url,
 			package_obj.dependencies || package_obj.versions[0].dependencies,
-			clear_queue, package_obj.owner
+			clear_queue,
+
+			package_obj.author || package_obj.owner,
+			package_obj.name || package_obj.pkg.name,
+			package_obj.version || package_obj.versions[0].version_number
 		)
 	},
 	add_pkg_properties: () => {
@@ -463,7 +467,7 @@ ipcRenderer.on("failed-mod", (event, modname) => {
 	})
 })
 
-ipcRenderer.on("duped-mod", (event, modname) => {
+ipcRenderer.on("legacy-duped-mod", (event, modname) => {
 	if (recent_toasts["duped" + modname]) {return}
 	add_recent_toast("duped" + modname);
 
@@ -490,28 +494,30 @@ ipcRenderer.on("installed-mod", (event, mod) => {
 	if (recent_toasts["installed" + mod.name]) {return}
 	add_recent_toast("installed" + mod.name);
 
+	let name = mod.fancy_name || mod.name;
+
 	setButtons(true);
-	Browser.setbutton(mod.name, lang("gui.browser.reinstall"));
+	Browser.setbutton(name, lang("gui.browser.reinstall"));
 
 	if (mod.malformed) {
 		new Toast({
 			timeout: 8000,
 			scheme: "warning",
 			title: lang("gui.toast.title.malformed"),
-			description: mod.name + " " + lang("gui.toast.desc.malformed")
+			description: name + " " + lang("gui.toast.desc.malformed")
 		})
 	}
 
 	new Toast({
 		scheme: "success",
 		title: lang("gui.toast.title.installed"),
-		description: mod.name + " " + lang("gui.toast.desc.installed")
+		description: name + " " + lang("gui.toast.desc.installed")
 	})
 
 	if (installqueue.length != 0) {
 		installFromURL(
 			"https://thunderstore.io/package/download/" + installqueue[0].pkg,
-			false, false, installqueue[0].author
+			false, false, installqueue[0].author, installqueue[0].package_name, installqueue[0].version
 		)
 
 		installqueue.shift();

@@ -173,7 +173,7 @@ function installFromPath(path) {
 }
 
 // Tells the main process to install a mod from a URL
-function installFromURL(url, dependencies, clearqueue, author) {
+function installFromURL(url, dependencies, clearqueue, author, package_name, version) {
 	if (clearqueue) {installqueue = []};
 
 	let prettydepends = [];
@@ -188,7 +188,9 @@ function installFromURL(url, dependencies, clearqueue, author) {
 				if (! isModInstalled(pkg[1])) {
 					newdepends.push({
 						pkg: depend,
-						author: pkg[0]
+						author: pkg[0],
+						version: pkg[2],
+						package_name: pkg[1]
 					});
 
 					prettydepends.push(`${pkg[1]} v${pkg[2]} - ${lang("gui.browser.madeby")} ${pkg[0]}`);
@@ -207,7 +209,7 @@ function installFromURL(url, dependencies, clearqueue, author) {
 	}
 
 	setButtons(false);
-	ipcRenderer.send("install-from-url", url, author);
+	ipcRenderer.send("install-from-url", url, author, package_name, version);
 
 	if (dependencies) {
 		installqueue = dependencies;

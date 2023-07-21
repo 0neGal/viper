@@ -19,9 +19,9 @@ const version = require("./modules/version");
 const gamepath = require("./modules/gamepath");
 const settings = require("./modules/settings");
 const requests = require("./modules/requests");
+const packages = require("./modules/packages");
 const is_running = require("./modules/is_running");
 
-const plugins = require("./modules/packages");
 
 var log = console.log;
 
@@ -113,7 +113,9 @@ function start() {
 
 	// install calls
 	ipcMain.on("install-from-path", (event, path) => {mods.install(path)});
-	ipcMain.on("install-from-url", (event, url, author) => {mods.installFromURL(url, author)});
+	ipcMain.on("install-from-url", (event, url, author, package_name, version) => {
+		packages.install(url, author, package_name, version);
+	});
 
 	win.webContents.on("dom-ready", () => {
 		send("mods", mods.list());
