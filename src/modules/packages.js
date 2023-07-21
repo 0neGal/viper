@@ -46,7 +46,7 @@ packages.split_name = (name) => {
 	}
 }
 
-packages.list = (dir = packages.path) => {
+packages.list = (dir = packages.path, no_functions) => {
 	let files = fs.readdirSync(dir);
 	let package_list = {};
 
@@ -93,13 +93,16 @@ packages.list = (dir = packages.path) => {
 					package_list[files[i]].has_mods = true;
 				}
 
-				// add `.remove()` function, mostly just a shorthand
-				package_list[files[i]].remove = () => {
-					return packages.remove(
-						split_name.author,
-						split_name.package_name,
-						split_name.version,
-					)
+				// add `.remove()` function, mostly just a shorthand,
+				// unless `no_functions` is `true`
+				if (! no_functions) {
+					package_list[files[i]].remove = () => {
+						return packages.remove(
+							split_name.author,
+							split_name.package_name,
+							split_name.version,
+						)
+					}
 				}
 
 				// set the `.icon` property

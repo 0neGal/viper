@@ -83,29 +83,6 @@ mods.list = () => {
 				package: package_obj || false
 			}
 
-			// Electron's serializer for
-			// BrowserWindow.webContents.send() is quite broken, and for
-			// some reason cant serialize the output when `package_obj`
-			// is anywhere inside, trying to find a solution I
-			// discovered that simply `JSON.stringify()`'ing
-			// `package_obj` does let it be able to be parsed in
-			// `index.js` however, of course now it is a string.
-			//
-			// wanting to not have to add extra code to the renderer
-			// just to fix this, I had to try and look for a better
-			// solution, and apparently this just somehow works, I have
-			// literally 0% fucking clue why or how it works and fixes
-			// it, but I will quite frankly not complain.
-			//
-			// whether `obj` has been serialized here or not, the actual
-			// output is the exact same, but somehow Electron just cant
-			// handle sending it to the renderer, failing to serialize
-			// it, by itself...
-			//
-			// anyway, you can move along now. :')
-			obj = JSON.stringify(obj);
-			obj = JSON.parse(obj);
-
 			if (obj.package) {
 				obj.author = obj.package.author;
 			}
@@ -143,7 +120,8 @@ mods.list = () => {
 	get_in_dir(mods.path);
 
 	// get mods in `packages` folder
-	let package_list = require("./packages").list();
+	let packages = require("./packages");
+	let package_list = require("./packages").list(packages.path, true);
 	for (let i in package_list) {
 		// make sure the package actually has mods
 		if (! package_list[i].has_mods) {
@@ -571,17 +549,25 @@ mods.remove = (mod) => {
 		return
 	}
 
-	let mod_name = mods.get(mod).folder_name;
+	let mod_data = mods.get(mod);
+	let mod_name = mod_data.folder_name;
+
 	if (! mod_name) {
 		console.log("error: " + lang("cli.mods.cantfind"));
 		cli.exit(1);
 		return;
 	}
 
-	let path_to_mod = path.join(mods.path, mod_name);
+	let mod_path = mod_data.folder_path;
 
-	// return early if path_to_mod isn't a folder
-	if (! fs.statSync(path_to_mod).isDirectory()) {
+	// if the mod comes from a package, we'll want to set `mod_path` to
+	// the package's folder, that way everything gets removed cleanly
+	if (mod_data.package) {
+		mod_path = mod_data.package.package_path;
+	}
+
+	// return early if `mod_path` isn't a folder
+	if (! fs.statSync(mod_path).isDirectory()) {
 		return cli.exit(1);
 	}
 
@@ -589,12 +575,12 @@ mods.remove = (mod) => {
 
 	// if the mod has a manifest.json we want to save it now so we can
 	// send it later when telling the renderer about the deleted mod
-	if (fs.existsSync(path.join(path_to_mod, "manifest.json"))) {
-		manifest_name = require(path.join(path_to_mod, "manifest.json")).name;
+	if (fs.existsSync(path.join(mod_path, "manifest.json"))) {
+		manifest_name = require(path.join(mod_path, "manifest.json")).name;
 	}
 
 	// actually remove the mod itself
-	fs.rmSync(path_to_mod, {recursive: true});
+	fs.rmSync(mod_path, {recursive: true});
 
 	console.log(lang("cli.mods.removed"));
 	cli.exit();
