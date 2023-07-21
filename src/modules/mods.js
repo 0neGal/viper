@@ -54,7 +54,9 @@ mods.list = () => {
 	}
 
 	let get_in_dir = (dir, package_obj) => {
+		let packaged_mods = [];
 		let files = fs.readdirSync(dir);
+
 		files.forEach((file) => {
 			// return early if `file` isn't a folder
 			if (! fs.statSync(path.join(dir, file)).isDirectory()) {
@@ -84,6 +86,7 @@ mods.list = () => {
 			}
 
 			if (obj.package) {
+				packaged_mods.push(obj.name);
 				obj.author = obj.package.author;
 			}
 
@@ -114,6 +117,27 @@ mods.list = () => {
 				enabled.push(obj);
 			}
 		})
+
+		if (packaged_mods.length == 0) {
+			return;
+		}
+
+		let add_packaged_mods = (mods_array) => {
+			for (let i = 0; i < mods_array.length; i++) {
+				if (mods_array[i].package.package_name !==
+					package_obj.package_name) {
+
+					continue;
+				}
+
+				mods_array[i].packaged_mods = packaged_mods;
+			}
+
+			return mods_array;
+		}
+
+		enabled = add_packaged_mods(enabled);
+		disbled = add_packaged_mods(disabled);
 	}
 
 	// get mods in `mods` folder

@@ -6,7 +6,12 @@ mods.load = (mods_obj) => {
 	let normalized_names = [];
 	
 	let set_mod = (mod) => {
-		let normalized_name = "mod-list-" + normalize(mod.name);
+		let name = mod.name;
+		if (mod.package) {
+			name = mod.package.package_name;
+		}
+
+		let normalized_name = "mod-list-" + normalize(name);
 
 		normalized_names.push(normalized_name);
 
@@ -25,23 +30,38 @@ mods.load = (mods_obj) => {
 		div.classList.add("el");
 		div.id = normalized_name;
 
+		let mod_details = {
+			name: mod.name,
+			version: mod.version,
+			description: mod.description
+		}
+
+		if (mod.package) {
+			mod_details = {
+				image: mod.package.icon,
+				name: mod.package.manifest.name,
+				version: mod.package.manifest.version_number,
+				description: mod.package.manifest.description
+			}
+		}
+
 		div.innerHTML += `
 			<div class="image">
-				<img src="">
+				<img src="${mod_details.image || ""}">
 				<img class="blur" src="">
 			</div>
 			<div class="text">
-				<div class="title">${mod.name}</div>
-				<div class="description">${mod.description}</div>
+				<div class="title">${mod_details.name}</div>
+				<div class="description">${mod_details.description}</div>
 				<button class="switch on orange"></button>
 				<button class="update bg-blue">
 					${lang("gui.browser.update")}
 				</button>
-				<button class="bg-red" onclick="mods.remove('${mod.name}')">
+				<button class="bg-red remove">
 					${lang("gui.mods.remove")}
 				</button>
 
-				<button class="visual">${version.format(mod.version)}</button>
+				<button class="visual">${version.format(mod_details.version)}</button>
 				<button class="visual">
 					${lang("gui.browser.madeby")}
 					${mod.author || lang("gui.mods.unknown_author")}
@@ -49,12 +69,28 @@ mods.load = (mods_obj) => {
 			</div>
 		`;
 
+		div.querySelector(".remove").addEventListener("click", () => {
+			if (! mod.package) {
+				return mods.remove(mod.name);
+			}
+
+			for (let i = 0; i < mod.packaged_mods.length; i++) {
+				mods.remove(mod.packaged_mods[i]);
+			}
+		})
+
 		if (mod.disabled) {
 			div.querySelector(".switch").classList.remove("on");
 		}
 
 		div.querySelector(".switch").addEventListener("click", () => {
-			mods.toggle(mod.name);
+			if (! mod.package) {
+				return mods.toggle(mod.name);
+			}
+
+			for (let i = 0; i < mod.packaged_mods.length; i++) {
+				mods.toggle(mod.packaged_mods[i]);
+			}
 		})
 
 		div.querySelector(".image").style.display = "none";
@@ -87,20 +123,24 @@ mods.load = (mods_obj) => {
 			return;
 		}
 
+
+		let image_container = mod_els[i].querySelector(".image");
+		let image_el = image_container.querySelector("img")
+		let image_blur_el = image_container.querySelector("img.blur")
+
 		if (mod_versions[mod]) {
-			let image_url = mod_versions[mod].package.versions[0].icon;
+			image_el.src = mod_versions[mod].package.versions[0].icon;
+		}
 
-			let image_container = mod_els[i].querySelector(".image");
-			let image_el = image_container.querySelector("img")
-			let image_blur_el = image_container.querySelector("img.blur")
+		if (image_el.getAttribute("src") &&
+			! image_container.parentElement.classList.contains("has-icon")) {
 
-			if (image_url && ! image_el.getAttribute("src")) {
-				image_container.style.display = null;
-				image_el.src = image_url;
-				image_blur_el.src = image_url;
+			let image_src = image_el.getAttribute("src");
 
-				image_container.parentElement.classList.add("has-icon");
-			}
+			image_blur_el.src = image_src;
+			image_container.style.display = null;
+
+			image_container.parentElement.classList.add("has-icon");
 		}
 
 		if (mod_versions[mod]
