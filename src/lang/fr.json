@@ -69,6 +69,8 @@
 	"gui.mods.installedmod": "Mod installé !",
 	"gui.mods.dragdrop": "Glissez/déposez un mod pour l'installer",
 	"gui.mods.confirmdependencies": "Ce mod a des dépendances (affichées ci-dessous), cliquer \"Ok\" les installera en même temps que le mod.\n\n",
+	"gui.mods.confirm_plugins_title": "Ce mod contient des plugins :",
+	"gui.mods.confirm_plugins_description": "Les plugins ont des accès à votre système, comparés aux mods classiques, et sont de fait plus dangereux à l'installation, comme pourrait l'être un plugin contenant un malware. Si ce plugin provient d'un tiers de confiance ou si vous savez ce que vous faites, ne tenez pas compte de ce message.",
 
 	"gui.browser.info": "Info",
 	"gui.browser.view": "Voir",
