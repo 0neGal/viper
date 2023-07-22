@@ -4,7 +4,11 @@ body {
 	background-color: transparent !important;
 }
 
+.footer,
 #ncmp_tool,
+.bottom-ads,
+.ncmp__banner,
+#get-app-alert,
 .navbar, .bottom-padding,
 .card-header, .breadcrumb,
 .list-group, .mb-4, .my-2, .mt-2,
