@@ -6,6 +6,8 @@ const { app } = require("electron");
 const util = require("util");
 const exec = util.promisify(require("child_process").exec);
 
+console = require("./console");
+
 module.exports = async () => {
 	let gamepath = "";
 	
@@ -40,10 +42,10 @@ module.exports = async () => {
 			let data_array = Object.values(values[i]);
 			
 			if (fs.existsSync(data_array[0] + "/steamapps/common/Titanfall2/Titanfall2.exe")) {
-				console.log("Found game in:", data_array[0]);
+				console.ok("Found game in:", data_array[0]);
 				return data_array[0] + "/steamapps/common/Titanfall2";
 			} else {
-				console.log("Game not in:", data_array[0]);
+				console.error("Game not in:", data_array[0]);
 			}
 		}
 	}
@@ -70,7 +72,7 @@ module.exports = async () => {
 	// searches VDF files
 	for (let i = 0; i < vdf_files.length; i++) {
 		if (! fs.existsSync(vdf_files[i])) {continue}
-		console.log("Searching VDF file at:", vdf_files[i]);
+		console.info("Searching VDF file at:", vdf_files[i]);
 
 		let data = fs.readFileSync(vdf_files[i]);
 		let read_vdf = readvdf(data.toString());

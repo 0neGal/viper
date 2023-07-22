@@ -7,6 +7,7 @@ const events = new Emitter();
 const cli = app.commandLine;
 const lang = require("./lang");
 const json = require("./modules/json");
+console = require("./modules/console");
 
 function hasArgs() {
 	// Makes sure the GUI isn't launched.
