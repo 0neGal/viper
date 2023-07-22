@@ -170,12 +170,12 @@
 	"request.viper.noReleaseNotes": "Impossible de récupérer les notes de mises à jour de Viper.\nVeuillez réessayer plus tard.",
 	"request.northstar.noReleaseNotes": "Impossible de récupérer les notes de mises à jour de Northstar.\nVeuillez réessayer plus tard.",
 
-	"general.running": "",
+	"general.running": "En cours d'exécution",
 
-	"tooltip.close": "",
-	"tooltip.minimize": "",
-	"tooltip.settings": "",
-	"tooltip.pages.viper": "",
-	"tooltip.pages.northstar": "",
-	"tooltip.pages.titanfall": ""
+	"tooltip.close": "Fermer Viper",
+	"tooltip.minimize": "Réduire Viper",
+	"tooltip.settings": "Paramètres",
+	"tooltip.pages.viper": "Viper",
+	"tooltip.pages.northstar": "Northstar",
+	"tooltip.pages.titanfall": "Titanfall 2"
 }
