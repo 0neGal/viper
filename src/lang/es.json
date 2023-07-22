@@ -170,12 +170,12 @@
 	"request.viper.noReleaseNotes": "No se pudo encontrar las notas de lanzamiento de Viper.\n¡Intenta mas tarde!",
 	"request.northstar.noReleaseNotes": "No se pudo encontrar las notas de lanzamiento de Northstar.\n¡Intenta mas tarde!",
 
-	"general.running": "",
+	"general.running": "Ejecutandose",
 
-	"tooltip.close": "",
-	"tooltip.minimize": "",
-	"tooltip.settings": "",
-	"tooltip.pages.viper": "",
-	"tooltip.pages.northstar": "",
-	"tooltip.pages.titanfall": ""
+	"tooltip.close": "Cerrar Viper",
+	"tooltip.minimize": "Minimizar Viper",
+	"tooltip.settings": "Configuraciones",
+	"tooltip.pages.viper": "Viper",
+	"tooltip.pages.northstar": "Northstar",
+	"tooltip.pages.titanfall": "Titanfall 2"
 }
