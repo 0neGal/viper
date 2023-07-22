@@ -183,17 +183,8 @@ packages.install = async (url, author, package_name, version) => {
 			// user, and make absolutely certain that they do want to
 			// install this package, as plugins have security concerns
 			let confirmation = await win.confirm(
-				`The following package has native plugins: ${name} \n\n`
-
-				+
-
-				"Native plugins have far more system access than a " +
-				"regular mod, and because of this they're inherently " +
-				"less secure to have installed, as a malicious plugin" +
-				" could do far more harm this way. If this plugin is " +
-				"one from a trusted developer or similar or you know " +
-				"what you're doing, then you can disregard this " +
-				"message completely."
+				`${lang("gui.mods.confirm_plugins_title")} ${name} \n\n` +
+				lang("gui.mods.confirm_plugins_description")
 			)
 
 			// check whether the user cancelled or confirmed the
