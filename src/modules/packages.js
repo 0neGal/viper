@@ -368,6 +368,32 @@ packages.verify = (package_path) => {
 		return "no-mods";
 	}
 
+	// make sure files in the `mods` folder actually are mods, and if
+	// none of them are, then we make sure to return back that are no
+	// mods installed
+	let found_mod = false;
+	let mods = fs.readdirSync(mods_path);
+	for (let i = 0; i < mods.length; i++) {
+		let mod = mods[i];
+		let mod_file = path.join(mod, "mod.json");
+
+		// make sure mod.json exists, and is a file, otherwise, this
+		// is unlikely to be a mod folder
+		if (! fs.existsSync(mod_file)
+			|| ! fs.statSync(mod_file).isFile()) {
+			continue;
+		}
+
+		// attempt to read the mod.json file, and if it succeeds, then
+		// this is likely to be a mod
+		let json_data = json(mod_file);
+		if (json_data) {
+			found_mod = true;
+		}
+	}
+
+	if (! found_mod) {return "no-mods"}
+
 	// all files exist, and everything is just fine
 	return true;
 }
