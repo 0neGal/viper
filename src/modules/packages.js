@@ -240,6 +240,7 @@ packages.install = async (url, author, package_name, version) => {
 	}
 
 	// removes older version of package inside the `packages` folder
+	packages.remove(author, package_name);
 	packages.remove(author, package_name, version);
 
 	console.info("Moving package:", name);
