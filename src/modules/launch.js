@@ -6,6 +6,8 @@ const lang = require("../lang");
 const win = require("./window");
 const settings = require("./settings");
 
+console = require("./console");
+
 // launches the game
 //
 // either Northstar or Vanilla. Linux support is not currently a thing,
@@ -25,11 +27,11 @@ function launch(game_version) {
 	// launch the requested game version
 	switch(game_version) {
 		case "vanilla":
-			console.log(lang("general.launching"), "Vanilla...");
+			console.info(lang("general.launching"), "Vanilla...");
 			exec("Titanfall2.exe", {cwd: settings.gamepath});
 			break;
 		default:
-			console.log(lang("general.launching"), "Northstar...");
+			console.info(lang("general.launching"), "Northstar...");
 			exec("NorthstarLauncher.exe", {cwd: settings.gamepath});
 			break;
 	}

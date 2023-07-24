@@ -21,6 +21,7 @@ const settings = require("./modules/settings");
 const requests = require("./modules/requests");
 const is_running = require("./modules/is_running");
 
+console = require("./modules/console");
 var log = console.log;
 
 // Starts the actual BrowserWindow, which is only run when using the

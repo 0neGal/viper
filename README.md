@@ -37,23 +37,19 @@ Currently Viper is capable of:
  * Auto-Update itself 
  * Be pretty!
 
-Besides this I've been considering adding some easy to use VPK modding tools so everybody can have fun with VPK modding even if you don't know how to do it the traditional way. However that is not at the top of the todo list right now.
+There are of course many other things that it can do, but summed up very simply, that is what Viper is capable of doing. With every update Viper gets more features and alike, often many optional features are also available in the settings menu.
+
 </p>
 
 ## Configuration
 
-All settings take place in the settings page, found in the top right corner of the app, where you can disable auto-updates, and other related settings. You can also manually go in and edit your config file (`viper.json`), if you feel so inclined.
+All settings take place in the settings page, found in the top right corner of the app, where you can change all kinds of settings. You can also manually go in and edit your config file (`viper.json`), if you feel so inclined.
 
 Your configuration file will be found in `%APPDATA%\viper.json` on Windows, and inside either `~/.config` or through your environment variables (`$XDG_CONFIG_HOME`) on Linux, the latter has priority.
 
-## Contact/Support
+## Support
 
-To get support either open a GitHub issue.<br>
-Or if you must you can contact a developer through the methods below:
-
-Ways to contact the main developer: [0neGal](https://github.com/0neGal)
- * Twitter: [@0neGal](https://twitter.com/0neGal)
- * Reddit: [/u/0neGal](https://reddit.com/u/0neGal)
+To get support please [open a GitHub issue](https://github.com/0neGal/viper/issues/new/choose), and clearly describe the problem with as many details as possible.
 
 ### Frequently Asked Questions (FAQ)
 
@@ -61,7 +57,7 @@ Many of the questions and problems you may have might be able to be answered by 
 
 ## Sidenote
 
-Given that we already have so many Northstar updaters and launchers I urge people to instead of creating new launchers unless there's a very specific reason, just make a pull request on one of the existing, otherwise we'll continue to have new ones.
+Given that we already have so many Northstar updaters and launchers I urge people to instead of creating new launchers unless there's a very specific reason, just make a pull request on one of the existing ones, otherwise we'll continue to have new ones.
 
 <p align="center">
 	Relevant xkcd:<br>
@@ -79,7 +75,7 @@ Some of the existing launchers are listed below:
 
 ## Development
 
-If you wanna edit Viper's code and run it and so on, you can simply do something along the lines of the below:
+If you wanna edit Viper's code, run it, and so on, you can simply do something along the lines of the below:
 
 ```sh
 $ git clone https://github.com/0neGal/viper
@@ -99,7 +95,7 @@ Additionally, if you're creating your own fork you easily publish builds and or 
 $ GH_TOKEN="<your very long, private and wonderful token>" npm run publish
 ```
 
-Keep in mind building all Linux builds may take a while on some systems as packaging the `tar.gz` release can take a while on many CPU's, at least from my testing. All other builds should be done quickly. When using the `publish` command it also automatically uploads the needed files to deploy auto-updates, keep in mind you'd need to have the `repository` setting changed to your new fork's location, otherwise it'll fetch from the original.
+Keep in mind building all Linux builds may take a while on some systems, as packaging the `tar.gz` release can take a while on many CPUs, at least from my testing. All other builds should be done quickly. When using the `publish` command it also automatically uploads the needed files to deploy auto-updates, keep in mind you'd need to have the `repository` setting changed to your new fork's location, otherwise it'll fetch from the original.
 
 ## Credits
 

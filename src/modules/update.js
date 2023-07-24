@@ -12,6 +12,8 @@ const requests = require("./requests");
 const gamepath = require("./gamepath");
 const is_running = require("./is_running");
 
+console = require("./console");
+
 const unzip = require("unzipper");
 const { https } = require("follow-redirects");
 
@@ -57,23 +59,23 @@ update.northstar_autoupdate = () => {
 	async function _checkForUpdates() {
 		is_auto_updating = true;
 
-		console.log(lang("cli.autoupdates.checking"));
+		console.info(lang("cli.autoupdates.checking"));
 
 		// checks if NS is outdated
 		if (await northstar_update_available()) {
-			console.log(lang("cli.autoupdates.available"));
+			console.ok(lang("cli.autoupdates.available"));
 			if (await is_running.game()) {
-				console.log(lang("general.autoupdates.gamerunning"));
+				console.error(lang("general.autoupdates.gamerunning"));
 				new Notification({
 					title: lang("gui.nsupdate.gaming.title"),
 					body: lang("gui.nsupdate.gaming.body")
 				}).show();
 			} else {
-				console.log(lang("cli.autoupdates.updatingns"));
+				console.status(lang("cli.autoupdates.updatingns"));
 				update.northstar();
 			}
 		} else {
-			console.log(lang("cli.autoupdates.noupdate"));
+			console.info(lang("cli.autoupdates.noupdate"));
 		}
 
 		setTimeout(
@@ -150,14 +152,14 @@ update.viper = (autoinstall) => {
 // unzip module does not support excluding files directly.
 update.northstar = async () => {
 	if (await is_running.game()) {
-		console.log(lang("general.autoupdates.gamerunning"));
+		console.error(lang("general.autoupdates.gamerunning"));
 		return false;
 	}
 
 	if (! gamepath.exists()) {return}
 
 	ipcMain.emit("ns-update-event", "cli.update.checking");
-	console.log(lang("cli.update.checking"));
+	console.info(lang("cli.update.checking"));
 	let ns_version = version.northstar();
 
 	const latest_version = await requests.getLatestNsVersion();
@@ -170,14 +172,14 @@ update.northstar = async () => {
 	// Makes sure it is not already the latest version
 	if (! await northstar_update_available()) {
 		ipcMain.emit("ns-update-event", "cli.update.uptodate.short");
-		console.log(lang("cli.update.uptodate"), ns_version);
+		console.ok(lang("cli.update.uptodate"), ns_version);
 
 		win.log(lang("gui.update.uptodate"));
 		cli.exit();
 		return;
 	} else {
 		if (ns_version != "unknown") {
-			console.log(lang("cli.update.current"), ns_version);
+			console.info(lang("cli.update.current"), ns_version);
 		};
 	}
 
@@ -188,11 +190,11 @@ update.northstar = async () => {
 		// cancel out if zip can't be retrieved and or found
 		if (res.statusCode !== 200) {
 			ipcMain.emit("ns-update-event", "cli.update.uptodate.short");
-			console.log(lang("cli.update.uptodate"), ns_version);
+			console.ok(lang("cli.update.uptodate"), ns_version);
 			return false;
 		}
 
-		console.log(lang("cli.update.downloading") + ":", latest_version);
+		console.info(lang("cli.update.downloading") + ":", latest_version);
 		ipcMain.emit("ns-update-event", "cli.update.downloading");
 
 		let tmp = path.dirname(settings.zip);
@@ -225,7 +227,7 @@ update.northstar = async () => {
 
 			win.log(lang("gui.update.extracting"));
 			ipcMain.emit("ns-update-event", "gui.update.extracting");
-			console.log(lang("cli.update.downloaddone"));
+			console.ok(lang("cli.update.downloaddone"));
 			// extracts the zip, this is the part where we're actually
 			// installing Northstar.
 			extract.pipe(unzip.Extract({path: settings.gamepath}))
@@ -249,7 +251,7 @@ update.northstar = async () => {
 				ipcMain.emit("get-version");
 				ipcMain.emit("ns-update-event", "cli.update.uptodate.short");
 				win.log(lang("gui.update.finished"));
-				console.log(lang("cli.update.finished"));
+				console.ok(lang("cli.update.finished"));
 				cli.exit();
 			})
 		})
