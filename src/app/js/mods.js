@@ -69,7 +69,7 @@ mods.load = (mods_obj) => {
 			</div>
 		`;
 
-		div.querySelector(".remove").addEventListener("click", () => {
+		div.querySelector(".remove").onclick = () => {
 			if (! mod.package) {
 				return mods.remove(mod.name);
 			}
@@ -77,7 +77,7 @@ mods.load = (mods_obj) => {
 			for (let i = 0; i < mod.packaged_mods.length; i++) {
 				mods.remove(mod.packaged_mods[i]);
 			}
-		})
+		}
 
 		if (mod.disabled) {
 			div.querySelector(".switch").classList.remove("on");
@@ -123,7 +123,6 @@ mods.load = (mods_obj) => {
 			return;
 		}
 
-
 		let image_container = mod_els[i].querySelector(".image");
 		let image_el = image_container.querySelector("img")
 		let image_blur_el = image_container.querySelector("img.blur")
@@ -157,6 +156,10 @@ mods.load = (mods_obj) => {
 			}
 
 			let mod_el = mod_els[i].cloneNode(true);
+
+			// copy click event of the remove button to the new button
+			mod_el.querySelector(".remove").onclick =
+				mod_els[i].querySelector(".remove").onclick;
 
 			mod_el.classList.add("no-animation");
 
