@@ -168,5 +168,14 @@
 	"general.invalidconfig": "Su archivo de configuración está formateado de forma incorrecta, si ha sido editado manualmente, por favor valide que ha sido escrito correctamente. \n\nSi no ha editado manualmente el archivo de configuración, es recomendado que simplemente restaure la configuración. \n\nPara restaurar tu configuración simplemente de click en \"OK\" a continuación. \n\nMas detalles:\n",
 
 	"request.viper.noReleaseNotes": "No se pudo encontrar las notas de lanzamiento de Viper.\n¡Intenta mas tarde!",
-	"request.northstar.noReleaseNotes": "No se pudo encontrar las notas de lanzamiento de Northstar.\n¡Intenta mas tarde!"
+	"request.northstar.noReleaseNotes": "No se pudo encontrar las notas de lanzamiento de Northstar.\n¡Intenta mas tarde!",
+
+	"general.running": "Ejecutandose",
+
+	"tooltip.close": "Cerrar Viper",
+	"tooltip.minimize": "Minimizar Viper",
+	"tooltip.settings": "Configuraciones",
+	"tooltip.pages.viper": "Viper",
+	"tooltip.pages.northstar": "Northstar",
+	"tooltip.pages.titanfall": "Titanfall 2"
 }

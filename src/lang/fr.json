@@ -168,5 +168,14 @@
 	"general.invalidconfig": "Votre fichier de configuration n'est pas formaté correctement ; si vous l'avez manuellement édité, veuillez vérifier son contenu.\n\nSinon, il est recommandé de remettre la configuration à zéro.\n\nPour cela, cliquez sur le bouton \"Ok\" en-dessous de ce message.\n\nPlus d'informations :\n",
 
 	"request.viper.noReleaseNotes": "Impossible de récupérer les notes de mises à jour de Viper.\nVeuillez réessayer plus tard.",
-	"request.northstar.noReleaseNotes": "Impossible de récupérer les notes de mises à jour de Northstar.\nVeuillez réessayer plus tard."
+	"request.northstar.noReleaseNotes": "Impossible de récupérer les notes de mises à jour de Northstar.\nVeuillez réessayer plus tard.",
+
+	"general.running": "En cours d'exécution",
+
+	"tooltip.close": "Fermer Viper",
+	"tooltip.minimize": "Réduire Viper",
+	"tooltip.settings": "Paramètres",
+	"tooltip.pages.viper": "Viper",
+	"tooltip.pages.northstar": "Northstar",
+	"tooltip.pages.titanfall": "Titanfall 2"
 }
