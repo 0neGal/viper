@@ -602,7 +602,7 @@ mods.remove = (mod) => {
 	// if the mod has a manifest.json we want to save it now so we can
 	// send it later when telling the renderer about the deleted mod
 	if (fs.existsSync(path.join(mod_path, "manifest.json"))) {
-		manifest_name = require(path.join(mod_path, "manifest.json")).name;
+		manifest_name = json(path.join(mod_path, "manifest.json")).name;
 	}
 
 	// actually remove the mod itself
