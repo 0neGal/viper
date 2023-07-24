@@ -4,6 +4,8 @@ const unzip = require("unzipper");
 const { app, ipcMain } = require("electron");
 const https = require("follow-redirects").https;
 
+const lang = require("../lang");
+
 const json = require("./json");
 const win = require("./window");
 const settings = require("./settings");
