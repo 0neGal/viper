@@ -69,6 +69,10 @@ mods.load = (mods_obj) => {
 			</div>
 		`;
 
+		if (mod_details.name.match(/^Northstar\..*/)) {
+			div.querySelector("img").src = "icons/northstar.png"
+		}
+
 		div.querySelector(".remove").onclick = () => {
 			if (! mod.package) {
 				return mods.remove(mod.name);
