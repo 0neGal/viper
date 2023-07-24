@@ -29,7 +29,7 @@
 	"cli.autoupdates.updatingns": "Lancement de la mise à jour...",
 	"cli.autoupdates.noupdate": "Pas de mise à jour de Northstar disponible.",
 
-	"cli.launch.linuxerror": "Le support du jeu sur Linux n'est pas encore implémenté.",
+	"cli.launch.platformerror": "Le support du jeu sur %s n'est pas encore implémenté.",
 
 	"cli.gamepath.lost": "Dossier de jeu non trouvé, veuillez vérifier qu'il est bien accessible !",
 

@@ -29,7 +29,7 @@
 	"cli.autoupdates.updatingns": "Launching update process...",
 	"cli.autoupdates.noupdate": "No Northstar update available.",
 
-	"cli.launch.linuxerror": "Launching the game is not currently supported on Linux",
+	"cli.launch.platformerror": "Launching the game is not currently supported on %s.",
 
 	"cli.gamepath.lost": "Gamepath not found, make sure it's mounted!",
 

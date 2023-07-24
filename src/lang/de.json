@@ -29,7 +29,7 @@
 	"cli.autoupdates.updatingns": "Updateprozess wird gestartet...",
 	"cli.autoupdates.noupdate": "Kein Update für Northstar vorhanden.",
 
-	"cli.launch.linuxerror": "Das Spiel starten ist derzeit nicht auf Linux unterstützt",
+	"cli.launch.platformerror": "Das Spiel starten ist derzeit nicht auf %s unterstützt",
 
 	"cli.gamepath.lost": "Installationspfad wurde nicht gefunden, bitte stelle sicher das er gemountet ist!",
 

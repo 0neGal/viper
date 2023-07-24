@@ -31,7 +31,7 @@
 	"cli.autoupdates.updatingns": "Lanzando proceso de actualización...",
 	"cli.autoupdates.noupdate": "No hay actualizaciones de Northstar disponibles.",
 
-	"cli.launch.linuxerror": "La ejecución del juego en Linux aun no está implementada",
+	"cli.launch.platformerror": "La ejecución del juego en %s aun no está implementada",
 
 	"cli.mods.failed": "¡Fallo al instalar el mod!",
 	"cli.mods.removed": "¡Modificación removida exitosamente!",

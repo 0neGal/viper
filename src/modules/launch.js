@@ -14,9 +14,9 @@ console = require("./console");
 // however it'll be added at some point.
 function launch(game_version) {
 	// return early, and show error message if on Linux
-	if (process.platform == "linux") {
-		win.alert(lang("cli.launch.linuxerror"));
-		console.error("error:", lang("cli.launch.linuxerror"));
+	if (process.platform != "win32") {
+		win.alert(lang("cli.launch.platformerror").replace("%s", process.platform));
+		console.error("error:", lang("cli.launch.platformerror").replace("%s", process.platform));
 		cli.exit(1);
 		return;
 	}
