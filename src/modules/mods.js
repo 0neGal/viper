@@ -10,6 +10,8 @@ const win = require("./window");
 const version = require("./version");
 const settings = require("./settings");
 
+console = require("./console");
+
 const cli = require("../cli");
 const lang = require("../lang");
 
@@ -33,7 +35,7 @@ mods.list = () => {
 	// make sure Northstar is actually installed
 	if (version.northstar() == "unknown") {
 		win.log(lang("general.notinstalled"));
-		console.log("error: " + lang("general.notinstalled"));
+		console.error("error: " + lang("general.notinstalled"));
 		cli.exit(1);
 		return false;
 	}
@@ -178,7 +180,7 @@ mods.get = (mod) => {
 	// make sure Northstar is actually installed
 	if (version.northstar() == "unknown") {
 		win.log(lang("general.notinstalled"));
-		console.log("error: " + lang("general.notinstalled"));
+		console.error("error: " + lang("general.notinstalled"));
 		cli.exit(1);
 		return false;
 	}
@@ -312,20 +314,20 @@ mods.install = (mod, opts) => {
 
 	if (version.northstar() == "unknown") {
 		win.log(lang("general.notinstalled"));
-		console.log("error: " + lang("general.notinstalled"));
+		console.error("error: " + lang("general.notinstalled"));
 		cli.exit(1);
 		return false;
 	}
 
 	let notamod = () => {
 		win.log(lang("gui.mods.notamod"));
-		console.log("error: " + lang("cli.mods.notamod"));
+		console.error("error: " + lang("cli.mods.notamod"));
 		cli.exit(1);
 		return false;
 	}
 
 	let installed = () => {
-		console.log(lang("cli.mods.installed"));
+		console.ok(lang("cli.mods.installed"));
 		cli.exit();
 
 		win.log(lang("gui.mods.installedmod"));
@@ -559,7 +561,7 @@ mods.remove = (mod) => {
 	// make sure Northstar is actually installed
 	if (version.northstar() == "unknown") {
 		win.log(lang("general.notinstalled"));
-		console.log("error: " + lang("general.notinstalled"));
+		console.error("error: " + lang("general.notinstalled"));
 		cli.exit(1);
 		return false;
 	}
@@ -577,7 +579,7 @@ mods.remove = (mod) => {
 	let mod_name = mod_data.folder_name;
 
 	if (! mod_name) {
-		console.log("error: " + lang("cli.mods.cantfind"));
+		console.error("error: " + lang("cli.mods.cantfind"));
 		cli.exit(1);
 		return;
 	}
@@ -606,7 +608,7 @@ mods.remove = (mod) => {
 	// actually remove the mod itself
 	fs.rmSync(mod_path, {recursive: true});
 
-	console.log(lang("cli.mods.removed"));
+	console.ok(lang("cli.mods.removed"));
 	cli.exit();
 
 	ipcMain.emit("gui-getmods"); // send updated list to renderer
@@ -631,7 +633,7 @@ mods.toggle = (mod, fork) => {
 	// make sure Northstar is actually installed
 	if (version.northstar() == "unknown") {
 		win.log(lang("general.notinstalled"));
-		console.log("error: " + lang("general.notinstalled"));
+		console.error("error: " + lang("general.notinstalled"));
 		cli.exit(1);
 		return false;
 	}
@@ -643,7 +645,7 @@ mods.toggle = (mod, fork) => {
 			mods.toggle(modlist[i].name, true); // enable mod
 		}
 
-		console.log(lang("cli.mods.toggledall"));
+		console.ok(lang("cli.mods.toggledall"));
 		cli.exit(0);
 		return
 	}
@@ -652,7 +654,7 @@ mods.toggle = (mod, fork) => {
 	mods.modfile.toggle(mod);
 
 	if (! fork) {
-		console.log(lang("cli.mods.toggled"));
+		console.ok(lang("cli.mods.toggled"));
 		cli.exit();
 	}
 

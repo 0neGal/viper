@@ -169,5 +169,14 @@
 	"general.invalidconfig": "Deine Konfigurationsdatei ist nicht richtig formatiert, falls diese manuell verändert wurde bitte stelle sicher das alles korrekt ist.\n\nFalls du diese nicht manuell verändert hast, ist es empfohlen diese zurückzusetzen!\n\nUm sie zurückzusetzen drücke einfach auf \"Ok\".\n\nWeitere Informationen:\n",
 
 	"request.viper.noReleaseNotes": "Viper Release Notes konnten nicht geladen werden.\nVersuche es erneut später!",
-	"request.northstar.noReleaseNotes": "Northstar Release Notes konnten nicht geladen werden.\nVersuche es erneut später!"
+	"request.northstar.noReleaseNotes": "Northstar Release Notes konnten nicht geladen werden.\nVersuche es erneut später!",
+
+	"general.running": "Läuft bereits.",
+
+	"tooltip.close": "Schließen",
+	"tooltip.minimize": "Minimieren",
+	"tooltip.settings": "Einstellungen",
+	"tooltip.pages.viper": "Viper",
+	"tooltip.pages.northstar": "Northstar",
+	"tooltip.pages.titanfall": "Titanfall 2"
 }

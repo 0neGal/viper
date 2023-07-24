@@ -5,6 +5,8 @@ const app = require("electron").app;
 const json = require("./json");
 const lang = require("../lang");
 
+console = require("./console");
+
 var invalid_settings = false;
 
 // base settings
@@ -47,7 +49,7 @@ if (fs.existsSync("viper.json")) {
 		settings.nsargs = fs.readFileSync(args, "utf8");
 	}
 } else {
-	console.log(lang("general.missingpath"));
+	console.error(lang("general.missingpath"));
 }
 
 // as to not have to do the same one liner a million times, this

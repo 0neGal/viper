@@ -173,9 +173,9 @@
 	"request.viper.noReleaseNotes": "Couldn't fetch Viper release notes.\nTry again later!",
 	"request.northstar.noReleaseNotes": "Couldn't fetch Northstar release notes.\nTry again later!",
 
-	"tooltip.close": "Closes Viper",
-	"tooltip.minimize": "Minimizes the window",
-	"tooltip.settings": "Opens the settings popup",
+	"tooltip.close": "Close Viper",
+	"tooltip.minimize": "Minimize Viper",
+	"tooltip.settings": "Settings",
 	"tooltip.pages.viper": "Viper",
 	"tooltip.pages.northstar": "Northstar",
 	"tooltip.pages.titanfall": "Titanfall 2"

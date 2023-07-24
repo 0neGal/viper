@@ -46,6 +46,11 @@
 	transform: scale(0.9);
 }
 
+.gamesContainer button.inactive:hover {
+	transform: scale(0.95);
+	filter: brightness(120%);
+}
+
 .gamesContainer button::before {
 	content: "";
 	display: block;
