@@ -23,8 +23,12 @@ function update_path() {
 		} else {return}
 	} 
 
-	// create the folder, in case it doesn't already exist
-	fs.mkdirSync(packages.path);
+	// only create folder if the profile folder exists
+	if (fs.existsSync(path.dirname(packages.path))) {
+		// create the folder, in case it doesn't already exist
+		fs.mkdirSync(packages.path);
+	}
+
 }; update_path();
 
 packages.format_name = (author, package_name, version) => {
