@@ -237,6 +237,36 @@ packages.install = async (url, author, package_name, version) => {
 			mods.remove(mod.name);
 			continue;
 		}
+
+		// normalizes a string, i.e attempt to make two strings
+		// identical, that simply have slightly different formatting, as
+		// an example, these strings:
+		//
+		//   "Mod_Name" and "Mod name"
+		//
+		// will just become:
+		//
+		//   "modname"
+		let normalize = (string) => {
+			return string.toLowerCase()
+				.replaceAll("_", "")
+				.replaceAll(".", "")
+				.replaceAll(" ", "");
+		}
+
+		// check if the mod's name from it's `mod.json` file when
+		// normalized, is the same as the normalized name of the package
+		if (normalize(mod.name) == normalize(package_name)) {
+			mods.remove(mod.name);
+			continue;
+		}
+
+		// check if the name of the mod's folder when normalized, is the
+		// same as the normalized name of the package
+		if (normalize(mod.folder_name) == normalize(package_name)) {
+			mods.remove(mod.name);
+			continue;
+		}
 	}
 
 	// removes older version of package inside the `packages` folder
@@ -374,8 +404,7 @@ packages.verify = (package_path) => {
 	let found_mod = false;
 	let mods = fs.readdirSync(mods_path);
 	for (let i = 0; i < mods.length; i++) {
-		let mod = mods[i];
-		let mod_file = path.join(mod, "mod.json");
+		let mod_file = path.join(mods_path, mods[i], "mod.json");
 
 		// make sure mod.json exists, and is a file, otherwise, this
 		// is unlikely to be a mod folder
