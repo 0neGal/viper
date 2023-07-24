@@ -172,7 +172,7 @@ update.northstar = async () => {
 	// Makes sure it is not already the latest version
 	if (! await northstar_update_available()) {
 		ipcMain.emit("ns-update-event", "cli.update.uptodate.short");
-		console.ok(lang("cli.update.uptodate"), ns_version);
+		console.ok(lang("cli.update.uptodate").replace("%s", ns_version));
 
 		win.log(lang("gui.update.uptodate"));
 		cli.exit();
