@@ -69,6 +69,8 @@
 	"gui.mods.installedmod": "Installed mod!",
 	"gui.mods.dragdrop": "Drag and drop a mod to install",
 	"gui.mods.confirmdependencies": "This package has dependencies, shown below, clicking \"Ok\" will install the package and the dependencies.\n\n",
+	"gui.mods.confirm_plugins_title": "The following package has native plugins:",
+	"gui.mods.confirm_plugins_description": "Native plugins have far more system access than a regular mod, and because of this they're inherently less secure to have installed, as a malicious plugin could do far more harm this way. If this plugin is one from a trusted developer or similar or you know what you're doing, then you can disregard this message completely.",
 
 	"gui.browser.info": "Info",
 	"gui.browser.view": "View",

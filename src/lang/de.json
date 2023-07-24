@@ -69,6 +69,8 @@
 	"gui.mods.installedmod": "Mod installiert!",
 	"gui.mods.dragdrop": "Drag and drop den Mod um ihn zu installieren!",
 	"gui.mods.confirmdependencies": "Dieser Mod benötigt weitere Mods, diese werden unter dieser Nachricht angezeigt. Beim drücken auf \"Ok\" stimmst du zu da diese Installiert werden.\n\n",
+	"gui.mods.confirm_plugins_title": "Das folgende Packet hat native plugins::",
+	"gui.mods.confirm_plugins_description": "Native plugins haben sehr viel mehr Rechte als reguläre Mods, da durch ist das nutzen dieser um einiges unsicherer denn es ist einfacher ihnen zuschaden! Bitte installieren sie nur native plugins von vertrauten Entwicklern oder ähnliches, falls dir bewusst ist was du machst kannst du diese Nachricht ignorieren.",
 
 	"gui.browser.info": "Info",
 	"gui.browser.view": "Anschauen",

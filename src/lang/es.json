@@ -69,6 +69,8 @@
 	"gui.mods.confirmdependencies": "Este paquete tiene dependencias, se muestran abajo. Presionar \"Ok\" instalará el paquete y las dependencias.\n\n",
 	"gui.mods.remove": "Remover",
 	"gui.mods.unknown_author": "Desconocido",
+	"gui.mods.confirm_plugins_title": "El siguiente paquete tiene complementos nativos:",
+	"gui.mods.confirm_plugins_description": "Los complementos nativos tienen mucho más acceso al sistema que un mod regular y, por lo tanto, son inherentemente menos seguros de instalar, ya que un complemento malicioso podría causar mucho más daño de esta manera. Si este complemento es de un desarrollador confiable o similar o si sabe lo que está haciendo, entonces puede ignorar completamente este mensaje.",
 	
 	"gui.browser.info": "Información",
 	"gui.browser.madeby": "hecho por",
