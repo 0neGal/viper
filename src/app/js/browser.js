@@ -111,7 +111,6 @@ var Browser = {
 		browser.classList.toggle("shown");
 	},
 	install: (package_obj, clear_queue = false) => {
-		console.log(package_obj)
 		return installFromURL(
 			package_obj.download || package_obj.versions[0].download_url,
 			package_obj.dependencies || package_obj.versions[0].dependencies,
