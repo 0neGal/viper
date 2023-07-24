@@ -165,6 +165,22 @@ packages.install = async (url, author, package_name, version) => {
 
 	let name = packages.format_name(author, package_name, version);
 
+	// removes zip's and folders
+	let cleanup = () => {
+		console.info("Cleaning up cache folder of mod:", name);
+		if (zip_path && fs.existsSync(zip_path)) {
+			fs.rm(zip_path, {recursive: true});
+			console.ok("Cleaned archive of mod:", name);
+		}
+
+		if (package_path && fs.existsSync(package_path)) {
+			fs.rm(zip_path, {recursive: true});
+			console.ok("Cleaned mod folder:", name);
+		}
+
+		console.ok("Cleaned up cache folder of mod:", name);
+	}
+
 	console.info("Downloading package:", name);
 	// download `url` to a temporary dir, and return the path to it
 	let zip_path = await packages.download(url, name);
@@ -199,10 +215,12 @@ packages.install = async (url, author, package_name, version) => {
 			ipcMain.emit("failed-mod", name);
 
 			// other unhandled error
-			return console.error(
+			console.error(
 				"Verification of package failed:", name,
 				", reason:", verification
 			);
+
+			return cleanup();
 	}
 
 	console.ok("Verified package:", name);
@@ -230,6 +248,9 @@ packages.install = async (url, author, package_name, version) => {
 	if (! moved) {
 		ipcMain.emit("failed-mod", name);
 		console.error("Moving package failed:", name);
+
+		cleanup();
+
 		return false;
 	}
 
@@ -239,6 +260,8 @@ packages.install = async (url, author, package_name, version) => {
 	})
 
 	console.ok("Installed package:", name);
+	cleanup();
+
 	return true;
 }
 
