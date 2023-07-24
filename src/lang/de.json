@@ -169,12 +169,12 @@
 	"request.viper.noReleaseNotes": "Viper Release Notes konnten nicht geladen werden.\nVersuche es erneut später!",
 	"request.northstar.noReleaseNotes": "Northstar Release Notes konnten nicht geladen werden.\nVersuche es erneut später!",
 
-	"general.running": "",
+	"general.running": "Läuft bereits.",
 
-	"tooltip.close": "",
-	"tooltip.minimize": "",
-	"tooltip.settings": "",
-	"tooltip.pages.viper": "",
-	"tooltip.pages.northstar": "",
-	"tooltip.pages.titanfall": ""
+	"tooltip.close": "Schließen",
+	"tooltip.minimize": "Minimieren",
+	"tooltip.settings": "Einstellungen",
+	"tooltip.pages.viper": "Viper",
+	"tooltip.pages.northstar": "Northstar",
+	"tooltip.pages.titanfall": "Titanfall 2"
 }
