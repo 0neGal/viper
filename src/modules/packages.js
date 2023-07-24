@@ -8,6 +8,8 @@ const json = require("./json");
 const win = require("./window");
 const settings = require("./settings");
 
+console = require("./console");
+
 var packages = {};
 
 function update_path() {
@@ -163,17 +165,17 @@ packages.install = async (url, author, package_name, version) => {
 
 	let name = packages.format_name(author, package_name, version);
 
-	console.log("Downloading package:", name);
+	console.info("Downloading package:", name);
 	// download `url` to a temporary dir, and return the path to it
 	let zip_path = await packages.download(url, name);
 
-	console.log("Extracting package:", name);
+	console.info("Extracting package:", name);
 	// extract the zip file we downloaded before, and return the path of
 	// the folder that we extracted it to
 	let package_path = await packages.extract(zip_path, name);
 
 
-	console.log("Verifying package:", name);
+	console.info("Verifying package:", name);
 	let verification = packages.verify(package_path);
 
 	switch(verification) {
@@ -190,22 +192,22 @@ packages.install = async (url, author, package_name, version) => {
 			// check whether the user cancelled or confirmed the
 			// installation, and act accordingly
 			if (! confirmation) {
-				return console.log("Cancelled package installation:", name);
+				return console.ok("Cancelled package installation:", name);
 			}
 			break;
 		default:
 			ipcMain.emit("failed-mod", name);
 
 			// other unhandled error
-			return console.log(
+			return console.error(
 				"Verification of package failed:", name,
 				", reason:", verification
 			);
 	}
 
-	console.log("Verified package:", name);
+	console.ok("Verified package:", name);
 
-	console.log("Deleting older version(s), if it exists:", name);
+	console.info("Deleting older version(s), if it exists:", name);
 	// check and delete any mod with the name package details in the old
 	// `mods` folder, if there are any at all
 	let mods = require("./mods");
@@ -222,12 +224,12 @@ packages.install = async (url, author, package_name, version) => {
 	// removes older version of package inside the `packages` folder
 	packages.remove(author, package_name, version);
 
-	console.log("Moving package:", name);
+	console.info("Moving package:", name);
 	let moved = packages.move(package_path);
 
 	if (! moved) {
 		ipcMain.emit("failed-mod", name);
-		console.log("Moving package failed:", name);
+		console.error("Moving package failed:", name);
 		return false;
 	}
 
@@ -236,7 +238,7 @@ packages.install = async (url, author, package_name, version) => {
 		fancy_name: package_name
 	})
 
-	console.log("Installed package:", name);
+	console.ok("Installed package:", name);
 	return true;
 }
 
