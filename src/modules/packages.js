@@ -34,6 +34,10 @@ function update_path() {
 }; update_path();
 
 packages.format_name = (author, package_name, version) => {
+	if (version && version[0] == "v") {
+		version = version.substring(1, version.length);
+	}
+
 	return author + "-" + package_name + "-" + version;
 }
 
