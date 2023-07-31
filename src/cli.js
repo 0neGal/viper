@@ -43,7 +43,7 @@ function gamepathExists() {
 		gamepath = json("viper.json").gamepath;
 
 		if (! fs.existsSync(gamepath)) {
-			console.error(`error: ${lang("cli.gamepath.lost")}`);
+			console.error(lang("cli.gamepath.lost"));
 			exit(1);
 		} else {
 			return true;
@@ -88,7 +88,7 @@ async function init() {
 		if (cli.getSwitchValue("setpath") != "") {
 			ipcMain.emit("setpathcli", cli.getSwitchValue("setpath"));
 		} else {
-			console.error(`error: ${lang("cli.setpath.noarg")}`);
+			console.error(lang("cli.setpath.noarg"));
 			exit(1);
 		}
 	}

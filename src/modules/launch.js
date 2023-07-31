@@ -16,7 +16,7 @@ function launch(game_version) {
 	// return early, and show error message if on Linux
 	if (process.platform == "linux") {
 		win.alert(lang("cli.launch.linuxerror"));
-		console.error("error:", lang("cli.launch.linuxerror"));
+		console.error(lang("cli.launch.linuxerror"));
 		cli.exit(1);
 		return;
 	}

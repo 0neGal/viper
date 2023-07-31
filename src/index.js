@@ -134,8 +134,14 @@ function start() {
 
 	// allows renderer to check for updates
 	ipcMain.on("ns-update-event", (event) => {send("ns-update-event", event)});
+
+	let update_active;
 	ipcMain.on("can-autoupdate", () => {
-		if (! autoUpdater.isUpdaterActive() || cli.hasParam("no-vp-updates")) {
+		if (typeof update_active == "undefined") {
+			update_active = autoUpdater.isUpdaterActive();
+		}
+
+		if (! update_active || cli.hasParam("no-vp-updates")) {
 			send("cant-autoupdate");
 		}
 	})
