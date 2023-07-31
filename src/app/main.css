@@ -63,7 +63,7 @@ button:active {filter: brightness(90%)}
 	transition: transform 0.25s ease-in-out;
 }
 
-#winbtns #settings:hover img {
+#winbtns #settings.shown img {
 	transform: rotate(90deg);
 }
 

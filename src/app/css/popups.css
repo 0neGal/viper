@@ -7,17 +7,19 @@
 
 .popup {
 	--spacing: var(--padding);
+	--top-spacing: calc(var(--spacing) + calc(var(--spacing) * 1.6));
 
 	z-index: 2;
 	opacity: 0.0;
 	position: fixed;
 	overflow-y: scroll;
-	top: var(--spacing);
 	pointer-events: none;
 	left: var(--spacing);
-	background: var(--bg);
 	right: var(--spacing);
 	bottom: var(--spacing);
+	top: var(--top-spacing);
+
+	background: var(--bg);
 	transform: scale(0.98);
 	backdrop-filter: blur(15px);
 	border-radius: calc(var(--padding) / 3);
@@ -54,8 +56,9 @@
 }
 
 #overlay.shown {
-	opacity: 0.8;
+	opacity: 1.0;
 	pointer-events: all;
+	backdrop-filter: blur(3px);
 }
 
 /* browser/preview popup { */

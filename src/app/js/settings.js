@@ -1,17 +1,22 @@
+
 var Settings = {
 	toggle: (state) => {
+		let settings_btn = document.getElementById("settings");
+
 		if (state) {
 			Settings.load();
 			options.scrollTo(0, 0);
 			overlay.classList.add("shown");
 			options.classList.add("shown");
+			settings_btn.classList.add("shown");
 
-			return
+			return;
 		} else if (! state) {
 			if (state != undefined) {
 				overlay.classList.remove("shown");
 				options.classList.remove("shown");
-				return
+				settings_btn.classList.remove("shown");
+				return;
 			}
 		}
 
@@ -19,6 +24,7 @@ var Settings = {
 		options.scrollTo(0, 0);
 		overlay.classList.toggle("shown");
 		options.classList.toggle("shown");
+		settings_btn.classList.toggle("shown");
 	},
 	apply: () => {
 		settings = {...settings, ...Settings.get()};

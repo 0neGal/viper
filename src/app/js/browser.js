@@ -82,7 +82,7 @@ var Browser = {
 			let filterRect = filter.getBoundingClientRect();
 			let spacing = parseInt(getComputedStyle(filters).getPropertyValue("--spacing"));
 
-			filters.style.top = filterRect.bottom - spacing;
+			filters.style.top = filterRect.bottom - (spacing + (spacing * 1.3));
 			filters.style.right = filterRect.right - filterRect.left + filterRect.width - (spacing / 2);
 		},
 	},
