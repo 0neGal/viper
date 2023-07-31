@@ -71,7 +71,7 @@ update.northstar_autoupdate = () => {
 					body: lang("gui.nsupdate.gaming.body")
 				}).show();
 			} else {
-				console.status(lang("cli.autoupdates.updatingns"));
+				console.info(lang("cli.autoupdates.updatingns"));
 				update.northstar();
 			}
 		} else {
