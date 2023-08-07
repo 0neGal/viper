@@ -70,11 +70,6 @@ settings.save = (obj = {}) => {
 
 	delete settings_content.save;
 
-	// write Northstar's startup argument file
-	if (fs.existsSync(settings.gamepath)) {
-		fs.writeFileSync(path.join(settings.gamepath, "ns_startup_args.txt"), settings.nsargs);
-	}
-
 	let stringified_settings = JSON.stringify({
 		...settings, ...obj
 	})
@@ -83,6 +78,16 @@ settings.save = (obj = {}) => {
 
 	// write the settings file
 	fs.writeFileSync(settings_file, stringified_settings);
+
+	// set the settings obj for the main process
+	settings = settings_content;
+
+	// write Northstar's startup arguments file
+	if (fs.existsSync(settings.gamepath)) {
+		fs.writeFileSync(path.join(
+			settings.gamepath, "ns_startup_args.txt"
+		), settings.nsargs);
+	}
 }
 
 module.exports = settings;
