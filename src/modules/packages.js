@@ -59,6 +59,13 @@ packages.split_name = (name) => {
 }
 
 packages.list = (dir = packages.path, no_functions) => {
+	update_path();
+
+	if (! fs.existsSync(packages.path)
+		|| dir == "R2Northstar/packages") {
+		return {};
+	}
+
 	let files = fs.readdirSync(dir);
 	let package_list = {};
 
@@ -172,6 +179,15 @@ packages.remove = (author, package_name, version) => {
 
 packages.install = async (url, author, package_name, version) => {
 	update_path();
+
+	if (! fs.existsSync(packages.path)) {
+		console.error(
+			"Can't install package, packages folder doesn't exist",
+			"and couldn't be created"
+		)
+
+		return false;
+	}
 
 	let name = packages.format_name(author, package_name, version);
 
