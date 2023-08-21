@@ -136,12 +136,18 @@ var Browser = {
 				for (let ii = 0; ii < modsobj.all.length; ii++) {
 					let mod = modsobj.all[ii];
 
-					if (normalize(mod.name) === normalized) {
-						local_name = mod.name;
-						local_version = version.format(mod.version);
-						if (version.is_newer(remote_version, local_version)) {
-							has_update = true;
-						}
+					if (normalize(mod.name) !== normalized && (
+						! mod.package ||
+						mod.package.author + "-" + mod.package.package_name !==
+						packages[i].full_name
+					)) {
+						continue;
+					}
+
+					local_name = mod.name;
+					local_version = version.format(mod.version);
+					if (version.is_newer(remote_version, local_version)) {
+						has_update = true;
 					}
 				}
 			}
