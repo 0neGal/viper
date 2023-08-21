@@ -90,6 +90,7 @@ mods.list = () => {
 			if (obj.package) {
 				packaged_mods.push(obj.name);
 				obj.author = obj.package.author;
+				obj.version = obj.package.version;
 			}
 
 			obj.disabled = ! mods.modfile.get(obj.name);
