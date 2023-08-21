@@ -1,8 +1,49 @@
+<!DOCTYPE html>
 <html>
 	<head>
 		<title>Viper</title>
+		<meta content="Viper" property="og:title">
+		<meta content="images/viper.png" property="og:image">
+		<meta content="Launcher+Updater for TF|2 Northstar" property="og:description">
+
+		<link rel="shortcut icon" href="images/viper.png" type="image/png">
+		<meta content="#C7777F" data-react-helmet="true" name="theme-color">
+
+		<link rel="stylesheet" href="main.css">
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=0,viewport-fit=cover">
 	</head>
 	<body>
+		<div class="background">
+			<div class="images">
+				<div class="image active-noanim"></div>
+			</div>
+			<div class="color"></div>
+		</div>
+
+		<div class="main">
+			<div class="box">
+				<div class="info">
+					<div class="image">
+						<img alt="Viper's logo" src="images/viper.png">
+						<h1>Viper</h1>
+					</div>
+					<button>
+						<img src="images/windows.png">
+						Download!
+					</button>
+					<a href="?release-page">Click for more download options</a>
+				</div>
+			</div>
+			<div class="box">
+				<img title="A screenshot of Viper" alt="A screenshot of Viper" src="images/preview.png" class="preview"></div>
+			</div>
+		</div>
+
 		<script src="main.js"></script>
+		<script src="redirect.js"></script>
 	</body>
 </html>

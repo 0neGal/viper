@@ -1,0 +1,162 @@
+/* base properties */
+body, button {
+	margin: 0;
+	color: white;
+	user-select: none;
+	background: black;
+	font-family: "Roboto", sans-serif;
+}
+
+/* positioning, sizing and everything for background elements */
+.background, .background .color, .background .image {
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	z-index: -1;
+	position: fixed;
+	background-size: cover;
+	background-position: center;
+}
+
+/* tinted background color */
+.background .color {
+	background-color: rgb(0, 0, 0, 0.7);
+}
+
+/* background image elements */
+.background .image {
+	opacity: 0.0;
+	transform: scale(1.0);
+	background-position-x: 50%;
+	transition: 0.8s opacity ease-in-out,
+		5.0s transform ease-out,
+		5.0s background-position-x ease-out;
+	background-image: url("images/backgrounds/1.jpg");
+}
+
+/* appear but dont animate */
+.background .image.active-noanim {
+	opacity: 1.0;
+}
+
+/* show and animate the image */
+.background .image.active {
+	opacity: 1.0;
+	transform: scale(1.05);
+	background-position-x: 25%;
+}
+
+/* main container for everything */
+
+.main {
+	width: 80vw;
+	height: 100vh;
+	display: flex;
+	margin: 0 auto;
+	max-width: 800px;
+	position: relative;
+	align-items: center;
+}
+
+/* actual containers with content */
+
+.box {
+	width: 100%;
+	height: 80%;
+	display: flex;
+	max-height: 400px;
+	border-radius: 15px;
+	align-items: center;
+	justify-content: center;
+}
+
+/* preview image */
+
+.box .preview {
+	width: 100%;
+	cursor: default;
+	border-radius: 15px;
+	transition: 0.3s ease-in-out;
+	transition-property: box-shadow, transform;
+	box-shadow: 0px 8px 5px rgba(0, 0, 0, 0.1);
+}
+
+.box .preview:hover {
+	transform: scale(1.05);
+	box-shadow: 0px 5px 25px rgba(0, 0, 0, 0.4);
+}
+
+/* hide preview image devices with less than 900px in width */
+@media (max-width: 900px) {
+	.box:nth-child(2) {
+		display: none;
+	}
+}
+
+/* main div with text and content */
+.info {
+	text-align: center;
+}
+
+/* Viper logo+text */
+.info .image {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: min(3vw, 30px);
+}
+
+/* Viper logo sizing */
+.info .image img {
+	width: 30%;
+	max-width: 400px;
+}
+
+/* more download options link */
+
+.info a {
+	opacity: 0.8;
+	color: #C7777F;
+	text-decoration: none;
+	transition: filter 0.2s ease-in;
+}
+
+.info a:hover {
+	filter: brightness(80%);
+}
+
+/* big download button */
+
+button {
+	border: none;
+	color: white;
+	display: flex;
+	margin: 15px auto;
+	font-size: 24px;
+	font-weight: bold;
+	padding: 20px 40px;
+	align-items: center;
+	border-radius: 10px;
+	justify-content: center;
+	transition: 0.2s ease-in-out;
+	background: linear-gradient(45deg, #81A1C1, #7380ED);
+	filter: drop-shadow(0px 8px 5px rgba(0, 0, 0, 0.1));
+}
+
+button:hover {
+	transform: scale(1.05);
+	filter: drop-shadow(0px 5px 15px rgba(0, 0, 0, 0.3)) brightness(110%);
+}
+
+button:active {
+	opacity: 0.7;transform: scale(0.98);
+	filter: drop-shadow(0px 5px 10px rgba(0, 0, 0, 0.4));
+}
+
+/* platform icon in button */
+button img {
+	width: 28px;
+	margin-right: 15px;
+}
+
