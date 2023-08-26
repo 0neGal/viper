@@ -61,7 +61,7 @@ packages.split_name = (name) => {
 packages.list = (dir = packages.path, no_functions) => {
 	update_path();
 
-	if (! fs.existsSync(packages.path)
+	if (! fs.existsSync(dir)
 		|| dir == "R2Northstar/packages") {
 		return {};
 	}
