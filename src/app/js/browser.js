@@ -211,11 +211,11 @@ var Browser = {
 			browserEntries.innerHTML = `<div class="loading">${lang('gui.browser.loading')}</div>`;
 		}
 	},
-	endoflist: (isEnd) => {
+	endoflist: (is_end) => {
 		let pkgs = [];
 		let filtered = Browser.filters.getpkgs();
 		for (let i = 0; i < filtered.length; i++) {
-			if ([packagecount + i]) {
+			if (filtered[packagecount + i]) {
 				pkgs.push(filtered[packagecount + i]);
 			} else {
 				break
@@ -226,7 +226,7 @@ var Browser = {
 			browserEntries.querySelector(".message").remove();
 		}
 
-		if (pkgs.length == 0 || isEnd) {
+		if (pkgs.length == 0 || is_end) {
 			Browser.msg(`${lang('gui.browser.endoflist')}`);
 			return
 		}
@@ -234,7 +234,7 @@ var Browser = {
 		Browser.msg(`<button id="loadmore">${lang("gui.browser.loadmore")}</button>`);
 		loadmore.addEventListener("click", () => {
 			Browser.loadpkgs(pkgs);
-			Browser.endoflist(pkgs);
+			Browser.endoflist(! pkgs.length);
 		})
 	},
 	search: (string) => {
