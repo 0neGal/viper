@@ -59,7 +59,7 @@
 		"unzipper": "^0.10.11"
 	},
 	"devDependencies": {
-		"electron": "^22.0.0",
+		"electron": "^22.0.1",
 		"electron-builder": "^24.6.3"
 	}
 }
