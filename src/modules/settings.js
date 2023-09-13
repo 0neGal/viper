@@ -61,7 +61,7 @@ if (fs.existsSync("viper.json")) {
 settings.save = (obj = {}, notify_renderer = true) => {
 	// refuse to save if settings aren't valid
 	if (invalid_settings) {
-		return false;
+		settings = {};
 	}
 
 	let settings_content = {
@@ -86,7 +86,7 @@ settings.save = (obj = {}, notify_renderer = true) => {
 	if (fs.existsSync(settings.gamepath)) {
 		fs.writeFileSync(path.join(
 			settings.gamepath, "ns_startup_args.txt"
-		), settings.nsargs);
+		), settings.nsargs || "-multiple");
 	}
 	
 	if (notify_renderer) {
