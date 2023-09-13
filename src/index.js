@@ -130,7 +130,13 @@ function start() {
 		}
 	});
 
-	ipcMain.on("save-settings", (event, obj) => {settings.save(obj)});
+	ipcMain.on("save-settings", (event, obj) => {
+		settings.save(obj, false)
+	});
+
+	ipcMain.on("saved-settings", (event, obj) => {
+		send("changed-settings", obj);
+	});
 
 	// allows renderer to check for updates
 	ipcMain.on("ns-update-event", (event) => {send("ns-update-event", event)});

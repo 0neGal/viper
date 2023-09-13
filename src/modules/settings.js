@@ -1,6 +1,6 @@
 const fs = require("fs");
 const path = require("path");
-const app = require("electron").app;
+const { app, ipcMain } = require("electron");
 
 const json = require("./json");
 const lang = require("../lang");
@@ -58,7 +58,7 @@ if (fs.existsSync("viper.json")) {
 //
 // you can also pass a settings object to the function and it'll try and
 // merge it together with the already existing settings
-settings.save = (obj = {}) => {
+settings.save = (obj = {}, notify_renderer = true) => {
 	// refuse to save if settings aren't valid
 	if (invalid_settings) {
 		return false;
@@ -87,6 +87,10 @@ settings.save = (obj = {}) => {
 		fs.writeFileSync(path.join(
 			settings.gamepath, "ns_startup_args.txt"
 		), settings.nsargs);
+	}
+	
+	if (notify_renderer) {
+		ipcMain.emit("saved-settings", settings_content);
 	}
 }
 

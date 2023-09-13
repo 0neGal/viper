@@ -54,6 +54,15 @@ if (fs.existsSync("viper.json")) {
 	setpath();
 }
 
+ipcRenderer.on("changed-settings", (e, new_settings) => {
+	// attempt to set `settings` to `new_settings`
+	try {
+		settings = {
+			...settings,
+			...new_settings
+		}
+	}catch(e) {}
+})
 
 // Show a toast message if no Internet connection has been detected.
 if (! navigator.onLine) {
