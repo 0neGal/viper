@@ -2,6 +2,8 @@ const fs = require("fs");
 const path = require("path");
 const { app, ipcRenderer, shell } = require("electron");
 
+const json = require("../modules/json");
+
 const lang = require("../lang");
 var modsobj = {
 	all: [],
@@ -33,24 +35,10 @@ ipcRenderer.send("setlang", settings.lang);
 
 // Loads the settings
 if (fs.existsSync("viper.json")) {
-	let conf = fs.readFileSync("viper.json", "utf8");
-	let json = {};
-
-	// Validates viper.json
-	try {
-		json = JSON.parse(conf);
-	}catch (e) {
-		let reset = confirm(lang("general.invalidconfig", navigator.language) + e);
-		if (! reset) {
-			ipcRenderer.send("exit");
-		} else {
-			fs.rmSync("viper.json");
-			ipcRenderer.send("relaunch");
-		}
-		
+	settings = {
+		...settings,
+		...json("viper.json") || {}
 	}
-
-	settings = {...settings, ...json};
 
 	if (settings.gamepath.length === 0) {
 		setpath(false);
