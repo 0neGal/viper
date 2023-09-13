@@ -35,21 +35,72 @@ ipcRenderer.send("setlang", settings.lang);
 
 // Loads the settings
 if (fs.existsSync("viper.json")) {
-	settings = {
-		...settings,
-		...json("viper.json") || {}
-	}
+	let iteration = 0;
 
-	if (settings.gamepath.length === 0) {
-		setpath(false);
-	} else {
-		setpath(true);
-	}
+	// loads the config file, it's loaded in an interval like this in
+	// case the config file is currently being written to, if we were to
+	// read from the file during that, then it'd be empty or similar.
+	//
+	// and because of that, we check if the file is empty when loading
+	// it, if so we wait 100ms, then check again, and we keep doing that
+	// hoping it'll become normal again. unless we've checked it 50
+	// times, then we simply give up, and force the user to re-select
+	// the gamepath, as this'll make the config file readable again.
+	//
+	// ideally it'll never have to check those 50 times, it's only in
+	// case something terrible has gone awry, like if a write got
+	// interrupted, or a user messed with the file.
+	//
+	// were it to truly be broken, then it'd take up to 5 seconds to
+	// then reset, this is basically nothing, especially considering
+	// this should only happen in very rare cases... hopefully!
+	let config_interval = setInterval(() => {
+		iteration++;
 
-	let args = path.join(settings.gamepath, "ns_startup_args.txt");
-	if (fs.existsSync(args)) {
-		settings.nsargs = fs.readFileSync(args, "utf8");
-	}
+		config = json("viper.json") || {};
+
+		// checks whether `settings.gamepath` is set, and if so,
+		// it'll attempt to load ns_startup_args.txt
+		let parse_settings = () => {
+			// if gamepath is not set, attempt to set it
+			if (settings.gamepath.length === 0) {
+				setpath(false);
+			} else {
+				// if the gamepath is set, we'll simply tell the main
+				// process about it, and it'll then show the main
+				// renderer BrowserWindow
+				setpath(true);
+			}
+
+			// filepath to Northstar's startup args file
+			let args = path.join(settings.gamepath, "ns_startup_args.txt");
+
+			// check file exists
+			if (fs.existsSync(args)) {
+				// load file into `settings`
+				settings.nsargs = fs.readFileSync(args, "utf8");
+			}
+		}
+
+		// make sure config isn't empty
+		if (Object.keys(config).length !== 0) {
+			// add `config` to `settings`
+			settings = {
+				...settings,
+				...config
+			}; parse_settings();
+
+			clearInterval(config_interval);
+			return;
+		}
+
+		// we've attempted to load the config 50 times now, give up
+		if (iteration >= 50) {
+			// request a new gamepath be set
+			setpath(false);
+			clearInterval(config_interval);
+		}
+	}, 100)
 } else {
 	setpath();
 }
