@@ -223,6 +223,7 @@ function isModInstalled(modname) {
 ipcRenderer.on("newpath", (event, newpath) => {
 	settings.gamepath = newpath;
 	ipcRenderer.send("gui-getmods");
+	ipcRenderer.send("save-settings", settings);
 })
 
 // Continuation of log()
