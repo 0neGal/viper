@@ -79,8 +79,12 @@ function start() {
 			process.exit(0)
 		}
 	});
+
 	ipcMain.on("minimize", () => {win.minimize()});
 	ipcMain.on("relaunch", () => {app.relaunch(); app.exit()});
+	ipcMain.on("kill-game", () => {
+		kill.game();
+	});
 
 	// passthrough to renderer from main
 	ipcMain.on("win-log", (event, ...args) => {send("log", ...args)});

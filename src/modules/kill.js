@@ -6,7 +6,7 @@ async function kill(process_name) {
 		let proc = process_name;
 		let cmd = (() => {
 			switch (process.platform) {
-				case "linux": return "killall " + proc;
+				case "linux": return "killall -9 " + proc;
 				case "win32": return "taskkill /IM " + proc + " /F";
 			}
 		})();
@@ -25,6 +25,18 @@ kill.origin = async () => {
 	let eadesktop = await kill("EADesktop.exe");
 
 	if (origin || eadesktop) {
+		return true;
+	}
+
+	return false;
+}
+
+kill.game = async () => {
+	let tf2 = await kill("Titanfall2.exe");
+	let northstar = await kill("NorthstarLauncher.exe");
+	let tf2_unpacked = await kill("Titanfall2-unpacked.exe");
+
+	if (tf2 || northstar || tf2_unpacked) {
 		return true;
 	}
 

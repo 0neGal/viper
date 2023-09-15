@@ -312,6 +312,9 @@ ipcRenderer.on("is-running", (event, running) => {
 		set_playbtns(lang("general.running"));
 
 		is_running = running;
+
+		update.setAttribute("onclick", "kill_game()");
+		update.innerHTML = "(" + lang("ns.menu.force_quit") + ")";
 		return;
 	}
 
@@ -320,8 +323,15 @@ ipcRenderer.on("is-running", (event, running) => {
 		set_playbtns(lang("gui.launch"));
 
 		is_running = running;
+
+		update.setAttribute("onclick", "updateNorthstar()");
+		update.innerHTML = "(" + lang("gui.update.check") + ")";
 	}
 })
+
+function kill_game() {
+	ipcRenderer.send("kill-game");
+}
 
 // Updates the installed mods
 ipcRenderer.on("mods", (event, mods_obj) => {

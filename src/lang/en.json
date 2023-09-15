@@ -159,6 +159,7 @@
 	"ns.menu.main": "Northstar Launcher",
 	"ns.menu.mods": "Mods",
 	"ns.menu.release": "Release Notes",
+	"ns.menu.force_quit": "Force quit game",
 
 	"general.autoupdates.gamerunning": "Game is running, refusing to update Northstar",
 	"general.mods.enabled": "Enabled mods:",
