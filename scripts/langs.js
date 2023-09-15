@@ -1,8 +1,34 @@
 const fs = require("fs");
 
 let problems = false;
-let lang = require("../src/lang/en.json");
 let maintainers = require("../src/lang/maintainers.json");
+
+function flatten_obj(data) {
+	var obj = {};
+
+	for (let i in data) {
+		if (! data.hasOwnProperty(i)) {
+			continue;
+		}
+
+		if (typeof data[i] == "object" && data[i] !== null) {
+			var flattened = flatten_obj(data[i]);
+			for (var ii in flattened) {
+				if (! flattened.hasOwnProperty(ii)) {
+					continue;
+				}
+
+				obj[i + "." + ii] = flattened[ii];
+			}
+		} else {
+			obj[i] = data[i];
+		}
+	}
+
+	return obj;
+}
+
+let lang = flatten_obj(require("../src/lang/en.json"));
 
 langs = fs.readdirSync("src/lang")
 langs.forEach((localefile) => {
@@ -12,7 +38,7 @@ langs.forEach((localefile) => {
 	let langmaintainers = maintainers.list[localefile.replace(/\..*$/, "")];
 	let locale = false;
 	try {
-		locale = require("../src/lang/" + localefile)
+		locale = flatten_obj(require("../src/lang/" + localefile));
 	}catch(err) {
 		console.log(`\x1b[101m!! ${localefile} is not formatted right !!\x1b[0m`);
 		return

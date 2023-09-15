@@ -67,9 +67,15 @@ var Settings = {
 				div.innerHTML = "";
 				let langs = fs.readdirSync(__dirname + "/../lang");
 				for (let i in langs) {
-					title = JSON.parse(fs.readFileSync(__dirname + `/../lang/${langs[i]}`, "utf8"))["lang.title"];
+					let lang_no_extension = langs[i].replace(/\..*$/, "");
+					let title = lang("lang.title", lang_no_extension);
+
+					if (title == "lang.title") {
+						continue;
+					}
+
 					if (title) {
-						div.innerHTML += `<option value="${langs[i].replace(/\..*$/, '')}">${title}</option>`
+						div.innerHTML += `<option value="${lang_no_extension}">${title}</option>`
 					}
 					
 				}

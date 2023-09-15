@@ -1,183 +1,285 @@
 {
-	"lang.title": "English",
+	"lang": {
+		"title": "English"
+	},
 
-	"cli.help.help": "shows this help message",
-	"cli.help.devtools": "opens the dev/debug tools",
-	"cli.help.version": "outputs version info",
-	"cli.help.cli": "forces the CLI to enable",
-	"cli.help.update": "updates Northstar from your set game path",
-	"cli.help.setpath": "sets your game path",
-	"cli.help.updatevp": "updates Viper itself, if supported.",
-	"cli.help.novpupdates": "overwrites viper.json and disables Viper updates",
-	"cli.help.installmod": "installs a mod, folder or zip",
-	"cli.help.removemod": "removes a mod",
-	"cli.help.togglemod": "toggles a mod",
+	"cli": {
+		"help": {
+			"help": "shows this help message",
+			"devtools": "opens the dev/debug tools",
+			"version": "outputs version info",
+			"cli": "forces the CLI to enable",
+			"update": "updates Northstar from your set game path",
+			"setpath": "sets your game path",
+			"updatevp": "updates Viper itself, if supported.",
+			"novpupdates": "overwrites viper.json and disables Viper updates",
+			"installmod": "installs a mod, folder or zip",
+			"removemod": "removes a mod",
+			"togglemod": "toggles a mod"
+		},
 
-	"cli.setpath.noarg": "No argument provided for --setpath",
+		"setpath": {
+			"noarg": "No argument provided for --setpath"
+		},
 
-	"cli.update.current": "Current version:",
-	"cli.update.downloading": "Downloading...",
-	"cli.update.checking": "Checking for updates...",
-	"cli.update.downloaddone": "Download done! Extracting...",
-	"cli.update.finished": "Installation/Update finished!",
-	"cli.update.uptodate": "Latest version (%s) is already installed, skipping update.",
-	"cli.update.uptodate.short": "Up-to-date",
-	"cli.update.noInternet": "No Internet connection",
+		"update": {
+			"current": "Current version:",
+			"downloading": "Downloading...",
+			"checking": "Checking for updates...",
+			"downloaddone": "Download done! Extracting...",
+			"finished": "Installation/Update finished!",
+			"uptodate": "Latest version (%s) is already installed, skipping update.",
+			"noInternet": "No Internet connection"
+		},
 
-	"cli.autoupdates.checking": "Checking for Northstar updates...",
-	"cli.autoupdates.available": "Northstar update available!",
-	"cli.autoupdates.updatingns": "Launching update process...",
-	"cli.autoupdates.noupdate": "No Northstar update available.",
+		"autoupdates": {
+			"checking": "Checking for Northstar updates...",
+			"available": "Northstar update available!",
+			"updatingns": "Launching update process...",
+			"noupdate": "No Northstar update available."
+		},
 
-	"cli.launch.linuxerror": "Launching the game is not currently supported on Linux",
+		"launch": {
+			"linuxerror": "Launching the game is not currently supported on Linux"
+		},
 
-	"cli.gamepath.lost": "Gamepath not found, make sure it's mounted!",
+		"gamepath": {
+			"lost": "Gamepath not found, make sure it's mounted!"
+		},
 
-	"cli.mods.failed": "Failed to install mod!",
-	"cli.mods.removed": "Successfully removed mod!",
-	"cli.mods.toggled": "Successfully toggled mod",
-	"cli.mods.installed": "Successfully installed mod!",
-	"cli.mods.cantfind": "Can't find a mod with that name!",
-	"cli.mods.notamod": "Selected folder/file is not a mod",
-	"cli.mods.toggledall": "Successfully toggled all mods",
-	"cli.mods.improperjson": "%s's mod.json has formatting errors",
+		"mods": {
+			"failed": "Failed to install mod!",
+			"removed": "Successfully removed mod!",
+			"toggled": "Successfully toggled mod",
+			"installed": "Successfully installed mod!",
+			"cantfind": "Can't find a mod with that name!",
+			"notamod": "Selected folder/file is not a mod",
+			"toggledall": "Successfully toggled all mods",
+			"improperjson": "%s's mod.json has formatting errors"
+		}
+	},
+	"gui": {
+		"exit": "Exit",
+		"welcome": "Welcome to Viper!",
+		"setpath": "Change Game Path",
 
-	"gui.welcome": "Welcome to Viper!",
-	"gui.versions.viper": "Viper version",
-	"gui.versions.northstar": "Northstar version",
-	"gui.exit": "Exit",
-	"gui.update": "Update",
-	"gui.setpath": "Change Game Path",
+		"versions": {
+			"viper": "Viper version",
+			"northstar": "Northstar version"
+		},
 
-	"gui.update.check": "Check for updates",
-	"gui.mods": "Mods",
-	"gui.mods.count": "Mods Installed:",
-	"gui.mods.disabledtag": "Disabled",
-	"gui.mods.remove": "Remove",
-	"gui.mods.install": "Install Mod",
-	"gui.mods.find": "Find Mods",
-	"gui.mods.toggleall": "Toggle All",
-	"gui.mods.removeall": "Remove All",
-	"gui.mods.nothingselected": "You've not selected a mod.",
-	"gui.mods.toggleall.confirm": "Toggling all mods could disable mods required for Northstar to function. Are you sure?",
-	"gui.mods.removeall.confirm": "Removing all mods will usually require you to reinstall Northstar. Are you sure?",
-	"gui.mods.required.confirm": "You've selected a core mod, Northstar may not function without it. Are you sure?",
-	"gui.mods.notamod": "Not a mod!",
-	"gui.mods.unknown_author": "Unknown",
-	"gui.mods.extracting": "Extracting mod...",
-	"gui.mods.installing": "Installing mod...",
-	"gui.mods.installedmod": "Installed mod!",
-	"gui.mods.dragdrop": "Drag and drop a mod to install",
-	"gui.mods.confirmdependencies": "This package has dependencies, shown below, clicking \"Ok\" will install the package and the dependencies.\n\n",
-	"gui.mods.confirm_plugins_title": "The following package has native plugins:",
-	"gui.mods.confirm_plugins_description": "Native plugins have far more system access than a regular mod, and because of this they're inherently less secure to have installed, as a malicious plugin could do far more harm this way. If this plugin is one from a trusted developer or similar or you know what you're doing, then you can disregard this message completely.",
+		"update": {
+			"button": "Update",
+			"check": "Check for updates",
+			"downloading": "Downloading...",
+			"extracting": "Extracting update...",
+			"finished": "Done! Ready to play!",
+			"uptodate": "Already up to date!",
+			"available": "A new update for Viper is available, do you want to restart and apply it?"
+		},
 
-	"gui.browser.info": "Info",
-	"gui.browser.view": "View",
-	"gui.browser.madeby": "by",
-	"gui.browser.search": "Search...",
-	"gui.browser.update": "Update",
-	"gui.browser.install": "Install",
-	"gui.browser.reinstall": "Re-Install",
-	"gui.browser.loading": "Loading mods...",
-	"gui.browser.loadmore": "Load more...",
-	"gui.browser.endoflist": "All packages have been loaded.",
-	"gui.browser.noresults": "No results...",
-	"gui.browser.filter.mods": "Mods",
-	"gui.browser.filter.skins": "Skins",
-	"gui.browser.filter.client": "Client-side",
-	"gui.browser.filter.server": "Server-side",
+		"mods": {
+			"title": "Mods",
+			"count": "Mods Installed:",
+			"disabledtag": "Disabled",
+			"remove": "Remove",
+			"install": "Install Mod",
+			"find": "Find Mods",
+			"toggleall": "Toggle All",
+			"removeall": "Remove All",
+			"nothingselected": "You've not selected a mod.",
 
-	"gui.settings.save": "Save",
-	"gui.settings.discard": "Discard",
-	"gui.settings.title.ns": "Northstar",
-	"gui.settings.title.language": "Language",
-	"gui.settings.title.updates": "Updates",
-	"gui.settings.title.misc": "Miscellaneous",
-	"gui.settings.nsargs.title": "Launch options",
-	"gui.settings.nsargs.desc": "Here you can add launch options for Northstar/Titanfall.",
-	"gui.settings.autolang.title": "Auto-Detect Language",
-	"gui.settings.autolang.desc": "When enabled, Viper tries to automatically detect your system language, when disabled you can manually change the language below.",
-	"gui.settings.forcedlang.title": "Language",
-	"gui.settings.forcedlang.desc": "When \"Auto-Detect Language\" is disabled, this will decide the language. Requires a restart to take effect.",
-	"gui.settings.autoupdate.title": "Viper Auto-Updates",
-	"gui.settings.autoupdate.desc": "Viper will automatically keep itself up-to-date.",
-	"gui.settings.nsupdate.title": "Northstar Auto-Updates",
-	"gui.settings.nsupdate.desc": "Viper will automatically keep Northstar up-to-date, however it can still manually be updated through the Northstar page.",
-	"gui.settings.excludes.title": "Retain files on update",
-	"gui.settings.excludes.desc": "When Northstar is updated, files specified here will not be overwritten by files from the new Northstar update, unless you know what you're changing, you should probably not change anything here. Each file is separated with a space.",
-	"gui.settings.originkill.title": "Automatically quit Origin and or EA Desktop",
-	"gui.settings.originkill.desc": "When Viper exits, automatically quit Origin and or EA Desktop as well.",
+			"required": {
+				"confirm": "You've selected a core mod, Northstar may not function without it. Are you sure?"
+			},
 
-	"gui.update.downloading": "Downloading...",
-	"gui.update.extracting": "Extracting update...",
-	"gui.update.finished": "Done! Ready to play!",
-	"gui.update.uptodate": "Already up to date!",
-	"gui.update.available": "A new update for Viper is available, do you want to restart and apply it?",
+			"notamod": "Not a mod!",
+			"unknown_author": "Unknown",
+			"extracting": "Extracting mod...",
+			"installing": "Installing mod...",
+			"installedmod": "Installed mod!",
+			"dragdrop": "Drag and drop a mod to install",
+			"confirmdependencies": "This package has dependencies, shown below, clicking \"Ok\" will install the package and the dependencies.\n\n",
+			"confirm_plugins_title": "The following package has native plugins:",
+			"confirm_plugins_description": "Native plugins have far more system access than a regular mod, and because of this they're inherently less secure to have installed, as a malicious plugin could do far more harm this way. If this plugin is one from a trusted developer or similar or you know what you're doing, then you can disregard this message completely."
+		},
 
-	"gui.nsupdate.gaming.title": "Northstar update available!",
-	"gui.nsupdate.gaming.body": "An update for Northstar is available.\nYou can force its installation after closing the game.",
+		"browser": {
+			"info": "Info",
+			"view": "View",
+			"madeby": "by",
+			"search": "Search...",
+			"update": "Update",
+			"install": "Install",
+			"reinstall": "Re-Install",
+			"loading": "Loading mods...",
+			"loadmore": "Load more...",
+			"endoflist": "All packages have been loaded.",
+			"noresults": "No results...",
 
-	"gui.server.player": "player",
-	"gui.server.players": "players",
-	"gui.server.servers": "servers",
-	"gui.server.offline": "Masterserver is Offline",
+			"filter": {
+				"mods": "Mods",
+				"skins": "Skins",
+				"client": "Client-side",
+				"server": "Server-side"
+			}
+		},
 
-	"gui.launch": "Launch",
-	"gui.launchvanilla": "Vanilla",
-	"gui.launchnorthstar": "Northstar",
-	"gui.installnorthstar": "Install",
+		"settings": {
+			"save": "Save",
+			"discard": "Discard",
 
-	"gui.selectpath": "Please select the path!",
-	"gui.gamepath.must": "The game path must be set to start Viper.",
-	"gui.gamepath.wrong": "This folder is not a valid game path.",	
-	"gui.gamepath.lost": "Gamepath no longer exists/can't be found!\n\nMake sure your drive is mounted properly, or if you moved your game location that you update the game path.\n\nViper may not work properly until next restart!",
+			"title": {
+				"ns": "Northstar",
+				"language": "Language",
+				"updates": "Updates",
+				"misc": "Miscellaneous"
+			},
 
-	"gui.toast.title.installed": "Mod installed!",
-	"gui.toast.title.duped": "Duplicate folder names!",
-	"gui.toast.title.failed": "Failed to install",
-	"gui.toast.title.malformed": "Incorrect folder structure!",
-	"gui.toast.title.unknown_error": "Unknown Error!",
-	"gui.toast.desc.installed": "has been installed successfully!",
-	"gui.toast.desc.malformed": "has an incorrect folder structure, if you're the developer, you should fix this.",
-	"gui.toast.desc.failed": "An unknown error occurred while trying to install the mod. This may be the author's fault, and it may also be Viper's fault.",
-	"gui.toast.desc.duped": "has multiple mod folders in it, with the same name, causing duplicate folders, if you're the developer, you should fix this.",
-	"gui.toast.desc.unknown_error": "An unknown error occurred, click for more details. You may want to take a screenshot of the detailed error when filing a bug report.",
+			"nsargs": {
+				"title": "Launch options",
+				"desc": "Here you can add launch options for Northstar/Titanfall."
+			},
 
-	"gui.toast.noInternet.title": "No Internet",
-	"gui.toast.noInternet.desc": "Viper may not work properly.",
+			"autolang": {
+				"title": "Auto-Detect Language",
+				"desc": "When enabled, Viper tries to automatically detect your system language, when disabled you can manually change the language below."
+			},
 
-	"viper.menu.main": "Viper",
-	"viper.menu.release": "Release Notes",
-	"viper.menu.info": "Extras",
-	"viper.menu.info.links": "Links",
-	"viper.menu.info.credits": "Credits",
+			"forcedlang": {
+				"title": "Language",
+				"desc": "When \"Auto-Detect Language\" is disabled, this will decide the language. Requires a restart to take effect."
+			},
 
-	"viper.info.discord": "Join Discord:",
-	"viper.info.issues": "Report issues with Viper:",
+			"autoupdate": {
+				"title": "Viper Auto-Updates",
+				"desc": "Viper will automatically keep itself up-to-date."
+			},
 
-	"ns.menu.main": "Northstar Launcher",
-	"ns.menu.mods": "Mods",
-	"ns.menu.release": "Release Notes",
-	"ns.menu.force_quit": "Force quit game",
+			"nsupdate": {
+				"title": "Northstar Auto-Updates",
+				"desc": "Viper will automatically keep Northstar up-to-date, however it can still manually be updated through the Northstar page."
+			},
 
-	"general.autoupdates.gamerunning": "Game is running, refusing to update Northstar",
-	"general.mods.enabled": "Enabled mods:",
-	"general.mods.disabled": "Disabled mods:",
-	"general.mods.installed": "Installed mods:",
-	"general.missingpath": "Game location could not be found automatically! Please select it manually!",
-	"general.notinstalled": "Northstar is not installed!",
-	"general.running": "Running",
-	"general.launching": "Launching",
-	"general.invalidconfig": "Your config file is improperly formatted, if it's been manually edited, please validate that everything is typed correctly.\n\nIf you did not manually edit the config file, it is recommended to simply reset the config.\n\nTo reset your config file simply click \"Ok\" below.\n\nMore details:\n",
+			"excludes": {
+				"title": "Retain files on update",
+				"desc": "When Northstar is updated, files specified here will not be overwritten by files from the new Northstar update, unless you know what you're changing, you should probably not change anything here. Each file is separated with a space."
+			},
 
-	"request.viper.noReleaseNotes": "Couldn't fetch Viper release notes.\nTry again later!",
-	"request.northstar.noReleaseNotes": "Couldn't fetch Northstar release notes.\nTry again later!",
+			"originkill": {
+				"title": "Automatically quit Origin and or EA Desktop",
+				"desc": "When Viper exits, automatically quit Origin and or EA Desktop as well."
+			}
+		},
 
-	"tooltip.close": "Close Viper",
-	"tooltip.minimize": "Minimize Viper",
-	"tooltip.settings": "Settings",
-	"tooltip.pages.viper": "Viper",
-	"tooltip.pages.northstar": "Northstar",
-	"tooltip.pages.titanfall": "Titanfall 2"
+		"nsupdate": {
+			"gaming": {
+				"title": "Northstar update available!",
+				"body": "An update for Northstar is available.\nYou can force its installation after closing the game."
+			}
+		},
+
+		"server": {
+			"player": "player",
+			"players": "players",
+			"servers": "servers",
+			"offline": "Masterserver is Offline"
+		},
+
+		"launch": "Launch",
+		"launchvanilla": "Vanilla",
+		"launchnorthstar": "Northstar",
+		"installnorthstar": "Install",
+		"selectpath": "Please select the path!",
+
+		"gamepath": {
+			"must": "The game path must be set to start Viper.",
+			"wrong": "This folder is not a valid game path.",
+			"lost": "Gamepath no longer exists/can't be found!\n\nMake sure your drive is mounted properly, or if you moved your game location that you update the game path.\n\nViper may not work properly until next restart!"
+		},
+
+		"toast": {
+			"title": {
+				"installed": "Mod installed!",
+				"duped": "Duplicate folder names!",
+				"failed": "Failed to install",
+				"malformed": "Incorrect folder structure!",
+				"unknown_error": "Unknown Error!"
+			},
+
+			"desc": {
+				"installed": "has been installed successfully!",
+				"malformed": "has an incorrect folder structure, if you're the developer, you should fix this.",
+				"failed": "An unknown error occurred while trying to install the mod. This may be the author's fault, and it may also be Viper's fault.",
+				"duped": "has multiple mod folders in it, with the same name, causing duplicate folders, if you're the developer, you should fix this.",
+				"unknown_error": "An unknown error occurred, click for more details. You may want to take a screenshot of the detailed error when filing a bug report."
+			},
+
+			"noInternet": {
+				"title": "No Internet",
+				"desc": "Viper may not work properly."
+			}
+		}
+	},
+
+	"viper": {
+		"menu": {
+			"main": "Viper",
+			"release": "Release Notes",
+			"info": "Extras"
+		},
+		"info": {
+			"links": "Links",
+			"credits": "Credits",
+			"discord": "Join Discord:",
+			"issues": "Report issues with Viper:"
+		}
+	},
+
+	"ns": {
+		"menu": {
+			"main": "Northstar Launcher",
+			"mods": "Mods",
+			"release": "Release Notes",
+			"force_quit": "Force quit game"
+		}
+	},
+
+	"general": {
+		"autoupdates": {
+			"gamerunning": "Game is running, refusing to update Northstar"
+		},
+
+		"mods": {
+			"enabled": "Enabled mods:",
+			"disabled": "Disabled mods:",
+			"installed": "Installed mods:"
+		},
+
+		"missingpath": "Game location could not be found automatically! Please select it manually!",
+		"notinstalled": "Northstar is not installed!",
+		"running": "Running",
+		"launching": "Launching",
+		"invalidconfig": "Your config file is improperly formatted, if it's been manually edited, please validate that everything is typed correctly.\n\nIf you did not manually edit the config file, it is recommended to simply reset the config.\n\nTo reset your config file simply click \"Ok\" below.\n\nMore details:\n"
+	},
+
+	"request": {
+		"viper": {
+			"noReleaseNotes": "Couldn't fetch Viper release notes.\nTry again later!"
+		},
+		"northstar": {
+			"noReleaseNotes": "Couldn't fetch Northstar release notes.\nTry again later!"
+		}
+	},
+
+	"tooltip": {
+		"close": "Close Viper",
+		"minimize": "Minimize Viper",
+		"settings": "Settings",
+		"pages": {
+			"viper": "Viper",
+			"northstar": "Northstar",
+			"titanfall": "Titanfall 2"
+		}
+	}
 }

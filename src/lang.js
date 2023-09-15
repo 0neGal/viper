@@ -6,6 +6,30 @@ const enLang = json(__dirname + "/lang/en.json");
 let lang = "";
 var langObj = {};
 
+function flatten_obj(data) {
+	var obj = {};
+
+	for (let i in data) {
+		if (! data.hasOwnProperty(i)) {
+			continue;
+		}
+
+		if (typeof data[i] == "object" && data[i] !== null) {
+			var flattened = flatten_obj(data[i]);
+			for (var ii in flattened) {
+				if (! flattened.hasOwnProperty(ii)) {
+					continue;
+				}
+
+				obj[i + "." + ii] = flattened[ii];
+			}
+		} else {
+			obj[i] = data[i];
+		}
+	}
+
+	return obj;
+}
 
 function _loadTranslation(forcedlang) {
 	if (fs.existsSync("viper.json")) {
@@ -41,7 +65,7 @@ function _loadTranslation(forcedlang) {
 		lang = "en";
 	}
 
-	langObj = json(__dirname + `/lang/${lang}.json`);
+	langObj = flatten_obj(json(__dirname + `/lang/${lang}.json`) || {});
 }
 
 
