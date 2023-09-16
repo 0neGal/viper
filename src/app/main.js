@@ -177,7 +177,7 @@ ipcRenderer.on("ns-update-event", (event, key) => {
 	console.log(lang(key));
 	switch(key) {
 		case "cli.update.uptodate.short":
-		case "cli.update.noInternet":
+		case "cli.update.no_internet":
 			setButtons(true);
 			playNsBtn.innerText = lang("gui.launch");
 			break;
@@ -241,7 +241,7 @@ function installFromURL(url, dependencies, clearqueue, author, package_name, ver
 						package_name: pkg[1]
 					});
 
-					prettydepends.push(`${pkg[1]} v${pkg[2]} - ${lang("gui.browser.madeby")} ${pkg[0]}`);
+					prettydepends.push(`${pkg[1]} v${pkg[2]} - ${lang("gui.browser.made_by")} ${pkg[0]}`);
 				}
 			}
 		}
@@ -356,7 +356,7 @@ ipcRenderer.on("version", (event, versions) => {
 
 		// Since Northstar is not installed, we cannot launch it
 		shouldInstallNorthstar = true;
-		playNsBtn.innerText = lang("gui.installnorthstar");
+		playNsBtn.innerText = lang("gui.install");
 	}
 }); ipcRenderer.send("get-version");
 

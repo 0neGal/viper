@@ -11,36 +11,36 @@
 			"cli": "Zwingt die CLI Einstellung auf \"an\".",
 			"update": "Aktualisiert den Installationspfad von Northstar, durch den gegeben Installationspfad von Titanfall 2.",
 			"setpath": "Setzt den Installationspfad von Titanfall 2.",
-			"updatevp": "Aktualisiert Viper, falls dies unterstützt wird.",
-			"novpupdates": "Überschreibt viper.json und deaktiviert das Aktualisieren von Viper.",
-			"installmod": "Installiert einen Mod, eine ZIP-Datei oder einen Ordner.",
-			"removemod": "Entfernt einen Mod.",
-			"togglemod": "Aktiviert/Deaktiviert einen Mod."
+			"update_vp": "Aktualisiert Viper, falls dies unterstützt wird.",
+			"no_vp_updates": "Überschreibt viper.json und deaktiviert das Aktualisieren von Viper.",
+			"install_mod": "Installiert einen Mod, eine ZIP-Datei oder einen Ordner.",
+			"remove_mod": "Entfernt einen Mod.",
+			"toggle_mod": "Aktiviert/Deaktiviert einen Mod."
 		},
 		
 		"setpath": {
-			"noarg": "Keine Argument für --setpath wurden angegeben!"
+			"no_arg": "Keine Argument für --setpath wurden angegeben!"
 		},
 		
 		"update": {
 			"current": "Jetzige Version:",
 			"downloading": "Wird heruntergeladen...",
 			"checking": "Überprüfe auf Updates...",
-			"downloaddone": "Herunterladen abgeschlossen! Extrahiere...",
+			"download_done": "Herunterladen abgeschlossen! Extrahiere...",
 			"finished": "Installation/Aktualisierung abeschlossen!",
 			"uptodate": "Installation ist bereits auf dem neusten Stand (%s), aktualisieren wird übersprungen.",
-			"noInternet": "Keine Internetverbindung"
+			"no_internet": "Keine Internetverbindung"
 		},
 		
-		"autoupdates": {
+		"auto_updates": {
 			"checking": "Überprüfe Northstar auf Updates...",
 			"available": "Ein Update für Northstar wurde gefunden!",
-			"updatingns": "Updateprozess wird gestartet...",
-			"noupdate": "Kein Update für Northstar vorhanden."
+			"updating_ns": "Updateprozess wird gestartet...",
+			"no_update": "Kein Update für Northstar vorhanden."
 		},
 		
 		"launch": {
-			"linuxerror": "Das Spiel starten ist derzeit nicht auf Linux unterstützt"
+			"linux_error": "Das Spiel starten ist derzeit nicht auf Linux unterstützt"
 		},
 		
 		"gamepath": {
@@ -52,10 +52,10 @@
 			"removed": "Mod wurde erfolgreich entfernt!",
 			"toggled": "Mod wurde erfolgreich aktiviert/deaktiviert!",
 			"installed": "Mod wurde erfolgreich installiert!",
-			"cantfind": "Ein Mod mit diesem Namen konnte nicht gefunden werden!",
-			"notamod": "Die angegebene Datei/der angegebene Ordner ist kein Mod!",
-			"toggledall": "Alle Mods wurde erfolgreich aktiviert/deaktiviert!",
-			"improperjson": "Die mod.json vom Mod %s ist fehlerhaft!"
+			"cant_find": "Ein Mod mit diesem Namen konnte nicht gefunden werden!",
+			"not_a_mod": "Die angegebene Datei/der angegebene Ordner ist kein Mod!",
+			"toggled_all": "Alle Mods wurde erfolgreich aktiviert/deaktiviert!",
+			"improper_json": "Die mod.json vom Mod %s ist fehlerhaft!"
 		}
 	},
 	
@@ -82,41 +82,42 @@
 		"mods": {
 			"title": "Mods",
 			"count": "Installierte Mods:",
-			"disabledtag": "Deaktiviert",
+			"disabled_tag": "Deaktiviert",
 			"remove": "Entfernen",
 			"install": "Installiere den Mod",
 			"find": "Suche nach Mods",
-			"toggleall": "Aktiviere/Deaktiviere alle Mods",
-			"removeall": "Entferne alle Mods",
-			"nothingselected": "Es wurde kein Mod ausgewählt.",
+			"toggle_all": "Aktiviere/Deaktiviere alle Mods",
+			"toggle_all_confirm": "Das Deaktivieren aller Mods kann zum Deaktiveren von Mods führen die von Northstar benötigt werden. Bist du dir sicher das du diese Aktion durchführen willst?",
+			"remove_all": "Entferne alle Mods",
+			"remove_all_confirm": "Das Entfernen aller Mods führt meist dazu das eine Neuinstallation von Northstar nötig ist. Bist du dir sicher das du diese Aktion durchführen willst?",
+			"nothing_selected": "Es wurde kein Mod ausgewählt.",
+			"required_confirm": "Du hast einen von Northstar benötigten Mod ausgewählt, bist du dir sicher das du diese Aktion durchführen willst",
 
-			"required": {
-				"confirm": "Du hast einen von Northstar benötigten Mod ausgewählt, bist du dir sicher das du diese Aktion durchführen willst"
-			},
-
-			"notamod": "Kein Mod!",
+			"not_a_mod": "Kein Mod!",
 			"unknown_author": "Unbekannt",
 			"extracting": "Extrahiere den Mod...",
 			"installing": "Installiere den Mod...",
-			"installedmod": "Mod installiert!",
-			"dragdrop": "Drag and drop den Mod um ihn zu installieren!",
-			"confirmdependencies": "Dieser Mod benötigt weitere Mods, diese werden unter dieser Nachricht angezeigt. Beim drücken auf \"Ok\" stimmst du zu da diese Installiert werden.\n\n",
-			"confirm_plugins_title": "Das folgende Packet hat native plugins::",
-			"confirm_plugins_description": "Native plugins haben sehr viel mehr Rechte als reguläre Mods, da durch ist das nutzen dieser um einiges unsicherer denn es ist einfacher ihnen zuschaden! Bitte installieren sie nur native plugins von vertrauten Entwicklern oder ähnliches, falls dir bewusst ist was du machst kannst du diese Nachricht ignorieren."
+			"installed_mod": "Mod installiert!",
+			"drag_n_drop": "Drag and drop den Mod um ihn zu installieren!",
+			"confirm_dependencies": "Dieser Mod benötigt weitere Mods, diese werden unter dieser Nachricht angezeigt. Beim drücken auf \"Ok\" stimmst du zu da diese Installiert werden.\n\n",
+			"confirm_plugins": {
+				"title": "Das folgende Packet hat native plugins::",
+				"description": "Native plugins haben sehr viel mehr Rechte als reguläre Mods, da durch ist das nutzen dieser um einiges unsicherer denn es ist einfacher ihnen zuschaden! Bitte installieren sie nur native plugins von vertrauten Entwicklern oder ähnliches, falls dir bewusst ist was du machst kannst du diese Nachricht ignorieren."
+			}
 		},
 
 		"browser": {
 			"info": "Info",
 			"view": "Anschauen",
-			"madeby": "von",
+			"made_by": "von",
 			"search": "Suchen...",
 			"update": "Aktualisieren",
 			"install": "Installieren",
 			"reinstall": "Neuinstallieren",
 			"loading": "Lade Mods...",
-			"loadmore": "Lade mehr...",
-			"endoflist": "Alle Packete wurden geladen.",
-			"noresults": "Keine Ergebnisse...",
+			"load_more": "Lade mehr...",
+			"end_of_list": "Alle Packete wurden geladen.",
+			"no_results": "Keine Ergebnisse...",
 
 			"filter": {
 				"mods": "Mods",
@@ -188,10 +189,7 @@
 		},
 
 		"launch": "Starten",
-		"launchvanilla": "Vanilla",
-		"launchnorthstar": "Northstar",
-		"installnorthstar": "Installieren",
-		"selectpath": "Bitte wähle einen Installationspfad!",
+		"install": "Installieren",
 
 		"gamepath": {
 			"must": "Der Installationspfad muss gesetzt worden sein um Viper zu nutzen.",
@@ -205,7 +203,8 @@
 				"failed": "Fehler beim Installieren des Mods!",
 				"malformed": "Fehlerhafte Ordnerstruktur!",
 				"duped": "Duplizierter Ordner name!",
-				"unknown_error": "Unbekannter Fehler!"
+				"unknown_error": "Unbekannter Fehler!",
+				"no_internet": "Kein Internet"
 			},
 
 			"desc": {
@@ -213,12 +212,8 @@
 				"malformed": "hat eine fehlerhafte Ordnerstruktur, falls du der Entwickler bist, solltest du dies beheben.",
 				"failed": "Ein unbekannter Fehler ist aufgetaucht beim Installieren, die Schuld kann beim Autor liegen oder bei Viper selbst!",
 				"duped": "hat mehrere Ordner in sich mit dem selben Namen, wodurch ein duplizierter Ordner ensteht! Falls du der Entwickler bist solltest du dies beheben!",
-				"unknown_error": "Ein unbekannter Fehler ist aufgetreten für mehr details drücken! Es wird empfohlen einen Screenshot von der detalierten Fehlernachricht zu machen wenn ein Bug-Report erstellt wird!"
-			},
-
-			"noInternet": {
-				"title": "Kein Internet",
-				"desc": "Viper funktioniert möglicherweise nicht korrekt"
+				"unknown_error": "Ein unbekannter Fehler ist aufgetreten für mehr details drücken! Es wird empfohlen einen Screenshot von der detalierten Fehlernachricht zu machen wenn ein Bug-Report erstellt wird!",
+				"no_internet": "Viper funktioniert möglicherweise nicht korrekt"
 			}
 		}
 	},
@@ -229,6 +224,7 @@
 			"release": "Release Notes",
 			"info": "Extras"
 		},
+
 		"info": {
 			"links": "Links",
 			"credits": "Credits",
@@ -246,8 +242,8 @@
 	},
 
 	"general": {
-		"autoupdates": {
-			"gamerunning": "Spiel wird ausgeführt, Northstar wird nicht aktualisiert."
+		"auto_updates": {
+			"game_running": "Spiel wird ausgeführt, Northstar wird nicht aktualisiert."
 		},
 
 		"mods": {
@@ -256,21 +252,15 @@
 			"installed": "Installierte Mods:"
 		},
 
-		"missingpath": "Installationspfad konnte nicht automatisch gefunden werden, bitte setze diesen manuell!",
-		"notinstalled": "Northstar ist nicht installiert!",
+		"missing_path": "Installationspfad konnte nicht automatisch gefunden werden, bitte setze diesen manuell!",
+		"not_installed": "Northstar ist nicht installiert!",
 		"launching": "Starte!",
-		"invalidconfig": "Deine Konfigurationsdatei ist nicht richtig formatiert, falls diese manuell verändert wurde bitte stelle sicher das alles korrekt ist.\n\nFalls du diese nicht manuell verändert hast, ist es empfohlen diese zurückzusetzen!\n\nUm sie zurückzusetzen drücke einfach auf \"Ok\".\n\nWeitere Informationen:\n",
 		"running": "Läuft bereits."
 	},
 
 	"request": {
-		"viper": {
-			"noReleaseNotes": "Viper Release Notes konnten nicht geladen werden.\nVersuche es erneut später!"
-		},
-
-		"northstar": {
-			"noReleaseNotes": "Northstar Release Notes konnten nicht geladen werden.\nVersuche es erneut später!"
-		}
+		"no_vp_release_notes": "Viper Release Notes konnten nicht geladen werden.\nVersuche es erneut später!",
+		"no_ns_release_notes": "Northstar Release Notes konnten nicht geladen werden.\nVersuche es erneut später!"
 	},
 
 	"tooltip": {

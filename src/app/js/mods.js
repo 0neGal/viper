@@ -63,7 +63,7 @@ mods.load = (mods_obj) => {
 
 				<button class="visual">${version.format(mod_details.version)}</button>
 				<button class="visual">
-					${lang("gui.browser.madeby")}
+					${lang("gui.browser.made_by")}
 					${mod.author || lang("gui.mods.unknown_author")}
 				</button>
 			</div>
@@ -183,11 +183,11 @@ mods.load = (mods_obj) => {
 
 mods.remove = (mod) => {
 	if (mod.toLowerCase().match(/^northstar\./)) {
-		if (! confirm(lang("gui.mods.required.confirm"))) {
+		if (! confirm(lang("gui.mods.required_confirm"))) {
 			return;
 		}
 	} else if (mod == "allmods") {
-		if (! confirm(lang("gui.mods.removeall.confirm"))) {
+		if (! confirm(lang("gui.mods.remove_all.confirm"))) {
 			return;
 		}
 	}
@@ -197,11 +197,11 @@ mods.remove = (mod) => {
 
 mods.toggle = (mod) => {
 	if (mod.toLowerCase().match(/^northstar\./)) {
-		if (! confirm(lang("gui.mods.required.confirm"))) {
+		if (! confirm(lang("gui.mods.required_confirm"))) {
 			return;
 		}
 	} else if (mod == "allmods") {
-		if (! confirm(lang("gui.mods.toggleall.confirm"))) {
+		if (! confirm(lang("gui.mods.toggle_all_confirm"))) {
 			return;
 		}
 	}

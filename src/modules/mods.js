@@ -34,8 +34,8 @@ mods.list = () => {
 
 	// make sure Northstar is actually installed
 	if (version.northstar() == "unknown") {
-		win.log(lang("general.notinstalled"));
-		console.error(lang("general.notinstalled"));
+		win.log(lang("general.not_installed"));
+		console.error(lang("general.not_installed"));
 		cli.exit(1);
 		return false;
 	}
@@ -180,8 +180,8 @@ mods.get = (mod) => {
 
 	// make sure Northstar is actually installed
 	if (version.northstar() == "unknown") {
-		win.log(lang("general.notinstalled"));
-		console.error(lang("general.notinstalled"));
+		win.log(lang("general.not_installed"));
+		console.error(lang("general.not_installed"));
 		cli.exit(1);
 		return false;
 	}
@@ -314,15 +314,15 @@ mods.install = (mod, opts) => {
 	}
 
 	if (version.northstar() == "unknown") {
-		win.log(lang("general.notinstalled"));
-		console.error(lang("general.notinstalled"));
+		win.log(lang("general.not_installed"));
+		console.error(lang("general.not_installed"));
 		cli.exit(1);
 		return false;
 	}
 
 	let notamod = () => {
-		win.log(lang("gui.mods.notamod"));
-		console.error(lang("cli.mods.notamod"));
+		win.log(lang("gui.mods.not_a_mod"));
+		console.error(lang("cli.mods.not_a_mod"));
 		cli.exit(1);
 		return false;
 	}
@@ -561,8 +561,8 @@ mods.remove = (mod) => {
 
 	// make sure Northstar is actually installed
 	if (version.northstar() == "unknown") {
-		win.log(lang("general.notinstalled"));
-		console.error(lang("general.notinstalled"));
+		win.log(lang("general.not_installed"));
+		console.error(lang("general.not_installed"));
 		cli.exit(1);
 		return false;
 	}
@@ -580,7 +580,7 @@ mods.remove = (mod) => {
 	let mod_name = mod_data.folder_name;
 
 	if (! mod_name) {
-		console.error(lang("cli.mods.cantfind"));
+		console.error(lang("cli.mods.cant_find"));
 		cli.exit(1);
 		return;
 	}
@@ -633,8 +633,8 @@ mods.toggle = (mod, fork) => {
 
 	// make sure Northstar is actually installed
 	if (version.northstar() == "unknown") {
-		win.log(lang("general.notinstalled"));
-		console.error(lang("general.notinstalled"));
+		win.log(lang("general.not_installed"));
+		console.error(lang("general.not_installed"));
 		cli.exit(1);
 		return false;
 	}
@@ -646,7 +646,7 @@ mods.toggle = (mod, fork) => {
 			mods.toggle(modlist[i].name, true); // enable mod
 		}
 
-		console.ok(lang("cli.mods.toggledall"));
+		console.ok(lang("cli.mods.toggled_all"));
 		cli.exit(0);
 		return
 	}

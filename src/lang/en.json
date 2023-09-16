@@ -11,36 +11,36 @@
 			"cli": "forces the CLI to enable",
 			"update": "updates Northstar from your set game path",
 			"setpath": "sets your game path",
-			"updatevp": "updates Viper itself, if supported.",
-			"novpupdates": "overwrites viper.json and disables Viper updates",
-			"installmod": "installs a mod, folder or zip",
-			"removemod": "removes a mod",
-			"togglemod": "toggles a mod"
+			"update_vp": "updates Viper itself, if supported.",
+			"no_vp_updates": "overwrites viper.json and disables Viper updates",
+			"install_mod": "installs a mod, folder or zip",
+			"remove_mod": "removes a mod",
+			"toggle_mod": "toggles a mod"
 		},
 
 		"setpath": {
-			"noarg": "No argument provided for --setpath"
+			"no_arg": "No argument provided for --setpath"
 		},
 
 		"update": {
 			"current": "Current version:",
 			"downloading": "Downloading...",
 			"checking": "Checking for updates...",
-			"downloaddone": "Download done! Extracting...",
+			"download_done": "Download done! Extracting...",
 			"finished": "Installation/Update finished!",
 			"uptodate": "Latest version (%s) is already installed, skipping update.",
-			"noInternet": "No Internet connection"
+			"no_internet": "No Internet connection"
 		},
 
-		"autoupdates": {
+		"auto_updates": {
 			"checking": "Checking for Northstar updates...",
 			"available": "Northstar update available!",
-			"updatingns": "Launching update process...",
-			"noupdate": "No Northstar update available."
+			"updating_ns": "Launching update process...",
+			"no_update": "No Northstar update available."
 		},
 
 		"launch": {
-			"linuxerror": "Launching the game is not currently supported on Linux"
+			"linux_error": "Launching the game is not currently supported on Linux"
 		},
 
 		"gamepath": {
@@ -52,10 +52,10 @@
 			"removed": "Successfully removed mod!",
 			"toggled": "Successfully toggled mod",
 			"installed": "Successfully installed mod!",
-			"cantfind": "Can't find a mod with that name!",
-			"notamod": "Selected folder/file is not a mod",
-			"toggledall": "Successfully toggled all mods",
-			"improperjson": "%s's mod.json has formatting errors"
+			"cant_find": "Can't find a mod with that name!",
+			"not_a_mod": "Selected folder/file is not a mod",
+			"toggled_all": "Successfully toggled all mods",
+			"improper_json": "%s's mod.json has formatting errors"
 		}
 	},
 	"gui": {
@@ -81,41 +81,43 @@
 		"mods": {
 			"title": "Mods",
 			"count": "Mods Installed:",
-			"disabledtag": "Disabled",
+			"disabled_tag": "Disabled",
 			"remove": "Remove",
 			"install": "Install Mod",
 			"find": "Find Mods",
-			"toggleall": "Toggle All",
-			"removeall": "Remove All",
-			"nothingselected": "You've not selected a mod.",
+			"toggle_all": "Toggle All",
+			"toggle_all_confirm": "Toggling all mods could disable mods required for Northstar to function. Are you sure?",
+			"remove_all": "Remove All",
+			"remove_all_confirm": "Removing all mods will usually require you to reinstall Northstar. Are you sure?",
+			"nothing_selected": "You've not selected a mod.",
+			"required_confirm": "You've selected a core mod, Northstar may not function without it. Are you sure?",
 
-			"required": {
-				"confirm": "You've selected a core mod, Northstar may not function without it. Are you sure?"
-			},
-
-			"notamod": "Not a mod!",
+			"not_a_mod": "Not a mod!",
 			"unknown_author": "Unknown",
 			"extracting": "Extracting mod...",
 			"installing": "Installing mod...",
-			"installedmod": "Installed mod!",
-			"dragdrop": "Drag and drop a mod to install",
-			"confirmdependencies": "This package has dependencies, shown below, clicking \"Ok\" will install the package and the dependencies.\n\n",
-			"confirm_plugins_title": "The following package has native plugins:",
-			"confirm_plugins_description": "Native plugins have far more system access than a regular mod, and because of this they're inherently less secure to have installed, as a malicious plugin could do far more harm this way. If this plugin is one from a trusted developer or similar or you know what you're doing, then you can disregard this message completely."
+			"installed_mod": "Installed mod!",
+			"drag_n_drop": "Drag and drop a mod to install",
+			"confirm_dependencies": "This package has dependencies, shown below, clicking \"Ok\" will install the package and the dependencies.\n\n",
+
+			"confirm_plugins": {
+				"title": "The following package has native plugins:",
+				"description": "Native plugins have far more system access than a regular mod, and because of this they're inherently less secure to have installed, as a malicious plugin could do far more harm this way. If this plugin is one from a trusted developer or similar or you know what you're doing, then you can disregard this message completely."
+			}
 		},
 
 		"browser": {
 			"info": "Info",
 			"view": "View",
-			"madeby": "by",
+			"made_by": "by",
 			"search": "Search...",
 			"update": "Update",
 			"install": "Install",
 			"reinstall": "Re-Install",
 			"loading": "Loading mods...",
-			"loadmore": "Load more...",
-			"endoflist": "All packages have been loaded.",
-			"noresults": "No results...",
+			"load_more": "Load more...",
+			"end_of_list": "All packages have been loaded.",
+			"no_results": "No results...",
 
 			"filter": {
 				"mods": "Mods",
@@ -187,10 +189,7 @@
 		},
 
 		"launch": "Launch",
-		"launchvanilla": "Vanilla",
-		"launchnorthstar": "Northstar",
-		"installnorthstar": "Install",
-		"selectpath": "Please select the path!",
+		"install": "Install",
 
 		"gamepath": {
 			"must": "The game path must be set to start Viper.",
@@ -204,7 +203,8 @@
 				"duped": "Duplicate folder names!",
 				"failed": "Failed to install",
 				"malformed": "Incorrect folder structure!",
-				"unknown_error": "Unknown Error!"
+				"unknown_error": "Unknown Error!",
+				"no_internet": "No Internet"
 			},
 
 			"desc": {
@@ -212,12 +212,8 @@
 				"malformed": "has an incorrect folder structure, if you're the developer, you should fix this.",
 				"failed": "An unknown error occurred while trying to install the mod. This may be the author's fault, and it may also be Viper's fault.",
 				"duped": "has multiple mod folders in it, with the same name, causing duplicate folders, if you're the developer, you should fix this.",
-				"unknown_error": "An unknown error occurred, click for more details. You may want to take a screenshot of the detailed error when filing a bug report."
-			},
-
-			"noInternet": {
-				"title": "No Internet",
-				"desc": "Viper may not work properly."
+				"unknown_error": "An unknown error occurred, click for more details. You may want to take a screenshot of the detailed error when filing a bug report.",
+				"no_internet": "Viper may not work properly."
 			}
 		}
 	},
@@ -228,6 +224,7 @@
 			"release": "Release Notes",
 			"info": "Extras"
 		},
+
 		"info": {
 			"links": "Links",
 			"credits": "Credits",
@@ -246,8 +243,8 @@
 	},
 
 	"general": {
-		"autoupdates": {
-			"gamerunning": "Game is running, refusing to update Northstar"
+		"auto_updates": {
+			"game_running": "Game is running, refusing to update Northstar"
 		},
 
 		"mods": {
@@ -256,20 +253,15 @@
 			"installed": "Installed mods:"
 		},
 
-		"missingpath": "Game location could not be found automatically! Please select it manually!",
-		"notinstalled": "Northstar is not installed!",
+		"missing_path": "Game location could not be found automatically! Please select it manually!",
+		"not_installed": "Northstar is not installed!",
 		"running": "Running",
-		"launching": "Launching",
-		"invalidconfig": "Your config file is improperly formatted, if it's been manually edited, please validate that everything is typed correctly.\n\nIf you did not manually edit the config file, it is recommended to simply reset the config.\n\nTo reset your config file simply click \"Ok\" below.\n\nMore details:\n"
+		"launching": "Launching"
 	},
 
 	"request": {
-		"viper": {
-			"noReleaseNotes": "Couldn't fetch Viper release notes.\nTry again later!"
-		},
-		"northstar": {
-			"noReleaseNotes": "Couldn't fetch Northstar release notes.\nTry again later!"
-		}
+		"no_vp_release_notes": "Couldn't fetch Viper release notes.\nTry again later!",
+		"no_ns_release_notes": "Couldn't fetch Northstar release notes.\nTry again later!"
 	},
 
 	"tooltip": {

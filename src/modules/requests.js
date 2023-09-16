@@ -123,7 +123,7 @@ async function getNsReleaseNotes() {
                     resolve( cache[NORTHSTAR_RELEASE_NOTES_KEY]["body"] );
                 } else {
                     console.error("Couldn't fetch Northstar release notes, cache is empty.");
-                    resolve( [lang("request.northstar.noReleaseNotes")] );
+                    resolve( [lang("request.no_ns_release_notes")] );
                 }
             });
         }
@@ -174,7 +174,7 @@ async function getVpReleaseNotes() {
                     resolve( cache[VIPER_RELEASE_NOTES_KEY]["body"] );
                 } else {
                     console.error("Couldn't fetch Viper release notes, cache is empty.");
-                    resolve( [lang("request.viper.noReleaseNotes")] );
+                    resolve( [lang("request.no_vp_release_notes")] );
                 }
             });
         }

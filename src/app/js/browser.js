@@ -231,7 +231,7 @@ var Browser = {
 			return
 		}
 
-		Browser.msg(`<button id="loadmore">${lang("gui.browser.loadmore")}</button>`);
+		Browser.msg(`<button id="loadmore">${lang("gui.browser.load_more")}</button>`);
 		loadmore.addEventListener("click", () => {
 			Browser.loadpkgs(pkgs);
 			Browser.endoflist(! pkgs.length);
@@ -427,7 +427,7 @@ function BrowserEl(properties) {
 
 			<button class="visual">${properties.version}</button>
 			<button class="visual">
-				${lang("gui.browser.madeby")}
+				${lang("gui.browser.made_by")}
 				${properties.author}
 			</button>
 		</div>
@@ -490,8 +490,8 @@ ipcRenderer.on("no-internet", (event, modname) => {
 	new Toast({
 		timeout: 10000,
 		scheme: "error",
-		title: lang("gui.toast.noInternet.title"),
-		description: lang("gui.toast.noInternet.desc")
+		title: lang("gui.toast.title.no_internet"),
+		description: lang("gui.toast.desc.no_internet")
 	})
 })
 

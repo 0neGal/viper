@@ -65,14 +65,17 @@ var Settings = {
 				let div = options[i].querySelector("select");
 
 				div.innerHTML = "";
-				let langs = fs.readdirSync(__dirname + "/../lang");
+				let lang_dir = __dirname + "/../lang";
+				let langs = fs.readdirSync(lang_dir);
 				for (let i in langs) {
+					let lang_file = require(lang_dir + "/" + langs[i]);
 					let lang_no_extension = langs[i].replace(/\..*$/, "");
-					let title = lang("lang.title", lang_no_extension);
 
-					if (title == "lang.title") {
+					if (! lang_file.lang || ! lang_file.lang.title) {
 						continue;
 					}
+
+					let title = lang_file.lang.title;
 
 					if (title) {
 						div.innerHTML += `<option value="${lang_no_extension}">${title}</option>`

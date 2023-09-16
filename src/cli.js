@@ -65,13 +65,13 @@ async function init() {
 
   --cli           ${lang("cli.help.cli")}
   --update        ${lang("cli.help.update")}
-  --update-viper  ${lang("cli.help.updatevp")}
+  --update-viper  ${lang("cli.help.update_vp")}
   --setpath       ${lang("cli.help.setpath")}
-  --no-vp-updates ${lang("cli.help.novpupdates")}
+  --no-vp-updates ${lang("cli.help.no_vp_updates")}
 
-  --installmod    ${lang("cli.help.installmod")}
-  --removemod     ${lang("cli.help.removemod")}
-  --togglemod     ${lang("cli.help.togglemod")}`)
+  --installmod    ${lang("cli.help.install_mod")}
+  --removemod     ${lang("cli.help.remove_mod")}
+  --togglemod     ${lang("cli.help.toggle_mod")}`)
 		// In the future --setpath should be able to understand
 		// relative paths, instead of just absolute ones.
 		exit();
@@ -88,7 +88,7 @@ async function init() {
 		if (cli.getSwitchValue("setpath") != "") {
 			ipcMain.emit("setpathcli", cli.getSwitchValue("setpath"));
 		} else {
-			console.error(lang("cli.setpath.noarg"));
+			console.error(lang("cli.setpath.no_arg"));
 			exit(1);
 		}
 	}

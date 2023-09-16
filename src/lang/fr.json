@@ -11,36 +11,36 @@
 			"cli": "force l'activation de la CLI",
 			"update": "met à jour Northstar sur le chemin du jeu précisé",
 			"setpath": "enregistre le chemin du client de jeu",
-			"updatevp": "met à jour le client Viper, si le format actuel le permet.",
-			"novpupdates": "écrase viper.json et désactive les mises à jour de Viper",
-			"installmod": "Installe un mod, dossier ou zip",
-			"removemod": "Supprime un mod",
-			"togglemod": "Active/désactive un mod"
+			"update_vp": "met à jour le client Viper, si le format actuel le permet.",
+			"no_vp_updates": "écrase viper.json et désactive les mises à jour de Viper",
+			"install_mod": "Installe un mod, dossier ou zip",
+			"remove_mod": "Supprime un mod",
+			"toggle_mod": "Active/désactive un mod"
 		},
 
 		"setpath": {
-			"noarg": "Aucun argument donné à --setpath"
+			"no_arg": "Aucun argument donné à --setpath"
 		},
 
 		"update": {
 			"current": "Version actuelle :",
 			"downloading": "Téléchargement en cours...",
 			"checking": "Vérification des mises à jour...",
-			"downloaddone": "Téléchargement terminé ! Extraction des fichiers...",
+			"download_done": "Téléchargement terminé ! Extraction des fichiers...",
 			"finished": "Mise à jour terminée !",
 			"uptodate": "La dernière version (%s) est déjà installée.",
-			"noInternet": "Pas de connexion Internet"
+			"no_internet": "Pas de connexion Internet"
 		},
 
-		"autoupdates": {
+		"auto_updates": {
 			"checking": "Vérifications des mises à jour de Northstar...",
 			"available": "Une mise à jour de Northstar est disponible !",
-			"updatingns": "Lancement de la mise à jour...",
-			"noupdate": "Pas de mise à jour de Northstar disponible."
+			"updating_ns": "Lancement de la mise à jour...",
+			"no_update": "Pas de mise à jour de Northstar disponible."
 		},
 
 		"launch": {
-			"linuxerror": "Le support du jeu sur Linux n'est pas encore implémenté."
+			"linux_error": "Le support du jeu sur Linux n'est pas encore implémenté."
 		},
 
 		"gamepath": {
@@ -52,10 +52,10 @@
 			"removed": "Le mod a bien été supprimé.",
 			"toggled": "Le mod a bien été activé/désactivé.",
 			"installed": "Mod installé !",
-			"cantfind": "Aucun mod avec ce nom n'a pu être trouvé.",
-			"notamod": "Le fichier/dossier sélectionné n'est pas un mod.",
-			"toggledall": "Tous les mods ont bien été activés/désactivés.",
-			"improperjson": "Le mod.json de %s présente des erreurs de formatage."
+			"cant_find": "Aucun mod avec ce nom n'a pu être trouvé.",
+			"not_a_mod": "Le fichier/dossier sélectionné n'est pas un mod.",
+			"toggled_all": "Tous les mods ont bien été activés/désactivés.",
+			"improper_json": "Le mod.json de %s présente des erreurs de formatage."
 		}
 	},
 
@@ -63,6 +63,7 @@
 		"exit": "Fermer",
 		"welcome": "Bienvenue sur Viper !",
 		"setpath": "Mettre à jour le chemin du jeu",
+
 		"versions": {
 			"viper": "Version de Viper",
 			"northstar": "Version de Northstar"
@@ -81,41 +82,42 @@
 		"mods": {
 			"title": "Mods",
 			"count": "Mods installés :",
-			"disabledtag": "Désactivé",
+			"disabled_tag": "Désactivé",
 			"remove": "Supprimer",
 			"install": "Installer le mod",
 			"find": "Chercher des mods",
-			"toggleall": "Activer/désactiver tous les mods",
-			"removeall": "Tout supprimer",
-			"nothingselected": "Aucun mod n'est sélectionné.",
+			"toggle_all": "Activer/désactiver tous les mods",
+			"toggle_all_confirm": "Cette action pourrait désactiver des mods nécessaires au bon fonctionnement de Northstar. Souhaitez-vous faire cela ?",
+			"remove_all": "Tout supprimer",
+			"remove_all_confirm": "Supprimer tous les mods vous forcera à réinstaller Northstar, souhaitez-vous faire cela ?",
+			"nothing_selected": "Aucun mod n'est sélectionné.",
+			"required_confirm": "Vous avez sélectionné un mod de base, Northstar peut ne pas fonctionner sans celui-ci. Souhaitez-vous faire cela ?",
 
-			"required": {
-				"confirm": "Vous avez sélectionné un mod de base, Northstar peut ne pas fonctionner sans celui-ci. Souhaitez-vous faire cela ?"
-			},
-
-			"notamod": "Ceci n'est pas un mod !",
+			"not_a_mod": "Ceci n'est pas un mod !",
 			"unknown_author": "Inconnu",
 			"extracting": "Extraction du mod...",
 			"installing": "Installation du mod...",
-			"installedmod": "Mod installé !",
-			"dragdrop": "Glissez/déposez un mod pour l'installer",
-			"confirmdependencies": "Ce mod a des dépendances (affichées ci-dessous), cliquer \"Ok\" les installera en même temps que le mod.\n\n",
-			"confirm_plugins_title": "Ce mod contient des plugins :",
-			"confirm_plugins_description": "Les plugins ont des accès à votre système, comparés aux mods classiques, et sont de fait plus dangereux à l'installation, comme pourrait l'être un plugin contenant un malware. Si ce plugin provient d'un tiers de confiance ou si vous savez ce que vous faites, ne tenez pas compte de ce message."
+			"installed_mod": "Mod installé !",
+			"drag_n_drop": "Glissez/déposez un mod pour l'installer",
+			"confirm_dependencies": "Ce mod a des dépendances (affichées ci-dessous), cliquer \"Ok\" les installera en même temps que le mod.\n\n",
+			"confirm_plugins": {
+				"title": "Ce mod contient des plugins :",
+				"description": "Les plugins ont des accès à votre système, comparés aux mods classiques, et sont de fait plus dangereux à l'installation, comme pourrait l'être un plugin contenant un malware. Si ce plugin provient d'un tiers de confiance ou si vous savez ce que vous faites, ne tenez pas compte de ce message."
+			}
 		},
 
 		"browser": {
 			"info": "Info",
 			"view": "Voir",
-			"madeby": "par",
+			"made_by": "par",
 			"search": "Rechercher",
 			"update": "Mise à jour",
 			"install": "Installer",
 			"reinstall": "Réinstaller",
 			"loading": "Chargement des mods...",
-			"loadmore": "Charger plus de mods...",
-			"endoflist": "Fin de la liste de mods.<br>Utilisez la barre de recherche pour en trouver davantage !",
-			"noresults": "Pas de résultat",
+			"load_more": "Charger plus de mods...",
+			"end_of_list": "Fin de la liste de mods.<br>Utilisez la barre de recherche pour en trouver davantage !",
+			"no_results": "Pas de résultat",
 
 			"filter": {
 				"mods": "Mods",
@@ -187,10 +189,7 @@
 		},
 
 		"launch": "Jouer",
-		"launchvanilla": "Vanilla",
-		"launchnorthstar": "Northstar",
-		"installnorthstar": "Installer",
-		"selectpath": "Veuillez sélectionner le dossier où se trouve le client Titanfall 2.",
+		"install": "Installer",
 
 		"gamepath": {
 			"must": "Vous devez sélectionner le chemin du dossier du jeu Titanfall 2 pour pouvoir lancer Viper.",
@@ -204,7 +203,8 @@
 				"duped": "Nom de dossier dupliqué !",
 				"failed": "L'installation a échoué",
 				"malformed": "La structure du dossier du mod est incorrecte.",
-				"unknown_error": "Erreur inconnue"
+				"unknown_error": "Erreur inconnue",
+				"no_internet": "Pas de connexion Internet"
 			},
 
 			"desc": {
@@ -212,12 +212,8 @@
 				"malformed": "a une structure de dossier incorrecte ; si vous êtes son développeur, vous devriez réparer ça.",
 				"failed": "Une erreur inconnue est survenue lors de l'installation du mod. Cela peut être du ressort de l'auteur du mod ou de Viper.",
 				"duped": "contient plusieurs dossiers ayant le même nom ; si vous êtes le développer, vous devriez réparer ceci.",
-				"unknown_error": "Une erreur inconnue est survenue, cliquez pour plus de détails. Vous devriez prendre une capture d'écran de l'erreur si vous comptez créer un ticket."
-			},
-
-			"noInternet": {
-				"title": "Pas de connexion Internet",
-				"desc": "Viper ne fonctionnera pas correctement tant que la connexion n'est pas rétablie."
+				"unknown_error": "Une erreur inconnue est survenue, cliquez pour plus de détails. Vous devriez prendre une capture d'écran de l'erreur si vous comptez créer un ticket.",
+				"no_internet": "Viper ne fonctionnera pas correctement tant que la connexion n'est pas rétablie."
 			}
 		}
 	},
@@ -228,6 +224,7 @@
 			"release": "Notes de mises à jour",
 			"info": "Informations"
 		},
+
 		"info": {
 			"links": "Liens utiles",
 			"credits": "Remerciements",
@@ -245,8 +242,8 @@
 	},
 
 	"general": {
-		"autoupdates": {
-			"gamerunning": "Le jeu est en cours d'exécution, impossible de lancer la mise à jour."
+		"auto_updates": {
+			"game_running": "Le jeu est en cours d'exécution, impossible de lancer la mise à jour."
 		},
 
 		"mods": {
@@ -255,20 +252,15 @@
 			"installed": "Mods installés :"
 		},
 
-		"missingpath": "Le chemin du client n'a pu être trouvé automatiquement, merci de le sélectionner manuellement.",
-		"notinstalled": "Northstar n'est pas installé !",
+		"missing_path": "Le chemin du client n'a pu être trouvé automatiquement, merci de le sélectionner manuellement.",
+		"not_installed": "Northstar n'est pas installé !",
 		"launching": "Lancement",
-		"invalidconfig": "Votre fichier de configuration n'est pas formaté correctement ; si vous l'avez manuellement édité, veuillez vérifier son contenu.\n\nSinon, il est recommandé de remettre la configuration à zéro.\n\nPour cela, cliquez sur le bouton \"Ok\" en-dessous de ce message.\n\nPlus d'informations :\n",
 		"running": "En cours d'exécution"
 	},
 
 	"request": {
-		"viper": {
-			"noReleaseNotes": "Impossible de récupérer les notes de mises à jour de Viper.\nVeuillez réessayer plus tard."
-		},
-		"northstar": {
-			"noReleaseNotes": "Impossible de récupérer les notes de mises à jour de Northstar.\nVeuillez réessayer plus tard."
-		}
+		"no_vp_release_notes": "Impossible de récupérer les notes de mises à jour de Viper.\nVeuillez réessayer plus tard.",
+		"no_ns_release_notes": "Impossible de récupérer les notes de mises à jour de Northstar.\nVeuillez réessayer plus tard."
 	},
 
 	"tooltip": {

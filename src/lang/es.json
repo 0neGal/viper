@@ -11,15 +11,15 @@
 			"cli": "obliga la linea de comandos a habilitarse",
 			"update": "actualiza Northstar desde la ruta de juego establecida",
 			"setpath": "establece la ruta del juego",
-			"updatevp": "actualiza Viper si es soportado",
-			"novpupdates": "sobrescribe viper.json y deshabilita las actualizaciones de Viper",
-			"installmod": "instala una modificación, desde una carpeta o zip",
-			"removemod": "remueve una modificación",
-			"togglemod": "alterna el estado de la modificación"
+			"update_vp": "actualiza Viper si es soportado",
+			"no_vp_updates": "sobrescribe viper.json y deshabilita las actualizaciones de Viper",
+			"install_mod": "instala una modificación, desde una carpeta o zip",
+			"remove_mod": "remueve una modificación",
+			"toggle_mod": "alterna el estado de la modificación"
 		},
 
 		"setpath": {
-			"noarg": "No se ha proporcionado ningún argumento para --setpath"
+			"no_arg": "No se ha proporcionado ningún argumento para --setpath"
 		},
 
 		"gamepath": {
@@ -30,21 +30,21 @@
 			"current": "Versión actual:",
 			"downloading": "Descargando...",
 			"checking": "Buscando actualizaciones...",
-			"downloaddone": "¡Descarga completa! Extrayendo...",
+			"download_done": "¡Descarga completa! Extrayendo...",
 			"finished": "Instalación/Actualización completada!",
 			"uptodate": "La ultima versión (%s) ya está instalada, omitiendo actualización.",
-			"noInternet": "Sin conexión a internet"
+			"no_internet": "Sin conexión a internet"
 		},
 
-		"autoupdates": {
+		"auto_updates": {
 			"checking": "Buscando actualizaciones de Northstar...",
 			"available": "¡Actualización de Northsar disponible!",
-			"updatingns": "Lanzando proceso de actualización...",
-			"noupdate": "No hay actualizaciones de Northstar disponibles."
+			"updating_ns": "Lanzando proceso de actualización...",
+			"no_update": "No hay actualizaciones de Northstar disponibles."
 		},
 
 		"launch": {
-			"linuxerror": "La ejecución del juego en Linux aun no está implementada"
+			"linux_error": "La ejecución del juego en Linux aun no está implementada"
 		},
 
 		"mods": {
@@ -52,10 +52,10 @@
 			"removed": "¡Modificación removida exitosamente!",
 			"toggled": "¡El estado de la modificación ha cambiado exitosamente!",
 			"installed": "¡Modificiación instalada exitosamente!",
-			"cantfind": "¡No se encuentra una modificación con ese nombre!",
-			"notamod": "La carpeta o el archivo seleccionado no es una modificación",
-			"toggledall": "¡El estado de todas las modifiaciones ha sido cambiado exitosamente!",
-			"improperjson": "%s's mod.json tiene errores de formato"
+			"cant_find": "¡No se encuentra una modificación con ese nombre!",
+			"not_a_mod": "La carpeta o el archivo seleccionado no es una modificación",
+			"toggled_all": "¡El estado de todas las modifiaciones ha sido cambiado exitosamente!",
+			"improper_json": "%s's mod.json tiene errores de formato"
 		}
 	},
 
@@ -82,41 +82,42 @@
 		"mods": {
 			"title": "Modificaciones (Mods)",
 			"count": "Modificaciones instaladas:",
-			"disabledtag": "Deshabilitado",
+			"disabled_tag": "Deshabilitado",
 			"install": "Instalar modificación",
 			"find": "Buscar modificaciones",
-			"toggleall": "Activar / Desactivar todo",
-			"removeall": "Remover todo",
-			"nothingselected": "No has seleccionado una modificación.",
+			"toggle_all": "Activar / Desactivar todo",
+			"toggle_all_confirm": "Alternar todo podría deshabilitar las modificaciones requeridas para que Northstar funcione. ¿Está seguro?",
+			"remove_all": "Remover todo",
+			"remove_all_confirm": "Eliminar todas las modificaciones generalmente requerirá que reinstales Northstar. ¿Está seguro?",
+			"nothing_selected": "No has seleccionado una modificación.",
+			"required_confirm": "Ha seleccionado un mod esencial, es posible que Northstar no funcione sin él. ¿Está seguro?",
 
-			"required": {
-				"confirm": "Ha seleccionado un mod esencial, es posible que Northstar no funcione sin él. ¿Está seguro?"
-			},
-
-			"notamod": "¡No es una modificación!",
+			"not_a_mod": "¡No es una modificación!",
 			"extracting": "Extrayendo modificación...",
 			"installing": "Instalando modificación...",
-			"installedmod": "¡Modificación instalada!",
-			"dragdrop": "Arrastra y suelta una modificación para instalarla",
-			"confirmdependencies": "Este paquete tiene dependencias, se muestran abajo. Presionar \"Ok\" instalará el paquete y las dependencias.\n\n",
+			"installed_mod": "¡Modificación instalada!",
+			"drag_n_drop": "Arrastra y suelta una modificación para instalarla",
+			"confirm_dependencies": "Este paquete tiene dependencias, se muestran abajo. Presionar \"Ok\" instalará el paquete y las dependencias.\n\n",
 			"remove": "Remover",
 			"unknown_author": "Desconocido",
-			"confirm_plugins_title": "El siguiente paquete tiene complementos nativos:",
-			"confirm_plugins_description": "Los complementos nativos tienen mucho más acceso al sistema que un mod regular y, por lo tanto, son inherentemente menos seguros de instalar, ya que un complemento malicioso podría causar mucho más daño de esta manera. Si este complemento es de un desarrollador confiable o similar o si sabe lo que está haciendo, entonces puede ignorar completamente este mensaje."
+			"confirm_plugins": {
+				"title": "El siguiente paquete tiene complementos nativos:",
+				"description": "Los complementos nativos tienen mucho más acceso al sistema que un mod regular y, por lo tanto, son inherentemente menos seguros de instalar, ya que un complemento malicioso podría causar mucho más daño de esta manera. Si este complemento es de un desarrollador confiable o similar o si sabe lo que está haciendo, entonces puede ignorar completamente este mensaje."
+			}
 		},
 
 		"browser": {
 			"info": "Información",
 			"view": "Ver",
-			"madeby": "hecho por",
+			"made_by": "hecho por",
 			"search": "Buscar...",
 			"update": "Actualizar",
 			"install": "Instalar",
 			"reinstall": "Re-Instalar",
 			"loading": "Cargando modificaciones...",
-			"loadmore": "Cargar más...",
-			"endoflist": "Todos los paquetes han sido cargados",
-			"noresults": "Sin resultados...",
+			"load_more": "Cargar más...",
+			"end_of_list": "Todos los paquetes han sido cargados",
+			"no_results": "Sin resultados...",
 
 			"filter": {
 				"mods": "Modificaciones",
@@ -188,10 +189,7 @@
 		},
 
 		"launch": "Ejecutar",
-		"launchvanilla": "Vainilla",
-		"launchnorthstar": "Northstar",
-		"installnorthstar": "Instalar",
-		"selectpath": "Por favor, ¡elija la ruta del juego!",
+		"install": "Instalar",
 
 		"gamepath": {
 			"must": "La ruta del juego debe establecerse para ejecutar Viper.",
@@ -205,7 +203,8 @@
 				"failed": "¡Falló al instalar!",
 				"malformed": "¡Estructura de las carpetas incorrecta!",
 				"duped": "tiene varias carpetas de la modificación con el mismo nombre, lo que genera carpetas duplicadas. Si eres el desarrollador, deberías arreglar esto.",
-				"unknown_error": "¡Error desconocido!"
+				"unknown_error": "¡Error desconocido!",
+				"no_internet": "Sin Internet"
 			},
 
 			"desc": {
@@ -213,12 +212,8 @@
 				"malformed": "tiene una estructura de carpetas incorrecta, si usted es el desarrollador, debe corregir esto.",
 				"failed": "Se produjo un error desconocido al intentar instalar la modificación. Esto puede ser culpa del autor de la modificación, y también puede ser culpa de Viper.",
 				"duped": "¡Nombres de las carpetas duplicados!",
-				"unknown_error": "Ha ocurrido un error desconocido, presiona para más detalles. Recomendamos que tomes una captura de pantalla del error con sus detalles cuando reportes un error."
-			},
-
-			"noInternet": {
-				"title": "Sin Internet",
-				"desc": "Viper puede funcionar de forma incorrecta."
+				"unknown_error": "Ha ocurrido un error desconocido, presiona para más detalles. Recomendamos que tomes una captura de pantalla del error con sus detalles cuando reportes un error.",
+				"no_internet": "Viper puede funcionar de forma incorrecta."
 			}
 		}
 	},
@@ -229,6 +224,7 @@
 			"release": "Notas de la versión",
 			"info": "Extras"
 		},
+
 		"info": {
 			"links": "Links",
 			"credits": "Creditos",
@@ -246,8 +242,8 @@
 	},
 
 	"general": {
-		"autoupdates": {
-			"gamerunning": "El juego está en ejecución, no se puede actualizar Northstar"
+		"auto_updates": {
+			"game_running": "El juego está en ejecución, no se puede actualizar Northstar"
 		},
 
 		"mods": {
@@ -256,20 +252,15 @@
 			"installed": "Modificiaciones instaladas:"
 		},
 
-		"missingpath": "¡La ruta del jueno no se ha podido encontrar automaticamente! ¡Por favor, elige la ruta manualmente!",
-		"notinstalled": "¡Northstar no se ha instalado!",
+		"missing_path": "¡La ruta del jueno no se ha podido encontrar automaticamente! ¡Por favor, elige la ruta manualmente!",
+		"not_installed": "¡Northstar no se ha instalado!",
 		"launching": "Ejecutando",
-		"invalidconfig": "Su archivo de configuración está formateado de forma incorrecta, si ha sido editado manualmente, por favor valide que ha sido escrito correctamente. \n\nSi no ha editado manualmente el archivo de configuración, es recomendado que simplemente restaure la configuración. \n\nPara restaurar tu configuración simplemente de click en \"OK\" a continuación. \n\nMas detalles:\n",
 		"running": "Ejecutandose"
 	},
 
 	"request": {
-		"viper": {
-			"noReleaseNotes": "No se pudo encontrar las notas de lanzamiento de Viper.\n¡Intenta mas tarde!"
-		},
-		"northstar": {
-			"noReleaseNotes": "No se pudo encontrar las notas de lanzamiento de Northstar.\n¡Intenta mas tarde!"
-		}
+		"no_vp_release_notes": "No se pudo encontrar las notas de lanzamiento de Viper.\n¡Intenta mas tarde!",
+		"no_ns_release_notes": "No se pudo encontrar las notas de lanzamiento de Northstar.\n¡Intenta mas tarde!"
 	},
 
 	"tooltip": {

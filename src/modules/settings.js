@@ -49,7 +49,7 @@ if (fs.existsSync("viper.json")) {
 		settings.nsargs = fs.readFileSync(args, "utf8");
 	}
 } else {
-	console.error(lang("general.missingpath"));
+	console.error(lang("general.missing_path"));
 }
 
 // as to not have to do the same one liner a million times, this

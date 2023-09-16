@@ -59,23 +59,23 @@ update.northstar_autoupdate = () => {
 	async function _checkForUpdates() {
 		is_auto_updating = true;
 
-		console.info(lang("cli.autoupdates.checking"));
+		console.info(lang("cli.auto_updates.checking"));
 
 		// checks if NS is outdated
 		if (await northstar_update_available()) {
-			console.ok(lang("cli.autoupdates.available"));
+			console.ok(lang("cli.auto_updates.available"));
 			if (await is_running.game()) {
-				console.error(lang("general.autoupdates.gamerunning"));
+				console.error(lang("general.auto_updates.game_running"));
 				new Notification({
 					title: lang("gui.nsupdate.gaming.title"),
 					body: lang("gui.nsupdate.gaming.body")
 				}).show();
 			} else {
-				console.info(lang("cli.autoupdates.updatingns"));
+				console.info(lang("cli.auto_updates.updating_ns"));
 				update.northstar();
 			}
 		} else {
-			console.info(lang("cli.autoupdates.noupdate"));
+			console.info(lang("cli.auto_updates.no_update"));
 		}
 
 		setTimeout(
@@ -152,7 +152,7 @@ update.viper = (autoinstall) => {
 // unzip module does not support excluding files directly.
 update.northstar = async () => {
 	if (await is_running.game()) {
-		console.error(lang("general.autoupdates.gamerunning"));
+		console.error(lang("general.auto_updates.game_running"));
 		return false;
 	}
 
@@ -227,7 +227,7 @@ update.northstar = async () => {
 
 			win.log(lang("gui.update.extracting"));
 			ipcMain.emit("ns-update-event", "gui.update.extracting");
-			console.ok(lang("cli.update.downloaddone"));
+			console.ok(lang("cli.update.download_done"));
 			// extracts the zip, this is the part where we're actually
 			// installing Northstar.
 			extract.pipe(unzip.Extract({path: settings.gamepath}))
