@@ -2,6 +2,11 @@ body {
 	overflow-x: hidden;
 	background: transparent !important;
 	background-color: transparent !important;
+	background-image: transparent !important;
+}
+
+.background {
+	display: none;
 }
 
 .footer,
