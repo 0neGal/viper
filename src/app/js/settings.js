@@ -1,4 +1,3 @@
-
 var Settings = {
 	toggle: (state) => {
 		let settings_btn = document.getElementById("settings");

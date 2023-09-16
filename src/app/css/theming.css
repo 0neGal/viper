@@ -37,10 +37,18 @@ a {
 	transition: filter 0.2s ease-in !important;
 }
 
+a.disabled {
+	opacity: 0.5;
+	pointer-events: none;
+}
+
 a:hover {
 	filter: brightness(80%) !important;
 }
 
+input:disabled {
+	opacity: 0.5;
+}
 
 ::-webkit-scrollbar {
 	width: 8px !important;

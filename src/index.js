@@ -81,9 +81,53 @@ function start() {
 	});
 
 	ipcMain.on("minimize", () => {win.minimize()});
-	ipcMain.on("relaunch", () => {app.relaunch(); app.exit()});
+	ipcMain.on("relaunch", () => {
+		app.relaunch({
+			args: process.argv.slice(1)
+		});
+
+		app.exit(0);
+	});
+
 	ipcMain.on("kill-game", () => {
 		kill.game();
+	});
+
+	ipcMain.on("kill-origin", () => {
+		kill.origin();
+	});
+
+	ipcMain.on("delete-request-cache", () => {
+		requests.delete_cache();
+	});
+
+	ipcMain.on("delete-install-cache", () => {
+		let delete_dirs = [
+			path.join(app.getPath("cache"), "vipertmp"),
+			path.join(settings.gamepath, "northstar.zip")
+		]
+
+		for (let i = 0; i < delete_dirs.length; i++) {
+			if (fs.existsSync(delete_dirs[i])) {
+				fs.rmSync(delete_dirs[i], {recursive: true});
+			}
+		}
+	});
+
+	ipcMain.on("reset-config", async () => {
+		let confirmation = await win_show.confirm(
+			lang("gui.settings.miscbuttons.reset_config_alert")
+		)
+
+		if (confirmation) {
+			fs.rmSync("viper.json");
+
+			app.relaunch({
+				args: process.argv.slice(1)
+			});
+
+			app.exit(0);
+		}
 	});
 
 	// passthrough to renderer from main
@@ -207,12 +251,12 @@ ipcMain.on("setlang", (event, lang) => {
 	settings.save();
 });
 
-ipcMain.on("update-northstar", async () => {
+ipcMain.on("update-northstar", async (e, force_install) => {
 	if (await is_running.game()) {
 		return win_show.alert(lang("general.auto_updates.game_running"));
 	}
 
-	update.northstar();
+	update.northstar(force_install);
 })
 
 ipcMain.on("setpath-cli", () => {gamepath.set()});

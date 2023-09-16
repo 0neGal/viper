@@ -1,8 +1,8 @@
 function Toast(properties) {
 	let toast = {
-		fg: "#000000",
-		bg: "#FFFFFF",
 		timeout: 3000,
+		fg: "#FFFFFF",
+		bg: "var(--selbg)",
 		callback: () => {},
 		title: "Untitled Toast",
 		description: "No description provided for toast",
@@ -44,6 +44,14 @@ function Toast(properties) {
 		<div class="title">${toast.title}</div>
 		<div class="description">${toast.description}</div>
 	`
+
+	if (! toast.title) {
+		el.querySelector(".title").remove();
+	}
+
+	if (! toast.description) {
+		el.querySelector(".description").remove();
+	}
 
 	toasts.appendChild(el);
 

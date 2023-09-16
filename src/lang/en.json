@@ -172,6 +172,30 @@
 			"originkill": {
 				"title": "Automatically quit Origin and or EA Desktop",
 				"desc": "When Viper exits, automatically quit Origin and or EA Desktop as well."
+			},
+
+			"updatebuttons": {
+				"title": "Repair actions",
+				"desc": "If you're having problems with updates, some of these buttons may help in fixing them.",
+				"buttons": {
+					"reset_cached_api_requests": "Reset cached API requests",
+					"force_northstar_reinstall": "Force re-install of Northstar",
+					"force_delete_install_cache": "Force delete cached install files"
+				}
+			},
+
+			"miscbuttons": {
+				"title": "Misc repair actions",
+				"desc": "If you're having problems then some of these buttons may help fixing it",
+				"buttons": {
+					"reset_config": "Reset config file",
+					"restart_viper": "Restart Viper",
+					"change_gamepath": "Change gamepath",
+					"force_quit_game": "Force quit Titanfall and Northstar",
+					"force_quit_origin": "Force quit Origin and or EA Desktop"
+				},
+
+				"reset_config_alert": "Please confirm that you want to reset the config file, after confirming Viper will delete the config file, and then restart."
 			}
 		},
 

@@ -121,7 +121,20 @@
 						</div>
 					</div>
 					<div class="actions">
-						<input type="text">
+						<input type="text" class="disable-when-installing">
+					</div>
+				</div>
+				<div class="buttons">
+					<div class="text">
+						%%gui.settings.updatebuttons.title%%
+						<div class="desc">
+							%%gui.settings.updatebuttons.desc%%
+						</div>
+					</div>
+					<div class="actions">
+						<button onclick="delete_request_cache()">%%gui.settings.updatebuttons.buttons.reset_cached_api_requests%%</button>
+						<button onclick="force_update_ns()" class="disable-when-installing">%%gui.settings.updatebuttons.buttons.force_northstar_reinstall%%</button>
+						<button onclick="delete_install_cache()" class="disable-when-installing">%%gui.settings.updatebuttons.buttons.force_delete_install_cache%%</button>
 					</div>
 				</div>
 				<div class="title">
@@ -137,6 +150,21 @@
 					</div>
 					<div class="actions">
 						<button class="switch off"></button>
+					</div>
+				</div>
+				<div class="buttons">
+					<div class="text">
+						%%gui.settings.miscbuttons.title%%
+						<div class="desc">
+							%%gui.settings.miscbuttons.desc%%
+						</div>
+					</div>
+					<div class="actions">
+						<button onclick="relaunch()">%%gui.settings.miscbuttons.buttons.restart_viper%%</button>
+						<button onclick="reset_config()">%%gui.settings.miscbuttons.buttons.reset_config%%</button>
+						<button onclick="kill_game()">%%gui.settings.miscbuttons.buttons.force_quit_game%%</button>
+						<button onclick="kill_origin()">%%gui.settings.miscbuttons.buttons.force_quit_origin%%</button>
+						<button onclick="setpath()" class="disable-when-installing">%%gui.settings.miscbuttons.buttons.change_gamepath%%</button>
 					</div>
 				</div>
 			</div>
@@ -195,7 +223,7 @@
 						<img src="icons/viper.png"/>
 						<div class="inline" style="margin-top: 20px;">
 							<div id="vpversion"></div> |
-							<a id="setpath" href="#" onclick="setpath()">%%gui.setpath%%</a>
+							<a id="setpath" href="#" onclick="setpath()" class="disable-when-installing">%%gui.setpath%%</a>
 						</div>
 					</div>
 					<div id="vpReleaseNotes" class="hidden section"></div>
@@ -228,7 +256,7 @@
 							<button id="playNsBtn" class="playBtn" onclick="launch()">%%gui.launch%%</button>
 							<div class="inline">
 								<div id="nsversion"></div>
-								<a id="update" href="#" onclick="updateNorthstar()">(%%gui.update.check%%)</a>
+								<a id="update" href="#" onclick="updateNorthstar()" class="disable-when-installing">(%%gui.update.check%%)</a>
 								<div id="serverstatus" class="checking"></div>
 							</div>
 						</div>

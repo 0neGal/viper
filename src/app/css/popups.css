@@ -89,7 +89,8 @@
 	margin: calc(var(--padding) / 2);
 }
 
-.popup .options .option {
+.popup .options .option,
+.popup .options .buttons {
 	width: 100%;
 	display: flex;
 	margin-bottom: var(--padding);
@@ -146,8 +147,13 @@
     background-image: url(../icons/check.png);
 }
 
-.option .text {font-weight: 600}
-.option .text .desc {
+.option .text,
+.buttons .text {
+	font-weight: 600;
+}
+
+.option .text .desc,
+.buttons .text .desc {
 	opacity: 0.8;
 	font-weight: 500;
 	font-size: 0.9em;
@@ -155,7 +161,8 @@
 	margin-top: calc(var(--padding) / 3);
 }
 
-.option .actions input, .option .actions select {
+.option .actions input,
+.option .actions select {
 	width: 100%;
 	margin: 0px;
 	--spacing: calc(var(--padding) / 3);
@@ -166,7 +173,16 @@
 	margin-right: 15vw;
 }
 
-.option .actions button {
+.buttons .actions {
+	text-align: right;
+}
+
+.buttons .actions button {
+	margin-bottom: calc(var(--padding) / 5);
+}
+
+.option .actions button,
+.buttons .actions button {
 	background: var(--selbg);
 }
 

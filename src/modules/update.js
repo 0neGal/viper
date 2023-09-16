@@ -150,7 +150,10 @@ update.viper = (autoinstall) => {
 // as to handle not overwriting files we rename certain files to
 // <file>.excluded, then rename them back after the extraction. The
 // unzip module does not support excluding files directly.
-update.northstar = async () => {
+//
+// `force_install` makes this function not care about whether or not
+// we're already up-to-date, forcing the install
+update.northstar = async (force_install) => {
 	if (await is_running.game()) {
 		console.error(lang("general.auto_updates.game_running"));
 		return false;
@@ -170,7 +173,7 @@ update.northstar = async () => {
 	}
 
 	// Makes sure it is not already the latest version
-	if (! await northstar_update_available()) {
+	if (! force_install && ! await northstar_update_available()) {
 		ipcMain.emit("ns-update-event", "cli.update.uptodate_short");
 		console.ok(lang("cli.update.uptodate").replace("%s", ns_version));
 

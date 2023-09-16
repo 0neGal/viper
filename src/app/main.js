@@ -122,6 +122,17 @@ if (! navigator.onLine) {
 
 function exit() {ipcRenderer.send("exit")}
 function updateNorthstar() {ipcRenderer.send("update-northstar")}
+function force_update_ns() {
+	ipcRenderer.send("update-northstar", true);
+}
+
+function reset_config() {
+	ipcRenderer.send("reset-config");
+}
+
+function relaunch() {
+	ipcRenderer.send("relaunch");
+}
 
 // Reports to the main process about game path status.
 // @param {boolean} value is game path loaded
@@ -151,11 +162,18 @@ function setButtons(state) {
 
 	let disablearray = (array) => {
 		for (let i = 0; i < array.length; i++) {
-			array[i].disabled = !state;
+			array[i].disabled = ! state;
+
+			if (state) {
+				array[i].classList.remove("disabled")
+			} else {
+				array[i].classList.add("disabled")
+			}
 		}
 	}
 
 	disablearray(document.querySelectorAll("#modsdiv .el button"));
+	disablearray(document.querySelectorAll(".disable-when-installing"));
 	disablearray(document.querySelectorAll(".playBtnContainer .playBtn"));
 	disablearray(document.querySelectorAll("#nsMods .buttons.modbtns button"));
 	disablearray(document.querySelectorAll("#browser #browserEntries .text button"));
@@ -331,6 +349,18 @@ ipcRenderer.on("is-running", (event, running) => {
 
 function kill_game() {
 	ipcRenderer.send("kill-game");
+}
+
+function kill_origin() {
+	ipcRenderer.send("kill-origin");
+}
+
+function delete_request_cache() {
+	ipcRenderer.send("delete-request-cache");
+}
+
+function delete_install_cache() {
+	ipcRenderer.send("delete-install-cache");
 }
 
 // Updates the installed mods

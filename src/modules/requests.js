@@ -27,6 +27,12 @@ function _getRequestsCache() {
     }
 }
 
+function delete_cache() {
+	if (fs.existsSync(cachePath)) {
+		return fs.rmSync(cachePath);
+	}
+}
+
 // Returns latest Northstar version available from GitHub releases. If
 // there's no cache result for this request, or if cache exists but is
 // old, refreshes cache with new data.
@@ -182,6 +188,7 @@ async function getVpReleaseNotes() {
 }
 
 module.exports = {
+	delete_cache,
     getLatestNsVersion, 
     getLatestNsVersionLink,
     getNsReleaseNotes,
