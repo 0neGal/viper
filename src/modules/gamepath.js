@@ -15,15 +15,39 @@ let gamepath = {};
 
 // returns true/false depending on if the gamepath currently exists/is
 // mounted, used to avoid issues...
-gamepath.exists = () => {
-	return fs.existsSync(settings.gamepath);
+gamepath.exists = (folder) => {
+	return fs.existsSync(folder || settings.gamepath);
 }
+
+// returns false if the user doesn't have read/write permissions to the
+// selected gamepath, if no gamepath is set, then this will always
+// return `false`, handle that correctly!
+gamepath.has_perms = (folder) => {
+	if (! gamepath.exists(folder)) {
+		return false;
+	}
+
+	try {
+		fs.accessSync(
+			folder || settings.gamepath,
+			fs.constants.R_OK | fs.constants.W_OK
+		)
+
+		return true;
+	} catch (err) {
+		return false;
+	}
+}
+
+gamepath.setting = false;
 
 // requests to set the game path
 //
 // if running with CLI it takes in the --setpath argument otherwise it
 // open the systems file browser for the user to select a path.
 gamepath.set = async (win, force_dialog) => {
+	gamepath.setting = true;
+
 	// actually sets and saves the gamepath in the settings
 	function set_gamepath(folder) {
 		// set settings
@@ -50,12 +74,20 @@ gamepath.set = async (win, force_dialog) => {
 				settings.save();
 				win.webContents.send("newpath", settings.gamepath);
 				ipcMain.emit("newpath", null, settings.gamepath);
+
+				gamepath.setting = false;
 			}
 
-			let gamepath = await findgame();
-			if (gamepath) {
-				set_gamepath(gamepath);
-				return;
+			let found_gamepath = await findgame();
+
+			if (found_gamepath) {
+				if (! gamepath.has_perms(found_gamepath)) {
+					ipcMain.emit("found-missing-perms", null, found_gamepath);
+					return;
+				}
+
+				set_gamepath(found_gamepath);
+				return gamepath.setting = false;
 			}
 
 			await win_show.alert(lang("general.missing_path"));
@@ -65,19 +97,27 @@ gamepath.set = async (win, force_dialog) => {
 		dialog.showOpenDialog({properties: ["openDirectory"]}).then(res => {
 			if (res.canceled) {
 				ipcMain.emit("newpath", null, false);
-				return;
+				return gamepath.setting = false;
 			}
 
 			if (! fs.existsSync(path.join(res.filePaths[0], "Titanfall2.exe"))) {
 				ipcMain.emit("wrong-path");
-				return;
+				return gamepath.setting = false;
+			}
+
+			if (! gamepath.has_perms(res.filePaths[0])) {
+				ipcMain.emit("missing-perms", null, res.filePaths[0]);
+				return gamepath.setting = false;
 			}
 
 			set_gamepath(res.filePaths[0]);
 
 			cli.exit();
-			return;
-		}).catch(err => {console.error(err)})
+			return gamepath.setting = false;
+		}).catch(err => {
+			console.error(err);
+			gamepath.setting = false;
+		})
 	}
 }
 
@@ -86,6 +126,10 @@ gamepath.set = async (win, force_dialog) => {
 // want to assume the gamepath is available forever and ever.
 setInterval(() => {
 	if (gamepath.exists()) {
+		if (! gamepath.has_perms()) {
+			return ipcMain.emit("gamepath-lost-perms", null, settings.gamepath);
+		}
+
 		ipcMain.emit("gui-getmods");
 	} else {
 		if (fs.existsSync("viper.json")) {

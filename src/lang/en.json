@@ -194,7 +194,10 @@
 		"gamepath": {
 			"must": "The game path must be set to start Viper.",
 			"wrong": "This folder is not a valid game path.",
-			"lost": "Gamepath no longer exists/can't be found!\n\nMake sure your drive is mounted properly, or if you moved your game location that you update the game path.\n\nViper may not work properly until next restart!"
+			"lost": "Gamepath no longer exists/can't be found!\n\nMake sure your drive is mounted properly, or if you moved your game location that you update the game path.\n\nViper may not work properly until next restart!",
+			"lost_perms": "Your user seems to have lost permissions to create and or read files in the selected gamepath, please select a gamepath or gain access to read and write to the folder:\n\n",
+			"found_missing_perms": "Automatically found a valid gamepath, however your user doesn't have permissions to create and or read files in it, please manually select a different gamepath or gain access to read and write to the folder:\n\n",
+			"missing_perms": "Your user doesn't have permissions to create and or read files in the selected gamepath, please select a different gamepath or gain access to read and write to the folder:\n\n"
 		},
 
 		"toast": {

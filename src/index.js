@@ -216,12 +216,12 @@ ipcMain.on("update-northstar", async () => {
 })
 
 ipcMain.on("setpath-cli", () => {gamepath.set()});
-ipcMain.on("setpath", (event, value) => {
+ipcMain.on("setpath", (event, value, force_dialog) => {
 	if (! value) {
 		if (! win.isVisible()) {
-			gamepath.set(win);
+			gamepath.set(win, force_dialog);
 		} else {
-			gamepath.set(win, true);
+			gamepath.set(win, force_dialog || true);
 		}
 	} else if (! win.isVisible()) {
 		win.show();
@@ -287,6 +287,24 @@ ipcMain.on("newpath", (event, newpath) => {
 }); ipcMain.on("wrong-path", () => {
 	win.send("wrong-path");
 });
+
+ipcMain.on("found-missing-perms", async (e, selected_gamepath) => {
+	await win_show.alert(lang("gui.gamepath.found_missing_perms") + selected_gamepath);
+	ipcMain.emit("setpath", null, false, true);
+})
+
+ipcMain.on("missing-perms", async (e, selected_gamepath) => {
+	await win_show.alert(lang("gui.gamepath.missing_perms") + selected_gamepath);
+	ipcMain.emit("setpath");
+})
+
+ipcMain.on("gamepath-lost-perms", async (e, selected_gamepath) => {
+	if (! gamepath.setting) {
+		gamepath.setting = true;
+		await win_show.alert(lang("gui.gamepath.lost_perms") + selected_gamepath);
+		ipcMain.emit("setpath");
+	}
+})
 
 // starts the GUI or CLI
 if (cli.hasArgs()) {
