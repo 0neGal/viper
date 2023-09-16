@@ -29,6 +29,7 @@
 			"download_done": "Téléchargement terminé ! Extraction des fichiers...",
 			"finished": "Mise à jour terminée !",
 			"uptodate": "La dernière version (%s) est déjà installée.",
+			"uptodate_short": "Votre client est à jour",
 			"no_internet": "Pas de connexion Internet"
 		},
 

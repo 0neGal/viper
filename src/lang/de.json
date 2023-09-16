@@ -29,6 +29,7 @@
 			"download_done": "Herunterladen abgeschlossen! Extrahiere...",
 			"finished": "Installation/Aktualisierung abeschlossen!",
 			"uptodate": "Installation ist bereits auf dem neusten Stand (%s), aktualisieren wird übersprungen.",
+			"uptodate_short": "Auf dem neusten stand",
 			"no_internet": "Keine Internetverbindung"
 		},
 		

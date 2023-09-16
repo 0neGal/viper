@@ -171,7 +171,7 @@ update.northstar = async () => {
 
 	// Makes sure it is not already the latest version
 	if (! await northstar_update_available()) {
-		ipcMain.emit("ns-update-event", "cli.update.uptodate.short");
+		ipcMain.emit("ns-update-event", "cli.update.uptodate_short");
 		console.ok(lang("cli.update.uptodate").replace("%s", ns_version));
 
 		win.log(lang("gui.update.uptodate"));
@@ -189,7 +189,7 @@ update.northstar = async () => {
 	https.get(requests.getLatestNsVersionLink(), (res) => {
 		// cancel out if zip can't be retrieved and or found
 		if (res.statusCode !== 200) {
-			ipcMain.emit("ns-update-event", "cli.update.uptodate.short");
+			ipcMain.emit("ns-update-event", "cli.update.uptodate_short");
 			console.ok(lang("cli.update.uptodate"), ns_version);
 			return false;
 		}
@@ -249,7 +249,7 @@ update.northstar = async () => {
 
 				ipcMain.emit("gui-getmods");
 				ipcMain.emit("get-version");
-				ipcMain.emit("ns-update-event", "cli.update.uptodate.short");
+				ipcMain.emit("ns-update-event", "cli.update.uptodate_short");
 				win.log(lang("gui.update.finished"));
 				console.ok(lang("cli.update.finished"));
 				cli.exit();

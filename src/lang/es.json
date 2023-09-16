@@ -22,10 +22,6 @@
 			"no_arg": "No se ha proporcionado ningún argumento para --setpath"
 		},
 
-		"gamepath": {
-			"lost": "El directorio del juego no fue encontrado, ¡asegúrate de que esté disponible!"
-		},
-
 		"update": {
 			"current": "Versión actual:",
 			"downloading": "Descargando...",
@@ -33,6 +29,7 @@
 			"download_done": "¡Descarga completa! Extrayendo...",
 			"finished": "Instalación/Actualización completada!",
 			"uptodate": "La ultima versión (%s) ya está instalada, omitiendo actualización.",
+			"uptodate_short": "Está actualizado",
 			"no_internet": "Sin conexión a internet"
 		},
 
@@ -45,6 +42,10 @@
 
 		"launch": {
 			"linux_error": "La ejecución del juego en Linux aun no está implementada"
+		},
+
+		"gamepath": {
+			"lost": "El directorio del juego no fue encontrado, ¡asegúrate de que esté disponible!"
 		},
 
 		"mods": {
