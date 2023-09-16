@@ -41,8 +41,8 @@
 .popup.small {
 	left: 20vw;
 	right: 20vw;
-	top: calc(var(--padding) * 2);
 	bottom: calc(var(--padding) * 2);
+	top: calc(var(--padding) * 2 + var(--top-spacing));
 }
 
 #overlay {
