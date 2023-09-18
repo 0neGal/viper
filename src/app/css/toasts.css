@@ -54,4 +54,5 @@
 	opacity: 0.8;
 	font-size: 0.8em;
 	font-weight: 600;
+	word-break: break-word;
 }
