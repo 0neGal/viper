@@ -188,6 +188,7 @@
 				"title": "Misc repair actions",
 				"desc": "If you're having problems then some of these buttons may help fixing it",
 				"buttons": {
+					"open_gamepath": "Open gamepath",
 					"reset_config": "Reset config file",
 					"restart_viper": "Restart Viper",
 					"change_gamepath": "Change gamepath",
@@ -195,6 +196,7 @@
 					"force_quit_origin": "Force quit Origin and or EA Desktop"
 				},
 
+				"open_gamepath_alert": "No valid gamepath is selected, so there's no gamepath to open, please select a valid gamepath first!",
 				"reset_config_alert": "Please confirm that you want to reset the config file, after confirming Viper will delete the config file, and then restart."
 			}
 		},

@@ -130,6 +130,15 @@ function reset_config() {
 	ipcRenderer.send("reset-config");
 }
 
+function open_gamepath() {
+	let open_path = require("electron").shell.openPath;
+	if (settings.gamepath) {
+		open_path(settings.gamepath);
+	} else {
+		alert(lang("gui.settings.miscbuttons.open_gamepath_alert"));
+	}
+}
+
 function relaunch() {
 	ipcRenderer.send("relaunch");
 }
