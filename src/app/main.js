@@ -318,6 +318,7 @@ function isModInstalled(modname) {
 
 // Frontend part of settings a new game path
 ipcRenderer.on("newpath", (event, newpath) => {
+	setButtons(true);
 	settings.gamepath = newpath;
 	ipcRenderer.send("gui-getmods");
 	ipcRenderer.send("save-settings", settings);
