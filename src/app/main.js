@@ -166,7 +166,7 @@ let log = console.log;
 
 // Disables or enables certain buttons when for example
 // updating/installing Northstar.
-function setButtons(state) {
+function setButtons(state, enable_gamepath_btns) {
 	playNsBtn.disabled = !state;
 
 	let disablearray = (array) => {
@@ -186,6 +186,16 @@ function setButtons(state) {
 	disablearray(document.querySelectorAll(".playBtnContainer .playBtn"));
 	disablearray(document.querySelectorAll("#nsMods .buttons.modbtns button"));
 	disablearray(document.querySelectorAll("#browser #browserEntries .text button"));
+
+	if (enable_gamepath_btns) {
+		let gamepath_btns = 
+			document.querySelectorAll('*[onclick="setpath()"]');
+
+		for (let i = 0; i < gamepath_btns.length; i++) {
+			gamepath_btns[i].disabled = false;
+			gamepath_btns[i].classList.remove("disabled");
+		}
+	}
 }
 
 ipcRenderer.on("set-buttons", (event, state) => {
@@ -194,7 +204,7 @@ ipcRenderer.on("set-buttons", (event, state) => {
 
 ipcRenderer.on("gamepath-lost", (event, state) => {
 	page(0);
-	setButtons(false);
+	setButtons(false, true);
 	alert(lang("gui.gamepath.lost"));
 })
 
