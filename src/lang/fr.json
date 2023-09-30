@@ -172,6 +172,32 @@
 			"originkill": {
 				"title": "Quitter automatiquement Origin et/ou EA app",
 				"desc": "Lorsque Viper est fermé, Origin et/ou EA app sera également automatiquement fermé."
+			},
+
+			"updatebuttons": {
+				"title": "",
+				"desc": "",
+				"buttons": {
+					"reset_cached_api_requests": "",
+					"force_northstar_reinstall": "",
+					"force_delete_install_cache": ""
+				}
+			},
+
+			"miscbuttons": {
+				"title": "",
+				"desc": "",
+				"buttons": {
+					"open_gamepath": "",
+					"reset_config": "",
+					"restart_viper": "",
+					"change_gamepath": "",
+					"force_quit_game": "",
+					"force_quit_origin": ""
+				},
+
+				"open_gamepath_alert": "",
+				"reset_config_alert": ""
 			}
 		},
 
@@ -195,7 +221,10 @@
 		"gamepath": {
 			"must": "Vous devez sélectionner le chemin du dossier du jeu Titanfall 2 pour pouvoir lancer Viper.",
 			"wrong": "Ce dossier ne contient pas le jeu Titanfall 2, et n'est donc pas valide.",
-			"lost": "Le chemin du jeu ne peut être trouvé / n'existe plus !\n\nVeuillez vérifier que votre disqué est correctement monté, ou, si vous avez déplacé votre jeu, que vous avez mis à jour le chemin du dossier.\n\nViper ne fonctionnera pas correctement jusqu'au prochain redémarrage."
+			"lost": "Le chemin du jeu ne peut être trouvé / n'existe plus !\n\nVeuillez vérifier que votre disqué est correctement monté, ou, si vous avez déplacé votre jeu, que vous avez mis à jour le chemin du dossier.\n\nViper ne fonctionnera pas correctement jusqu'au prochain redémarrage.",
+			"lost_perms": "",
+			"found_missing_perms": "",
+			"missing_perms": ""
 		},
 
 		"toast": {
@@ -238,7 +267,8 @@
 		"menu": {
 			"main": "Lanceur Northstar",
 			"mods": "Mods",
-			"release": "Notes de mises à jour"
+			"release": "Notes de mises à jour",
+			"force_quit": ""
 		}
 	},
 

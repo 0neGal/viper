@@ -172,6 +172,32 @@
 			"originkill": {
 				"title": "Cerrar Origin o la aplicación de EA automáticamente",
 				"desc": "Cuando Viper se cierra, cerrar junto a Origin o la aplicación de EA"
+			},
+
+			"updatebuttons": {
+				"title": "",
+				"desc": "",
+				"buttons": {
+					"reset_cached_api_requests": "",
+					"force_northstar_reinstall": "",
+					"force_delete_install_cache": ""
+				}
+			},
+
+			"miscbuttons": {
+				"title": "",
+				"desc": "",
+				"buttons": {
+					"open_gamepath": "",
+					"reset_config": "",
+					"restart_viper": "",
+					"change_gamepath": "",
+					"force_quit_game": "",
+					"force_quit_origin": ""
+				},
+
+				"open_gamepath_alert": "",
+				"reset_config_alert": ""
 			}
 		},
 
@@ -195,7 +221,10 @@
 		"gamepath": {
 			"must": "La ruta del juego debe establecerse para ejecutar Viper.",
 			"wrong": "Esta carpeta no es una ruta válida para el juego.",
-			"lost": "¡El directorio del juego ya no existe/no se puede encontrar!\n\nAsegúrate de que tu unidad esté instalada correctamente o, si cambiaste la ubicación del juego, actualiza la ruta del juego.\n\nViper puede no funcionar correctamente hasta el próximo reinicio!"
+			"lost": "¡El directorio del juego ya no existe/no se puede encontrar!\n\nAsegúrate de que tu unidad esté instalada correctamente o, si cambiaste la ubicación del juego, actualiza la ruta del juego.\n\nViper puede no funcionar correctamente hasta el próximo reinicio!",
+			"lost_perms": "",
+			"found_missing_perms": "",
+			"missing_perms": ""
 		},
 
 		"toast": {
@@ -238,7 +267,8 @@
 		"menu": {
 			"main": "Northstar Launcher",
 			"mods": "Modificaciones",
-			"release": "Notas de actualización"
+			"release": "Notas de actualización",
+			"force_quit": ""
 		}
 	},
 

@@ -172,6 +172,32 @@
 			"originkill": {
 				"title": "Automatisch Origin und oder EA Desktop schließen",
 				"desc": "Wenn Viper sich schließt soll Origin und oder EA Desktop sich auch schließen."
+			},
+
+			"updatebuttons": {
+				"title": "",
+				"desc": "",
+				"buttons": {
+					"reset_cached_api_requests": "",
+					"force_northstar_reinstall": "",
+					"force_delete_install_cache": ""
+				}
+			},
+
+			"miscbuttons": {
+				"title": "",
+				"desc": "",
+				"buttons": {
+					"open_gamepath": "",
+					"reset_config": "",
+					"restart_viper": "",
+					"change_gamepath": "",
+					"force_quit_game": "",
+					"force_quit_origin": ""
+				},
+
+				"open_gamepath_alert": "",
+				"reset_config_alert": ""
 			}
 		},
 
@@ -195,7 +221,10 @@
 		"gamepath": {
 			"must": "Der Installationspfad muss gesetzt worden sein um Viper zu nutzen.",
 			"wrong": "Der angegebene Installationspfad ist nicht gültig!",
-			"lost": "Der angegeben Installationspfad ist nicht mehr gültig!\n\nBitte stelle sicher das die Festplatte mounted ist, oder falls sich der Installationspfad geändert hat, das du diesen auch in Viper aktualisierst!\n\nViper wird möglicherweiße bis zum nächsten Neustart nicht funktionieren!"
+			"lost": "Der angegeben Installationspfad ist nicht mehr gültig!\n\nBitte stelle sicher das die Festplatte mounted ist, oder falls sich der Installationspfad geändert hat, das du diesen auch in Viper aktualisierst!\n\nViper wird möglicherweiße bis zum nächsten Neustart nicht funktionieren!",
+			"lost_perms": "",
+			"found_missing_perms": "",
+			"missing_perms": ""
 		},
 
 		"toast": {
@@ -238,7 +267,8 @@
 		"menu": {
 			"main": "Northstar Launcher",
 			"mods": "Mods",
-			"release": "Release Notes"
+			"release": "Release Notes",
+			"force_quit": ""
 		}
 	},
 
