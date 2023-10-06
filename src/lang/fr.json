@@ -175,29 +175,29 @@
 			},
 
 			"updatebuttons": {
-				"title": "",
-				"desc": "",
+				"title": "Paramètres de récupération",
+				"desc": "Si vous avez des problèmes de mises à jour, certaines de ces options pourraient vous aider.",
 				"buttons": {
-					"reset_cached_api_requests": "",
-					"force_northstar_reinstall": "",
-					"force_delete_install_cache": ""
+					"reset_cached_api_requests": "Supprimer le cache local d'API",
+					"force_northstar_reinstall": "Forcer la réinstallation de Northstar",
+					"force_delete_install_cache": "Supprimer le cache d'installation du jeu"
 				}
 			},
 
 			"miscbuttons": {
-				"title": "",
-				"desc": "",
+				"title": "Paramètres de récupération",
+				"desc": "Si vous avez des problèmes de mises à jour, certaines de ces options pourraient vous aider.",
 				"buttons": {
-					"open_gamepath": "",
-					"reset_config": "",
-					"restart_viper": "",
-					"change_gamepath": "",
-					"force_quit_game": "",
-					"force_quit_origin": ""
+					"open_gamepath": "Ouvrir le dossier du jeu",
+					"reset_config": "Réinitialiser le fichier de configuration",
+					"restart_viper": "Redémarrer Viper",
+					"change_gamepath": "Changer le dossier du jeu",
+					"force_quit_game": "Forcer la fermeture de Titanfall et Northstar",
+					"force_quit_origin": "Forcer la fermeture d'Origin et/ou EA Desktop"
 				},
 
-				"open_gamepath_alert": "",
-				"reset_config_alert": ""
+				"open_gamepath_alert": "Aucun chemin de jeu n'est sélectionné, et ne peut donc être ouvert ; veuillez en sélectionner un d'abord !",
+				"reset_config_alert": "Veuillez confirmer que vous voulez réinitialiser le fichier de configuration ; après confirmation, Viper supprimera ce fichier et redémarrera."
 			}
 		},
 
@@ -222,9 +222,9 @@
 			"must": "Vous devez sélectionner le chemin du dossier du jeu Titanfall 2 pour pouvoir lancer Viper.",
 			"wrong": "Ce dossier ne contient pas le jeu Titanfall 2, et n'est donc pas valide.",
 			"lost": "Le chemin du jeu ne peut être trouvé / n'existe plus !\n\nVeuillez vérifier que votre disqué est correctement monté, ou, si vous avez déplacé votre jeu, que vous avez mis à jour le chemin du dossier.\n\nViper ne fonctionnera pas correctement jusqu'au prochain redémarrage.",
-			"lost_perms": "",
-			"found_missing_perms": "",
-			"missing_perms": ""
+			"lost_perms": "L'utilisateur semble avoir perdu les permissions de lecture/écriture de fichiers dans le dossier sélectionné, veuillez sélectionner un autre dossier ou accorder les permissions en lecture/écriture à l'utilisateur :\n\n",
+			"found_missing_perms": "Chemin du jeu automatiquement trouvé, cependant l'utilisateur courant n'a pas les permissions de lecture/écriture de fichiers dans le dossier sélectionné, veuillez manuellement sélectionner un autre dossier ou accorder les permissions en lecture/écriture à l'utilisateur :\n\n",
+			"missing_perms": "L'utilisateur courant n'a pas les permissions de lecture/écriture de fichiers dans le dossier sélectionné, veuillez manuellement sélectionner un autre dossier ou accorder les permissions en lecture/écriture à l'utilisateur :\n\n"
 		},
 
 		"toast": {
@@ -268,7 +268,7 @@
 			"main": "Lanceur Northstar",
 			"mods": "Mods",
 			"release": "Notes de mises à jour",
-			"force_quit": ""
+			"force_quit": "Forcer la fermeture du jeu"
 		}
 	},
 
