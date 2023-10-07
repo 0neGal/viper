@@ -172,6 +172,32 @@
 			"originkill": {
 				"title": "Cerrar Origin o la aplicación de EA automáticamente",
 				"desc": "Cuando Viper se cierra, cerrar junto a Origin o la aplicación de EA"
+			},
+
+			"updatebuttons": {
+				"title": "Opciones de reparación",
+				"desc": "Si estás teniendo problemas con las actualizaciones, algunos de estos botones pueden ayudar a solucionarlos.",
+				"buttons": {
+					"reset_cached_api_requests": "Restablecer las solicitudes de API en caché",
+					"force_northstar_reinstall": "Forzar la reinstalación de Northstar",
+					"force_delete_install_cache": "Forzar la eliminación de archivos de instalación en caché"
+				}
+			},
+
+			"miscbuttons": {
+				"title": "Acciones de reparación diversas",
+				"desc": "Si estás teniendo problemas, entonces algunos de estos botones pueden ayudar a solucionarlo",
+				"buttons": {
+					"open_gamepath": "Abrir ruta del juego",
+					"reset_config": "Restablecer archivo de configuración",
+					"restart_viper": "Reiniciar Viper",
+					"change_gamepath": "Cambiar ruta del juego",
+					"force_quit_game": "Cerrar forzosamente Titanfall y Northstar",
+					"force_quit_origin": "Cerrar forzosamente Origin y/o EA Desktop"
+				},
+
+				"open_gamepath_alert": "No se ha seleccionado una ruta de juego válida, por lo que no hay una ruta de juego para abrir. ¡Por favor, selecciona primero una ruta de juego válida!",
+				"reset_config_alert": "Por favor, confirma que deseas restablecer el archivo de configuración. Después de confirmar, Viper eliminará el archivo de configuración y luego reiniciará."
 			}
 		},
 
@@ -195,7 +221,10 @@
 		"gamepath": {
 			"must": "La ruta del juego debe establecerse para ejecutar Viper.",
 			"wrong": "Esta carpeta no es una ruta válida para el juego.",
-			"lost": "¡El directorio del juego ya no existe/no se puede encontrar!\n\nAsegúrate de que tu unidad esté instalada correctamente o, si cambiaste la ubicación del juego, actualiza la ruta del juego.\n\nViper puede no funcionar correctamente hasta el próximo reinicio!"
+			"lost": "¡El directorio del juego ya no existe/no se puede encontrar!\n\nAsegúrate de que tu unidad esté instalada correctamente o, si cambiaste la ubicación del juego, actualiza la ruta del juego.\n\nViper puede no funcionar correctamente hasta el próximo reinicio!",
+			"lost_perms": "Tu usuario parece haber perdido permisos para crear o leer archivos en la ruta de juego seleccionada. Por favor, selecciona una ruta de juego válida o recupera el acceso para leer y escribir en la carpeta:\n\n",
+			"found_missing_perms": "Se encontró automáticamente una ruta de juego válida, pero tu usuario no tiene permisos para crear o leer archivos en ella. Por favor, selecciona manualmente una ruta de juego diferente o obtén acceso para leer y escribir en la carpeta:\n\n",
+			"missing_perms": "Tu usuario no tiene permisos para crear o leer archivos en la ruta de juego seleccionada. Por favor, selecciona una ruta de juego diferente o obtén acceso para leer y escribir en la carpeta:\n\n"
 		},
 
 		"toast": {
@@ -238,7 +267,8 @@
 		"menu": {
 			"main": "Northstar Launcher",
 			"mods": "Modificaciones",
-			"release": "Notas de actualización"
+			"release": "Notas de actualización",
+			"force_quit": "Cerrar forzosamente el juego"
 		}
 	},
 
