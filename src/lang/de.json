@@ -175,29 +175,29 @@
 			},
 
 			"updatebuttons": {
-				"title": "",
-				"desc": "",
+				"title": "Reparations Aktionen",
+				"desc": "Bei Problemen mit updates könnte diese Aktionen helfen.",
 				"buttons": {
-					"reset_cached_api_requests": "",
-					"force_northstar_reinstall": "",
-					"force_delete_install_cache": ""
+					"reset_cached_api_requests": "API zwischenspeicher leerung erzwingen",
+					"force_northstar_reinstall": "Northstar neuinstallation erzwingen",
+					"force_delete_install_cache": "Zwischengespeicherte Installationsdateien löschung erzwingen"
 				}
 			},
 
 			"miscbuttons": {
-				"title": "",
-				"desc": "",
+				"title": "Zusatz Aktionen",
+				"desc": "Beim weiteren Problemen könnten diesen Aktion helfen.",
 				"buttons": {
-					"open_gamepath": "",
-					"reset_config": "",
-					"restart_viper": "",
-					"change_gamepath": "",
-					"force_quit_game": "",
-					"force_quit_origin": ""
+					"open_gamepath": "Spielepfad öffnen",
+					"reset_config": "Konfiguration zurücksetzung erzwingen",
+					"restart_viper": "Viper neustarten",
+					"change_gamepath": "Spielepfad ändern",
+					"force_quit_game": "Titanfall/Northstar schließung erzwingen",
+					"force_quit_origin": "Origin/EA Desktop schließung erzwingen"
 				},
 
-				"open_gamepath_alert": "",
-				"reset_config_alert": ""
+				"open_gamepath_alert": "Fehlerhafter Spielepfad, dadurch kann keiner geöffnet werden. Bitte wähle den richtigen Pfad zuerst!",
+				"reset_config_alert": "Bestätige die Zurücksetzung der Konfiguration, Viper wird nach dem bestätigen die Konfiguration Datein löschen und neustarten."
 			}
 		},
 
@@ -222,9 +222,9 @@
 			"must": "Der Installationspfad muss gesetzt worden sein um Viper zu nutzen.",
 			"wrong": "Der angegebene Installationspfad ist nicht gültig!",
 			"lost": "Der angegeben Installationspfad ist nicht mehr gültig!\n\nBitte stelle sicher das die Festplatte mounted ist, oder falls sich der Installationspfad geändert hat, das du diesen auch in Viper aktualisierst!\n\nViper wird möglicherweiße bis zum nächsten Neustart nicht funktionieren!",
-			"lost_perms": "",
-			"found_missing_perms": "",
-			"missing_perms": ""
+			"lost_perms": "Wie es aussieht hat der jetzige Nutzer die Rechte Datein zulesen oder zuschreiben im Spielepfad verloren, bitte wähle einen richtigen Pfad aus oder erhalte die benötigten Berechtigungen für den jetzigen:\n\n",
+			"found_missing_perms": "Es wurde ein Spielepfad automatisch gefunden, jedoch fehlen dir die Rechte Datein zulesen oder zuschreiben in diesem Pfad. Bitte wähle einen anderen Pfad aus oder erhalte die benötigten Berechtigungen für den gewählten Pfad:\n\n",
+			"missing_perms": "Wie es aussieht hat der jetzige Nutzer die Rechte Datein zulesen oder zuschreiben im Spielepfad nicht, bitte wähle einen richtigen Pfad aus oder erhalte die benötigten Berechtigungen für den gewählten Pfad:\n\n"
 		},
 
 		"toast": {
@@ -268,7 +268,7 @@
 			"main": "Northstar Launcher",
 			"mods": "Mods",
 			"release": "Release Notes",
-			"force_quit": ""
+			"force_quit": "Schließen erzwingen"
 		}
 	},
 
