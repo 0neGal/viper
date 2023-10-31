@@ -30,7 +30,10 @@
 			"finished": "Installation/Update finished!",
 			"uptodate": "Latest version (%s) is already installed, skipping update.",
 			"uptodate_short": "Up-to-date",
-			"no_internet": "No Internet connection"
+			"no_internet": "No Internet connection",
+			"unknown_size": "The size of the update could not be determined:",
+			"unknown_size_not_found": "`content-length` could not be found inside received header",
+			"unknown_size_invalid_length": "`content-length` is invalid"
 		},
 
 		"auto_updates": {

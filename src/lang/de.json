@@ -30,7 +30,10 @@
 			"finished": "Installation/Aktualisierung abeschlossen!",
 			"uptodate": "Installation ist bereits auf dem neusten Stand (%s), aktualisieren wird übersprungen.",
 			"uptodate_short": "Auf dem neusten stand",
-			"no_internet": "Keine Internetverbindung"
+			"no_internet": "Keine Internetverbindung",
+			"unknown_size": "Die Größe des Updates konnte nicht festgestellt werden:",
+			"unknown_size_not_found": "`content-length` konnte nicht gefunden werden",
+			"unknown_size_invalid_length": "`content-length` ist ungültig"
 		},
 		
 		"auto_updates": {

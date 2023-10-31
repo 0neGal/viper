@@ -197,6 +197,31 @@ update.northstar = async (force_install) => {
 			return false;
 		}
 
+		// variables for caclulating percentage downloaded
+		let complete_size_str = "???";
+		const percentage_str = "(%s%)";
+		// TODO: find a better way to get the complete size, since not all servers send this info
+		const content_length = res.headers["content-length"];
+		let content_length_mb = 0.0;
+		let unknown_size = false;
+
+		// if content_length is undefined, we can't get the complete size (not all servers send the content-length)
+		if (content_length == undefined) {
+			// TODO: add translations
+			console.error(lang("cli.update.unknown_size"), lang("cli.update.unknown_size_not_found"));
+			unknown_size = true;
+		} else {
+			content_length_mb = parseInt(content_length);
+
+			if (content_length_mb.isNaN) {
+				console.error(lang("cli.update.unknown_size"), lang("cli.update.unknown_size_invalid_length"));
+				unknown_size = true;
+			} else {
+				content_length_mb = (content_length_mb / 1024 / 1024).toFixed(1);
+				complete_size_str = content_length_mb;
+			}
+		}
+
 		console.info(lang("cli.update.downloading") + ":", latest_version);
 		ipcMain.emit("ns-update-event", "cli.update.downloading");
 
@@ -221,7 +246,16 @@ update.northstar = async (force_install) => {
 		// percentage instead of how much is downloaded.
 		res.on("data", (chunk) => {
 			received += chunk.length;
-			ipcMain.emit("ns-update-event", lang("gui.update.downloading") + " " + (received / 1024 / 1024).toFixed(1) + "mb");
+			const received_mb = (received / 1024 / 1024).toFixed(1);
+
+			let current_percentage = 100;
+
+			if (unknown_size === false) {
+				current_percentage = (received_mb / content_length_mb * 100.0).toFixed(1);
+			}
+
+
+			ipcMain.emit("ns-update-event", lang("gui.update.downloading") + " " + received_mb + "/" + complete_size_str + " mb " + percentage_str.replace("%s", current_percentage));
 		})
 
 		stream.on("finish", () => {
