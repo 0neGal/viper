@@ -197,7 +197,7 @@ update.northstar = async (force_install) => {
 			return false;
 		}
 
-		// variables for caclulating percentage downloaded
+		// variables for calculating percentage downloaded
 		let complete_size_str = "???";
 		const percentage_str = "(%s%)";
 		// TODO: find a better way to get the complete size, since not all servers send this info
@@ -207,7 +207,6 @@ update.northstar = async (force_install) => {
 
 		// if content_length is undefined, we can't get the complete size (not all servers send the content-length)
 		if (content_length == undefined) {
-			// TODO: add translations
 			console.error(lang("cli.update.unknown_size"), lang("cli.update.unknown_size_not_found"));
 			unknown_size = true;
 		} else {
