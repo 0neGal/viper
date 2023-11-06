@@ -9,8 +9,8 @@
 			"devtools": "打开开发者工具",
 			"version": "输出版本信息",
 			"cli": "强制开启CLI",
-			"update": "从您设置的游戏目录更新Northstar",
-			"setpath": "设置您的游戏目录",
+			"update": "从您设置的游戏路径更新Northstar",
+			"setpath": "设置您的游戏路径",
 			"update_vp": "如果支持的话, 自更新Viper.",
 			"no_vp_updates": "覆盖vipers.json并禁止其更新",
 			"install_mod": "安装一个模组, 文件夹, 或zip压缩包",
@@ -45,7 +45,7 @@
 		},
 
 		"gamepath": {
-			"lost": "没有找到游戏目录, 请确保它已经挂载!"
+			"lost": "没有找到游戏路径, 请确保它已经挂载!"
 		},
 
 		"mods": {
@@ -62,7 +62,7 @@
 	"gui": {
 		"exit": "退出",
 		"welcome": "欢迎来到Viper!",
-		"setpath": "更换游戏目录",
+		"setpath": "更换游戏路径",
 
 		"versions": {
 			"viper": "Viper版本",
@@ -102,7 +102,7 @@
 
 			"confirm_plugins": {
 				"title": "以下包含有native插件:",
-				"description": "Native插件比普通的模组拥有更多对系统的访问权限, 恶意插件可能会导致您的计算机受到损害. 如果这个插件是来自于一位信任的开发者或您知道自己在干什么, 那么请忽略这条信息."
+				"description": "Native插件比普通的模组拥有更多对系统的访问权限, 如果安装了恶意插件可能会导致您的计算机受到损害. 如果这个插件是来自于一位信任的开发者或您知道自己在干什么, 那么请忽略这条信息."
 			}
 		},
 
@@ -187,15 +187,15 @@
 				"title": "其他修复操作",
 				"desc": "如果您遇到了问题,那么这些按钮或许会帮助您修复它们.",
 				"buttons": {
-					"open_gamepath": "打开游戏目录",
+					"open_gamepath": "打开游戏路径",
 					"reset_config": "重置配置文件",
 					"restart_viper": "重启Viper",
-					"change_gamepath": "更改游戏目录",
+					"change_gamepath": "更改游戏路径",
 					"force_quit_game": "强制退出泰坦陨落2和Northstar",
 					"force_quit_origin": "强制退出Origin和/或EA Desktop"
 				},
 
-				"open_gamepath_alert": "没有一个有效的游戏目录被选择, 所以它不能被打开. 请先选择一个有效的游戏目录!",
+				"open_gamepath_alert": "没有一个有效的游戏路径被选择, 所以它不能被打开. 请先选择一个有效的游戏路径!",
 				"reset_config_alert": "请确认您想要重置配置文件, 确认后Viper将会删除配置文件并重启."
 			}
 		},
@@ -218,12 +218,12 @@
 		"install": "安装",
 
 		"gamepath": {
-			"must": "游戏目录必须被设置才能启动Viper.",
-			"wrong": "该目录不是一个有效的游戏目录",
-			"lost": "Gamepath no longer exists/can't be found!\n\nMake sure your drive is mounted properly, or if you moved your game location that you update the game path.\n\nViper may not work properly until next restart!",
-			"lost_perms": "Your user seems to have lost permissions to create and or read files in the selected gamepath, please select a gamepath or gain access to read and write to the folder:\n\n",
-			"found_missing_perms": "Automatically found a valid gamepath, however your user doesn't have permissions to create and or read files in it, please manually select a different gamepath or gain access to read and write to the folder:\n\n",
-			"missing_perms": "Your user doesn't have permissions to create and or read files in the selected gamepath, please select a different gamepath or gain access to read and write to the folder:\n\n"
+			"must": "游戏路径必须被设置才能启动Viper.",
+			"wrong": "该目录不是一个有效的游戏路径",
+			"lost": "无法找到游戏路径!\n\n请确认您是否移动了游戏路径或硬盘是否被正确挂载\n\nViper在下一次重启前可能无法正常工作!",
+			"lost_perms": "您的用户没有对当前设定的游戏路径创建和读取文件的权限, 请选择一个新的游戏路径或获取对该目录的读写权限:\n\n",
+			"found_missing_perms": "自动找到了一个有效的游戏路径, 然而您的用户没有对该路径的读写权限. 请手动指定一个不同的游戏路径或获取对该路径的读写权限:\n\n",
+			"missing_perms": "您的用户没有对选中的游戏路径的读写权限, 请手动指定一个不同的游戏路径或获取对该路径的读写权限:\n\n"
 		},
 
 		"toast": {
@@ -240,7 +240,7 @@
 				"installed": "已成功安装!",
 				"malformed": "拥有错误的文件夹结构, 如果您是它的开发者, 您应该修复这个问题.",
 				"failed": "在尝试安装该时发生了未知错误, 这可能是作者的问题, 也可能是Viper的问题",
-				"duped": "has multiple mod folders in it, with the same name, causing duplicate folders, if you're the developer, you should fix this.",
+				"duped": "存在多个同名的模组文件夹, 如果你是它的开发者, 你应该修复这个问题.",
 				"unknown_error": "一个未知错误产生了, 点击来查看更多细节. 您可能会想要对错误信息进行截图用于bug反馈",
 				"no_internet": "Viper可能不会正常工作."
 			}
@@ -273,24 +273,24 @@
 
 	"general": {
 		"auto_updates": {
-			"game_running": "Game is running, refusing to update Northstar"
+			"game_running": "游戏运行中, 拒绝更新Northstar"
 		},
 
 		"mods": {
-			"enabled": "Enabled mods:",
-			"disabled": "Disabled mods:",
-			"installed": "Installed mods:"
+			"enabled": "启用的模组:",
+			"disabled": "禁用的模组:",
+			"installed": "已安装的模组:"
 		},
 
-		"missing_path": "无法找到游戏目录！请手动选择！",
-		"not_installed": "Northstar is not installed!",
+		"missing_path": "无法找到游戏路径！请手动选择！",
+		"not_installed": "没有安装Northstar!",
 		"running": "运行中",
 		"launching": "启动中"
 	},
 
 	"request": {
-		"no_vp_release_notes": "Couldn't fetch Viper release notes.\nTry again later!",
-		"no_ns_release_notes": "Couldn't fetch Northstar release notes.\nTry again later!"
+		"no_vp_release_notes": "无法获取Viper的更新日志.\n请稍后再试!",
+		"no_ns_release_notes": "无法获取Northstar的更新日志.\n请稍后再试!"
 	},
 
 	"tooltip": {
