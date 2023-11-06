@@ -9,17 +9,17 @@
 			"devtools": "打开开发者工具",
 			"version": "输出版本信息",
 			"cli": "强制开启CLI",
-			"update": "updates Northstar from your set game path",
-			"setpath": "sets your game path",
-			"update_vp": "updates Viper itself, if supported.",
-			"no_vp_updates": "overwrites viper.json and disables Viper updates",
-			"install_mod": "installs a mod, folder or zip",
+			"update": "从您设置的游戏目录更新Northstar",
+			"setpath": "设置您的游戏目录",
+			"update_vp": "如果支持的话, 自更新Viper.",
+			"no_vp_updates": "覆盖vipers.json并禁止其更新",
+			"install_mod": "安装一个模组, 文件夹, 或zip压缩包",
 			"remove_mod": "移除该模组",
 			"toggle_mod": "开关该模组"
 		},
 
 		"setpath": {
-			"no_arg": "No argument provided for --setpath"
+			"no_arg": "没有为--setpath 提供argument"
 		},
 
 		"update": {
@@ -34,33 +34,33 @@
 		},
 
 		"auto_updates": {
-			"checking": "正在检查Northstar的更新...",
+			"checking": "正在检查Northstar更新...",
 			"available": "Northstar有可用的新更新！",
-			"updating_ns": "Launching update process...",
+			"updating_ns": "启动更新进程中...",
 			"no_update": "无可用的Northstar更新"
 		},
 
 		"launch": {
-			"linux_error": "当前在Linux平台上不支持启动该游戏"
+			"linux_error": "当前不支持在Linux平台上启动游戏"
 		},
 
 		"gamepath": {
-			"lost": "没有找到游戏目录, 请确保它已经mounted!"
+			"lost": "没有找到游戏目录, 请确保它已经挂载!"
 		},
 
 		"mods": {
 			"failed": "模组安装失败!",
 			"removed": "成功移除该模组!",
-			"toggled": "成功切换该模组!",
-			"installed": "Successfully installed mod!",
-			"cant_find": "Can't find a mod with that name!",
-			"not_a_mod": "Selected folder/file is not a mod",
-			"toggled_all": "Successfully toggled all mods",
-			"improper_json": "%s's mod.json has formatting errors"
+			"toggled": "成功开关该模组!",
+			"installed": "安装模组成功!",
+			"cant_find": "无法找到含有该名字的模组!",
+			"not_a_mod": "选中的文件夹/文件不是一个模组",
+			"toggled_all": "成功开关所有模组",
+			"improper_json": "%s的mod.json含有格式错误"
 		}
 	},
 	"gui": {
-		"exit": "Exit",
+		"exit": "退出",
 		"welcome": "欢迎来到Viper!",
 		"setpath": "更换游戏目录",
 
@@ -71,156 +71,155 @@
 
 		"update": {
 			"button": "更新",
-			"check": "Check for updates",
-			"downloading": "Downloading...",
-			"extracting": "Extracting update...",
-			"finished": "Done! Ready to play!",
-			"uptodate": "Already up to date!",
-			"available": "A new update for Viper is available, do you want to restart and apply it?"
+			"check": "检查更新",
+			"downloading": "下载中...",
+			"extracting": "解压更新中...",
+			"finished": "完成!",
+			"uptodate": "已经为最新版本!",
+			"available": "Viper有一个可用的新更新, 您想要重启Viper并应用它吗?"
 		},
 
 		"mods": {
-			"title": "Mods",
-			"count": "Mods Installed:",
-			"disabled_tag": "Disabled",
-			"remove": "Remove",
-			"install": "Install Mod",
-			"find": "Find Mods",
-			"toggle_all": "Toggle All",
-			"toggle_all_confirm": "Toggling all mods could disable mods required for Northstar to function. Are you sure?",
-			"remove_all": "Remove All",
-			"remove_all_confirm": "Removing all mods will usually require you to reinstall Northstar. Are you sure?",
-			"nothing_selected": "You've not selected a mod.",
-			"required_confirm": "You've selected a core mod, Northstar may not function without it. Are you sure?",
-
-			"not_a_mod": "Not a mod!",
-			"unknown_author": "Unknown",
-			"extracting": "Extracting mod...",
-			"installing": "Installing mod...",
-			"installed_mod": "Installed mod!",
-			"drag_n_drop": "Drag and drop a mod to install",
-			"confirm_dependencies": "This package has dependencies, shown below, clicking \"Ok\" will install the package and the dependencies.\n\n",
+			"title": "模组",
+			"count": "已安装的模组数:",
+			"disabled_tag": "已禁用",
+			"remove": "移除",
+			"install": "安装模组",
+			"find": "寻找模组",
+			"toggle_all": "开关所有",
+			"toggle_all_confirm": "开关所有模组可能会导致使Northstar需要的模组被禁用, 您确定吗?",
+			"remove_all": "移除所有",
+			"remove_all_confirm": "移除所有模组通常会需要您重新安装Northstar, 您确定吗?",
+			"nothing_selected": "您还没有选择一个模组.",
+			"required_confirm": "您选择了一个核心模组, Northstar没有它可能无法工作, 您确定吗?",
+			"not_a_mod": "不是一个模组!",
+			"unknown_author": "未知",
+			"extracting": "解压模组中...",
+			"installing": "安装模组中...",
+			"installed_mod": "模组安装成功!",
+			"drag_n_drop": "将Mod拖至这里进行安装",
+			"confirm_dependencies": "此包含有依赖项, 以下展示, 点击 \"Ok\" 将会安装此包和它的依赖项.\n\n",
 
 			"confirm_plugins": {
-				"title": "The following package has native plugins:",
-				"description": "Native plugins have far more system access than a regular mod, and because of this they're inherently less secure to have installed, as a malicious plugin could do far more harm this way. If this plugin is one from a trusted developer or similar or you know what you're doing, then you can disregard this message completely."
+				"title": "以下包含有native插件:",
+				"description": "Native插件比普通的模组拥有更多对系统的访问权限, 恶意插件可能会导致您的计算机受到损害. 如果这个插件是来自于一位信任的开发者或您知道自己在干什么, 那么请忽略这条信息."
 			}
 		},
 
 		"browser": {
-			"info": "Info",
-			"view": "View",
-			"made_by": "by",
-			"search": "Search...",
-			"update": "Update",
-			"install": "Install",
-			"reinstall": "Re-Install",
-			"loading": "Loading mods...",
-			"load_more": "Load more...",
-			"end_of_list": "All packages have been loaded.",
-			"no_results": "No results...",
+			"info": "详情",
+			"view": "查看",
+			"made_by": "来自",
+			"search": "搜索...",
+			"update": "更新",
+			"install": "安装",
+			"reinstall": "重新安装",
+			"loading": "加载模组中...",
+			"load_more": "加载更多...",
+			"end_of_list": "所有包全部加载完毕.",
+			"no_results": "没有相关结果...",
 
 			"filter": {
-				"mods": "Mods",
-				"skins": "Skins",
-				"client": "Client-side",
-				"server": "Server-side"
+				"mods": "模组",
+				"skins": "皮肤",
+				"client": "客户端",
+				"server": "服务器端"
 			}
 		},
 
 		"settings": {
-			"save": "Save",
-			"discard": "Discard",
+			"save": "保存",
+			"discard": "取消",
 
 			"title": {
 				"ns": "Northstar",
-				"language": "Language",
-				"updates": "Updates",
-				"misc": "Miscellaneous"
+				"language": "语言",
+				"updates": "更新",
+				"misc": "杂项"
 			},
 
 			"nsargs": {
-				"title": "Launch options",
-				"desc": "Here you can add launch options for Northstar/Titanfall."
+				"title": "启动选项",
+				"desc": "在这里您可以为Northstar/泰坦陨落添加启动选项"
 			},
 
 			"autolang": {
-				"title": "Auto-Detect Language",
-				"desc": "When enabled, Viper tries to automatically detect your system language, when disabled you can manually change the language below."
+				"title": "自动检测语言",
+				"desc": "当开启后, Viper会尝试自动检测您的系统语言. 关闭此选项的话, 您可以在以下设置更换语言."
 			},
 
 			"forcedlang": {
-				"title": "Language",
-				"desc": "When \"Auto-Detect Language\" is disabled, this will decide the language. Requires a restart to take effect."
+				"title": "语言",
+				"desc": "当 \"自动检测语言\" 被禁用后, 此设置将会作为Viper的语言. 需要重启Viper来生效."
 			},
 
 			"autoupdate": {
-				"title": "Viper Auto-Updates",
-				"desc": "Viper will automatically keep itself up-to-date."
+				"title": "Viper自动更新",
+				"desc": "Viper将会自动更新至最新版本."
 			},
 
 			"nsupdate": {
-				"title": "Northstar Auto-Updates",
-				"desc": "Viper will automatically keep Northstar up-to-date, however it can still manually be updated through the Northstar page."
+				"title": "Northstar自动更新",
+				"desc": "Viper将会自动更新Northstar至最新版本, 不过您还是可以在Northstar页面下手动更新"
 			},
 
 			"excludes": {
-				"title": "Retain files on update",
-				"desc": "When Northstar is updated, files specified here will not be overwritten by files from the new Northstar update, unless you know what you're changing, you should probably not change anything here. Each file is separated with a space."
+				"title": "在更新时保留文件",
+				"desc": "当Northstar更新后, 在此指定的文件将不会被新的Northstar更新覆盖. 除非您知道自己在修改什么, 您可能不会想要改动任何东西. 每一个文件都以空格隔开."
 			},
 
 			"originkill": {
-				"title": "Automatically quit Origin and or EA Desktop",
-				"desc": "When Viper exits, automatically quit Origin and or EA Desktop as well."
+				"title": "自动退出Origin和/或EA Desktop",
+				"desc": "当Viper退出后, 同时自动退出Origin和/或EA Desktop"
 			},
 
 			"updatebuttons": {
-				"title": "Repair actions",
-				"desc": "If you're having problems with updates, some of these buttons may help in fixing them.",
+				"title": "修复操作",
+				"desc": "如果您更新后遇到了问题, 这些按钮或许会帮助您修复它们.",
 				"buttons": {
-					"reset_cached_api_requests": "Reset cached API requests",
-					"force_northstar_reinstall": "Force re-install of Northstar",
-					"force_delete_install_cache": "Force delete cached install files"
+					"reset_cached_api_requests": "重置缓存的API请求",
+					"force_northstar_reinstall": "强制重新安装Northstar",
+					"force_delete_install_cache": "强制删除已缓存的安装文件"
 				}
 			},
 
 			"miscbuttons": {
-				"title": "Misc repair actions",
-				"desc": "If you're having problems then some of these buttons may help fixing it",
+				"title": "其他修复操作",
+				"desc": "如果您遇到了问题,那么这些按钮或许会帮助您修复它们.",
 				"buttons": {
-					"open_gamepath": "Open gamepath",
-					"reset_config": "Reset config file",
-					"restart_viper": "Restart Viper",
-					"change_gamepath": "Change gamepath",
-					"force_quit_game": "Force quit Titanfall and Northstar",
-					"force_quit_origin": "Force quit Origin and or EA Desktop"
+					"open_gamepath": "打开游戏目录",
+					"reset_config": "重置配置文件",
+					"restart_viper": "重启Viper",
+					"change_gamepath": "更改游戏目录",
+					"force_quit_game": "强制退出泰坦陨落2和Northstar",
+					"force_quit_origin": "强制退出Origin和/或EA Desktop"
 				},
 
-				"open_gamepath_alert": "No valid gamepath is selected, so there's no gamepath to open, please select a valid gamepath first!",
-				"reset_config_alert": "Please confirm that you want to reset the config file, after confirming Viper will delete the config file, and then restart."
+				"open_gamepath_alert": "没有一个有效的游戏目录被选择, 所以它不能被打开. 请先选择一个有效的游戏目录!",
+				"reset_config_alert": "请确认您想要重置配置文件, 确认后Viper将会删除配置文件并重启."
 			}
 		},
 
 		"nsupdate": {
 			"gaming": {
 				"title": "有可用的Northstar更新！",
-				"body": "An update for Northstar is available.\nYou can force its installation after closing the game."
+				"body": "Northstar有一个可用的更新\n您可以在退出游戏后强制安装"
 			}
 		},
 
 		"server": {
-			"player": "player",
-			"players": "players",
-			"servers": "servers",
-			"offline": "Masterserver is Offline"
+			"player": "玩家",
+			"players": "玩家",
+			"servers": "服务器",
+			"offline": "主服务器为离线状态"
 		},
 
-		"launch": "Launch",
-		"install": "Install",
+		"launch": "启动",
+		"install": "安装",
 
 		"gamepath": {
 			"must": "游戏目录必须被设置才能启动Viper.",
-			"wrong": "This folder is not a valid game path.",
+			"wrong": "该目录不是一个有效的游戏目录",
 			"lost": "Gamepath no longer exists/can't be found!\n\nMake sure your drive is mounted properly, or if you moved your game location that you update the game path.\n\nViper may not work properly until next restart!",
 			"lost_perms": "Your user seems to have lost permissions to create and or read files in the selected gamepath, please select a gamepath or gain access to read and write to the folder:\n\n",
 			"found_missing_perms": "Automatically found a valid gamepath, however your user doesn't have permissions to create and or read files in it, please manually select a different gamepath or gain access to read and write to the folder:\n\n",
@@ -229,21 +228,21 @@
 
 		"toast": {
 			"title": {
-				"installed": "Mod installed!",
-				"duped": "Duplicate folder names!",
-				"failed": "Failed to install",
-				"malformed": "Incorrect folder structure!",
-				"unknown_error": "Unknown Error!",
-				"no_internet": "No Internet"
+				"installed": "模组安装成功!",
+				"duped": "重复的文件夹名字!",
+				"failed": "安装失败",
+				"malformed": "错误的文件夹结构!",
+				"unknown_error": "未知错误!",
+				"no_internet": "没有互联网"
 			},
 
 			"desc": {
-				"installed": "has been installed successfully!",
-				"malformed": "has an incorrect folder structure, if you're the developer, you should fix this.",
-				"failed": "An unknown error occurred while trying to install the mod. This may be the author's fault, and it may also be Viper's fault.",
+				"installed": "已成功安装!",
+				"malformed": "拥有错误的文件夹结构, 如果您是它的开发者, 您应该修复这个问题.",
+				"failed": "在尝试安装该时发生了未知错误, 这可能是作者的问题, 也可能是Viper的问题",
 				"duped": "has multiple mod folders in it, with the same name, causing duplicate folders, if you're the developer, you should fix this.",
-				"unknown_error": "An unknown error occurred, click for more details. You may want to take a screenshot of the detailed error when filing a bug report.",
-				"no_internet": "Viper may not work properly."
+				"unknown_error": "一个未知错误产生了, 点击来查看更多细节. 您可能会想要对错误信息进行截图用于bug反馈",
+				"no_internet": "Viper可能不会正常工作."
 			}
 		}
 	},
@@ -251,24 +250,24 @@
 	"viper": {
 		"menu": {
 			"main": "Viper",
-			"release": "Release Notes",
-			"info": "Extras"
+			"release": "更新日志",
+			"info": "额外内容"
 		},
 
 		"info": {
-			"links": "Links",
-			"credits": "Credits",
-			"discord": "Join Discord:",
-			"issues": "Report issues with Viper:"
+			"links": "链接",
+			"credits": "鸣谢",
+			"discord": "加入Discord:",
+			"issues": "向Viper反馈问题:"
 		}
 	},
 
 	"ns": {
 		"menu": {
-			"main": "Northstar Launcher",
-			"mods": "Mods",
-			"release": "Release Notes",
-			"force_quit": "Force quit game"
+			"main": "Northstar启动器",
+			"mods": "模组",
+			"release": "更新日志",
+			"force_quit": "强制退出游戏"
 		}
 	},
 
