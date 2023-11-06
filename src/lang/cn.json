@@ -6,11 +6,11 @@
 	"cli": {
 		"help": {
 			"help": "显示该帮助信息",
-			"devtools": "打开开发者工具",
+			"devtools": "打开开发者调试工具",
 			"version": "输出版本信息",
 			"cli": "强制开启CLI",
-			"update": "从您设置的游戏路径更新Northstar",
-			"setpath": "设置您的游戏路径",
+			"update": "从您设置的游戏目录更新Northstar",
+			"setpath": "设置您的游戏目录",
 			"update_vp": "如果支持的话, 自更新Viper.",
 			"no_vp_updates": "覆盖vipers.json并禁止其更新",
 			"install_mod": "安装一个模组, 文件夹, 或zip压缩包",
@@ -45,7 +45,7 @@
 		},
 
 		"gamepath": {
-			"lost": "没有找到游戏路径, 请确保它已经挂载!"
+			"lost": "没有找到游戏目录, 请确保它已经挂载!"
 		},
 
 		"mods": {
@@ -62,7 +62,7 @@
 	"gui": {
 		"exit": "退出",
 		"welcome": "欢迎来到Viper!",
-		"setpath": "更换游戏路径",
+		"setpath": "更换游戏目录",
 
 		"versions": {
 			"viper": "Viper版本",
@@ -187,15 +187,15 @@
 				"title": "其他修复操作",
 				"desc": "如果您遇到了问题,那么这些按钮或许会帮助您修复它们.",
 				"buttons": {
-					"open_gamepath": "打开游戏路径",
+					"open_gamepath": "打开游戏目录",
 					"reset_config": "重置配置文件",
 					"restart_viper": "重启Viper",
-					"change_gamepath": "更改游戏路径",
+					"change_gamepath": "更改游戏目录",
 					"force_quit_game": "强制退出泰坦陨落2和Northstar",
 					"force_quit_origin": "强制退出Origin和/或EA Desktop"
 				},
 
-				"open_gamepath_alert": "没有一个有效的游戏路径被选择, 所以它不能被打开. 请先选择一个有效的游戏路径!",
+				"open_gamepath_alert": "没有一个有效的游戏目录被选择, 所以它不能被打开. 请先选择一个有效的游戏目录!",
 				"reset_config_alert": "请确认您想要重置配置文件, 确认后Viper将会删除配置文件并重启."
 			}
 		},
@@ -220,10 +220,10 @@
 		"gamepath": {
 			"must": "游戏目录必须被设置才能启动Viper.",
 			"wrong": "该目录不是一个有效的游戏目录",
-			"lost": "无法找到游戏路径!\n\n请确认您是否移动了游戏路径或硬盘是否被正确挂载\n\nViper在下一次重启前可能无法正常工作!",
-			"lost_perms": "您的用户没有对当前设定的游戏路径创建和读取文件的权限, 请选择一个新的游戏路径或获取对该目录的读写权限:\n\n",
-			"found_missing_perms": "自动找到了一个有效的游戏路径, 然而您的用户没有对该路径的读写权限. 请手动指定一个不同的游戏路径或获取对该路径的读写权限:\n\n",
-			"missing_perms": "您的用户没有对选中的游戏路径的读写权限, 请手动指定一个不同的游戏路径或获取对该路径的读写权限:\n\n"
+			"lost": "无法找到游戏目录!\n\n请确认您是否移动了游戏目录或硬盘是否被正确挂载\n\nViper在下一次重启前可能无法正常工作!",
+			"lost_perms": "您的用户没有对当前设定的游戏目录创建和读取文件的权限, 请选择一个新的游戏目录或获取对该目录的读写权限:\n\n",
+			"found_missing_perms": "自动找到了一个有效的游戏目录, 然而您的用户没有对该目录的读写权限. 请手动指定一个不同的游戏目录或获取对该目录的读写权限:\n\n",
+			"missing_perms": "您的用户没有对选中的游戏目录的读写权限, 请手动指定一个不同的游戏目录或获取对该目录的读写权限:\n\n"
 		},
 
 		"toast": {
