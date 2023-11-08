@@ -200,7 +200,7 @@ var Browser = {
 	},
 	loading: (string) => {
 		if (Browser.filters.get().unfiltered.length == 0) {
-			string = lang("gui.browser.noresults");
+			string = lang("gui.browser.no_results");
 		}
 
 		if (string) {
@@ -242,7 +242,7 @@ var Browser = {
 		let res = fuse.search(string);
 
 		if (res.length < 1) {
-			Browser.loading(lang("gui.browser.noresults"));
+			Browser.loading(lang("gui.browser.no_results"));
 			return
 		}
 
@@ -257,7 +257,7 @@ var Browser = {
 		}
 
 		if (count < 1) {
-			Browser.loading(lang("gui.browser.noresults"));
+			Browser.loading(lang("gui.browser.no_results"));
 		}
 	},
 	setbutton: (mod, string) => {

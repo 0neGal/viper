@@ -187,7 +187,7 @@ mods.remove = (mod) => {
 			return;
 		}
 	} else if (mod == "allmods") {
-		if (! confirm(lang("gui.mods.remove_all.confirm"))) {
+		if (! confirm(lang("gui.mods.remove_all_confirm"))) {
 			return;
 		}
 	}

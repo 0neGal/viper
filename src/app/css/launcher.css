@@ -178,6 +178,7 @@
 	color: white;
 	padding: 20px;
 	font-size: 24px;
+	overflow: hidden;
 	font-weight: bold;
 	margin-top: 100px;
 	margin-bottom: 10px;
@@ -185,6 +186,8 @@
 	background: var(--redbg);
 	transition: 0.2s ease-in-out;
 	filter: drop-shadow(0px 8px 5px rgba(0, 0, 0, 0.1));
+
+	--progress: 100%;
 }
 
 .contentContainer .playBtn:hover {
@@ -195,6 +198,19 @@
 .contentContainer .playBtn:active {
 	opacity: 0.7;transform: scale(0.98);
 	filter: drop-shadow(0px 5px 10px rgba(0, 0, 0, 0.4));
+}
+
+.contentContainer .playBtn:before {
+	top: 0;
+	left: 0;
+	bottom: 0;
+	content: " ";
+	opacity: 0.5;
+	position: absolute;
+	right: var(--progress);
+	filter: brightness(1.5);
+	background: var(--bluebg);
+	transition: 0.2s ease-in-out;
 }
 
 .contentContainer #nsMain .playBtn {
