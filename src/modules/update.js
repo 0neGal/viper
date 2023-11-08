@@ -197,8 +197,30 @@ update.northstar = async (force_install) => {
 			return false;
 		}
 
+		let unknown_size = false;
+		let content_length_mb = 0.0;
+		let content_length = res.headers["content-length"];
+
+		// if content_length is `undefined`, we can't get the complete
+		// size (not all servers send the content-length)
+		if (content_length == undefined) {
+			unknown_size = true;
+		} else {
+			content_length = parseInt(content_length);
+
+			if (isNaN(content_length)) {
+				unknown_size = true;
+			} else {
+				content_length_mb = (content_length / 1024 / 1024).toFixed(1);
+			}
+		}
+
 		console.info(lang("cli.update.downloading") + ":", latest_version);
-		ipcMain.emit("ns-update-event", "cli.update.downloading");
+		ipcMain.emit("ns-update-event", {
+			progress: 0,
+			btn_text: "1/2",
+			key: "cli.update.downloading",
+		});
 
 		let tmp = path.dirname(settings.zip);
 
@@ -217,11 +239,26 @@ update.northstar = async (force_install) => {
 		res.pipe(stream);
 
 		let received = 0;
-		// progress messages, we should probably switch this to
-		// percentage instead of how much is downloaded.
 		res.on("data", (chunk) => {
 			received += chunk.length;
-			ipcMain.emit("ns-update-event", lang("gui.update.downloading") + " " + (received / 1024 / 1024).toFixed(1) + "mb");
+			let received_mb = (received / 1024 / 1024).toFixed(1);
+
+			let percentage_str = "";
+			let current_percentage = 0;
+
+			let key = lang("gui.update.downloading") + " " + received_mb + "mb";
+
+			if (unknown_size === false) {
+				key += " / " + content_length_mb + "mb";
+				current_percentage = Math.floor(received_mb / content_length_mb * 100);
+				percentage_str = " - " + current_percentage + "%";
+			}
+
+			ipcMain.emit("ns-update-event", {
+				key: key,
+				progress: current_percentage,
+				btn_text: "1/2" + percentage_str
+			});
 		})
 
 		stream.on("finish", () => {
@@ -229,19 +266,33 @@ update.northstar = async (force_install) => {
 			let extract = fs.createReadStream(settings.zip);
 
 			win.log(lang("gui.update.extracting"));
-			ipcMain.emit("ns-update-event", "gui.update.extracting");
+			ipcMain.emit("ns-update-event", {
+				progress: 0,
+				btn_text: "2/2 - 0%",
+				key: lang("gui.update.extracting")
+			});
+
 			console.ok(lang("cli.update.download_done"));
+
 			// extracts the zip, this is the part where we're actually
 			// installing Northstar.
 			extract.pipe(unzip.Extract({path: settings.gamepath}))
 
-			let max = received;
-			received = 0;
+			let extracted = 0;
+			let size = received;
+			let size_mb = (size / 1024 / 1024).toFixed(1);
 
 			extract.on("data", (chunk) => {
-				received += chunk.length;
-				let percent = Math.floor(received / max * 100);
-				ipcMain.emit("ns-update-event", lang("gui.update.extracting") + " " + percent + "%");
+				extracted += chunk.length;
+				let percent = Math.floor(extracted / size * 100);
+				let extracted_mb = (extracted / 1024 / 1024).toFixed(1);
+
+				ipcMain.emit("ns-update-event", {
+					progress: percent,
+					btn_text: "2/2 - " + percent + "%",
+					key: lang("gui.update.extracting") +
+						" " + extracted_mb + "mb / " + size_mb + "mb"
+				});
 			})
 
 			extract.on("end", () => {

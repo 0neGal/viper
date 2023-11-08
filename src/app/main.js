@@ -198,6 +198,41 @@ function setButtons(state, enable_gamepath_btns) {
 	}
 }
 
+// `percent` should be a number between 0 to 100, if it's `false` it'll
+// reset it back to nothing instantly, with no animatino
+function set_ns_progress(percent) {
+	// reset button progress
+	if (percent === false) {
+		document.querySelector(".contentContainer #nsMain .playBtn")
+			.style.setProperty("--progress", "unset");
+
+		return;
+	}
+
+	percent = parseInt(percent);
+
+	// make sure we're dealing with a number
+	if (isNaN(percent) || typeof percent !== "number") {
+		return false;
+	}
+
+	// limit percent, while this barely has a difference, if you were to
+	// set a very high number, the CSS would then use a very high
+	// number, not great.
+	if (percent > 100) {
+		percent = 100;
+	} else if (percent < 0) {
+		percent = 0;
+	}
+
+	// invert number to it works in the CSS
+	percent = 100 - percent;
+
+	// set the CSS progress variable
+	document.querySelector(".contentContainer #nsMain .playBtn")
+		.style.setProperty("--progress", percent + "%");
+}
+
 ipcRenderer.on("set-buttons", (event, state) => {
 	setButtons(state);
 })
@@ -209,16 +244,30 @@ ipcRenderer.on("gamepath-lost", (event, state) => {
 })
 
 // Frontend part of updating Northstar
-ipcRenderer.on("ns-update-event", (event, key) => {
+ipcRenderer.on("ns-update-event", (event, options) => {
+	let key = options.key;
+	if (typeof options == "string") {
+		key = options;
+	}
+
 	document.getElementById("update").innerText = `(${lang(key)})`;
-	console.log(lang(key));
+
 	switch(key) {
 		case "cli.update.uptodate_short":
 		case "cli.update.no_internet":
 			setButtons(true);
+			set_ns_progress(false);
 			playNsBtn.innerText = lang("gui.launch");
 			break;
 		default:
+			if (options.progress) {
+				set_ns_progress(options.progress);
+			}
+
+			if (options.btn_text) {
+				playNsBtn.innerText = options.btn_text;
+			}
+
 			setButtons(false);
 			break;
 	}
