@@ -49,7 +49,7 @@
 	"homepage": "https://github.com/0neGal/viper#readme",
 	"dependencies": {
 		"electron-updater": "^4.6.1",
-		"follow-redirects": "^1.14.8",
+		"follow-redirects": "^1.15.4",
 		"fs-extra": "^10.0.0",
 		"fuse.js": "^6.5.3",
 		"jsonrepair": "^2.2.1",
