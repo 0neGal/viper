@@ -141,6 +141,34 @@ update.viper = (autoinstall) => {
 	autoUpdater.checkForUpdatesAndNotify();
 }
 
+// removes all mods in "R2Northstar/mods" starting with "Northstar."
+function remove_core_mods() {
+	if (! gamepath.exists()) {return}
+
+	// make sure the "R2Northstar/mods" folder exists, on top of making
+	// sure that, it is in fact a folder
+	let mod_dir = path.join(settings.gamepath, "R2Northstar/mods");
+	if (! fs.existsSync(mod_dir) && ! fs.statSync(mod_dir).isFile()) {
+		return
+	}
+
+	// get list of items in `mod_dir`
+	let mods = fs.readdirSync(mod_dir);
+
+	// run through list
+	for (let i = 0; i < mods.length; i++) {
+		// does the item starts with "Northstar."?
+		if (mods[i].match("Northstar\..*")) {
+			// remove the item
+			fs.rmSync(path.join(mod_dir, mods[i]), {
+				recursive: true
+			})
+		}
+	}
+
+	console.ok("Removed existing core mods!");
+}
+
 // installs/Updates Northstar
 //
 // if Northstar is already installed it'll be an update, otherwise it'll
@@ -262,6 +290,8 @@ update.northstar = async (force_install) => {
 		})
 
 		stream.on("finish", () => {
+			remove_core_mods();
+
 			stream.close();
 			let extract = fs.createReadStream(settings.zip);
 
