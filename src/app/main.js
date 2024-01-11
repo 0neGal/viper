@@ -75,9 +75,9 @@ if (fs.existsSync("viper.json")) {
 			// filepath to Northstar's startup args file
 			let args = path.join(settings.gamepath, "ns_startup_args.txt");
 
-			// check file exists
-			if (fs.existsSync(args)) {
-				// load file into `settings`
+			// check file exists, and that no `nsargs` setting was set
+			if (! settings.nsargs && fs.existsSync(args)) {
+				// load arguments from file into `settings`
 				settings.nsargs = fs.readFileSync(args, "utf8");
 			}
 		}

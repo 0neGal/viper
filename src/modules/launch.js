@@ -24,15 +24,23 @@ function launch(game_version) {
 	// change current directory to gamepath
 	process.chdir(settings.gamepath);
 
+	let launch_args = settings.nsargs || "";
+
 	// launch the requested game version
 	switch(game_version) {
 		case "vanilla":
 			console.info(lang("general.launching"), "Vanilla...");
-			exec("Titanfall2.exe", {cwd: settings.gamepath});
+			exec("Titanfall2.exe " + launch_args, {
+				cwd: settings.gamepath
+			})
+
 			break;
 		default:
 			console.info(lang("general.launching"), "Northstar...");
-			exec("NorthstarLauncher.exe", {cwd: settings.gamepath});
+			exec("NorthstarLauncher.exe " + launch_args, {
+				cwd: settings.gamepath
+			})
+
 			break;
 	}
 }

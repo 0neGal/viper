@@ -45,7 +45,7 @@ if (fs.existsSync("viper.json")) {
 	settings.zip = path.join(app.getPath("cache"), "vipertmp/northstar.zip");
 
 	let args = path.join(settings.gamepath, "ns_startup_args.txt");
-	if (fs.existsSync(args)) {
+	if (! settings.nsargs && fs.existsSync(args)) {
 		settings.nsargs = fs.readFileSync(args, "utf8");
 	}
 } else {
@@ -81,13 +81,6 @@ settings.save = (obj = {}, notify_renderer = true) => {
 
 	// set the settings obj for the main process
 	settings = settings_content;
-
-	// write Northstar's startup arguments file
-	if (fs.existsSync(settings.gamepath)) {
-		fs.writeFileSync(path.join(
-			settings.gamepath, "ns_startup_args.txt"
-		), settings.nsargs || "-multiple");
-	}
 	
 	if (notify_renderer) {
 		ipcMain.emit("saved-settings", settings_content);
