@@ -44,130 +44,152 @@
 				</button>
 			</div>
 			<div class="options">
-				<div class="title">
-					<img src="icons/game.png">
-					<h2>%%gui.settings.title.ns%%</h2>
-				</div>
-				<div class="option" name="nsargs">
-					<div class="text">
-						%%gui.settings.nsargs.title%%
-						<div class="desc">
-							%%gui.settings.nsargs.desc%%
+				<details open>
+					<summary>
+						<div class="title">
+							<img src="icons/game.png">
+							<h2>%%gui.settings.title.ns%%</h2>
+						</div>
+					</summary>
+					<div class="option" name="nsargs">
+						<div class="text">
+							%%gui.settings.nsargs.title%%
+							<div class="desc">
+								%%gui.settings.nsargs.desc%%
+							</div>
+						</div>
+						<div class="actions">
+							<input>
 						</div>
 					</div>
-					<div class="actions">
-						<input>
-					</div>
-				</div>
-				<div class="title">
-					<img src="icons/language.png">
-					<h2>%%gui.settings.title.language%%</h2>
-				</div>
-				<div class="option" name="autolang">
-					<div class="text">
-						%%gui.settings.autolang.title%%
-						<div class="desc">
-							%%gui.settings.autolang.desc%%
+				</details>
+
+				<details open>
+					<summary>
+						<div class="title">
+							<img src="icons/language.png">
+							<h2>%%gui.settings.title.language%%</h2>
+						</div>
+					</summary>
+
+					<div class="option" name="autolang">
+						<div class="text">
+							%%gui.settings.autolang.title%%
+							<div class="desc">
+								%%gui.settings.autolang.desc%%
+							</div>
+						</div>
+						<div class="actions">
+							<button class="switch off"></button>
 						</div>
 					</div>
-					<div class="actions">
-						<button class="switch off"></button>
-					</div>
-				</div>
-				<div class="option" name="forcedlang">
-					<div class="text">
-						%%gui.settings.forcedlang.title%%
-						<div class="desc">
-							%%gui.settings.forcedlang.desc%%
+					<div class="option" name="forcedlang">
+						<div class="text">
+							%%gui.settings.forcedlang.title%%
+							<div class="desc">
+								%%gui.settings.forcedlang.desc%%
+							</div>
+						</div>
+						<div class="actions">
+							<select onchange="Settings.switch(document.querySelector(`.option[name='autolang'] button`), false)">
+								<option></option>
+							</select>
 						</div>
 					</div>
-					<div class="actions">
-						<select onchange="Settings.switch(document.querySelector(`.option[name='autolang'] button`), false)">
-							<option></option>
-						</select>
-					</div>
-				</div>
-				<div class="title">
-					<img src="icons/updates.png">
-					<h2>%%gui.settings.title.updates%%</h2>
-				</div>
-				<div class="option" name="autoupdate">
-					<div class="text">
-						%%gui.settings.autoupdate.title%%
-						<div class="desc">
-							%%gui.settings.autoupdate.desc%%
+				</details>
+
+				<details open>
+					<summary>
+						<div class="title">
+							<img src="icons/updates.png">
+							<h2>%%gui.settings.title.updates%%</h2>
+						</div>
+					</summary>
+
+					<div class="option" name="autoupdate">
+						<div class="text">
+							%%gui.settings.autoupdate.title%%
+							<div class="desc">
+								%%gui.settings.autoupdate.desc%%
+							</div>
+						</div>
+						<div class="actions">
+							<button class="switch on"></button>
 						</div>
 					</div>
-					<div class="actions">
-						<button class="switch on"></button>
-					</div>
-				</div>
-				<div class="option" name="nsupdate">
-					<div class="text">
-						%%gui.settings.nsupdate.title%%
-						<div class="desc">
-							%%gui.settings.nsupdate.desc%%
+					<div class="option" name="nsupdate">
+						<div class="text">
+							%%gui.settings.nsupdate.title%%
+							<div class="desc">
+								%%gui.settings.nsupdate.desc%%
+							</div>
+						</div>
+						<div class="actions">
+							<button class="switch on"></button>
 						</div>
 					</div>
-					<div class="actions">
-						<button class="switch on"></button>
-					</div>
-				</div>
-				<div class="option" name="excludes" type="array">
-					<div class="text">
-						%%gui.settings.excludes.title%%
-						<div class="desc">
-							%%gui.settings.excludes.desc%%
+					<div class="option" name="excludes" type="array">
+						<div class="text">
+							%%gui.settings.excludes.title%%
+							<div class="desc">
+								%%gui.settings.excludes.desc%%
+							</div>
+						</div>
+						<div class="actions">
+							<input type="text" class="disable-when-installing">
 						</div>
 					</div>
-					<div class="actions">
-						<input type="text" class="disable-when-installing">
-					</div>
-				</div>
-				<div class="buttons">
-					<div class="text">
-						%%gui.settings.updatebuttons.title%%
-						<div class="desc">
-							%%gui.settings.updatebuttons.desc%%
+					<div class="buttons">
+						<div class="text">
+							%%gui.settings.updatebuttons.title%%
+							<div class="desc">
+								%%gui.settings.updatebuttons.desc%%
+							</div>
+						</div>
+						<div class="actions">
+							<button onclick="delete_request_cache()">%%gui.settings.updatebuttons.buttons.reset_cached_api_requests%%</button>
+							<button onclick="force_update_ns()" class="disable-when-installing">%%gui.settings.updatebuttons.buttons.force_northstar_reinstall%%</button>
+							<button onclick="delete_install_cache()" class="disable-when-installing">%%gui.settings.updatebuttons.buttons.force_delete_install_cache%%</button>
 						</div>
 					</div>
-					<div class="actions">
-						<button onclick="delete_request_cache()">%%gui.settings.updatebuttons.buttons.reset_cached_api_requests%%</button>
-						<button onclick="force_update_ns()" class="disable-when-installing">%%gui.settings.updatebuttons.buttons.force_northstar_reinstall%%</button>
-						<button onclick="delete_install_cache()" class="disable-when-installing">%%gui.settings.updatebuttons.buttons.force_delete_install_cache%%</button>
-					</div>
-				</div>
-				<div class="title">
-					<img src="icons/settings.png">
-					<h2>%%gui.settings.title.misc%%</h2>
-				</div>
-				<div class="option" name="originkill">
-					<div class="text">
-						%%gui.settings.originkill.title%%
-						<div class="desc">
-							%%gui.settings.originkill.desc%%
+				</details>
+
+				<details open>
+					<summary>
+						<div class="title">
+							<img src="icons/settings.png">
+							<h2>%%gui.settings.title.misc%%</h2>
+						</div>
+					</summary>
+
+					<div class="option" name="originkill">
+						<div class="text">
+							%%gui.settings.originkill.title%%
+							<div class="desc">
+								%%gui.settings.originkill.desc%%
+							</div>
+						</div>
+						<div class="actions">
+							<button class="switch off"></button>
 						</div>
 					</div>
-					<div class="actions">
-						<button class="switch off"></button>
-					</div>
-				</div>
-				<div class="buttons">
-					<div class="text">
-						%%gui.settings.miscbuttons.title%%
-						<div class="desc">
-							%%gui.settings.miscbuttons.desc%%
+					<div class="buttons">
+						<div class="text">
+							%%gui.settings.miscbuttons.title%%
+							<div class="desc">
+								%%gui.settings.miscbuttons.desc%%
+							</div>
+						</div>
+						<div class="actions">
+							<button onclick="relaunch()">%%gui.settings.miscbuttons.buttons.restart_viper%%</button>
+							<button onclick="reset_config()">%%gui.settings.miscbuttons.buttons.reset_config%%</button>
+							<button onclick="open_gamepath()">%%gui.settings.miscbuttons.buttons.open_gamepath%%</button>
+							<button onclick="kill_game()">%%gui.settings.miscbuttons.buttons.force_quit_game%%</button>
+							<button onclick="kill_origin()">%%gui.settings.miscbuttons.buttons.force_quit_origin%%</button>
+							<button onclick="setpath()" class="disable-when-installing">%%gui.settings.miscbuttons.buttons.change_gamepath%%</button>
 						</div>
 					</div>
-					<div class="actions">
-						<button onclick="relaunch()">%%gui.settings.miscbuttons.buttons.restart_viper%%</button>
-						<button onclick="reset_config()">%%gui.settings.miscbuttons.buttons.reset_config%%</button>
-						<button onclick="open_gamepath()">%%gui.settings.miscbuttons.buttons.open_gamepath%%</button>
-						<button onclick="kill_game()">%%gui.settings.miscbuttons.buttons.force_quit_game%%</button>
-						<button onclick="kill_origin()">%%gui.settings.miscbuttons.buttons.force_quit_origin%%</button>
-						<button onclick="setpath()" class="disable-when-installing">%%gui.settings.miscbuttons.buttons.change_gamepath%%</button>
-					</div>
-				</div>
+				</details>
 			</div>
 		</div>
 

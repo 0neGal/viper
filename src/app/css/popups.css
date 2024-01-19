@@ -87,6 +87,20 @@
 
 /* settings popup { */
 
+.popup .options details {
+	opacity: 1.0;
+	transition: 0.15s opacity ease-in-out;
+}
+
+.popup .options details:not([open]) {
+	opacity: 0.5;
+}
+
+.popup .options details summary {
+	cursor: pointer;
+	list-style-type: none;
+}
+
 .popup .options {
 	color: white;
 	margin: calc(var(--padding) / 2);
