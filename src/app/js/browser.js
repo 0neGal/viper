@@ -87,28 +87,16 @@ var Browser = {
 		},
 	},
 	toggle: (state) => {
-		if (state) {
-			browser.scrollTo(0, 0);
-			overlay.classList.add("shown");
-			browser.classList.add("shown");
+		browser.scrollTo(0, 0);
+		popups.set("#browser", state);
 
+		if (state) {
 			if (browserEntries.querySelectorAll(".el").length == 0) {
 				Browser.loadfront();
 			}
-			return
-		} else if (! state) {
-			if (state != undefined) {
-				Browser.filters.toggle(false);
-				overlay.classList.remove("shown");
-				browser.classList.remove("shown");
-				preview.classList.remove("shown");
-				return
-			}
+		} else if (state === false) {
+			Browser.filters.toggle(false);
 		}
-
-		browser.scrollTo(0, 0);
-		overlay.classList.toggle("shown");
-		browser.classList.toggle("shown");
 	},
 	install: (package_obj, clear_queue = false) => {
 		return installFromURL(

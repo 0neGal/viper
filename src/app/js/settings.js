@@ -1,28 +1,21 @@
 var Settings = {
 	toggle: (state) => {
+		Settings.load();
+		options.scrollTo(0, 0);
+
+		popups.set("#options", state);
 		let settings_btn = document.getElementById("settings");
 
 		if (state) {
-			Settings.load();
-			options.scrollTo(0, 0);
-			overlay.classList.add("shown");
-			options.classList.add("shown");
 			settings_btn.classList.add("shown");
-
 			return;
-		} else if (! state) {
+		} else if (state === false) {
 			if (state != undefined) {
-				overlay.classList.remove("shown");
-				options.classList.remove("shown");
 				settings_btn.classList.remove("shown");
 				return;
 			}
 		}
 
-		Settings.load();
-		options.scrollTo(0, 0);
-		overlay.classList.toggle("shown");
-		options.classList.toggle("shown");
 		settings_btn.classList.toggle("shown");
 	},
 	apply: () => {
