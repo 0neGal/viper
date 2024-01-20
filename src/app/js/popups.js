@@ -24,6 +24,11 @@ popups.set = (popup, state, auto_close_all = true) => {
 		overlay.classList.remove("shown");
 		popup_el.classList.remove("shown");
 	}
+
+	events.emit("popup-changed", {
+		popup: popup_el,
+		new_state: state
+	})
 }
 
 popups.show = (popup, auto_close_all = true) => {

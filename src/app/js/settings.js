@@ -4,19 +4,6 @@ var Settings = {
 		options.scrollTo(0, 0);
 
 		popups.set("#options", state);
-		let settings_btn = document.getElementById("settings");
-
-		if (state) {
-			settings_btn.classList.add("shown");
-			return;
-		} else if (state === false) {
-			if (state != undefined) {
-				settings_btn.classList.remove("shown");
-				return;
-			}
-		}
-
-		settings_btn.classList.toggle("shown");
 	},
 	apply: () => {
 		settings = {...settings, ...Settings.get()};
@@ -119,6 +106,20 @@ var Settings = {
 		}
 	}
 }
+
+events.on("popup-changed", () => {
+	let settings_is_shown =
+		document.getElementById("options")
+		.classList.contains("shown");
+
+	let settings_btn = document.getElementById("settings");
+
+	if (settings_is_shown) {
+		settings_btn.classList.add("shown");
+	} else {
+		settings_btn.classList.remove("shown");
+	}
+})
 
 document.body.addEventListener("click", (e) => {
 	let el = document.elementFromPoint(e.clientX, e.clientY);
