@@ -555,8 +555,8 @@ search.addEventListener("keyup", () => {
 	}
 })
 
-let events = ["scroll", "mousedown", "touchdown"];
-events.forEach((event) => {
+let mouse_events = ["scroll", "mousedown", "touchdown"];
+mouse_events.forEach((event) => {
     browser.addEventListener(event, () => {
 		Preview.hide();
 
