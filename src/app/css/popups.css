@@ -96,6 +96,10 @@
 	opacity: 0.5;
 }
 
+.popup .options details:hover:not([open]) {
+	opacity: 0.8;
+}
+
 .popup .options details summary {
 	cursor: pointer;
 	list-style-type: none;
