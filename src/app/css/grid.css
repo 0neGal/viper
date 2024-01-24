@@ -22,7 +22,7 @@
 	animation-name: none;
 }
 
-.grid .el, .popup #search,
+.grid .el, .popup .search,
 .popup #close, .popup .misc button,
 .option .actions select, .option .actions input {
 	color: white;
@@ -36,7 +36,7 @@
 	width: calc(50% - var(--spacing) * 4);
 }
 
-.popup .misc, .popup #search, .option .actions input {
+.popup .misc, .popup .search, .option .actions input {
 	--height: var(--mischeight);
 }
 
@@ -53,7 +53,7 @@
 	position: fixed;
 }
 
-.popup #search,
+.popup .search,
 .option .actions input,
 .option .actions select {
 	border: none;
@@ -62,7 +62,7 @@
 	width: calc(100% - var(--spacing) * 2);
 }
 
-.popup #search:focus, 
+.popup .search:focus, 
 .option .actions input:focus,
 .option .actions button:active {
 	filter: brightness(1.5);

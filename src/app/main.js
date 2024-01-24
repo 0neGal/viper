@@ -1,5 +1,6 @@
 const fs = require("fs");
 const path = require("path");
+const Fuse = require("fuse.js");
 const { app, ipcRenderer, shell } = require("electron");
 
 const json = require("../modules/json");

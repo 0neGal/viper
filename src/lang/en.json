@@ -61,6 +61,7 @@
 	},
 	"gui": {
 		"exit": "Exit",
+		"search": "Search...",
 		"welcome": "Welcome to Viper!",
 		"setpath": "Change Game Path",
 
@@ -111,7 +112,6 @@
 			"info": "Info",
 			"view": "View",
 			"made_by": "by",
-			"search": "Search...",
 			"update": "Update",
 			"install": "Install",
 			"reinstall": "Re-Install",

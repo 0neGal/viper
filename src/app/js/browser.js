@@ -1,5 +1,4 @@
-const Fuse = require("fuse.js");
-var fuse;
+var browser_fuse;
 var packages = [];
 
 var packagecount = 0;
@@ -184,7 +183,7 @@ var Browser = {
 
 			Browser.add_pkg_properties();
 
-			fuse = new Fuse(packages, {
+			browser_fuse = new Fuse(packages, {
 				keys: ["full_name"]
 			})
 		}
@@ -241,7 +240,7 @@ var Browser = {
 	},
 	search: (string) => {
 		Browser.loading();
-		let res = fuse.search(string);
+		let res = browser_fuse.search(string);
 
 		if (res.length < 1) {
 			Browser.loading(lang("gui.browser.no_results"));
@@ -551,6 +550,7 @@ function normalize(items) {
 
 let searchtimeout;
 let searchstr = "";
+let search = document.querySelector("#browser .search");
 search.addEventListener("keyup", () => {
 	Browser.filters.toggle(false);
 	clearTimeout(searchtimeout);

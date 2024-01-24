@@ -62,6 +62,7 @@
 	
 	"gui": {
 		"exit": "Schließen",
+		"search": "Suchen...",
 		"welcome": "Willkommen zu Viper!",
 		"setpath": "Installationspfad aktualisieren.",
 
@@ -111,7 +112,6 @@
 			"info": "Info",
 			"view": "Anschauen",
 			"made_by": "von",
-			"search": "Suchen...",
 			"update": "Aktualisieren",
 			"install": "Installieren",
 			"reinstall": "Neuinstallieren",

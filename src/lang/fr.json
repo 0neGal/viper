@@ -62,6 +62,7 @@
 
 	"gui": {
 		"exit": "Fermer",
+		"search": "Rechercher",
 		"welcome": "Bienvenue sur Viper !",
 		"setpath": "Mettre à jour le chemin du jeu",
 
@@ -111,7 +112,6 @@
 			"info": "Info",
 			"view": "Voir",
 			"made_by": "par",
-			"search": "Rechercher",
 			"update": "Mise à jour",
 			"install": "Installer",
 			"reinstall": "Réinstaller",

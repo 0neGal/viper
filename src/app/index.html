@@ -33,7 +33,7 @@
 		<div id="overlay" onclick="popups.set_all(false)"></div>
 		<div class="popup" id="options">
 			<div class="misc">
-				<div style="width:100%"></div>
+				<input class="search" placeholder="%%gui.search%%">
 				<button id="apply" onclick="Settings.toggle(false);Settings.apply()">
 					<img src="icons/apply.png">
 					%%gui.settings.save%%
@@ -204,7 +204,7 @@
 			</div>
 
 			<div class="misc">
-				<input id="search" placeholder="%%gui.browser.search%%">
+				<input class="search" placeholder="%%gui.search%%">
 				<button id="filter" onclick="Browser.filters.toggle()">
 					<img src="icons/filter.png">
 				</button>
