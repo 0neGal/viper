@@ -31,7 +31,19 @@ function formatRelease(notes) {
 	} else {
 		for (let release of notes) {
 			if (release.prerelease) {continue}
-			let new_content = "# " + release.name + "\n\n"	+ release.body + "\n\n\n";
+			let new_content = 
+				// release date
+				new Date(release.published_at).toLocaleString() +
+				"\n" +
+
+				// release name
+				`# ${release.name}` +
+				"\n\n" +
+
+				// actual release text/body
+				release.body +
+				"\n\n\n";
+
 			content +=
 				"<div class='release-block'>\n"
 					+ markdown(new_content, {breaks: true}) + "\n" +

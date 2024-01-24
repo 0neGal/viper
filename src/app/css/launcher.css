@@ -160,6 +160,16 @@
 	margin-bottom: var(--padding);
 }
 
+.section .release-block p:nth-child(1) {
+	opacity: 0.8;
+	margin-top: 0px;
+	margin-bottom: 0px;
+}
+
+.section .release-block h1:nth-child(2) {
+	margin-top: 0px;
+}
+
 .contentBody img {max-width: 100%}
 .contentBody .img {text-align: center}
 
