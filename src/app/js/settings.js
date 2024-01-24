@@ -36,6 +36,12 @@ var Settings = {
 		return opts;
 	},
 	load: () => {
+		// re-opens any closed categories
+		let categories = document.querySelectorAll("#options details");
+		for (let i = 0; i < categories.length; i++) {
+			categories[i].setAttribute("open", true);
+		}
+
 		let options = document.querySelectorAll(".option");
 
 		for (let i = 0; i < options.length; i++) {
