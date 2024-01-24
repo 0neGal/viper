@@ -284,6 +284,7 @@ code {
 #nsMods .line {
 	width: 100%;
 	display: flex;
+	font-weight: 700;
 	align-items: center;
 	margin: calc(var(--padding) / 2);
 	margin-top: calc(var(--padding) / 2);
