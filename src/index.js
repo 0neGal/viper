@@ -53,7 +53,15 @@ function start() {
 	});
 
 	// when --devtools is added it'll open the dev tools
-	if (cli.hasParam("devtools")) {win.openDevTools()}
+	if (cli.hasParam("devtools")) {
+		// for some unknown, mysterious reason, the devtools just wont
+		// open if you call this immediately, that's how its worked for
+		// a very long time, and suddenly it stopped working, and this
+		// seemingly was the only fix
+		setTimeout(() => {
+			win.openDevTools();
+		}, 1)
+	}
 
 	// general setup
 	win.removeMenu();
