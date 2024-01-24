@@ -571,12 +571,12 @@ search.addEventListener("keyup", () => {
 
 let mouse_events = ["scroll", "mousedown", "touchdown"];
 mouse_events.forEach((event) => {
-    browser.addEventListener(event, () => {
+    document.body.addEventListener(event, () => {
 		Preview.hide();
 
-		let mouseAt = document.elementsFromPoint(mouseX, mouseY);
-		if (! mouseAt.includes(document.querySelector("#filter"))
-			&& ! mouseAt.includes(document.querySelector(".overlay"))) {
+		let mouse_at = document.elementsFromPoint(mouseX, mouseY);
+		if (! mouse_at.includes(document.querySelector("#filter"))
+			&& ! mouse_at.includes(document.querySelector(".overlay"))) {
 			Browser.filters.toggle(false);
 		}
 	})
