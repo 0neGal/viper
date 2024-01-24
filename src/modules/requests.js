@@ -1,196 +1,217 @@
-const { app } = require("electron");
-const path = require("path");
 const fs = require("fs");
-const { https, http } = require("follow-redirects");
-const lang = require("../lang");
+const path = require("path");
+const app = require("electron").app;
+const https = require("follow-redirects").https;
 
 const json = require("./json");
+const version = require("./version");
 
-// all requests results are stored in this file
-const cachePath = path.join(app.getPath("cache"), "viper-requests.json");
-const NORTHSTAR_LATEST_RELEASE_KEY = "nsLatestRelease";
-const NORTHSTAR_RELEASE_NOTES_KEY = "nsReleaseNotes";
-const VIPER_RELEASE_NOTES_KEY = "vpReleaseNotes";
+var cache_dir = app.getPath("userData");
+var cache_file = path.join(cache_dir, "cached-requests.json");
 
-const user_agent = "viper/" + json(path.join(__dirname, "../../package.json")).version;
-
-function _saveCache(data) {
-    fs.writeFileSync(cachePath, JSON.stringify(data));
+// updates `cache_dir` and `cache_file`
+function set_paths() {
+	cache_dir = app.getPath("userData");
+	cache_file = path.join(cache_dir, "cached-requests.json");
 }
 
-function _getRequestsCache() {
-    if (fs.existsSync(cachePath)) {
-        return JSON.parse(fs.readFileSync(cachePath, "utf8"));
-    } else {
-        fs.writeFileSync(cachePath, "{}");
-        return {};
-    }
+let requests = {
+	cache: {}
 }
 
-function delete_cache() {
-	if (fs.existsSync(cachePath)) {
-		return fs.rmSync(cachePath);
+// verifies and ensures `cache_dir` exists
+function ensure_dir() {
+	set_paths();
+
+	// does the folder exist?
+	let exists = fs.existsSync(cache_dir);
+
+	// shorthand for creating folder
+	let mkdir = () => {fs.mkdirSync(cache_dir)};
+
+	// if folder doesn't exist at all, create it
+	if (! exists) {
+		mkdir();
+		return;
+	}
+
+	// if it does exist, but somehow is a file, remove it, then recreate
+	// it as an actual folder, wait how did this even happen?
+	if (exists && fs.statSync(cache_dir).isFile()) {
+		fs.rmSync(cache_dir);
+		mkdir();
 	}
 }
 
-// Returns latest Northstar version available from GitHub releases. If
-// there's no cache result for this request, or if cache exists but is
-// old, refreshes cache with new data.
-async function getLatestNsVersion() {
-    return new Promise((resolve, reject) => {
-        let cache = _getRequestsCache();
-    
-        if (cache[NORTHSTAR_LATEST_RELEASE_KEY] && (Date.now() - cache[NORTHSTAR_LATEST_RELEASE_KEY]["time"]) < 5 * 60 * 1000) {
-            resolve( cache[NORTHSTAR_LATEST_RELEASE_KEY]["body"]["tag_name"] );
-        } else {
-            https.get({
-                host: "api.github.com",
-                port: 443,
-                path: "/repos/R2Northstar/Northstar/releases/latest",
-                method: "GET",
-                headers: { "User-Agent": user_agent }
-            }, 
-            
-            response => {
-                response.setEncoding("utf8");
-                let responseData = "";
+// check `cache_file` and optionally check for the existence of
+// `cache_key`, and if it exists, return it as is
+let check_file = (cache_key) => {
+	// if `cache_file` doesn't exist, or isn't even a file, somehow,
+	// simply return `false`, and if it wasn't a file, we'll also remove
+	// the non-file item.
+	if (! fs.existsSync(cache_file)
+		|| ! fs.statSync(cache_file).isFile()) {
 
-                response.on("data", data => {
-                    responseData += data;
-                });
+		if (fs.existsSync(cache_file)) {
+			fs.rmSync(cache_file, {recursive: true});
+		}
 
-                response.on("end", _ => {                    
-                    cache[NORTHSTAR_LATEST_RELEASE_KEY] = {
-                        "time": Date.now(),
-                        "body": JSON.parse(responseData)
-                    };
-                    _saveCache(cache);
-                    resolve( cache[NORTHSTAR_LATEST_RELEASE_KEY]["body"]["tag_name"] );
-                });
-            })
-            
-            .on('error', () => {
-                console.error('Failed to get latest Northstar version.');
-                resolve( false );
-            });
-        }
-    });
+		return false;
+	}
+
+	// attempt to read and parse `cache_file` as JSON
+	let file = json(cache_file);
+
+	// if parsing failed, remove file, and return `false`
+	if (! file) {
+		fs.rmSync(cache_file);
+		return false;
+	}
+
+	if (! cache_key) {
+		return file;
+	}
+
+	// if `cache_key` isn't found, return `false`
+	if (! file[cache_key]) {
+		return false;
+	}
+
+	return file[cache_key];
 }
 
-// Returns the download link to latest Northstar version. Should always
-// be called after getLatestNsVersion, as it refreshes cache data (if
-// needed).
-function getLatestNsVersionLink() {
-    const cache = _getRequestsCache();
-    return cache[NORTHSTAR_LATEST_RELEASE_KEY]["body"].assets[0].browser_download_url;
+// attempts to get a `cache_key`'s value, unless it's been set more than
+// `max_time_min` ago, set it to a falsy value to disable
+requests.cache.get = (cache_key, max_time_min = 5) => {
+	ensure_dir();
+
+	let key = check_file(cache_key);
+
+	// something went wrong with the config file or the key doesn't
+	// exist, return `false`
+	if (! key) {
+		return false;
+	}
+
+	// if the key is missing `.data` or `.time`, return `false`
+	if (! key.data || ! key.time) {
+		return false;
+	}
+
+	// convert from minutes to milliseconds
+	max_time_min = max_time_min * 1000 * 60;
+
+	let now = new Date().getTime();
+
+	// check if `key.time` is more than `max_time_min` since it got set
+	if (now - key.time > max_time_min && max_time_min) {
+		return false;
+	}
+
+	return key.data;
 }
 
-// Returns and caches the Northstar release notes
-async function getNsReleaseNotes() {
-    return new Promise(resolve => {
-        let cache = _getRequestsCache();
+// attempt to delete `cache_key` from `cache_file`
+requests.cache.delete = (cache_key) => {
+	ensure_dir();
+	let file = check_file();
 
-        if (cache[NORTHSTAR_RELEASE_NOTES_KEY] && (Date.now() - cache[NORTHSTAR_RELEASE_NOTES_KEY]["time"]) < 5 * 60 * 1000) {
-            resolve( cache[NORTHSTAR_RELEASE_NOTES_KEY]["body"] );
-        } else {
-            https.get({
-                host: "api.github.com",
-                port: 443,
-                path: "/repos/R2Northstar/Northstar/releases",
-                method: "GET",
-                headers: { "User-Agent": user_agent }
-            }, 
-            
-            response => {
-                response.setEncoding("utf8");
-                let responseData = "";
+	// if something went wrong when checking the `cache_file`, simply
+	// set the file to an empty Object
+	if (! file) {
+		file = {};
+	}
 
-                response.on("data", data => {
-                    responseData += data;
-                });
-
-                response.on("end", _ => {                    
-                    cache[NORTHSTAR_RELEASE_NOTES_KEY] = {
-                        "time": Date.now(),
-                        "body": JSON.parse(responseData)
-                    };
-                    _saveCache(cache);
-                    resolve( cache[NORTHSTAR_RELEASE_NOTES_KEY]["body"] );
-                });
-            })
-            
-            // When GitHub cannot be reached (when user doesn't have Internet 
-            // access for instance), we return latest cache content even if 
-            // it's not up-to-date, or display an error message if cache
-            // is empty.
-            .on('error', () => {
-                if ( cache[NORTHSTAR_RELEASE_NOTES_KEY] ) {
-                    console.warn("Couldn't fetch Northstar release notes, returning data from cache.");
-                    resolve( cache[NORTHSTAR_RELEASE_NOTES_KEY]["body"] );
-                } else {
-                    console.error("Couldn't fetch Northstar release notes, cache is empty.");
-                    resolve( [lang("request.no_ns_release_notes")] );
-                }
-            });
-        }
-    });
+	delete file[cache_key];
+	fs.writeFileSync(cache_file, JSON.stringify(file));
 }
 
-// Returns and caches the Viper release notes
-async function getVpReleaseNotes() {
-    return new Promise(resolve => {
-        let cache = _getRequestsCache();
+// deletes all cached keys
+requests.cache.delete.all = () => {
+	// if the file already exists, and actually is a file, we will
+	// simply empty it by writing an empty Object to it
+	if (fs.existsSync(cache_file)
+		&& fs.statSync(cache_file).isFile()) {
 
-        if (cache[VIPER_RELEASE_NOTES_KEY] && (Date.now() - cache[VIPER_RELEASE_NOTES_KEY]["time"]) < 5 * 60 * 1000) {
-            resolve( cache[VIPER_RELEASE_NOTES_KEY]["body"] );
-        } else {
-            https.get({
-                host: "api.github.com",
-                port: 443,
-                path: "/repos/0negal/viper/releases",
-                method: "GET",
-                headers: { "User-Agent": user_agent }
-            }, 
-            
-            response => {
-                response.setEncoding("utf8");
-                let responseData = "";
-
-                response.on("data", data => {
-                    responseData += data;
-                });
-
-                response.on("end", _ => {                    
-                    cache[VIPER_RELEASE_NOTES_KEY] = {
-                        "time": Date.now(),
-                        "body": JSON.parse(responseData)
-                    };
-                    _saveCache(cache);
-                    resolve( cache[VIPER_RELEASE_NOTES_KEY]["body"] );
-                });
-            })
-
-            // When GitHub cannot be reached (when user doesn't have Internet 
-            // access for instance), we return latest cache content even if 
-            // it's not up-to-date, or display an error message if cache
-            // is empty.
-            .on('error', () => {
-                if ( cache[VIPER_RELEASE_NOTES_KEY] ) {
-                    console.warn("Couldn't fetch Viper release notes, returning data from cache.");
-                    resolve( cache[VIPER_RELEASE_NOTES_KEY]["body"] );
-                } else {
-                    console.error("Couldn't fetch Viper release notes, cache is empty.");
-                    resolve( [lang("request.no_vp_release_notes")] );
-                }
-            });
-        }
-    });
+		fs.writeFileSync(cache_file, "{}");
+	} else if (fs.existsSync(cache_file)) {
+		// if `cache_file` does exist, but its not a file, we'll delete
+		// it completely
+		fs.rmSync(cache_file, {recursive: true});
+	}
 }
 
-module.exports = {
-	delete_cache,
-    getLatestNsVersion, 
-    getLatestNsVersionLink,
-    getNsReleaseNotes,
-    getVpReleaseNotes
-};
+// sets `cache_key` to `data` and updates its timestamp
+requests.cache.set = (cache_key, data) => {
+	ensure_dir();
+	let file = check_file();
+
+	// if something went wrong when checking the `cache_file`, simply
+	// set the file to an empty Object
+	if (! file) {
+		file = {};
+	}
+
+	file[cache_key] = {
+		data: data,
+		time: new Date().getTime()
+	}
+
+	fs.writeFileSync(cache_file, JSON.stringify(file));
+}
+
+// attempts to `GET` `https://<host>/<path>`, and then returns the
+// result or if it fails it'll reject with `false`
+//
+// if `cache_key` is set, we'll first attempt to check if any valid
+// cache with that key exists, and then return it directly if its still
+// valid cache.
+requests.get = (host, path, cache_key, max_time_min) => {
+	let cached = requests.cache.get(cache_key, max_time_min);
+	if (cached) {
+		return cached;
+	}
+
+	// we'll use this as the `User-Agent` header for the request
+	let user_agent = "viper/" + version.viper();
+
+	return new Promise((resolve, reject) => {
+		// start `GET` request
+		https.get({
+			host: host,
+			port: 443,
+			path: path,
+			method: "GET",
+			headers: { "User-Agent": user_agent }
+		},
+
+		// on data response
+		response => {
+			// set correct encoding
+			response.setEncoding("utf8");
+
+			// this'll be filled with incoming data
+			let res_data = "";
+
+			// data has arrived, add it on `res_data`
+			response.on("data", data => {
+				res_data += data;
+			})
+
+			// request is done, return result
+			response.on("end", _ => {
+				resolve(res_data);
+				if (cache_key) {
+					requests.cache.set(cache_key, res_data);
+				}
+			})
+		})
+		
+		// an error occured, simply `reject()`
+		.on("error", () => {
+			reject(false);
+		})
+	})
+}
+
+module.exports = requests;

@@ -166,7 +166,21 @@ var Browser = {
 		packagecount = 0;
 		
 		if (packages.length < 1) {
-			packages = await (await fetch("https://northstar.thunderstore.io/api/v1/package/")).json();
+			let host = "northstar.thunderstore.io";
+			let path = "/api/v1/package/";
+
+			packages = [];
+
+			// attempt to get the list of packages from Thunderstore, if
+			// this has been done recently, it'll simply return a cached
+			// version of the request
+			try {
+				packages = JSON.parse(
+					await request(host, path, "thunderstore-packages")
+				)
+			}catch(err) {
+				console.error(err)
+			}
 
 			Browser.add_pkg_properties();
 

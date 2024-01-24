@@ -19,6 +19,7 @@ const version = require("./modules/version");
 const gamepath = require("./modules/gamepath");
 const settings = require("./modules/settings");
 const requests = require("./modules/requests");
+const releases = require("./modules/releases");
 const packages = require("./modules/packages");
 const is_running = require("./modules/is_running");
 
@@ -41,8 +42,6 @@ function start() {
 		// as it's fairly responsive, but for now we won't allow that.
 		resizable: false,
 
-		userAgent: "test",
-
 		frame: false,
 		titleBarStyle: "hidden",
 		icon: path.join(__dirname, "assets/icons/512x512.png"),
@@ -59,7 +58,7 @@ function start() {
 	// general setup
 	win.removeMenu();
 	win.loadURL("file://" + __dirname + "/app/index.html", {
-		userAgent: "viper/" + json(path.join(__dirname, "../package.json")).version,
+		userAgent: "viper/" + version.viper(),
 	});
 
 	win.send = (channel, data) => {
@@ -98,7 +97,7 @@ function start() {
 	});
 
 	ipcMain.on("delete-request-cache", () => {
-		requests.delete_cache();
+		requests.cache.delete.all();
 	});
 
 	ipcMain.on("delete-install-cache", () => {
@@ -164,6 +163,17 @@ function start() {
 	ipcMain.on("install-from-url", (event, url, author, package_name, version) => {
 		packages.install(url, author, package_name, version);
 	});
+
+	// lets renderer use `requests.get()`
+	ipcMain.handle("request", async (e, ...args) => {
+		let res = false;
+
+		try {
+			res = await requests.get(...args);
+		}catch(err) {}
+
+		return res;
+	})
 
 	win.webContents.on("dom-ready", () => {
 		send("mods", mods.list());
@@ -277,7 +287,7 @@ function sendVersionsInfo() {
 	send("version", {
 		ns: version.northstar(),
 		tf2: version.titanfall(),
-		vp: "v" + require("../package.json").version
+		vp: "v" + version.viper()
 	});
 }
 
@@ -360,15 +370,16 @@ if (cli.hasArgs()) {
 } else {
 	app.on("ready", () => {
 		app.setPath("userData", path.join(app.getPath("cache"), app.name));
+
 		start();
 	})
 }
 
 // returns cached requests
 ipcMain.on("get-ns-notes", async () => {
-	win.send("ns-notes", await requests.getNsReleaseNotes());
+	win.send("ns-notes", await releases.notes.northstar());
 });
 
 ipcMain.on("get-vp-notes", async () => {
-	win.send("vp-notes", await requests.getVpReleaseNotes());
+	win.send("vp-notes", await releases.notes.viper());
 });

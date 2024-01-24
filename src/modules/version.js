@@ -76,4 +76,11 @@ version.titanfall = () => {
 	}
 }
 
+// returns Viper's current version, taken from `package.json`
+version.viper = () => {
+	return json(
+		path.join(__dirname, "../../package.json")
+	).version;
+}
+
 module.exports = version;

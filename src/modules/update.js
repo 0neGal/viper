@@ -8,7 +8,7 @@ const lang = require("../lang");
 const win = require("./window");
 const version = require("./version");
 const settings = require("./settings");
-const requests = require("./requests");
+const releases = require("./releases");
 const gamepath = require("./gamepath");
 const is_running = require("./is_running");
 
@@ -92,7 +92,7 @@ update.northstar_autoupdate = () => {
 // returns whether an update is available for Northstar
 async function northstar_update_available() {
 	let local = version.northstar();
-	let distant = await requests.getLatestNsVersion();
+	let distant = (await releases.latest.northstar()).version;
 
 	if (distant == false) {
 		return false;
@@ -193,9 +193,9 @@ update.northstar = async (force_install) => {
 	console.info(lang("cli.update.checking"));
 	let ns_version = version.northstar();
 
-	const latest_version = await requests.getLatestNsVersion();
+	let latest = await releases.latest.northstar();
 
-	if (latest_version == false) {
+	if (latest && latest.version == false) {
 		ipcMain.emit("ns-update-event", "cli.update.noInternet");
 		return;
 	}
@@ -211,13 +211,13 @@ update.northstar = async (force_install) => {
 	} else {
 		if (ns_version != "unknown") {
 			console.info(lang("cli.update.current"), ns_version);
-		};
+		}
 	}
 
 	exclude_files();
 
 	// start the download of the zip
-	https.get(requests.getLatestNsVersionLink(), (res) => {
+	https.get(latest.download_link, (res) => {
 		// cancel out if zip can't be retrieved and or found
 		if (res.statusCode !== 200) {
 			ipcMain.emit("ns-update-event", "cli.update.uptodate_short");
@@ -243,7 +243,7 @@ update.northstar = async (force_install) => {
 			}
 		}
 
-		console.info(lang("cli.update.downloading") + ":", latest_version);
+		console.info(lang("cli.update.downloading") + ":", latest.version);
 		ipcMain.emit("ns-update-event", {
 			progress: 0,
 			btn_text: "1/2",

@@ -30,6 +30,12 @@ var settings = {
 	]
 }
 
+// invokes `requests.get()` from `src/modules/requests.js` through the
+// main process, and returns the output
+async function request(...args) {
+	return await ipcRenderer.invoke("request", ...args);
+}
+
 // Sets the lang to the system default
 ipcRenderer.send("setlang", settings.lang);
 

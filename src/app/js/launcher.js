@@ -127,7 +127,15 @@ async function loadServers() {
 	serverstatus.classList.add("checking");
 
 	try {
-		let servers = await (await fetch("https://northstar.tf/client/servers")).json();
+		let host = "northstar.tf";
+		let path = "/client/servers";
+
+		// ask the masterserver for the list of servers, if this has
+		// been done recently, it'll simply return the cached version
+		let servers = JSON.parse(
+			await request(host, path, "ns-servers")
+		)
+
 		masterserver = true;
 
 		playercount = 0;
