@@ -571,10 +571,13 @@ search.addEventListener("keyup", () => {
 
 let mouse_events = ["scroll", "mousedown", "touchdown"];
 mouse_events.forEach((event) => {
-    document.body.addEventListener(event, () => {
-		Preview.hide();
-
+    document.body.addEventListener(event, (e) => {
 		let mouse_at = document.elementsFromPoint(mouseX, mouseY);
+
+		if (! mouse_at.includes(document.querySelector("#preview"))) {
+			Preview.hide();
+		}
+
 		if (! mouse_at.includes(document.querySelector("#filter"))
 			&& ! mouse_at.includes(document.querySelector(".overlay"))) {
 			Browser.filters.toggle(false);
