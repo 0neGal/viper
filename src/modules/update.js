@@ -112,9 +112,18 @@ async function northstar_update_available() {
 // simply fetches it from GitHub and updates if it's outdated, very
 // useful. Not much we have to do on our side.
 update.viper = (autoinstall) => {
+	// stop if we're already in the process of updating
+	if (update.viper.updating) {
+		return;
+	}
+
+	update.viper.updating = true;
+
 	const { autoUpdater } = require("electron-updater");
 
 	if (! autoUpdater.isUpdaterActive()) {
+		update.viper.updating = false;
+
 		if (settings.nsupdate) {
 			update.northstar_autoupdate();
 		}
@@ -125,21 +134,31 @@ update.viper = (autoinstall) => {
 	if (autoinstall) {
 		autoUpdater.on("update-downloaded", (info) => {
 			autoUpdater.quitAndInstall();
+			update.viper.updating = false;
 		});
 	}
 
-	autoUpdater.on("error", (info) => {cli.exit(1)});
+	autoUpdater.on("error", (info) => {
+		update.viper.updating = false;
+		cli.exit(1)
+	});
+
 	autoUpdater.on("update-not-available", (info) => {
+		update.viper.updating = false;
+
 		// only check for NS updates if Viper itself has no updates and
 		// if NS auto updates is enabled.
 		if (settings.nsupdate || cli.hasArgs()) {
 			update.northstar_autoupdate();
 		}
+
 		cli.exit();
 	});
 
 	autoUpdater.checkForUpdatesAndNotify();
 }
+
+update.viper.updating = false;
 
 // removes all mods in "R2Northstar/mods" starting with "Northstar."
 function remove_core_mods() {
@@ -182,12 +201,23 @@ function remove_core_mods() {
 // `force_install` makes this function not care about whether or not
 // we're already up-to-date, forcing the install
 update.northstar = async (force_install) => {
+	// stop if we're already in the process of updating
+	if (update.northstar.updating) {
+		return;
+	}
+
+	update.northstar.updating = true;
+
 	if (await is_running.game()) {
+		update.northstar.updating = false;
 		console.error(lang("general.auto_updates.game_running"));
 		return false;
 	}
 
-	if (! gamepath.exists()) {return}
+	if (! gamepath.exists()) {
+		update.northstar.updating = false;
+		return;
+	}
 
 	ipcMain.emit("ns-update-event", "cli.update.checking");
 	console.info(lang("cli.update.checking"));
@@ -196,6 +226,7 @@ update.northstar = async (force_install) => {
 	let latest = await releases.latest.northstar();
 
 	if (latest && latest.version == false) {
+		update.northstar.updating = false;
 		ipcMain.emit("ns-update-event", "cli.update.noInternet");
 		return;
 	}
@@ -206,6 +237,9 @@ update.northstar = async (force_install) => {
 		console.ok(lang("cli.update.uptodate").replace("%s", ns_version));
 
 		win.log(lang("gui.update.uptodate"));
+
+		update.northstar.updating = false;
+
 		cli.exit();
 		return;
 	} else {
@@ -222,6 +256,7 @@ update.northstar = async (force_install) => {
 		if (res.statusCode !== 200) {
 			ipcMain.emit("ns-update-event", "cli.update.uptodate_short");
 			console.ok(lang("cli.update.uptodate"), ns_version);
+			update.northstar.updating = false;
 			return false;
 		}
 
@@ -336,10 +371,15 @@ update.northstar = async (force_install) => {
 				ipcMain.emit("ns-update-event", "cli.update.uptodate_short");
 				win.log(lang("gui.update.finished"));
 				console.ok(lang("cli.update.finished"));
+
+				update.northstar.updating = false;
+
 				cli.exit();
 			})
 		})
 	})
 }
+
+update.northstar.updating = false;
 
 module.exports = update;
