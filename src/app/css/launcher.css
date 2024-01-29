@@ -170,6 +170,10 @@
 	margin-top: 0px;
 }
 
+.section .release-block :last-child {
+	margin-bottom: 0px;
+}
+
 .contentBody img {max-width: 100%}
 .contentBody .img {text-align: center}
 
