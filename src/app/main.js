@@ -128,7 +128,14 @@ if (! navigator.onLine) {
 }
 
 function exit() {ipcRenderer.send("exit")}
-function updateNorthstar() {ipcRenderer.send("update-northstar")}
+
+let checked_for_ns_update = new Date().getTime();
+
+function updateNorthstar() {
+	checked_for_ns_update = new Date().getTime();
+	ipcRenderer.send("update-northstar")
+}
+
 function force_update_ns() {
 	ipcRenderer.send("update-northstar", true);
 }
@@ -257,16 +264,44 @@ ipcRenderer.on("ns-update-event", (event, options) => {
 		key = options;
 	}
 
-	document.getElementById("update").innerText = `(${lang(key)})`;
+	// updates text in update button to `lang(key)`
+	let update_btn = () => {
+		document.getElementById("update")
+			.innerText = `(${lang(key)})`;
+	}
 
 	switch(key) {
 		case "cli.update.uptodate_short":
 		case "cli.update.no_internet":
-			setButtons(true);
-			set_ns_progress(false);
-			playNsBtn.innerText = lang("gui.launch");
+			// initial value
+			let delay = 0;
+
+			// get current time
+			let now = new Date().getTime();
+
+			// check if `checked_for_ns_update` was less than 500ms
+			// since now, this variable is set when `updateNorthstar()`
+			// is called
+			if (now - checked_for_ns_update < 500) {
+				// if less than 500ms has passed, set `delay` to the
+				// amount of milliseconds missing until we've hit that
+				// 500ms threshold
+				delay = 500 - (now - checked_for_ns_update);
+			}
+
+			// wait `delay`ms
+			setTimeout(() => {
+				// set buttons accordingly
+				update_btn();
+				setButtons(true);
+				set_ns_progress(false);
+				playNsBtn.innerText = lang("gui.launch");
+			}, delay)
+
 			break;
 		default:
+			update_btn();
+
 			if (options.progress) {
 				set_ns_progress(options.progress);
 			}
