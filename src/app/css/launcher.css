@@ -153,11 +153,17 @@
 
 .section .release-block {
 	margin-top: 0px;
-	border-radius: 5px;
 	background: var(--bg);
 	padding: var(--padding);
 	backdrop-filter: blur(15px);
 	margin-bottom: var(--padding);
+	border-radius: calc(var(--padding) / 3);
+}
+
+.section .release-block {
+	backdrop-filter: none;
+	margin: var(--padding);
+	background: var(--selbg);
 }
 
 .section .release-block p:nth-child(1) {
@@ -252,7 +258,10 @@
 	height: 80vh;
 	margin-top: 35px;
 	overflow-y: scroll;
+	background: var(--bg);
 	flex-direction: column;
+	backdrop-filter: blur(15px);
+	border-radius: calc(var(--padding) / 3);
 }
 
 .inline * {
@@ -305,11 +314,12 @@ code {
 }
 
 #modsdiv {
-	height: 80vh;
 	overflow-y: scroll;
-	border-radius: 5px;
 	background: var(--bg);
 	backdrop-filter: blur(15px);
+	padding: calc(var(--padding) / 2);
+	height: calc(80vh - var(--padding));
+	border-radius: calc(var(--padding) / 3);
 }
 
 #modsdiv .mod {

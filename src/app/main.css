@@ -29,7 +29,8 @@ button {
 button:hover {filter: brightness(110%)}
 button:active {filter: brightness(90%)}
 
-.popup, #modsdiv, .release-block {
+.popup, #modsdiv, #modsdiv .el,
+.release-block, #nsRelease, #vpReleaseNotes {
 	outline: 1px solid #444444;
 	border: 3px solid var(--bg) inset;
 }

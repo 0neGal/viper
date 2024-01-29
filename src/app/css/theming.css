@@ -51,7 +51,7 @@ input:disabled {
 }
 
 ::-webkit-scrollbar {
-	width: 8px !important;
+	width: 18px !important;
 }
  
 ::-webkit-scrollbar-track {
@@ -60,8 +60,9 @@ input:disabled {
 }
  
 ::-webkit-scrollbar-thumb {
+	border: 5px solid transparent;
 	border-radius: 10px !important;
-	background: rgb(var(--red)) !important;
+	box-shadow: rgb(var(--red)) 0px 0px 10px 10px inset;
 }
 
 ::selection {
