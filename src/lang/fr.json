@@ -290,8 +290,8 @@
 	},
 
 	"request": {
-		"no_vp_release_notes": "Impossible de récupérer les notes de mises à jour de Viper.\nVeuillez réessayer plus tard.",
-		"no_ns_release_notes": "Impossible de récupérer les notes de mises à jour de Northstar.\nVeuillez réessayer plus tard."
+		"no_vp_release_notes": "<h3>Impossible de récupérer les notes de mises à jour de Viper.</h3>Veuillez réessayer plus tard.",
+		"no_ns_release_notes": "<h3>Impossible de récupérer les notes de mises à jour de Northstar.</h3>Veuillez réessayer plus tard."
 	},
 
 	"tooltip": {

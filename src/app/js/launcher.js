@@ -24,6 +24,8 @@ function page(page) {
 }; page(1)
 
 function formatRelease(notes) {
+	if (! notes) {return ""}
+
 	let content = "";
 
 	if (notes.length === 1) {
@@ -58,13 +60,38 @@ function formatRelease(notes) {
 	});
 }
 
+// sets content of `div` to a single release block with centered text
+// inside it, the text being `lang(lang_key)`
+let set_error_content = (div, lang_key) => {
+	div.innerHTML =
+		"<div class='release-block'>" +
+			"<p><center>" +
+				lang(lang_key) +
+			"</center></p>" +
+		"</div>";
+}
+
 // Updates the Viper release notes
 ipcRenderer.on("vp-notes", (event, response) => {
+	if (! response) {
+		return set_error_content(
+			vpReleaseNotes,
+			"request.no_vp_release_notes"
+		)
+	}
+
 	vpReleaseNotes.innerHTML = formatRelease(response);
 });
 
 // Updates the Northstar release notes
 ipcRenderer.on("ns-notes", (event, response) => {
+	if (! response) {
+		return set_error_content(
+			nsRelease,
+			"request.no_ns_release_notes"
+		)
+	}
+
 	nsRelease.innerHTML = formatRelease(response);
 });
 

@@ -290,8 +290,8 @@
 	},
 
 	"request": {
-		"no_vp_release_notes": "Couldn't fetch Viper release notes.\nTry again later!",
-		"no_ns_release_notes": "Couldn't fetch Northstar release notes.\nTry again later!"
+		"no_vp_release_notes": "<h3>Couldn't fetch Viper release notes.</h3>Try again later!",
+		"no_ns_release_notes": "<h3>Couldn't fetch Northstar release notes.</h3>Try again later!"
 	},
 
 	"tooltip": {

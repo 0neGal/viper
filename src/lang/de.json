@@ -290,8 +290,8 @@
 	},
 
 	"request": {
-		"no_vp_release_notes": "Viper Release Notes konnten nicht geladen werden.\nVersuche es erneut später!",
-		"no_ns_release_notes": "Northstar Release Notes konnten nicht geladen werden.\nVersuche es erneut später!"
+		"no_vp_release_notes": "<h3>Viper Release Notes konnten nicht geladen werden.</h3>Versuche es erneut später!",
+		"no_ns_release_notes": "<h3>Northstar Release Notes konnten nicht geladen werden.</h3>Versuche es erneut später!"
 	},
 
 	"tooltip": {

@@ -290,8 +290,8 @@
 	},
 
 	"request": {
-		"no_vp_release_notes": "No se pudo encontrar las notas de lanzamiento de Viper.\n¡Intenta mas tarde!",
-		"no_ns_release_notes": "No se pudo encontrar las notas de lanzamiento de Northstar.\n¡Intenta mas tarde!"
+		"no_vp_release_notes": "<h3>No se pudo encontrar las notas de lanzamiento de Viper.</h3>¡Intenta mas tarde!",
+		"no_ns_release_notes": "<h3>No se pudo encontrar las notas de lanzamiento de Northstar.</h3>¡Intenta mas tarde!"
 	},
 
 	"tooltip": {

@@ -289,8 +289,8 @@
 	},
 
 	"request": {
-		"no_vp_release_notes": "无法获取Viper的更新日志.\n请稍后再试!",
-		"no_ns_release_notes": "无法获取Northstar的更新日志.\n请稍后再试!"
+		"no_vp_release_notes": "<h3>无法获取Viper的更新日志.</h3>请稍后再试!",
+		"no_ns_release_notes": "<h3>无法获取Northstar的更新日志.</h3>请稍后再试!"
 	},
 
 	"tooltip": {
