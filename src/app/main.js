@@ -442,6 +442,9 @@ ipcRenderer.on("is-running", (event, running) => {
 
 		is_running = running;
 
+		// show force quit button in Titanfall tab
+		tfquit.style.display = "inline-block";
+
 		update.setAttribute("onclick", "kill_game()");
 		update.innerHTML = "(" + lang("ns.menu.force_quit") + ")";
 		return;
@@ -452,6 +455,9 @@ ipcRenderer.on("is-running", (event, running) => {
 		set_playbtns(lang("gui.launch"));
 
 		is_running = running;
+
+		// hide force quit button in Titanfall tab
+		tfquit.style.display = "none";
 
 		update.setAttribute("onclick", "updateNorthstar()");
 		update.innerHTML = "(" + lang("gui.update.check") + ")";
