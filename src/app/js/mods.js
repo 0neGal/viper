@@ -55,10 +55,12 @@ mods.load = (mods_obj) => {
 				<div class="description">${mod_details.description}</div>
 				<button class="switch on orange"></button>
 				<button class="update bg-blue">
-					${lang("gui.browser.update")}
+					<img src="icons/downloads.png">
+					<span>${lang("gui.browser.update")}</span>
 				</button>
 				<button class="bg-red remove">
-					${lang("gui.mods.remove")}
+					<img src="icons/trash.png">
+					<span>${lang("gui.mods.remove")}</span>
 				</button>
 
 				<button class="visual">${version.format(mod_details.version)}</button>

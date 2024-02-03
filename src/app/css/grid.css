@@ -78,6 +78,7 @@
 }
 
 .popup .misc button img {
+	margin: 0px;
 	opacity: 0.6;
 	width: var(--height);
 	transform: scale(0.5);

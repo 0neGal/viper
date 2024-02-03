@@ -232,7 +232,11 @@ var Browser = {
 			return
 		}
 
-		Browser.msg(`<button id="loadmore">${lang("gui.browser.load_more")}</button>`);
+		Browser.msg(`<button id="loadmore">` +
+				`<img src="icons/down.png">` +
+				`<span>${lang("gui.browser.load_more")}</span>` +
+			`</button>`);
+
 		loadmore.addEventListener("click", () => {
 			Browser.loadpkgs(pkgs);
 			Browser.endoflist(! pkgs.length);
@@ -261,18 +265,23 @@ var Browser = {
 			Browser.loading(lang("gui.browser.no_results"));
 		}
 	},
-	setbutton: (mod, string) => {
+	setbutton: (mod, string, icon) => {
 		mod = normalize(mod);
 		if (browserEntries.querySelector(`#mod-${mod}`)) {
 			let elems = browserEntries.querySelectorAll(`.el#mod-${mod}`);
 
 			for (let i = 0; i < elems.length; i++) {
+				if (icon) {
+					string = `<img src="icons/${icon}.png">` +
+						`<span>${string}</span>`;
+				}
+
 				elems[i].querySelector(".text button").innerHTML = string;
 			}
 		} else {
 			let make = (str) => {
 				if (browserEntries.querySelector(`#mod-${str}`)) {
-					return Browser.setbutton(str, string);
+					return Browser.setbutton(str, string, icon);
 				} else {
 					return false;
 				}
@@ -392,6 +401,7 @@ function BrowserEl(properties) {
 		browserEntries.innerHTML = "";
 	}
 
+	let installicon = "downloads";
 	let installstr = lang("gui.browser.install");
 	let normalized_mods = [];
 
@@ -400,9 +410,11 @@ function BrowserEl(properties) {
 	}
 
 	if (properties.pkg.local_version) {
+		installicon = "redo";
 		installstr = lang("gui.browser.reinstall");
 
 		if (properties.pkg.has_update) {
+			installicon = "downloads";
 			installstr = lang("gui.browser.update");
 		}
 	}
@@ -420,10 +432,12 @@ function BrowserEl(properties) {
 			<div class="title">${properties.title}</div>
 			<div class="description">${properties.description}</div>
 			<button class="install bg-blue" onclick=''>
-				${installstr}
+				<img src="icons/${installicon}.png">
+				<span>${installstr}</span>
 			</button>
 			<button class="info" onclick="Preview.set('${properties.url}')">
-				${lang('gui.browser.view')}
+				<img src="icons/open.png">
+				<span>${lang('gui.browser.view')}</span>
 			</button>
 
 			<button class="visual">${properties.version}</button>
@@ -454,9 +468,10 @@ function add_recent_toast(name, timeout = 3000) {
 
 ipcRenderer.on("removed-mod", (event, mod) => {
 	setButtons(true);
-	Browser.setbutton(mod.name, lang("gui.browser.install"));
+	Browser.setbutton(mod.name, lang("gui.browser.install"), "downloads");
+
 	if (mod.manifest_name) {
-		Browser.setbutton(mod.manifest_name, lang("gui.browser.install"));
+		Browser.setbutton(mod.manifest_name, lang("gui.browser.install"), "downloads");
 	}
 })
 
@@ -503,7 +518,7 @@ ipcRenderer.on("installed-mod", (event, mod) => {
 	let name = mod.fancy_name || mod.name;
 
 	setButtons(true);
-	Browser.setbutton(name, lang("gui.browser.reinstall"));
+	Browser.setbutton(name, lang("gui.browser.reinstall"), "redo");
 
 	if (mod.malformed) {
 		new Toast({

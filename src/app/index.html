@@ -290,10 +290,22 @@
 							<div class="line">
 								<div class="text" id="modcount">%%gui.mods.title%%</div>
 								<div class="buttons modbtns">
-									<button id="removeall" class="bg-red2" onclick="mods.remove('allmods')">%%gui.mods.remove_all%%</button>
-									<button id="toggleall" class="bg-orange2" onclick="mods.toggle('allmods')">%%gui.mods.toggle_all%%</button>
-									<button id="installmod" class="bg-blue" onclick="installmod()">%%gui.mods.install%%</button>
-									<button id="findmod" class="bg-blue2" onclick="Browser.toggle(true)">%%gui.mods.find%%</button>
+									<button id="removeall" class="bg-red2" onclick="mods.remove('allmods')">
+										<img src="icons/trash.png">
+										%%gui.mods.remove_all%%
+									</button>
+									<button id="toggleall" class="bg-orange2" onclick="mods.toggle('allmods')">
+										<img src="icons/toggles.png">
+										%%gui.mods.toggle_all%%
+									</button>
+									<button id="installmod" class="bg-blue" onclick="installmod()">
+										<img src="icons/downloads.png">
+										%%gui.mods.install%%
+									</button>
+									<button id="findmod" class="bg-blue2" onclick="Browser.toggle(true)">
+										<img src="icons/search.png">
+										%%gui.mods.find%%
+									</button>
 								</div>
 							</div>
 						</div>

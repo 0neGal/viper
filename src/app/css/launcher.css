@@ -285,6 +285,40 @@
 	background: rgb(var(--red)) !important;
 }
 
+button:has(img):not(img:only-child) {
+	top: 2px;
+	position: relative;
+	align-items: center;
+	display: inline-flex;
+	justify-content: center;
+}
+
+button:has(img):not(img:only-child) img {
+	width: 1em;
+	height: 1em;
+	height: fit-content;
+	margin-right: calc(var(--padding) / 3)
+}
+
+button:has(img):has(span) img {
+	opacity: 0.0;
+	transition: opacity 0.2s ease-in-out;
+}
+
+button:has(img):has(span):hover img {
+	opacity: 1.0;
+}
+
+button:has(img):has(span) span {
+	right: 0.8em;
+	position: relative;
+	transition: right 0.2s ease-in-out;
+}
+
+button:has(img):has(span):hover span {
+	right: 0.1em;
+}
+
 button:disabled {
 	opacity: 0.5;
 	pointer-events: none;
