@@ -166,7 +166,7 @@ requests.cache.set = (cache_key, data) => {
 // if `cache_key` is set, we'll first attempt to check if any valid
 // cache with that key exists, and then return it directly if its still
 // valid cache.
-requests.get = (host, path, cache_key, max_time_min) => {
+requests.get = (host, path, cache_key, ignore_max_time_when_offline = true, max_time_min) => {
 	let cached = requests.cache.get(cache_key, max_time_min);
 	if (cached) {
 		return cached;
@@ -207,8 +207,19 @@ requests.get = (host, path, cache_key, max_time_min) => {
 			})
 		})
 		
-		// an error occured, simply `reject()`
+		// an error occured
 		.on("error", () => {
+			if (ignore_max_time_when_offline) {
+				// check if the request has been cached before, at all, not
+				// caring about how long time ago it was, and if it was, we
+				// simply return that, as a last resort.
+				cached = requests.cache.get(cache_key, false);
+
+				if (cached) {
+					return resolve(cached);
+				}
+			}
+
 			reject(false);
 		})
 	})

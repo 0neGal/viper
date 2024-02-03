@@ -145,7 +145,7 @@ async function loadServers() {
 		// ask the masterserver for the list of servers, if this has
 		// been done recently, it'll simply return the cached version
 		let servers = JSON.parse(
-			await request(host, path, "ns-servers")
+			await request(host, path, "ns-servers", false)
 		)
 
 		masterserver = true;
