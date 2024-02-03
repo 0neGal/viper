@@ -530,8 +530,8 @@ setlang();
 
 let dragtimer;
 document.addEventListener("dragover", (e) => {
-    e.preventDefault();
-    e.stopPropagation();
+	e.preventDefault();
+	e.stopPropagation();
 	dragUI.classList.add("shown");
 
 	clearTimeout(dragtimer);
@@ -546,8 +546,8 @@ document.addEventListener("mouseover", (e) => {
 });
 
 document.addEventListener("drop", (e) => {
-    event.preventDefault();
-    event.stopPropagation();
+	event.preventDefault();
+	event.stopPropagation();
 
 	dragUI.classList.remove("shown");
 	installFromPath(event.dataTransfer.files[0].path);

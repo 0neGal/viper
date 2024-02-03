@@ -571,7 +571,7 @@ search.addEventListener("keyup", () => {
 
 let mouse_events = ["scroll", "mousedown", "touchdown"];
 mouse_events.forEach((event) => {
-    document.body.addEventListener(event, (e) => {
+	document.body.addEventListener(event, (e) => {
 		let mouse_at = document.elementsFromPoint(mouseX, mouseY);
 
 		if (! mouse_at.includes(document.querySelector("#preview"))) {

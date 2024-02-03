@@ -97,13 +97,13 @@ img {pointer-events: none}
 .contentContainer, 
 .gamesContainer {
 	user-select: none;
-  	-webkit-app-region: drag;
+	-webkit-app-region: drag;
 }
 
 #overlay.shown ~ #bgHolder,
 #overlay.shown ~ .contentContainer, 
 #overlay.shown ~ .gamesContainer {
-  	-webkit-app-region: no-drag;
+	-webkit-app-region: no-drag;
 }
 
 a, button, #close, #nsRelease, #vpReleaseNotes,

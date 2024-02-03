@@ -125,9 +125,9 @@
 
 .grid .el .image img.blur {
 	z-index: -1;
-    position: relative;
-    filter: blur(10px);
-    top: calc(var(--height) * -1 + 5px);
+	position: relative;
+	filter: blur(10px);
+	top: calc(var(--height) * -1 + 5px);
 }
 
 .grid .el .text {

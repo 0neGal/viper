@@ -76,7 +76,7 @@
 	color: white;
 	flex-grow: 1;
 	opacity: 1.0;
-    margin-left: 5%;
+	margin-left: 5%;
 	position: absolute;
 	transition: 0.15s ease-in-out;
 }
@@ -298,9 +298,9 @@ button.visual {
 }
 
 code {
-    font-size: 16px;
-    padding: 2px 5px;
-    border-radius: 3px;
+	font-size: 16px;
+	padding: 2px 5px;
+	border-radius: 3px;
 	background-color: #00000070;
 }
 
