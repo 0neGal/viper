@@ -37,7 +37,7 @@ a {
 	transition: filter 0.2s ease-in !important;
 }
 
-a.disabled {
+a.disabled:not("[onclick='kill_game()']") {
 	opacity: 0.5;
 	pointer-events: none;
 }
