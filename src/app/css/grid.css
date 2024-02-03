@@ -114,8 +114,13 @@
 .grid .el .image, .grid .el .image img {
 	width: var(--height);
 	height: var(--height);
+	transition: opacity 0.2s;
 	margin-right: var(--spacing);
 	border-radius: var(--spacing);
+}
+
+#modsdiv .el:has(.switch:not(.on)) .image img {
+	opacity: 0.5;
 }
 
 .grid .el .image img.blur {
