@@ -58,7 +58,7 @@ if (fs.existsSync("viper.json")) {
 //
 // you can also pass a settings object to the function and it'll try and
 // merge it together with the already existing settings
-settings.save = (obj = {}, notify_renderer = true) => {
+let save = (obj = {}, notify_renderer = true) => {
 	// refuse to save if settings aren't valid
 	if (invalid_settings) {
 		settings = {};
@@ -67,8 +67,6 @@ settings.save = (obj = {}, notify_renderer = true) => {
 	let settings_content = {
 		...settings, ...obj
 	}
-
-	delete settings_content.save;
 
 	let stringified_settings = JSON.stringify({
 		...settings, ...obj
@@ -87,4 +85,26 @@ settings.save = (obj = {}, notify_renderer = true) => {
 	}
 }
 
-module.exports = settings;
+// sets `key` in `settings` to `value`
+let set = (key, value) => {
+	settings[key] = value;
+}
+
+// returns up-to-date `settings`, along with `set()` and `save()`
+let export_func = () => {
+	return {
+		...settings,
+
+		set,
+		save
+	}
+}
+
+// add properties from `settings` to `export_func`, this is just for
+// backwards compatibility, and they really shouldn't be relied on,
+// this'll likely be removed at some point
+for (let i in settings) {
+	export_func[i] = settings[i];
+}
+
+module.exports = export_func;

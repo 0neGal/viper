@@ -74,7 +74,7 @@ function start() {
 	}; send = win.send;
 
 	ipcMain.on("exit", () => {
-		if (settings.originkill) {
+		if (settings().originkill) {
 			is_running.origin().then((running) => {
 				if (running) {
 					kill.origin().then(process.exit(0))
@@ -111,7 +111,7 @@ function start() {
 	ipcMain.on("delete-install-cache", () => {
 		let delete_dirs = [
 			path.join(app.getPath("cache"), "vipertmp"),
-			path.join(settings.gamepath, "northstar.zip")
+			path.join(settings().gamepath, "northstar.zip")
 		]
 
 		for (let i = 0; i < delete_dirs.length; i++) {
@@ -197,7 +197,7 @@ function start() {
 	});
 
 	ipcMain.on("save-settings", (event, obj) => {
-		settings.save(obj, false)
+		settings().save(obj, false);
 	});
 
 	ipcMain.on("saved-settings", (event, obj) => {
@@ -219,7 +219,7 @@ function start() {
 	})
 
 	// start auto-update process
-	if (settings.autoupdate) {
+	if (settings().autoupdate) {
 		if (cli.hasParam("no-vp-updates")) {
 			update.northstar_autoupdate();
 		} else {
@@ -265,8 +265,8 @@ ipcMain.on("launch-ns", () => {launch()});
 ipcMain.on("launch-vanilla", () => {launch("vanilla")});
 
 ipcMain.on("setlang", (event, lang) => {
-	settings.lang = lang;
-	settings.save();
+	settings().set("lang", lang);
+	settings().save();
 });
 
 ipcMain.on("update-northstar", async (e, force_install) => {

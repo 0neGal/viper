@@ -16,7 +16,7 @@ let gamepath = {};
 // returns true/false depending on if the gamepath currently exists/is
 // mounted, used to avoid issues...
 gamepath.exists = (folder) => {
-	return fs.existsSync(folder || settings.gamepath);
+	return fs.existsSync(folder || settings().gamepath);
 }
 
 // returns false if the user doesn't have read/write permissions to the
@@ -29,7 +29,7 @@ gamepath.has_perms = (folder) => {
 
 	try {
 		fs.accessSync(
-			folder || settings.gamepath,
+			folder || settings().gamepath,
 			fs.constants.R_OK | fs.constants.W_OK
 		)
 
@@ -51,14 +51,16 @@ gamepath.set = async (win, force_dialog) => {
 	// actually sets and saves the gamepath in the settings
 	function set_gamepath(folder) {
 		// set settings
-		settings.gamepath = folder;
-		settings.zip = path.join(settings.gamepath + "/northstar.zip");
+		settings().set("gamepath", folder);
+		settings().set("zip", path.join(
+			settings().gamepath + "/northstar.zip"
+		))
 
-		settings.save(); // save settings
+		settings().save(); // save settings
 
 		// tell the renderer the path has changed
-		win.webContents.send("newpath", settings.gamepath);
-		ipcMain.emit("newpath", null, settings.gamepath);
+		win.webContents.send("newpath", settings().gamepath);
+		ipcMain.emit("newpath", null, settings().gamepath);
 	}
 
 	if (! win) { // CLI
@@ -69,11 +71,14 @@ gamepath.set = async (win, force_dialog) => {
 		// gamepath, and then later fallback to the GUI/manual selection
 		if (! force_dialog) {
 			function set_gamepath(folder, force_dialog) {
-				settings.gamepath = folder;
-				settings.zip = path.join(settings.gamepath + "/northstar.zip");
-				settings.save();
-				win.webContents.send("newpath", settings.gamepath);
-				ipcMain.emit("newpath", null, settings.gamepath);
+				settings().set("gamepath", folder);
+				settings().set("zip", path.join(
+					settings().gamepath + "/northstar.zip")
+				)
+
+				settings().save();
+				win.webContents.send("newpath", settings().gamepath);
+				ipcMain.emit("newpath", null, settings().gamepath);
 
 				gamepath.setting = false;
 			}
@@ -127,13 +132,13 @@ gamepath.set = async (win, force_dialog) => {
 setInterval(() => {
 	if (gamepath.exists()) {
 		if (! gamepath.has_perms()) {
-			return ipcMain.emit("gamepath-lost-perms", null, settings.gamepath);
+			return ipcMain.emit("gamepath-lost-perms", null, settings().gamepath);
 		}
 
 		ipcMain.emit("gui-getmods");
 	} else {
 		if (fs.existsSync("viper.json")) {
-			if (settings.gamepath != "") {
+			if (settings().gamepath != "") {
 				ipcMain.emit("gamepath-lost");
 			}
 		}

@@ -10,7 +10,7 @@ let version = {};
 // if not installed it'll return "unknown"
 version.northstar = () => {
 	// if NorthstarLauncher.exe doesn't exist, always return "unknown"
-	if (! fs.existsSync(path.join(settings.gamepath, "NorthstarLauncher.exe"))) {
+	if (! fs.existsSync(path.join(settings().gamepath, "NorthstarLauncher.exe"))) {
 		return "unknown";
 	}
 
@@ -30,7 +30,7 @@ version.northstar = () => {
 
 	// checks version of mods
 	for (let i = 0; i < versionFiles.length; i++) {
-		var versionFile = path.join(settings.gamepath, "R2Northstar/mods/", versionFiles[i],"/mod.json");
+		var versionFile = path.join(settings().gamepath, "R2Northstar/mods/", versionFiles[i],"/mod.json");
 		if (fs.existsSync(versionFile)) {
 			if (! fs.statSync(versionFile).isFile()) {
 				add("unknown");
@@ -68,7 +68,7 @@ version.northstar = () => {
 // TODO: This file is present on Origin install, should check if it's
 // present with Steam install as well.
 version.titanfall = () => {
-	var versionFilePath = path.join(settings.gamepath, "gameversion.txt");
+	var versionFilePath = path.join(settings().gamepath, "gameversion.txt");
 	if (fs.existsSync(versionFilePath)) {
 		return fs.readFileSync(versionFilePath, "utf8");
 	} else {

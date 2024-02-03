@@ -15,7 +15,7 @@ console = require("./console");
 var packages = {};
 
 function update_path() {
-	packages.path = path.join(settings.gamepath, "R2Northstar/packages");
+	packages.path = path.join(settings().gamepath, "R2Northstar/packages");
 	
 	// make sure the `packages` folder exists
 	if (fs.existsSync(packages.path)) {

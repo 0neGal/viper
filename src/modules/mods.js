@@ -21,7 +21,7 @@ var mods = {
 }
 
 function update_path() {
-	mods.path = path.join(settings.gamepath, "R2Northstar/mods");
+	mods.path = path.join(settings().gamepath, "R2Northstar/mods");
 }; update_path();
 
 // returns a list of mods

@@ -23,8 +23,8 @@ let update = {};
 function restore_excluded_files() {
 	if (! gamepath.exists()) {return}
 
-	for (let i = 0; i < settings.excludes.length; i++) {
-		let exclude = path.join(settings.gamepath + "/" + settings.excludes[i]);
+	for (let i = 0; i < settings().excludes.length; i++) {
+		let exclude = path.join(settings().gamepath + "/" + settings().excludes[i]);
 		if (fs.existsSync(exclude + ".excluded")) {
 			fs.renameSync(exclude + ".excluded", exclude);
 		}
@@ -32,10 +32,10 @@ function restore_excluded_files() {
 }; restore_excluded_files();
 
 // renames excluded files to <file>.excluded, the list of files to be
-// exluded is set in the settings (settings.excludes)
+// exluded is set in the settings (settings().excludes)
 function exclude_files() {
-	for (let i = 0; i < settings.excludes.length; i++) {
-		let exclude = path.join(settings.gamepath + "/" + settings.excludes[i]);
+	for (let i = 0; i < settings().excludes.length; i++) {
+		let exclude = path.join(settings().gamepath + "/" + settings().excludes[i]);
 		if (fs.existsSync(exclude)) {
 			fs.renameSync(exclude, exclude + ".excluded");
 		}
@@ -50,7 +50,7 @@ let is_auto_updating = false;
 // it uses isGameRunning() to ensure it doesn't run while the game is
 // running, as that may have all kinds of issues.
 update.northstar_autoupdate = () => {
-	if (! settings.nsupdate || ! fs.existsSync("viper.json") || settings.gamepath.length === 0) {
+	if (! settings().nsupdate || ! fs.existsSync("viper.json") || settings().gamepath.length === 0) {
 		return;
 	}
 
@@ -124,7 +124,7 @@ update.viper = (autoinstall) => {
 	if (! autoUpdater.isUpdaterActive()) {
 		update.viper.updating = false;
 
-		if (settings.nsupdate) {
+		if (settings().nsupdate) {
 			update.northstar_autoupdate();
 		}
 
@@ -148,7 +148,7 @@ update.viper = (autoinstall) => {
 
 		// only check for NS updates if Viper itself has no updates and
 		// if NS auto updates is enabled.
-		if (settings.nsupdate || cli.hasArgs()) {
+		if (settings().nsupdate || cli.hasArgs()) {
 			update.northstar_autoupdate();
 		}
 
@@ -166,7 +166,7 @@ function remove_core_mods() {
 
 	// make sure the "R2Northstar/mods" folder exists, on top of making
 	// sure that, it is in fact a folder
-	let mod_dir = path.join(settings.gamepath, "R2Northstar/mods");
+	let mod_dir = path.join(settings().gamepath, "R2Northstar/mods");
 	if (! fs.existsSync(mod_dir) && ! fs.statSync(mod_dir).isFile()) {
 		return
 	}
@@ -285,7 +285,7 @@ update.northstar = async (force_install) => {
 			key: "cli.update.downloading",
 		});
 
-		let tmp = path.dirname(settings.zip);
+		let tmp = path.dirname(settings().zip);
 
 		if (fs.existsSync(tmp)) {
 			if (! fs.statSync(tmp).isDirectory()) {
@@ -293,12 +293,12 @@ update.northstar = async (force_install) => {
 			}
 		} else {
 			fs.mkdirSync(tmp);
-			if (fs.existsSync(settings.zip)) {
-				fs.rmSync(settings.zip);
+			if (fs.existsSync(settings().zip)) {
+				fs.rmSync(settings().zip);
 			}
 		}
 
-		let stream = fs.createWriteStream(settings.zip);
+		let stream = fs.createWriteStream(settings().zip);
 		res.pipe(stream);
 
 		let received = 0;
@@ -328,7 +328,7 @@ update.northstar = async (force_install) => {
 			remove_core_mods();
 
 			stream.close();
-			let extract = fs.createReadStream(settings.zip);
+			let extract = fs.createReadStream(settings().zip);
 
 			win.log(lang("gui.update.extracting"));
 			ipcMain.emit("ns-update-event", {
@@ -341,7 +341,7 @@ update.northstar = async (force_install) => {
 
 			// extracts the zip, this is the part where we're actually
 			// installing Northstar.
-			extract.pipe(unzip.Extract({path: settings.gamepath}))
+			extract.pipe(unzip.Extract({path: settings().gamepath}))
 
 			let extracted = 0;
 			let size = received;
