@@ -1,6 +1,11 @@
 const path = require("path");
 const { app, BrowserWindow } = require("electron");
 
+// makes it so Electron cache doesn't get stored in your system's config
+// folder, and instead changing it over to using the system's cache
+// folder instead
+app.setPath("userData", path.join(app.getPath("cache"), app.name));
+
 // ensures PWD/CWD is the config folder where viper.json is located
 process.chdir(app.getPath("appData"));
 
@@ -107,13 +112,9 @@ if (cli.hasArgs()) {
 		cli.init();
 	}
 } else {
+	// start the window/GUI
 	app.on("ready", () => {
-		// makes it so Electron cache doesn't get stored in your system
-		// config folder, changing it over to actually using the system
-		// cache folder instead
-		app.setPath("userData", path.join(app.getPath("cache"), app.name));
 
-		// start the window/GUI
 		start();
 	})
 }
