@@ -29,7 +29,7 @@ Please note that some versions will update themselves automatically when a new r
 <p>
 Currently Viper is capable of:
 
-<img src="assets/preview.png" align="right" width="50%">
+<img src="assets/ns-launch.png" align="right" width="50%">
 
  * Updating/Installing Northstar
  * Launching Vanilla and or Northstar
