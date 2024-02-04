@@ -597,7 +597,7 @@ mods.installFromURL = (url, author) => {
 
 	// download mod to a temporary location
 	https.get(url, (res) => {
-		let tmp = path.join(app.getPath("cache"), "vipertmp");
+		let tmp = path.join(app.getPath("userData"), "Temp");
 		let modlocation = path.join(tmp, "/mod.zip");
 
 		// make sure the temporary folder exists

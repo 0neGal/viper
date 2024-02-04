@@ -22,6 +22,7 @@ let update = {};
 
 ipcMain.on("delete-install-cache", () => {
 	let delete_dirs = [
+		path.join(app.getPath("userData"), "Temp"),
 		path.join(app.getPath("cache"), "vipertmp"),
 		path.join(settings().gamepath, "northstar.zip")
 	]
