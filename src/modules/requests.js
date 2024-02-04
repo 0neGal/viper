@@ -145,16 +145,18 @@ requests.cache.delete = (cache_key) => {
 
 // deletes all cached keys
 requests.cache.delete.all = () => {
-	// if the file already exists, and actually is a file, we will
-	// simply empty it by writing an empty Object to it
-	if (fs.existsSync(cache_file)
-		&& fs.statSync(cache_file).isFile()) {
+	// paths to files we'll be deleting
+	let files = [
+		cache_file,
+		path.join(app.getPath("cache"), "viper-requests.json")
+	]
 
-		fs.writeFileSync(cache_file, "{}");
-	} else if (fs.existsSync(cache_file)) {
-		// if `cache_file` does exist, but its not a file, we'll delete
-		// it completely
-		fs.rmSync(cache_file, {recursive: true});
+	// run through list of files, and attempt to delete each of them
+	for (let i = 0; i < files.length; i++) {
+		// if the file actually exists, delete it!
+		if (fs.existsSync(files[i])) {
+			fs.rmSync(files[i], {recursive: true});
+		}
 	}
 }
 
