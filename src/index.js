@@ -5,7 +5,6 @@ const { app, BrowserWindow } = require("electron");
 process.chdir(app.getPath("appData"));
 
 const cli = require("./cli");
-const main_win = require("./win");
 
 const mods = require("./modules/mods");
 const update = require("./modules/update");
@@ -23,7 +22,7 @@ console = require("./modules/console");
 // Starts the actual BrowserWindow, which is only run when using the
 // GUI, for the CLI this function is never called.
 function start() {
-	win = new BrowserWindow({
+	let win = new BrowserWindow({
 		width: 1000,
 		height: 600,
 		title: "Viper",
@@ -39,11 +38,12 @@ function start() {
 		frame: false,
 		titleBarStyle: "hidden",
 		icon: path.join(__dirname, "assets/icons/512x512.png"),
+
 		webPreferences: {
 			webviewTag: true,
 			nodeIntegration: true,
-			contextIsolation: false,
-		},
+			contextIsolation: false
+		}
 	})
 
 	// makes sending things to the renderer a little more readable
@@ -51,9 +51,9 @@ function start() {
 		win.webContents.send(channel, data);
 	}; send = win.send;
 
-	// give `main_win` the main window, `main_win()` will then be equal
+	// give `./win` the main window, `./win()` will then be equal
 	// to `win`, but its accessible anywhere
-	main_win.set(win);
+	require("./win").set(win);
 
 	// when --devtools is added it'll open the dev tools
 	if (cli.hasParam("devtools")) {

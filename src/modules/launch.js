@@ -2,9 +2,9 @@ const exec = require("child_process").exec;
 const ipcMain = require("electron").ipcMain;
 
 const cli = require("../cli");
+const win = require("../win");
 const lang = require("../lang");
 
-const win = require("./window");
 const settings = require("./settings");
 
 console = require("./console");
@@ -21,7 +21,7 @@ ipcMain.on("launch-vanilla", () => {
 function launch(game_version) {
 	// return early, and show error message if on Linux
 	if (process.platform == "linux") {
-		win.alert(lang("cli.launch.linux_error"));
+		win().alert(lang("cli.launch.linux_error"));
 		console.error(lang("cli.launch.linux_error"));
 		cli.exit(1);
 		return;

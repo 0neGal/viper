@@ -3,11 +3,10 @@ const fs = require("fs-extra");
 const { autoUpdater } = require("electron-updater");
 const { app, ipcMain, Notification } = require("electron");
 
+const win = require("../win");
 const cli = require("../cli");
 const lang = require("../lang");
-const main_win = require("../win");
 
-const win = require("./window");
 const version = require("./version");
 const settings = require("./settings");
 const releases = require("./releases");
@@ -36,7 +35,7 @@ ipcMain.on("delete-install-cache", () => {
 
 ipcMain.on("update-northstar", async (e, force_install) => {
 	if (await is_running.game()) {
-		return win.alert(lang("general.auto_updates.game_running"));
+		return win().alert(lang("general.auto_updates.game_running"));
 	}
 
 	update.northstar(force_install);
@@ -44,7 +43,7 @@ ipcMain.on("update-northstar", async (e, force_install) => {
 
 // inform renderer that an update has been downloaded
 autoUpdater.on("update-downloaded", () => {
-	main_win().send("update-available");
+	win().send("update-available");
 })
 
 // updates and restarts Viper, if user says yes to do so.
@@ -66,7 +65,7 @@ ipcMain.on("can-autoupdate", () => {
 	// if `update_active` is falsy or `--no-vp-updates` is set,
 	// inform the renderer that auto updates aren't possible
 	if (! update_active || cli.hasParam("no-vp-updates")) {
-		main_win().send("cant-autoupdate");
+		win().send("cant-autoupdate");
 	}
 })
 
@@ -271,7 +270,7 @@ update.northstar = async (force_install) => {
 		return;
 	}
 
-	main_win().send("ns-update-event", "cli.update.checking");
+	win().send("ns-update-event", "cli.update.checking");
 	console.info(lang("cli.update.checking"));
 	let ns_version = version.northstar();
 
@@ -279,16 +278,16 @@ update.northstar = async (force_install) => {
 
 	if (latest && latest.version == false) {
 		update.northstar.updating = false;
-		main_win().send("ns-update-event", "cli.update.noInternet");
+		win().send("ns-update-event", "cli.update.noInternet");
 		return;
 	}
 
 	// Makes sure it is not already the latest version
 	if (! force_install && ! await northstar_update_available()) {
-		main_win().send("ns-update-event", "cli.update.uptodate_short");
+		win().send("ns-update-event", "cli.update.uptodate_short");
 		console.ok(lang("cli.update.uptodate").replace("%s", ns_version));
 
-		win.log(lang("gui.update.uptodate"));
+		win().log(lang("gui.update.uptodate"));
 
 		update.northstar.updating = false;
 
@@ -306,7 +305,7 @@ update.northstar = async (force_install) => {
 	https.get(latest.download_link, (res) => {
 		// cancel out if zip can't be retrieved and or found
 		if (res.statusCode !== 200) {
-			main_win().send("ns-update-event", "cli.update.uptodate_short");
+			win().send("ns-update-event", "cli.update.uptodate_short");
 			console.ok(lang("cli.update.uptodate"), ns_version);
 			update.northstar.updating = false;
 			return false;
@@ -331,7 +330,7 @@ update.northstar = async (force_install) => {
 		}
 
 		console.info(lang("cli.update.downloading") + ":", latest.version);
-		main_win().send("ns-update-event", {
+		win().send("ns-update-event", {
 			progress: 0,
 			btn_text: "1/2",
 			key: "cli.update.downloading",
@@ -369,7 +368,7 @@ update.northstar = async (force_install) => {
 				percentage_str = " - " + current_percentage + "%";
 			}
 
-			main_win().send("ns-update-event", {
+			win().send("ns-update-event", {
 				key: key,
 				progress: current_percentage,
 				btn_text: "1/2" + percentage_str
@@ -382,8 +381,8 @@ update.northstar = async (force_install) => {
 			stream.close();
 			let extract = fs.createReadStream(settings().zip);
 
-			win.log(lang("gui.update.extracting"));
-			main_win().send("ns-update-event", {
+			win().log(lang("gui.update.extracting"));
+			win().send("ns-update-event", {
 				progress: 0,
 				btn_text: "2/2 - 0%",
 				key: lang("gui.update.extracting")
@@ -404,7 +403,7 @@ update.northstar = async (force_install) => {
 				let percent = Math.floor(extracted / size * 100);
 				let extracted_mb = (extracted / 1024 / 1024).toFixed(1);
 
-				main_win().send("ns-update-event", {
+				win().send("ns-update-event", {
 					progress: percent,
 					btn_text: "2/2 - " + percent + "%",
 					key: lang("gui.update.extracting") +
@@ -420,8 +419,8 @@ update.northstar = async (force_install) => {
 
 				ipcMain.emit("gui-getmods");
 				ipcMain.emit("get-version");
-				main_win().send("ns-update-event", "cli.update.uptodate_short");
-				win.log(lang("gui.update.finished"));
+				win().send("ns-update-event", "cli.update.uptodate_short");
+				win().log(lang("gui.update.finished"));
 				console.ok(lang("cli.update.finished"));
 
 				update.northstar.updating = false;

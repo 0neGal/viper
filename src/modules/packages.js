@@ -4,11 +4,10 @@ const unzip = require("unzipper");
 const { app, ipcMain } = require("electron");
 const https = require("follow-redirects").https;
 
+const win = require("../win");
 const lang = require("../lang");
-const main_win = require("../win");
 
 const json = require("./json");
-const win = require("./window");
 const settings = require("./settings");
 
 console = require("./console");
@@ -232,7 +231,7 @@ packages.install = async (url, author, package_name, version) => {
 			// if the package has plugins, then we want to prompt the
 			// user, and make absolutely certain that they do want to
 			// install this package, as plugins have security concerns
-			let confirmation = await win.confirm(
+			let confirmation = await win().confirm(
 				`${lang("gui.mods.confirm_plugins_title")} ${name} \n\n` +
 				lang("gui.mods.confirm_plugins_description")
 			)
@@ -244,7 +243,7 @@ packages.install = async (url, author, package_name, version) => {
 			}
 			break;
 		default:
-			main_win().send("failed-mod", name);
+			win().send("failed-mod", name);
 
 			// other unhandled error
 			console.error(
@@ -309,7 +308,7 @@ packages.install = async (url, author, package_name, version) => {
 	let moved = packages.move(package_path);
 
 	if (! moved) {
-		main_win().send("failed-mod", name);
+		win().send("failed-mod", name);
 		console.error("Moving package failed:", name);
 
 		cleanup();
@@ -317,7 +316,7 @@ packages.install = async (url, author, package_name, version) => {
 		return false;
 	}
 
-	main_win().send("installed-mod", {
+	win().send("installed-mod", {
 		name: name,
 		fancy_name: package_name
 	})

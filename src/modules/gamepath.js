@@ -8,7 +8,6 @@ const cli = require("../cli");
 const lang = require("../lang");
 
 const version = require("./version");
-const win_show = require("./window");
 const settings = require("./settings");
 const findgame = require("./findgame");
 
@@ -46,19 +45,19 @@ ipcMain.on("wrong-path", () => {
 })
 
 ipcMain.on("found-missing-perms", async (e, selected_gamepath) => {
-	await win_show.alert(lang("gui.gamepath.found_missing_perms") + selected_gamepath);
+	await win().alert(lang("gui.gamepath.found_missing_perms") + selected_gamepath);
 	ipcMain.emit("setpath", null, false, true);
 })
 
 ipcMain.on("missing-perms", async (e, selected_gamepath) => {
-	await win_show.alert(lang("gui.gamepath.missing_perms") + selected_gamepath);
+	await win().alert(lang("gui.gamepath.missing_perms") + selected_gamepath);
 	ipcMain.emit("setpath");
 })
 
 ipcMain.on("gamepath-lost-perms", async (e, selected_gamepath) => {
 	if (! gamepath.setting) {
 		gamepath.setting = true;
-		await win_show.alert(lang("gui.gamepath.lost_perms") + selected_gamepath);
+		await win().alert(lang("gui.gamepath.lost_perms") + selected_gamepath);
 		ipcMain.emit("setpath");
 	}
 })
@@ -154,7 +153,7 @@ gamepath.set = async (win, force_dialog) => {
 				return gamepath.setting = false;
 			}
 
-			await win_show.alert(lang("general.missing_path"));
+			await win().alert(lang("general.missing_path"));
 		}
 
 		// fallback to GUI/manual selection

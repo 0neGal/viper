@@ -6,15 +6,14 @@ const { https } = require("follow-redirects");
 const { app, ipcMain, dialog } = require("electron");
 
 const json = require("./json");
-const win = require("./window");
 const version = require("./version");
 const settings = require("./settings");
 
 console = require("./console");
 
+const win = require("../win");
 const cli = require("../cli");
 const lang = require("../lang");
-const main_win = require("../win");
 
 var mods = {
 	installing: [],
@@ -35,7 +34,7 @@ ipcMain.on("install-from-path", (event, path) => {
 })
 
 ipcMain.on("no-internet", () => {
-	main_win().send("no-internet");
+	win().send("no-internet");
 })
 
 ipcMain.on("install-mod", () => {
@@ -46,7 +45,7 @@ ipcMain.on("install-mod", () => {
 			if (res.filePaths.length != 0) {
 				mods.install(res.filePaths[0]);
 			} else {
-				main_win().send("set-buttons", true);
+				win().send("set-buttons", true);
 			}
 		}).catch(err => {error(err)});
 	}
@@ -54,7 +53,7 @@ ipcMain.on("install-mod", () => {
 
 // sends installed mods info to renderer
 ipcMain.on("gui-getmods", (event, ...args) => {
-	main_win().send("mods", mods.list());
+	win().send("mods", mods.list());
 })
 
 ipcMain.on("getmods", () => {
@@ -94,7 +93,7 @@ mods.list = () => {
 
 	// make sure Northstar is actually installed
 	if (version.northstar() == "unknown") {
-		win.log(lang("general.not_installed"));
+		win().log(lang("general.not_installed"));
 		console.error(lang("general.not_installed"));
 		cli.exit(1);
 		return false;
@@ -240,7 +239,7 @@ mods.get = (mod) => {
 
 	// make sure Northstar is actually installed
 	if (version.northstar() == "unknown") {
-		win.log(lang("general.not_installed"));
+		win().log(lang("general.not_installed"));
 		console.error(lang("general.not_installed"));
 		cli.exit(1);
 		return false;
@@ -374,14 +373,14 @@ mods.install = (mod, opts) => {
 	}
 
 	if (version.northstar() == "unknown") {
-		win.log(lang("general.not_installed"));
+		win().log(lang("general.not_installed"));
 		console.error(lang("general.not_installed"));
 		cli.exit(1);
 		return false;
 	}
 
 	let notamod = () => {
-		win.log(lang("gui.mods.not_a_mod"));
+		win().log(lang("gui.mods.not_a_mod"));
 		console.error(lang("cli.mods.not_a_mod"));
 		cli.exit(1);
 		return false;
@@ -391,7 +390,7 @@ mods.install = (mod, opts) => {
 		console.ok(lang("cli.mods.installed"));
 		cli.exit();
 
-		win.log(lang("gui.mods.installedmod"));
+		win().log(lang("gui.mods.installedmod"));
 
 		if (modname == "mods") {
 			let manifest = path.join(app.getPath("userData"), "Archives/manifest.json");
@@ -401,26 +400,26 @@ mods.install = (mod, opts) => {
 			}
 		}
 
-		main_win().send("installed-mod", {
+		win().send("installed-mod", {
 			name: modname,
 			malformed: opts.malformed,
 		})
 
-		main_win().send("mods", mods.list());
+		win().send("mods", mods.list());
 		return true;
 	}
 
 	if (! fs.existsSync(mod)) {return notamod()}
 
 	if (fs.statSync(mod).isDirectory()) {
-		win.log(lang("gui.mods.installing"));
+		win().log(lang("gui.mods.installing"));
 		files = fs.readdirSync(mod);
 		if (fs.existsSync(path.join(mod, "mod.json")) &&
 			fs.statSync(path.join(mod, "mod.json")).isFile()) {
 
 
 			if (! json(path.join(mod, "mod.json"))) {
-				main_win().send("failed-mod");
+				win().send("failed-mod");
 				return notamod();
 			}
 
@@ -435,13 +434,13 @@ mods.install = (mod, opts) => {
 
 			copy(mod, copydest, (err) => {
 				if (err) {
-					main_win().send("failed-mod");
+					win().send("failed-mod");
 					return;
 				}
 
 				copy(opts.manifest_file, path.join(copydest, "manifest.json"), (err) => {
 					if (err) {
-						main_win().send("failed-mod");
+						win().send("failed-mod");
 						return;
 					}
 
@@ -471,7 +470,7 @@ mods.install = (mod, opts) => {
 						while (mods.installing.includes(mod_name)) {
 							if (! mods.dupe_msg_sent) {
 								mods.dupe_msg_sent = true;
-								main_win().send("duped-mod", mod_name);
+								win().send("duped-mod", mod_name);
 							}
 
 							use_mod_name = true;
@@ -502,7 +501,7 @@ mods.install = (mod, opts) => {
 			return notamod();
 		}
 	} else {
-		win.log(lang("gui.mods.extracting"));
+		win().log(lang("gui.mods.extracting"));
 		let cache = path.join(app.getPath("userData"), "Archives");
 		if (fs.existsSync(cache)) {
 			fs.rmSync(cache, {recursive: true});
@@ -550,7 +549,7 @@ mods.install = (mod, opts) => {
 								}
 
 								if (files.length == 0) {
-									main_win().send("failed-mod");
+									win().send("failed-mod");
 									return notamod();
 								}
 							}
@@ -621,7 +620,7 @@ mods.remove = (mod) => {
 
 	// make sure Northstar is actually installed
 	if (version.northstar() == "unknown") {
-		win.log(lang("general.not_installed"));
+		win().log(lang("general.not_installed"));
 		console.error(lang("general.not_installed"));
 		cli.exit(1);
 		return false;
@@ -672,11 +671,11 @@ mods.remove = (mod) => {
 	console.ok(lang("cli.mods.removed"));
 	cli.exit();
 
-	main_win().send("mods", mods.list()); // send updated list to renderer
+	win().send("mods", mods.list()); // send updated list to renderer
 
 	// tell the renderer that the mod has been removed, along with
 	// relevant info for it to properly update everything graphically
-	main_win().send("removed-mod", {
+	win().send("removed-mod", {
 		name: mod.replace(/^.*(\\|\/|\:)/, ""),
 		manifest_name: manifest_name
 	})
@@ -693,7 +692,7 @@ mods.toggle = (mod, fork) => {
 
 	// make sure Northstar is actually installed
 	if (version.northstar() == "unknown") {
-		win.log(lang("general.not_installed"));
+		win().log(lang("general.not_installed"));
 		console.error(lang("general.not_installed"));
 		cli.exit(1);
 		return false;
@@ -720,7 +719,7 @@ mods.toggle = (mod, fork) => {
 	}
 
 	// send updated modlist to renderer
-	main_win().send("mods", mods.list());
+	win().send("mods", mods.list());
 }
 
 module.exports = mods;

@@ -2,11 +2,11 @@ const fs = require("fs");
 const path = require("path");
 const { app, ipcMain } = require("electron");
 
-const json = require("./json");
+const win = require("../win");
 const lang = require("../lang");
-const win = require("./window");
 
 console = require("./console");
+const json = require("./json");
 
 var invalid_settings = false;
 
@@ -15,7 +15,7 @@ ipcMain.on("save-settings", (event, obj) => {
 })
 
 ipcMain.on("reset-config", async () => {
-	let confirmation = await win.confirm(
+	let confirmation = await win().confirm(
 		lang("gui.settings.miscbuttons.reset_config_alert")
 	)
 
