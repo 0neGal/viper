@@ -378,7 +378,7 @@ function installFromURL(url, dependencies, clearqueue, author, package_name, ver
 	} 
 
 	if (dependencies && dependencies.length != 0) {
-		let confirminstall = confirm(lang("gui.mods.confirmdependencies") + prettydepends.join("\n"));
+		let confirminstall = confirm(lang("gui.mods.confirm_dependencies") + prettydepends.join("\n"));
 		if (! confirminstall) {
 			return
 		}
