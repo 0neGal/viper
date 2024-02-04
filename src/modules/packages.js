@@ -5,6 +5,7 @@ const { app, ipcMain } = require("electron");
 const https = require("follow-redirects").https;
 
 const lang = require("../lang");
+const main_win = require("../win");
 
 const json = require("./json");
 const win = require("./window");
@@ -13,6 +14,11 @@ const settings = require("./settings");
 console = require("./console");
 
 var packages = {};
+
+// lets renderer install packages
+ipcMain.on("install-from-url", (event, url, author, package_name, version) => {
+	packages.install(url, author, package_name, version);
+})
 
 function update_path() {
 	packages.path = path.join(settings().gamepath, "R2Northstar/packages");
@@ -238,7 +244,7 @@ packages.install = async (url, author, package_name, version) => {
 			}
 			break;
 		default:
-			ipcMain.emit("failed-mod", name);
+			main_win().send("failed-mod", name);
 
 			// other unhandled error
 			console.error(
@@ -303,7 +309,7 @@ packages.install = async (url, author, package_name, version) => {
 	let moved = packages.move(package_path);
 
 	if (! moved) {
-		ipcMain.emit("failed-mod", name);
+		main_win().send("failed-mod", name);
 		console.error("Moving package failed:", name);
 
 		cleanup();
@@ -311,7 +317,7 @@ packages.install = async (url, author, package_name, version) => {
 		return false;
 	}
 
-	ipcMain.emit("installed-mod", "", {
+	main_win().send("installed-mod", {
 		name: name,
 		fancy_name: package_name
 	})

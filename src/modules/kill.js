@@ -1,4 +1,13 @@
 const exec = require("child_process").exec;
+const ipcMain = require("electron").ipcMain;
+
+ipcMain.on("kill-game", () => {
+	kill.game();
+})
+
+ipcMain.on("kill-origin", () => {
+	kill.origin();
+})
 
 // a simple function to kill processes with a certain name
 async function kill(process_name) {
@@ -9,13 +18,13 @@ async function kill(process_name) {
 				case "linux": return "killall -9 " + proc;
 				case "win32": return "taskkill /IM " + proc + " /F";
 			}
-		})();
+		})()
 
 		exec(cmd, (err, stdout) => {
 			// just try and fail silently if we don't find it w/e
 			resolve(true);
-		});
-	});
+		})
+	})
 }
 
 kill.process = kill;

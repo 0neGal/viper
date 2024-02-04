@@ -1,6 +1,11 @@
+const win = require("../win");
 const exec = require("child_process").exec;
 
 let is_running = {};
+
+setInterval(async () => {
+	win().send("is-running", await is_running.game());
+}, 1000)
 
 // a simple function that checks whether any of a given set of process
 // names are running, you can either input a string or an Array of

@@ -1,10 +1,11 @@
+const main_win = require("../win");
 const ipcMain = require("electron").ipcMain;
 
 let win = {};
 
 // logs into the dev tools of the renderer
-win.log = (msg) => {
-	ipcMain.emit("win-log", msg, msg);
+win.log = (...args) => {
+	main_win().send("log", ...args);
 }
 
 // this increments for every alert that's created, the ID is used to
@@ -20,7 +21,10 @@ win.alert = (msg) => {
 			resolve();
 		})
 
-		ipcMain.emit("win-alert", msg, msg, alert_id);
+		main_win().send("alert", {
+			id: alert_id,
+			message: msg
+		})
 	})
 }
 
@@ -37,7 +41,10 @@ win.confirm = (msg) => {
 			resolve(confirmed);
 		})
 
-		ipcMain.emit("win-confirm", msg, msg, confirm_id);
+		main_win().send("confirm", {
+			message: msg,
+			id: confirm_id
+		})
 	})
 }
 

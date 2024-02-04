@@ -2,8 +2,8 @@ const path = require("path");
 const fs = require("fs-extra");
 const unzip = require("unzipper");
 const copy = require("recursive-copy");
-const { app, ipcMain } = require("electron");
 const { https } = require("follow-redirects");
+const { app, ipcMain, dialog } = require("electron");
 
 const json = require("./json");
 const win = require("./window");
@@ -14,11 +14,71 @@ console = require("./console");
 
 const cli = require("../cli");
 const lang = require("../lang");
+const main_win = require("../win");
 
 var mods = {
 	installing: [],
 	dupe_msg_sent: false,
 }
+
+ipcMain.on("remove-mod", (event, mod) => {
+	mods.remove(mod);
+})
+
+ipcMain.on("toggle-mod", (event, mod) => {
+	mods.toggle(mod);
+})
+
+// lets renderer install mods from a path
+ipcMain.on("install-from-path", (event, path) => {
+	mods.install(path);
+})
+
+ipcMain.on("no-internet", () => {
+	main_win().send("no-internet");
+})
+
+ipcMain.on("install-mod", () => {
+	if (cli.hasArgs()) {
+		mods.install(cli.param("installmod"));
+	} else {
+		dialog.showOpenDialog({properties: ["openFile"]}).then(res => {
+			if (res.filePaths.length != 0) {
+				mods.install(res.filePaths[0]);
+			} else {
+				main_win().send("set-buttons", true);
+			}
+		}).catch(err => {error(err)});
+	}
+})
+
+// sends installed mods info to renderer
+ipcMain.on("gui-getmods", (event, ...args) => {
+	main_win().send("mods", mods.list());
+})
+
+ipcMain.on("getmods", () => {
+	let mods = mods.list();
+
+	if (mods.all.length > 0) {
+		log(`${lang("general.mods.installed")} ${mods.all.length}`);
+		log(`${lang("general.mods.enabled")} ${mods.enabled.length}`);
+		for (let i = 0; i < mods.enabled.length; i++) {
+			log(`  ${mods.enabled[i].name} ${mods.enabled[i].version}`);
+		}
+
+		if (mods.disabled.length > 0) {
+			log(`${lang("general.mods.disabled")} ${mods.disabled.length}`);
+			for (let i = 0; i < mods.disabled.length; i++) {
+				log(`  ${mods.disabled[i].name} ${mods.disabled[i].version}`);
+			}
+		}
+		cli.exit(0);
+	} else {
+		log("No mods installed");
+		cli.exit(0);
+	}
+})
 
 function update_path() {
 	mods.path = path.join(settings().gamepath, "R2Northstar/mods");
@@ -341,12 +401,12 @@ mods.install = (mod, opts) => {
 			}
 		}
 
-		ipcMain.emit("installed-mod", "", {
+		main_win().send("installed-mod", {
 			name: modname,
 			malformed: opts.malformed,
-		});
+		})
 
-		ipcMain.emit("gui-getmods");
+		main_win().send("mods", mods.list());
 		return true;
 	}
 
@@ -360,7 +420,7 @@ mods.install = (mod, opts) => {
 
 
 			if (! json(path.join(mod, "mod.json"))) {
-				ipcMain.emit("failed-mod");
+				main_win().send("failed-mod");
 				return notamod();
 			}
 
@@ -375,13 +435,13 @@ mods.install = (mod, opts) => {
 
 			copy(mod, copydest, (err) => {
 				if (err) {
-					ipcMain.emit("failed-mod");
+					main_win().send("failed-mod");
 					return;
 				}
 
 				copy(opts.manifest_file, path.join(copydest, "manifest.json"), (err) => {
 					if (err) {
-						ipcMain.emit("failed-mod");
+						main_win().send("failed-mod");
 						return;
 					}
 
@@ -411,7 +471,7 @@ mods.install = (mod, opts) => {
 						while (mods.installing.includes(mod_name)) {
 							if (! mods.dupe_msg_sent) {
 								mods.dupe_msg_sent = true;
-								ipcMain.emit("duped-mod", "", mod_name);
+								main_win().send("duped-mod", mod_name);
 							}
 
 							use_mod_name = true;
@@ -490,7 +550,7 @@ mods.install = (mod, opts) => {
 								}
 
 								if (files.length == 0) {
-									ipcMain.emit("failed-mod");
+									main_win().send("failed-mod");
 									return notamod();
 								}
 							}
@@ -612,14 +672,14 @@ mods.remove = (mod) => {
 	console.ok(lang("cli.mods.removed"));
 	cli.exit();
 
-	ipcMain.emit("gui-getmods"); // send updated list to renderer
+	main_win().send("mods", mods.list()); // send updated list to renderer
 
 	// tell the renderer that the mod has been removed, along with
 	// relevant info for it to properly update everything graphically
-	ipcMain.emit("removed-mod", "", {
+	main_win().send("removed-mod", {
 		name: mod.replace(/^.*(\\|\/|\:)/, ""),
 		manifest_name: manifest_name
-	});
+	})
 }
 
 // toggles mods
@@ -660,7 +720,7 @@ mods.toggle = (mod, fork) => {
 	}
 
 	// send updated modlist to renderer
-	ipcMain.emit("gui-getmods");
+	main_win().send("mods", mods.list());
 }
 
 module.exports = mods;

@@ -1,17 +1,76 @@
 const path = require("path");
 const fs = require("fs-extra");
 
+const win = require("../win");
 const { dialog, ipcMain } = require("electron");
 
 const cli = require("../cli");
 const lang = require("../lang");
 
+const version = require("./version");
 const win_show = require("./window");
 const settings = require("./settings");
 const findgame = require("./findgame");
 
-
 let gamepath = {};
+
+ipcMain.on("setpath-cli", () => {gamepath.set()});
+ipcMain.on("setpath", (event, value, force_dialog) => {
+	if (! value) {
+		if (! win().isVisible()) {
+			gamepath.set(win(), force_dialog);
+		} else {
+			gamepath.set(win(), force_dialog || true);
+		}
+	} else if (! win().isVisible()) {
+		win().show();
+	}
+})
+
+
+// allows renderer to set a new renderer
+ipcMain.on("newpath", (event, newpath) => {
+	if (newpath === false && ! win().isVisible()) {
+		win().send("no-path-selected");
+	} else {
+		version.send_info();
+
+		if (! win().isVisible()) {
+			win().show();
+		}
+	}
+})
+
+ipcMain.on("wrong-path", () => {
+	win().send("wrong-path");
+})
+
+ipcMain.on("found-missing-perms", async (e, selected_gamepath) => {
+	await win_show.alert(lang("gui.gamepath.found_missing_perms") + selected_gamepath);
+	ipcMain.emit("setpath", null, false, true);
+})
+
+ipcMain.on("missing-perms", async (e, selected_gamepath) => {
+	await win_show.alert(lang("gui.gamepath.missing_perms") + selected_gamepath);
+	ipcMain.emit("setpath");
+})
+
+ipcMain.on("gamepath-lost-perms", async (e, selected_gamepath) => {
+	if (! gamepath.setting) {
+		gamepath.setting = true;
+		await win_show.alert(lang("gui.gamepath.lost_perms") + selected_gamepath);
+		ipcMain.emit("setpath");
+	}
+})
+
+// ensures gamepath still exists and is valid on startup
+let gamepathlost = false;
+ipcMain.on("gamepath-lost", (event, ...args) => {
+	if (! gamepathlost) {
+		gamepathlost = true;
+		win().send("gamepath-lost");
+	}
+})
 
 // returns true/false depending on if the gamepath currently exists/is
 // mounted, used to avoid issues...

@@ -1,6 +1,6 @@
 const fs = require("fs");
 const path = require("path");
-const app = require("electron").app;
+const { app, ipcMain } = require("electron");
 const https = require("follow-redirects").https;
 
 const json = require("./json");
@@ -8,6 +8,23 @@ const version = require("./version");
 
 var cache_dir = app.getPath("userData");
 var cache_file = path.join(cache_dir, "cached-requests.json");
+
+// lets renderer delete request cache
+ipcMain.on("delete-request-cache", () => {
+	requests.cache.delete.all();
+})
+
+// lets renderer use `requests.get()`
+ipcMain.handle("request", async (e, ...args) => {
+	let res = false;
+
+	try {
+		res = await requests.get(...args);
+	}catch(err) {}
+
+	return res;
+})
+
 
 // updates `cache_dir` and `cache_file`
 function set_paths() {

@@ -1,10 +1,27 @@
 const path = require("path");
 const fs = require("fs-extra");
+const ipcMain = require("electron").ipcMain;
+
+const win = require("../win");
 
 const json = require("./json");
 const settings = require("./settings");
 
 let version = {};
+
+// sends the version info back to the renderer
+ipcMain.on("get-version", () => {
+	version.send_info();
+})
+
+// retrieves various local version numbers and sends them to the renderer
+version.send_info = () => {
+	win().send("version", {
+		ns: version.northstar(),
+		tf2: version.titanfall(),
+		vp: "v" + version.viper()
+	})
+}
 
 // returns the current Northstar version
 // if not installed it'll return "unknown"

@@ -80,7 +80,16 @@ async function init() {
 	// --update
 	if (cli.hasSwitch("update") && gamepathExists()) {ipcMain.emit("update")}
 	// --version
-	if (cli.hasSwitch("version") && gamepathExists()) {ipcMain.emit("version-cli")}
+	if (cli.hasSwitch("version") && gamepathExists()) {
+		let version = require("./modules/version");
+
+		console.log("Viper: v" + require("../package.json").version);
+		console.log("Titanfall 2: " + version.titanfall());
+		console.log("Northstar: " + version.northstar());
+		console.log("Node: " + process.version);
+		console.log("Electron: v" + process.versions.electron);
+		exit();
+	}
 
 	// --setpath
 	if (cli.hasSwitch("setpath")) {

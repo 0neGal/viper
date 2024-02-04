@@ -4,10 +4,36 @@ const { app, ipcMain } = require("electron");
 
 const json = require("./json");
 const lang = require("../lang");
+const win = require("./window");
 
 console = require("./console");
 
 var invalid_settings = false;
+
+ipcMain.on("save-settings", (event, obj) => {
+	save(obj, false);
+})
+
+ipcMain.on("reset-config", async () => {
+	let confirmation = await win.confirm(
+		lang("gui.settings.miscbuttons.reset_config_alert")
+	)
+
+	if (confirmation) {
+		fs.rmSync("viper.json");
+
+		app.relaunch({
+			args: process.argv.slice(1)
+		})
+
+		app.exit(0);
+	}
+})
+
+ipcMain.on("setlang", (event, lang) => {
+	set("lang", lang);
+	save();
+})
 
 // base settings
 var settings = {
@@ -81,7 +107,7 @@ let save = (obj = {}, notify_renderer = true) => {
 	settings = settings_content;
 	
 	if (notify_renderer) {
-		ipcMain.emit("saved-settings", settings_content);
+		send("changed-settings", obj);
 	}
 }
 

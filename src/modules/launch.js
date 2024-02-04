@@ -1,4 +1,5 @@
 const exec = require("child_process").exec;
+const ipcMain = require("electron").ipcMain;
 
 const cli = require("../cli");
 const lang = require("../lang");
@@ -7,6 +8,11 @@ const win = require("./window");
 const settings = require("./settings");
 
 console = require("./console");
+
+ipcMain.on("launch-ns", launch);
+ipcMain.on("launch-vanilla", () => {
+	launch("vanilla");
+})
 
 // launches the game
 //

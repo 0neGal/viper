@@ -1,9 +1,11 @@
 const path = require("path");
 const fs = require("fs-extra");
-const { ipcMain, Notification } = require("electron");
+const { autoUpdater } = require("electron-updater");
+const { app, ipcMain, Notification } = require("electron");
 
 const cli = require("../cli");
 const lang = require("../lang");
+const main_win = require("../win");
 
 const win = require("./window");
 const version = require("./version");
@@ -15,9 +17,59 @@ const is_running = require("./is_running");
 console = require("./console");
 
 const unzip = require("unzipper");
-const { https } = require("follow-redirects");
+const https = require("follow-redirects").https;
 
 let update = {};
+
+ipcMain.on("delete-install-cache", () => {
+	let delete_dirs = [
+		path.join(app.getPath("cache"), "vipertmp"),
+		path.join(settings().gamepath, "northstar.zip")
+	]
+
+	for (let i = 0; i < delete_dirs.length; i++) {
+		if (fs.existsSync(delete_dirs[i])) {
+			fs.rmSync(delete_dirs[i], {recursive: true});
+		}
+	}
+})
+
+ipcMain.on("update-northstar", async (e, force_install) => {
+	if (await is_running.game()) {
+		return win.alert(lang("general.auto_updates.game_running"));
+	}
+
+	update.northstar(force_install);
+})
+
+// inform renderer that an update has been downloaded
+autoUpdater.on("update-downloaded", () => {
+	main_win().send("update-available");
+})
+
+// updates and restarts Viper, if user says yes to do so.
+// otherwise it'll do it on the next start up.
+ipcMain.on("update-now", () => {
+	autoUpdater.quitAndInstall();
+})
+
+let update_active;
+
+// renderer requested a check for whether we can auto updates
+ipcMain.on("can-autoupdate", () => {
+	// is this the first time we're checking?
+	if (typeof update_active == "undefined") {
+		// save auto updater status
+		update_active = autoUpdater.isUpdaterActive();
+	}
+
+	// if `update_active` is falsy or `--no-vp-updates` is set,
+	// inform the renderer that auto updates aren't possible
+	if (! update_active || cli.hasParam("no-vp-updates")) {
+		main_win().send("cant-autoupdate");
+	}
+})
+
 
 // renames excluded files to their original name
 function restore_excluded_files() {
@@ -219,7 +271,7 @@ update.northstar = async (force_install) => {
 		return;
 	}
 
-	ipcMain.emit("ns-update-event", "cli.update.checking");
+	main_win().send("ns-update-event", "cli.update.checking");
 	console.info(lang("cli.update.checking"));
 	let ns_version = version.northstar();
 
@@ -227,13 +279,13 @@ update.northstar = async (force_install) => {
 
 	if (latest && latest.version == false) {
 		update.northstar.updating = false;
-		ipcMain.emit("ns-update-event", "cli.update.noInternet");
+		main_win().send("ns-update-event", "cli.update.noInternet");
 		return;
 	}
 
 	// Makes sure it is not already the latest version
 	if (! force_install && ! await northstar_update_available()) {
-		ipcMain.emit("ns-update-event", "cli.update.uptodate_short");
+		main_win().send("ns-update-event", "cli.update.uptodate_short");
 		console.ok(lang("cli.update.uptodate").replace("%s", ns_version));
 
 		win.log(lang("gui.update.uptodate"));
@@ -254,7 +306,7 @@ update.northstar = async (force_install) => {
 	https.get(latest.download_link, (res) => {
 		// cancel out if zip can't be retrieved and or found
 		if (res.statusCode !== 200) {
-			ipcMain.emit("ns-update-event", "cli.update.uptodate_short");
+			main_win().send("ns-update-event", "cli.update.uptodate_short");
 			console.ok(lang("cli.update.uptodate"), ns_version);
 			update.northstar.updating = false;
 			return false;
@@ -279,11 +331,11 @@ update.northstar = async (force_install) => {
 		}
 
 		console.info(lang("cli.update.downloading") + ":", latest.version);
-		ipcMain.emit("ns-update-event", {
+		main_win().send("ns-update-event", {
 			progress: 0,
 			btn_text: "1/2",
 			key: "cli.update.downloading",
-		});
+		})
 
 		let tmp = path.dirname(settings().zip);
 
@@ -317,7 +369,7 @@ update.northstar = async (force_install) => {
 				percentage_str = " - " + current_percentage + "%";
 			}
 
-			ipcMain.emit("ns-update-event", {
+			main_win().send("ns-update-event", {
 				key: key,
 				progress: current_percentage,
 				btn_text: "1/2" + percentage_str
@@ -331,7 +383,7 @@ update.northstar = async (force_install) => {
 			let extract = fs.createReadStream(settings().zip);
 
 			win.log(lang("gui.update.extracting"));
-			ipcMain.emit("ns-update-event", {
+			main_win().send("ns-update-event", {
 				progress: 0,
 				btn_text: "2/2 - 0%",
 				key: lang("gui.update.extracting")
@@ -352,7 +404,7 @@ update.northstar = async (force_install) => {
 				let percent = Math.floor(extracted / size * 100);
 				let extracted_mb = (extracted / 1024 / 1024).toFixed(1);
 
-				ipcMain.emit("ns-update-event", {
+				main_win().send("ns-update-event", {
 					progress: percent,
 					btn_text: "2/2 - " + percent + "%",
 					key: lang("gui.update.extracting") +
@@ -368,7 +420,7 @@ update.northstar = async (force_install) => {
 
 				ipcMain.emit("gui-getmods");
 				ipcMain.emit("get-version");
-				ipcMain.emit("ns-update-event", "cli.update.uptodate_short");
+				main_win().send("ns-update-event", "cli.update.uptodate_short");
 				win.log(lang("gui.update.finished"));
 				console.ok(lang("cli.update.finished"));
 

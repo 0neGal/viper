@@ -1,9 +1,21 @@
+const win = require("../win");
+const ipcMain = require("electron").ipcMain;
+
 const requests = require("./requests");
 
 let releases = {
 	notes: {},
 	latest: {}
 }
+
+// returns release notes to renderer
+ipcMain.on("get-ns-notes", async () => {
+	win().send("ns-notes", await releases.notes.northstar());
+})
+
+ipcMain.on("get-vp-notes", async () => {
+	win().send("vp-notes", await releases.notes.viper());
+})
 
 // gets and returns the release notes of a GitHub repo
 async function github_releases(repo) {
