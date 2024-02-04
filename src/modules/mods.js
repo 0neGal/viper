@@ -6,6 +6,7 @@ const { https } = require("follow-redirects");
 const { app, ipcMain, dialog } = require("electron");
 
 const json = require("./json");
+const update = require("./update");
 const version = require("./version");
 const settings = require("./settings");
 
@@ -93,8 +94,13 @@ mods.list = () => {
 
 	// make sure Northstar is actually installed
 	if (version.northstar() == "unknown") {
-		win().log(lang("general.not_installed"));
-		console.error(lang("general.not_installed"));
+		// notify user of missing Northstar, unless its because its
+		// currently being updated
+		if (! update.northstar.updating) {
+			win().log(lang("general.not_installed"));
+			console.error(lang("general.not_installed"));
+		}
+
 		cli.exit(1);
 		return false;
 	}
@@ -239,8 +245,13 @@ mods.get = (mod) => {
 
 	// make sure Northstar is actually installed
 	if (version.northstar() == "unknown") {
-		win().log(lang("general.not_installed"));
-		console.error(lang("general.not_installed"));
+		// notify user of missing Northstar, unless its because its
+		// currently being updated
+		if (! update.northstar.updating) {
+			win().log(lang("general.not_installed"));
+			console.error(lang("general.not_installed"));
+		}
+
 		cli.exit(1);
 		return false;
 	}
@@ -373,8 +384,13 @@ mods.install = (mod, opts) => {
 	}
 
 	if (version.northstar() == "unknown") {
-		win().log(lang("general.not_installed"));
-		console.error(lang("general.not_installed"));
+		// notify user of missing Northstar, unless its because its
+		// currently being updated
+		if (! update.northstar.updating) {
+			win().log(lang("general.not_installed"));
+			console.error(lang("general.not_installed"));
+		}
+
 		cli.exit(1);
 		return false;
 	}
@@ -620,8 +636,13 @@ mods.remove = (mod) => {
 
 	// make sure Northstar is actually installed
 	if (version.northstar() == "unknown") {
-		win().log(lang("general.not_installed"));
-		console.error(lang("general.not_installed"));
+		// notify user of missing Northstar, unless its because its
+		// currently being updated
+		if (! update.northstar.updating) {
+			win().log(lang("general.not_installed"));
+			console.error(lang("general.not_installed"));
+		}
+
 		cli.exit(1);
 		return false;
 	}
@@ -692,8 +713,13 @@ mods.toggle = (mod, fork) => {
 
 	// make sure Northstar is actually installed
 	if (version.northstar() == "unknown") {
-		win().log(lang("general.not_installed"));
-		console.error(lang("general.not_installed"));
+		// notify user of missing Northstar, unless its because its
+		// currently being updated
+		if (! update.northstar.updating) {
+			win().log(lang("general.not_installed"));
+			console.error(lang("general.not_installed"));
+		}
+
 		cli.exit(1);
 		return false;
 	}
