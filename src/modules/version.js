@@ -87,7 +87,7 @@ version.northstar = () => {
 version.titanfall = () => {
 	var versionFilePath = path.join(settings().gamepath, "gameversion.txt");
 	if (fs.existsSync(versionFilePath)) {
-		return fs.readFileSync(versionFilePath, "utf8");
+		return fs.readFileSync(versionFilePath, "utf8").trim();
 	} else {
 		return "unknown";
 	}
