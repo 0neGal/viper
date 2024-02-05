@@ -1,6 +1,6 @@
 const path = require("path");
 const fs = require("fs-extra");
-const unzip = require("unzipper");
+const unzip = require("unzip-stream");
 const copy = require("recursive-copy");
 const { https } = require("follow-redirects");
 const { app, ipcMain, dialog } = require("electron");

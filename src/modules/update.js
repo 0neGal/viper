@@ -15,7 +15,7 @@ const is_running = require("./is_running");
 
 console = require("./console");
 
-const unzip = require("unzipper");
+const unzip = require("unzip-stream");
 const https = require("follow-redirects").https;
 
 let update = {};

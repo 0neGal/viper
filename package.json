@@ -56,7 +56,7 @@
 		"marked": "^4.0.10",
 		"recursive-copy": "^2.0.13",
 		"simple-vdf": "^1.1.1",
-		"unzipper": "^0.10.11"
+		"unzip-stream": "^0.3.1"
 	},
 	"devDependencies": {
 		"electron": "^28.2.0",
