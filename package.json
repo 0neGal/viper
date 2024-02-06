@@ -54,6 +54,7 @@
 		"fuse.js": "^6.5.3",
 		"jsonrepair": "^2.2.1",
 		"marked": "^4.0.10",
+		"minimist": "^1.2.8",
 		"recursive-copy": "^2.0.13",
 		"simple-vdf": "^1.1.1",
 		"unzip-stream": "^0.3.1"
