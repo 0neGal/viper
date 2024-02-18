@@ -16,7 +16,7 @@ Downloads are available on the [releases page](https://github.com/0neGal/viper/r
 
 Please note that some versions will update themselves automatically when a new release is available (just like Origin or Steam) and some will NOT, so choose it accordingly. Only the AppImage, Flatpak and Windows Setup/Installer can auto-update.
 
-**Windows:** [`Viper Setup [x.y.z].exe`](https://0negal.github.io/viper/index.html?win-setup) (auto-updates, and is recommanded), [`Viper [x.y.z].exe`](https://0negal.github.io/viper/index.html?win-portable) (single executable, no fuss)
+**Windows:** [`Viper Setup [x.y.z].exe`](https://0negal.github.io/viper/index.html?win-setup) (auto-updates, and is recommended), [`Viper [x.y.z].exe`](https://0negal.github.io/viper/index.html?win-portable) (single executable, no fuss)
 
 **Linux:** [`.AppImage`](https://0negal.github.io/viper/index.html?appimage) or [Flatpak](https://flathub.org/apps/details/com.github._0negal.Viper) (auto-updates), [AUR (unofficial)](https://aur.archlinux.org/packages/viper-bin), [`.deb`](https://0negal.github.io/viper/index.html?deb), [`.rpm`](https://0negal.github.io/viper/index.html?rpm), [`.tar.gz`](https://0negal.github.io/viper/index.html?linux)
 

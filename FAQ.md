@@ -13,7 +13,7 @@ As briefly covered in the README, you've multiple choices for installing Viper.
 
 #### Windows
 
-There's the installer, and the portable exe, we recommend using the installer as it can auto update, there's a Download button on the README which downloads the newest version of the installer.
+There's the installer, and the portable `.exe`, we recommend using the installer as it can auto update, there's a Download button on the README which downloads the newest version of the installer.
 
 #### Linux
 

@@ -19,7 +19,7 @@ If you're contributing, please follow <a href="CODE_OF_CONDUCT.md">code of condu
 
 `/* */` is useful in some cases, refer to the code example below.
 
-`() => {}` is also preffered over `function () {}` when possible.
+`() => {}` is also preferred over `function () {}` when possible.
 
 Single use functions are also generally discouraged, if a function is used once there's no need to make it a function.
 
