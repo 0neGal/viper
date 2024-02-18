@@ -51,9 +51,36 @@ Viper has a very simple i18n system, please read below for instructions.
 
 #### Language file
 
-The language file will be a file inside the `src/lang/` folder, name it according to the [ISO 3166-1 Alpha-2 standard](https://en.m.wikipedia.org/wiki/ISO_3166-1_alpha-2) in lowercase, meaning English = en, Spanish = es, French = fr, and so on.
+The language file will be a file inside the `src/lang/` folder, name it according to the [ISO 3166-1 Alpha-2 standard](https://en.m.wikipedia.org/wiki/ISO_3166-1_alpha-2) in lowercase, meaning English = `en.json`, Spanish = `es.json`, French = `fr.json`, and so on.
 
 Everything inside the file is pretty straight forward, the only special one is the `lang.title` string, please set this to `<language in english> - <language in native language>`, meaning for French it's, `French - Français`. This will be shown inside the language selection screen.
+
+If you don't feel like editing a JSON file and copying keys back and forwards from other complete language files, then you're in luck, because `scripts/langs.js` help with this exact problem. Simply make sure a valid localization file already exists, meaning it could have just `{}` inside it. Then after that you can use the language script to manage it:
+
+```sh
+$ npm install
+$ npm run langs:localize
+```
+
+You'll be prompted to select a language to edit, then if there are missing keys you'll be prompted for whether you just want to add those keys or if you want to edit all keys. After that you'll get a list of all the keys available, you'll simply select any of them, then you'll be prompted for the value for the key, then hit <kbd>Enter</kbd> when you're done, and you'll be put right back to the list of keys as before. You'll then edit as needed, when you're done select `Save changes`, you're changes will then be written to the localization file and it'll automatically be formatted for you.
+
+To sum it up:
+
+ 1. Make sure a parseable JSON localization file exists in `src/lang/`
+ 2. Run `npm run langs:localize` (after `npm install`)
+ 3. Select your desired language
+ 4. Select the key you want to add/change
+ 5. Edit it as you wish
+ 6. Save whenever your done
+ 7. Commit your changes!
+
+If you do happen to manually edit your localization files remember to run the following commands before committing and pushing changes:
+
+```sh
+$ npm install
+$ npm langs:check # verifies the files are parseable and not missing keys
+$ npm langs:format # formats and sorts the file for you
+```
 
 #### Maintainers file
 

@@ -1,307 +1,267 @@
 {
-	"lang": {
-		"title": "French - Français"
-	},
-
 	"cli": {
-		"help": {
-			"help": "affiche ce message d'aide",
-			"devtools": "affiche les outils de développement",
-			"version": "retourne des informations sur la version du logiciel",
-			"cli": "force l'activation de la CLI",
-			"update": "met à jour Northstar sur le chemin du jeu précisé",
-			"setpath": "enregistre le chemin du client de jeu",
-			"update_vp": "met à jour le client Viper, si le format actuel le permet.",
-			"no_vp_updates": "écrase viper.json et désactive les mises à jour de Viper",
-			"install_mod": "Installe un mod, dossier ou zip",
-			"remove_mod": "Supprime un mod",
-			"toggle_mod": "Active/désactive un mod"
-		},
-
-		"setpath": {
-			"no_arg": "Aucun argument donné à --setpath"
-		},
-
-		"update": {
-			"current": "Version actuelle :",
-			"downloading": "Téléchargement en cours...",
-			"checking": "Vérification des mises à jour...",
-			"download_done": "Téléchargement terminé ! Extraction des fichiers...",
-			"finished": "Mise à jour terminée !",
-			"uptodate": "La dernière version (%s) est déjà installée.",
-			"uptodate_short": "Votre client est à jour",
-			"no_internet": "Pas de connexion Internet"
-		},
-
 		"auto_updates": {
-			"checking": "Vérifications des mises à jour de Northstar...",
 			"available": "Une mise à jour de Northstar est disponible !",
-			"updating_ns": "Lancement de la mise à jour...",
-			"no_update": "Pas de mise à jour de Northstar disponible."
+			"checking": "Vérifications des mises à jour de Northstar...",
+			"no_update": "Pas de mise à jour de Northstar disponible.",
+			"updating_ns": "Lancement de la mise à jour..."
 		},
-
-		"launch": {
-			"linux_error": "Le support du jeu sur Linux n'est pas encore implémenté."
-		},
-
 		"gamepath": {
 			"lost": "Dossier de jeu non trouvé, veuillez vérifier qu'il est bien accessible !"
 		},
-
+		"help": {
+			"cli": "force l'activation de la CLI",
+			"devtools": "affiche les outils de développement",
+			"help": "affiche ce message d'aide",
+			"install_mod": "Installe un mod, dossier ou zip",
+			"no_vp_updates": "écrase viper.json et désactive les mises à jour de Viper",
+			"remove_mod": "Supprime un mod",
+			"setpath": "enregistre le chemin du client de jeu",
+			"toggle_mod": "Active/désactive un mod",
+			"update": "met à jour Northstar sur le chemin du jeu précisé",
+			"update_vp": "met à jour le client Viper, si le format actuel le permet.",
+			"version": "retourne des informations sur la version du logiciel"
+		},
+		"launch": {
+			"linux_error": "Le support du jeu sur Linux n'est pas encore implémenté."
+		},
 		"mods": {
+			"cant_find": "Aucun mod avec ce nom n'a pu être trouvé.",
 			"failed": "L'installation du mod a échoué.",
+			"improper_json": "Le mod.json de %s présente des erreurs de formatage.",
+			"installed": "Mod installé !",
+			"not_a_mod": "Le fichier/dossier sélectionné n'est pas un mod.",
 			"removed": "Le mod a bien été supprimé.",
 			"toggled": "Le mod a bien été activé/désactivé.",
-			"installed": "Mod installé !",
-			"cant_find": "Aucun mod avec ce nom n'a pu être trouvé.",
-			"not_a_mod": "Le fichier/dossier sélectionné n'est pas un mod.",
-			"toggled_all": "Tous les mods ont bien été activés/désactivés.",
-			"improper_json": "Le mod.json de %s présente des erreurs de formatage."
+			"toggled_all": "Tous les mods ont bien été activés/désactivés."
+		},
+		"setpath": {
+			"no_arg": "Aucun argument donné à --setpath"
+		},
+		"update": {
+			"checking": "Vérification des mises à jour...",
+			"current": "Version actuelle :",
+			"download_done": "Téléchargement terminé ! Extraction des fichiers...",
+			"downloading": "Téléchargement en cours...",
+			"finished": "Mise à jour terminée !",
+			"no_internet": "Pas de connexion Internet",
+			"uptodate": "La dernière version (%s) est déjà installée.",
+			"uptodate_short": "Votre client est à jour"
 		}
 	},
-
-	"gui": {
-		"exit": "Fermer",
-		"search": "Rechercher",
-		"welcome": "Bienvenue sur Viper !",
-		"setpath": "Mettre à jour le chemin du jeu",
-
-		"versions": {
-			"viper": "Version de Viper",
-			"northstar": "Version de Northstar"
+	"general": {
+		"auto_updates": {
+			"game_running": "Le jeu est en cours d'exécution, impossible de lancer la mise à jour."
 		},
-
+		"launching": "Lancement",
+		"missing_path": "Le chemin du client n'a pu être trouvé automatiquement, merci de le sélectionner manuellement.",
+		"mods": {
+			"disabled": "Mods désactivés :",
+			"enabled": "Mods activés :",
+			"installed": "Mods installés :"
+		},
+		"not_installed": "Northstar n'est pas installé !",
+		"running": "En cours d'exécution"
+	},
+	"gui": {
+		"browser": {
+			"end_of_list": "Fin de la liste de mods.<br>Utilisez la barre de recherche pour en trouver davantage !",
+			"filter": {
+				"client": "Côté client",
+				"mods": "Mods",
+				"server": "Côté serveur",
+				"skins": "Skins"
+			},
+			"info": "Info",
+			"install": "Installer",
+			"load_more": "Charger plus de mods...",
+			"loading": "Chargement des mods...",
+			"made_by": "par",
+			"no_results": "Pas de résultat",
+			"reinstall": "Réinstaller",
+			"update": "Mise à jour",
+			"view": "Voir"
+		},
+		"exit": "Fermer",
+		"gamepath": {
+			"found_missing_perms": "Chemin du jeu automatiquement trouvé, cependant l'utilisateur courant n'a pas les permissions de lecture/écriture de fichiers dans le dossier sélectionné, veuillez manuellement sélectionner un autre dossier ou accorder les permissions en lecture/écriture à l'utilisateur :\n\n",
+			"lost": "Le chemin du jeu ne peut être trouvé / n'existe plus !\n\nVeuillez vérifier que votre disqué est correctement monté, ou, si vous avez déplacé votre jeu, que vous avez mis à jour le chemin du dossier.\n\nViper ne fonctionnera pas correctement jusqu'au prochain redémarrage.",
+			"lost_perms": "L'utilisateur semble avoir perdu les permissions de lecture/écriture de fichiers dans le dossier sélectionné, veuillez sélectionner un autre dossier ou accorder les permissions en lecture/écriture à l'utilisateur :\n\n",
+			"missing_perms": "L'utilisateur courant n'a pas les permissions de lecture/écriture de fichiers dans le dossier sélectionné, veuillez manuellement sélectionner un autre dossier ou accorder les permissions en lecture/écriture à l'utilisateur :\n\n",
+			"must": "Vous devez sélectionner le chemin du dossier du jeu Titanfall 2 pour pouvoir lancer Viper.",
+			"wrong": "Ce dossier ne contient pas le jeu Titanfall 2, et n'est donc pas valide."
+		},
+		"install": "Installer",
+		"launch": "Jouer",
+		"mods": {
+			"confirm_dependencies": "Ce mod a des dépendances (affichées ci-dessous), cliquer \"Ok\" les installera en même temps que le mod.\n\n",
+			"confirm_plugins": {
+				"description": "Les plugins ont des accès à votre système, comparés aux mods classiques, et sont de fait plus dangereux à l'installation, comme pourrait l'être un plugin contenant un malware. Si ce plugin provient d'un tiers de confiance ou si vous savez ce que vous faites, ne tenez pas compte de ce message.",
+				"title": "Ce mod contient des plugins :"
+			},
+			"count": "Mods installés :",
+			"disabled_tag": "Désactivé",
+			"drag_n_drop": "Glissez/déposez un mod pour l'installer",
+			"extracting": "Extraction du mod...",
+			"find": "Chercher des mods",
+			"install": "Installer le mod",
+			"installed_mod": "Mod installé !",
+			"installing": "Installation du mod...",
+			"not_a_mod": "Ceci n'est pas un mod !",
+			"nothing_selected": "Aucun mod n'est sélectionné.",
+			"remove": "Supprimer",
+			"remove_all": "Tout supprimer",
+			"remove_all_confirm": "Supprimer tous les mods vous forcera à réinstaller Northstar, souhaitez-vous faire cela ?",
+			"required_confirm": "Vous avez sélectionné un mod de base, Northstar peut ne pas fonctionner sans celui-ci. Souhaitez-vous faire cela ?",
+			"title": "Mods",
+			"toggle_all": "Activer/désactiver tous les mods",
+			"toggle_all_confirm": "Cette action pourrait désactiver des mods nécessaires au bon fonctionnement de Northstar. Souhaitez-vous faire cela ?",
+			"unknown_author": "Inconnu"
+		},
+		"nsupdate": {
+			"gaming": {
+				"body": "Une mise à jour pour Northstar est disponible.\nVous pourrez l'installer après avoir fermé le jeu.",
+				"title": "Mise à jour Northstar disponible !"
+			}
+		},
+		"search": "Rechercher",
+		"server": {
+			"offline": "Le serveur maître est hors-ligne",
+			"player": "joueur",
+			"players": "joueurs",
+			"servers": "serveurs"
+		},
+		"setpath": "Mettre à jour le chemin du jeu",
+		"settings": {
+			"autolang": {
+				"desc": "Lorsque activée, Viper essaie de déterminer automatiquement la langue de votre système ; désactiver cette option vous permet de sélectionner manuellement la langue utilisée.",
+				"title": "Auto-détection de la langue"
+			},
+			"autoupdate": {
+				"desc": "Viper se tient automatiquement à jour.",
+				"title": "Mises à jour pour Viper"
+			},
+			"discard": "Annuler",
+			"excludes": {
+				"desc": "Lorsque Northstar est mis à jour, ces fichiers ne seront pas écrasés par ceux provenant de la mise à jour; les noms de fichiers sont séparés par un espace.",
+				"title": "Fichiers à conserver"
+			},
+			"forcedlang": {
+				"desc": "Lorsque \"Auto-détection de la langue\" est désactivée, cette option permet de sélectionner la langue (requiert un redémarrage).",
+				"title": "Langue"
+			},
+			"miscbuttons": {
+				"buttons": {
+					"change_gamepath": "Changer le dossier du jeu",
+					"force_quit_game": "Forcer la fermeture de Titanfall et Northstar",
+					"force_quit_origin": "Forcer la fermeture d'Origin et/ou EA Desktop",
+					"open_gamepath": "Ouvrir le dossier du jeu",
+					"reset_config": "Réinitialiser le fichier de configuration",
+					"restart_viper": "Redémarrer Viper"
+				},
+				"desc": "Si vous avez des problèmes de mises à jour, certaines de ces options pourraient vous aider.",
+				"open_gamepath_alert": "Aucun chemin de jeu n'est sélectionné, et ne peut donc être ouvert ; veuillez en sélectionner un d'abord !",
+				"reset_config_alert": "Veuillez confirmer que vous voulez réinitialiser le fichier de configuration ; après confirmation, Viper supprimera ce fichier et redémarrera.",
+				"title": "Paramètres de récupération"
+			},
+			"nsargs": {
+				"desc": "Vous pouvez ajouter ici des options de démarrage pour Northstar/Titanfall.",
+				"title": "Options de lancement"
+			},
+			"nsupdate": {
+				"desc": "Viper tient automatiquement Northstar à jour (n'empêche pas de le mettre à jour manuellement via sa page dédiée).",
+				"title": "Mises à jour pour Northstar"
+			},
+			"originkill": {
+				"desc": "Lorsque Viper est fermé, Origin et/ou EA app sera également automatiquement fermé.",
+				"title": "Quitter automatiquement Origin et/ou EA app"
+			},
+			"save": "Sauvegarder",
+			"title": {
+				"language": "Langue",
+				"misc": "Divers",
+				"ns": "Northstar",
+				"updates": "Mises à jour"
+			},
+			"updatebuttons": {
+				"buttons": {
+					"force_delete_install_cache": "Supprimer le cache d'installation du jeu",
+					"force_northstar_reinstall": "Forcer la réinstallation de Northstar",
+					"reset_cached_api_requests": "Supprimer le cache local d'API"
+				},
+				"desc": "Si vous avez des problèmes de mises à jour, certaines de ces options pourraient vous aider.",
+				"title": "Paramètres de récupération"
+			}
+		},
+		"toast": {
+			"desc": {
+				"duped": "contient plusieurs dossiers ayant le même nom ; si vous êtes le développer, vous devriez réparer ceci.",
+				"failed": "Une erreur inconnue est survenue lors de l'installation du mod. Cela peut être du ressort de l'auteur du mod ou de Viper.",
+				"installed": "a été installé avec succès !",
+				"malformed": "a une structure de dossier incorrecte ; si vous êtes son développeur, vous devriez réparer ça.",
+				"no_internet": "Viper ne fonctionnera pas correctement tant que la connexion n'est pas rétablie.",
+				"unknown_error": "Une erreur inconnue est survenue, cliquez pour plus de détails. Vous devriez prendre une capture d'écran de l'erreur si vous comptez créer un ticket."
+			},
+			"title": {
+				"duped": "Nom de dossier dupliqué !",
+				"failed": "L'installation a échoué",
+				"installed": "Mod installé !",
+				"malformed": "La structure du dossier du mod est incorrecte.",
+				"no_internet": "Pas de connexion Internet",
+				"unknown_error": "Erreur inconnue"
+			}
+		},
 		"update": {
+			"available": "Une mise à jour pour Viper est disponible, voulez-vous l'installer maintenant ?",
 			"button": "Mise à jour",
 			"check": "Vérifier les mises à jour",
 			"downloading": "Téléchargement de la mise à jour...",
 			"extracting": "Extraction des fichiers...",
 			"finished": "Terminé, vous pouvez jouer !",
-			"uptodate": "Déjà à jour !",
-			"available": "Une mise à jour pour Viper est disponible, voulez-vous l'installer maintenant ?"
+			"uptodate": "Déjà à jour !"
 		},
-
-		"mods": {
-			"title": "Mods",
-			"count": "Mods installés :",
-			"disabled_tag": "Désactivé",
-			"remove": "Supprimer",
-			"install": "Installer le mod",
-			"find": "Chercher des mods",
-			"toggle_all": "Activer/désactiver tous les mods",
-			"toggle_all_confirm": "Cette action pourrait désactiver des mods nécessaires au bon fonctionnement de Northstar. Souhaitez-vous faire cela ?",
-			"remove_all": "Tout supprimer",
-			"remove_all_confirm": "Supprimer tous les mods vous forcera à réinstaller Northstar, souhaitez-vous faire cela ?",
-			"nothing_selected": "Aucun mod n'est sélectionné.",
-			"required_confirm": "Vous avez sélectionné un mod de base, Northstar peut ne pas fonctionner sans celui-ci. Souhaitez-vous faire cela ?",
-
-			"not_a_mod": "Ceci n'est pas un mod !",
-			"unknown_author": "Inconnu",
-			"extracting": "Extraction du mod...",
-			"installing": "Installation du mod...",
-			"installed_mod": "Mod installé !",
-			"drag_n_drop": "Glissez/déposez un mod pour l'installer",
-			"confirm_dependencies": "Ce mod a des dépendances (affichées ci-dessous), cliquer \"Ok\" les installera en même temps que le mod.\n\n",
-			"confirm_plugins": {
-				"title": "Ce mod contient des plugins :",
-				"description": "Les plugins ont des accès à votre système, comparés aux mods classiques, et sont de fait plus dangereux à l'installation, comme pourrait l'être un plugin contenant un malware. Si ce plugin provient d'un tiers de confiance ou si vous savez ce que vous faites, ne tenez pas compte de ce message."
-			}
+		"versions": {
+			"northstar": "Version de Northstar",
+			"viper": "Version de Viper"
 		},
-
-		"browser": {
-			"info": "Info",
-			"view": "Voir",
-			"made_by": "par",
-			"update": "Mise à jour",
-			"install": "Installer",
-			"reinstall": "Réinstaller",
-			"loading": "Chargement des mods...",
-			"load_more": "Charger plus de mods...",
-			"end_of_list": "Fin de la liste de mods.<br>Utilisez la barre de recherche pour en trouver davantage !",
-			"no_results": "Pas de résultat",
-
-			"filter": {
-				"mods": "Mods",
-				"skins": "Skins",
-				"client": "Côté client",
-				"server": "Côté serveur"
-			}
-		},
-
-		"settings": {
-			"save": "Sauvegarder",
-			"discard": "Annuler",
-
-			"title": {
-				"ns": "Northstar",
-				"language": "Langue",
-				"updates": "Mises à jour",
-				"misc": "Divers"
-			},
-
-			"nsargs": {
-				"title": "Options de lancement",
-				"desc": "Vous pouvez ajouter ici des options de démarrage pour Northstar/Titanfall."
-			},
-
-			"autolang": {
-				"title": "Auto-détection de la langue",
-				"desc": "Lorsque activée, Viper essaie de déterminer automatiquement la langue de votre système ; désactiver cette option vous permet de sélectionner manuellement la langue utilisée."
-			},
-
-			"forcedlang": {
-				"title": "Langue",
-				"desc": "Lorsque \"Auto-détection de la langue\" est désactivée, cette option permet de sélectionner la langue (requiert un redémarrage)."
-			},
-
-			"autoupdate": {
-				"title": "Mises à jour pour Viper",
-				"desc": "Viper se tient automatiquement à jour."
-			},
-
-			"nsupdate": {
-				"title": "Mises à jour pour Northstar",
-				"desc": "Viper tient automatiquement Northstar à jour (n'empêche pas de le mettre à jour manuellement via sa page dédiée)."
-			},
-
-			"excludes": {
-				"title": "Fichiers à conserver",
-				"desc": "Lorsque Northstar est mis à jour, ces fichiers ne seront pas écrasés par ceux provenant de la mise à jour; les noms de fichiers sont séparés par un espace."
-			},
-
-			"originkill": {
-				"title": "Quitter automatiquement Origin et/ou EA app",
-				"desc": "Lorsque Viper est fermé, Origin et/ou EA app sera également automatiquement fermé."
-			},
-
-			"updatebuttons": {
-				"title": "Paramètres de récupération",
-				"desc": "Si vous avez des problèmes de mises à jour, certaines de ces options pourraient vous aider.",
-				"buttons": {
-					"reset_cached_api_requests": "Supprimer le cache local d'API",
-					"force_northstar_reinstall": "Forcer la réinstallation de Northstar",
-					"force_delete_install_cache": "Supprimer le cache d'installation du jeu"
-				}
-			},
-
-			"miscbuttons": {
-				"title": "Paramètres de récupération",
-				"desc": "Si vous avez des problèmes de mises à jour, certaines de ces options pourraient vous aider.",
-				"buttons": {
-					"open_gamepath": "Ouvrir le dossier du jeu",
-					"reset_config": "Réinitialiser le fichier de configuration",
-					"restart_viper": "Redémarrer Viper",
-					"change_gamepath": "Changer le dossier du jeu",
-					"force_quit_game": "Forcer la fermeture de Titanfall et Northstar",
-					"force_quit_origin": "Forcer la fermeture d'Origin et/ou EA Desktop"
-				},
-
-				"open_gamepath_alert": "Aucun chemin de jeu n'est sélectionné, et ne peut donc être ouvert ; veuillez en sélectionner un d'abord !",
-				"reset_config_alert": "Veuillez confirmer que vous voulez réinitialiser le fichier de configuration ; après confirmation, Viper supprimera ce fichier et redémarrera."
-			}
-		},
-
-		"nsupdate": {
-			"gaming": {
-				"title": "Mise à jour Northstar disponible !",
-				"body": "Une mise à jour pour Northstar est disponible.\nVous pourrez l'installer après avoir fermé le jeu."
-			}
-		},
-
-		"server": {
-			"player": "joueur",
-			"players": "joueurs",
-			"servers": "serveurs",
-			"offline": "Le serveur maître est hors-ligne"
-		},
-
-		"launch": "Jouer",
-		"install": "Installer",
-
-		"gamepath": {
-			"must": "Vous devez sélectionner le chemin du dossier du jeu Titanfall 2 pour pouvoir lancer Viper.",
-			"wrong": "Ce dossier ne contient pas le jeu Titanfall 2, et n'est donc pas valide.",
-			"lost": "Le chemin du jeu ne peut être trouvé / n'existe plus !\n\nVeuillez vérifier que votre disqué est correctement monté, ou, si vous avez déplacé votre jeu, que vous avez mis à jour le chemin du dossier.\n\nViper ne fonctionnera pas correctement jusqu'au prochain redémarrage.",
-			"lost_perms": "L'utilisateur semble avoir perdu les permissions de lecture/écriture de fichiers dans le dossier sélectionné, veuillez sélectionner un autre dossier ou accorder les permissions en lecture/écriture à l'utilisateur :\n\n",
-			"found_missing_perms": "Chemin du jeu automatiquement trouvé, cependant l'utilisateur courant n'a pas les permissions de lecture/écriture de fichiers dans le dossier sélectionné, veuillez manuellement sélectionner un autre dossier ou accorder les permissions en lecture/écriture à l'utilisateur :\n\n",
-			"missing_perms": "L'utilisateur courant n'a pas les permissions de lecture/écriture de fichiers dans le dossier sélectionné, veuillez manuellement sélectionner un autre dossier ou accorder les permissions en lecture/écriture à l'utilisateur :\n\n"
-		},
-
-		"toast": {
-			"title": {
-				"installed": "Mod installé !",
-				"duped": "Nom de dossier dupliqué !",
-				"failed": "L'installation a échoué",
-				"malformed": "La structure du dossier du mod est incorrecte.",
-				"unknown_error": "Erreur inconnue",
-				"no_internet": "Pas de connexion Internet"
-			},
-
-			"desc": {
-				"installed": "a été installé avec succès !",
-				"malformed": "a une structure de dossier incorrecte ; si vous êtes son développeur, vous devriez réparer ça.",
-				"failed": "Une erreur inconnue est survenue lors de l'installation du mod. Cela peut être du ressort de l'auteur du mod ou de Viper.",
-				"duped": "contient plusieurs dossiers ayant le même nom ; si vous êtes le développer, vous devriez réparer ceci.",
-				"unknown_error": "Une erreur inconnue est survenue, cliquez pour plus de détails. Vous devriez prendre une capture d'écran de l'erreur si vous comptez créer un ticket.",
-				"no_internet": "Viper ne fonctionnera pas correctement tant que la connexion n'est pas rétablie."
-			}
-		}
+		"welcome": "Bienvenue sur Viper !"
 	},
-
-	"viper": {
-		"menu": {
-			"main": "Viper",
-			"release": "Notes de mises à jour",
-			"info": "Informations"
-		},
-
-		"info": {
-			"links": "Liens utiles",
-			"credits": "Remerciements",
-			"discord": "Rejoingnez le serveur Discord :",
-			"issues": "Un problème avec Viper ? Créez un ticket ici :"
-		}
+	"lang": {
+		"title": "French - Français"
 	},
-
 	"ns": {
 		"menu": {
+			"force_quit": "Forcer la fermeture du jeu",
 			"main": "Lanceur Northstar",
 			"mods": "Mods",
-			"release": "Notes de mises à jour",
-			"force_quit": "Forcer la fermeture du jeu"
+			"release": "Notes de mises à jour"
 		}
 	},
-
-	"general": {
-		"auto_updates": {
-			"game_running": "Le jeu est en cours d'exécution, impossible de lancer la mise à jour."
-		},
-
-		"mods": {
-			"enabled": "Mods activés :",
-			"disabled": "Mods désactivés :",
-			"installed": "Mods installés :"
-		},
-
-		"missing_path": "Le chemin du client n'a pu être trouvé automatiquement, merci de le sélectionner manuellement.",
-		"not_installed": "Northstar n'est pas installé !",
-		"launching": "Lancement",
-		"running": "En cours d'exécution"
-	},
-
 	"request": {
-		"no_vp_release_notes": "<h3>Impossible de récupérer les notes de mises à jour de Viper.</h3>Veuillez réessayer plus tard.",
-		"no_ns_release_notes": "<h3>Impossible de récupérer les notes de mises à jour de Northstar.</h3>Veuillez réessayer plus tard."
+		"no_ns_release_notes": "<h3>Impossible de récupérer les notes de mises à jour de Northstar.</h3>Veuillez réessayer plus tard.",
+		"no_vp_release_notes": "<h3>Impossible de récupérer les notes de mises à jour de Viper.</h3>Veuillez réessayer plus tard."
 	},
-
 	"tooltip": {
 		"close": "Fermer Viper",
 		"minimize": "Réduire Viper",
-		"settings": "Paramètres",
 		"pages": {
-			"viper": "Viper",
 			"northstar": "Northstar",
-			"titanfall": "Titanfall 2"
+			"titanfall": "Titanfall 2",
+			"viper": "Viper"
+		},
+		"settings": "Paramètres"
+	},
+	"viper": {
+		"info": {
+			"credits": "Remerciements",
+			"discord": "Rejoingnez le serveur Discord :",
+			"issues": "Un problème avec Viper ? Créez un ticket ici :",
+			"links": "Liens utiles"
+		},
+		"menu": {
+			"info": "Informations",
+			"main": "Viper",
+			"release": "Notes de mises à jour"
 		}
 	}
 }
