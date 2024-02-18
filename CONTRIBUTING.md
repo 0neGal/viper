@@ -25,7 +25,7 @@ Single use functions are also generally discouraged, if a function is used once 
 
 As shown below below:
 
-```javascript
+```js
 function foo(bar) {
 	/*
 		This is a very long comment, however, it does not exceed 72
