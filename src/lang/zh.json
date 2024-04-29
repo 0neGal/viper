@@ -163,7 +163,7 @@
 				"methods": {
 					"command": "自定义命令",
 					"steam_auto": "Steam（自动）",
-					"steam_executable": "Steam（快捷方式）",
+					"steam_executable": "Steam（程序）",
 					"steam_flatpak": "Steam (Flatpak)",
 					"steam_protocol": "Steam (Protocol)"
 				},
@@ -221,7 +221,7 @@
 				"installed": "已成功安装!",
 				"malformed": "拥有错误的文件夹结构, 如果您是它的开发者, 您应该修复这个问题.",
 				"missing_flatpak": "无法以Flatpak的方式启动，看起来它并没有被安装",
-				"missing_flatpak_steam": "无法以Steam（Flatpak）的方式启动，看起来它并没有被安装",
+				"missing_flatpak_steam": "无法以Steam (Flatpak) 的方式启动，看起来它并没有被安装",
 				"missing_launch_command": "当前缺少运行游戏的自定义命令，需指定来启动游戏",
 				"missing_steam": "无法以Steam的方式启动，看起来它并没有被安装",
 				"no_internet": "Viper可能不会正常工作.",
