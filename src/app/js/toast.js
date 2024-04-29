@@ -69,3 +69,7 @@ function dismissToast(id) {
 		}, 500)
 	}
 }
+
+ipcRenderer.on("toast", (_, properties) => {
+	Toast(properties);
+})
