@@ -1,6 +1,7 @@
 var settings_fuse;
 
 var Settings = {
+	default: {settings},
 	toggle: (state) => {
 		Settings.load();
 		options.scrollTo(0, 0);
@@ -42,11 +43,25 @@ var Settings = {
 		let categories = document.querySelectorAll("#options details");
 		for (let i = 0; i < categories.length; i++) {
 			categories[i].setAttribute("open", true);
+
+			// hide categories that aren't for the current platform
+			let for_platform = categories[i].getAttribute("platform");
+			if (for_platform && process.platform != for_platform) {
+				categories[i].style.display = "none";
+				categories[i].setAttribute("perma-hidden", true);
+			}
 		}
 
 		let options = document.querySelectorAll(".option");
 
 		for (let i = 0; i < options.length; i++) {
+			// hide options that aren't for the current platform
+			let for_platform = options[i].getAttribute("platform");
+			if (for_platform && process.platform != for_platform) {
+				options[i].style.display = "none";
+				options[i].setAttribute("perma-hidden", true);
+			}
+
 			let optName = options[i].getAttribute("name");
 			if (optName == "forcedlang") {
 				let div = options[i].querySelector("select");
@@ -75,6 +90,25 @@ var Settings = {
 			}
 
 			if (settings[optName] != undefined) {
+				// check if setting has a `<select>`
+				let select_el = options[i].querySelector(".actions select");
+				if (select_el) {
+					// get `<option>` for settings value, if it exists
+					let option = select_el.querySelector(
+						`option[value="${settings[optName]}"]`
+					)
+
+					// check if it exists
+					if (option) {
+						// set the `<select>` to the settings value
+						select_el.value = settings[optName];
+					} else { // use the default value
+						select_el.value = Settings.default[optName];
+					}
+
+					continue;
+				}
+
 				switch(typeof settings[optName]) {
 					case "string":
 						options[i].querySelector(".actions input").value = settings[optName];
@@ -92,7 +126,6 @@ var Settings = {
 							switchDiv.classList.remove("on");
 						}
 						break
-
 				}
 			}
 		}
