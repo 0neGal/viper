@@ -150,6 +150,25 @@
 				"desc": "当 \"自动检测语言\" 被禁用后, 此设置将会作为Viper的语言. 需要重启Viper来生效.",
 				"title": "语言"
 			},
+			"linux_launch_cmd_ns": {
+				"desc": "当您以 \"自定义命令\" 选项启动Northstar客户端时，此项将会以$TF_ARGS的形式包含在启动命令的尾部作为Northstar的启动选项",
+				"title": "Northstar启动命令"
+			},
+			"linux_launch_cmd_vanilla": {
+				"desc": "当您以 \"自定义命令\" 选项启动原版客户端时，此项将会以$TF_ARGS的形式包含在启动命令的尾部作为原版的启动选项",
+				"title": "原版启动命令"
+			},
+			"linux_launch_method": {
+				"desc": "在Linux系统中启动游戏的方式",
+				"methods": {
+					"command": "自定义命令",
+					"steam_auto": "Steam（自动）",
+					"steam_executable": "Steam（快捷方式）",
+					"steam_flatpak": "Steam (Flatpak)",
+					"steam_protocol": "Steam (Protocol)"
+				},
+				"title": "Linux启动方式"
+			},
 			"miscbuttons": {
 				"buttons": {
 					"change_gamepath": "更改游戏目录",
@@ -179,6 +198,7 @@
 			"save": "保存",
 			"title": {
 				"language": "语言",
+				"linux": "Linux",
 				"misc": "杂项",
 				"ns": "Northstar",
 				"updates": "更新"
@@ -197,16 +217,26 @@
 			"desc": {
 				"duped": "存在多个同名的模组文件夹, 如果你是它的开发者, 你应该修复这个问题.",
 				"failed": "在尝试安装该时发生了未知错误, 这可能是作者的问题, 也可能是Viper的问题",
+				"failed_launch_command": "在运行自定义启动命令时发生了一些错误",
 				"installed": "已成功安装!",
 				"malformed": "拥有错误的文件夹结构, 如果您是它的开发者, 您应该修复这个问题.",
+				"missing_flatpak": "无法以Flatpak的方式启动，看起来它并没有被安装",
+				"missing_flatpak_steam": "无法以Steam（Flatpak）的方式启动，看起来它并没有被安装",
+				"missing_launch_command": "当前缺少运行游戏的自定义命令，需指定来启动游戏",
+				"missing_steam": "无法以Steam的方式启动游戏，看起来它并没有被安装",
 				"no_internet": "Viper可能不会正常工作.",
 				"unknown_error": "一个未知错误产生了, 点击来查看更多细节. 您可能会想要对错误信息进行截图用于bug反馈"
 			},
 			"title": {
 				"duped": "重复的文件夹名字!",
 				"failed": "安装失败",
+				"failed_launch_command": "运行启动命令失败",
 				"installed": "模组安装成功!",
 				"malformed": "错误的文件夹结构!",
+				"missing_flatpak": "缺少Flatpak",
+				"missing_flatpak_steam": "缺少Steam（Flatpak)",
+				"missing_launch_command": "缺少启动命令",
+				"missing_steam": "缺少Steam",
 				"no_internet": "没有互联网",
 				"unknown_error": "未知错误!"
 			}
