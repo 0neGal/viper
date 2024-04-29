@@ -15,6 +15,9 @@ var modsobj = {
 let shouldInstallNorthstar = false;
 
 // Base settings
+//
+// TODO: dont duplicate this, instead just use the one in
+// `src/modules/settings.js` automatically
 var settings = {
 	nsargs: "",
 	gamepath: "",
@@ -25,6 +28,11 @@ var settings = {
 	originkill: false,
 	zip: "/northstar.zip",
 	lang: navigator.language,
+
+	linux_launch_cmd_ns: "",
+	linux_launch_cmd_vanilla: "",
+	linux_launch_method: "steam_auto",
+
 	excludes: [
 		"ns_startup_args.txt",
 		"ns_startup_args_dedi.txt"
