@@ -223,7 +223,7 @@
 				"missing_flatpak": "无法以Flatpak的方式启动，看起来它并没有被安装",
 				"missing_flatpak_steam": "无法以Steam（Flatpak）的方式启动，看起来它并没有被安装",
 				"missing_launch_command": "当前缺少运行游戏的自定义命令，需指定来启动游戏",
-				"missing_steam": "无法以Steam的方式启动游戏，看起来它并没有被安装",
+				"missing_steam": "无法以Steam的方式启动，看起来它并没有被安装",
 				"no_internet": "Viper可能不会正常工作.",
 				"unknown_error": "一个未知错误产生了, 点击来查看更多细节. 您可能会想要对错误信息进行截图用于bug反馈"
 			},
