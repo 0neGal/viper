@@ -151,12 +151,12 @@
 				"title": "语言"
 			},
 			"linux_launch_cmd_ns": {
-				"desc": "当您以 \"自定义命令\" 选项启动Northstar客户端时，此项将会以$TF_ARGS的形式包含在启动命令的尾部作为Northstar的启动选项",
-				"title": "Northstar启动命令"
+				"desc": "当您以 \"自定义命令\" 选项启动Northstar客户端时，此项将会以$TF_ARGS的形式包含在启动命令的尾部作为Northstar的启动参数",
+				"title": "Northstar启动参数"
 			},
 			"linux_launch_cmd_vanilla": {
-				"desc": "当您以 \"自定义命令\" 选项启动原版客户端时，此项将会以$TF_ARGS的形式包含在启动命令的尾部作为原版的启动选项",
-				"title": "原版启动命令"
+				"desc": "当您以 \"自定义命令\" 选项启动原版客户端时，此项将会以$TF_ARGS的形式包含在启动命令的尾部作为原版的启动参数",
+				"title": "原版启动参数"
 			},
 			"linux_launch_method": {
 				"desc": "在Linux系统中启动游戏的方式",
