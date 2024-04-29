@@ -61,7 +61,9 @@ let format = (logging = true) => {
 
 		try {
 			// attempt read, parse and flatten `file_path`
-			let json = flat.flatten(require(file_path));
+			let json = flat.flatten(
+				JSON.parse(fs.readFileSync(file_path))
+			)
 
 			// sort `json`
 			json = Object.fromEntries(
@@ -152,7 +154,6 @@ let localize = async () => {
 	// get just the flattened keys of the language
 	let keys = Object.keys(lang_keys);
 
-	console.log(problems)
 	// are there any missing keys?
 	if (problems[picked_lang].length) {
 		// prompt for whether we should only show missing keys
