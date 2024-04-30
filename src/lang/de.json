@@ -150,6 +150,25 @@
 				"desc": "Wenn \"Automatische Spracherkennung\" deaktiviert ist, wird diese Option genutzt um die Sprachen zu ändern. Oft ist ein Neustart nötig!",
 				"title": "Sprache"
 			},
+			"linux_launch_cmd_ns": {
+				"desc": "Dieser Befehl wird zum starten von Northstar ausgeführt wenn die Startmethode \"Eigener Befehl\" ausgewählt ist. Startvariabeln werden am ende des Befehl angehangen und als Environmentvariable $TF_ARGS mitgegeben.",
+				"title": "Northstar Startbefehl"
+			},
+			"linux_launch_cmd_vanilla": {
+				"desc": "Dieser Befehl wird zum starten von Vanilla ausgeführt wenn die Startmethode \"Eigener Befehl\" ausgewählt ist. Startvariabeln werden am ende des Befehls angehangen und als Environmentvariable $TF_ARGS mitgegeben.",
+				"title": "Vanilla Startbefehl"
+			},
+			"linux_launch_method": {
+				"desc": "Die Methode welche zum start des Spieles auf Linux genutzt wird.",
+				"methods": {
+					"command": "Eigener Befehl",
+					"steam_auto": "Steam (Automatisch)",
+					"steam_executable": "Steam (Ausführungsdatei)",
+					"steam_flatpak": "Steam (Flatpak)",
+					"steam_protocol": "Steam (Protokoll)"
+				},
+				"title": "Linux Startmethode"
+			},
 			"miscbuttons": {
 				"buttons": {
 					"change_gamepath": "Spielepfad ändern",
@@ -179,6 +198,7 @@
 			"save": "Speichern",
 			"title": {
 				"language": "Sprache",
+				"linux": "Linux",
 				"misc": "Sonstiges",
 				"ns": "Northstar",
 				"updates": "Updates"
@@ -197,16 +217,26 @@
 			"desc": {
 				"duped": "hat mehrere Ordner in sich mit dem selben Namen, wodurch ein duplizierter Ordner ensteht! Falls du der Entwickler bist solltest du dies beheben!",
 				"failed": "Ein unbekannter Fehler ist aufgetaucht beim Installieren, die Schuld kann beim Autor liegen oder bei Viper selbst!",
+				"failed_launch_command": "Es gab einen Fehler beim ausführen vom Startbefehl.",
 				"installed": "wurde installiert!",
 				"malformed": "hat eine fehlerhafte Ordnerstruktur, falls du der Entwickler bist, solltest du dies beheben.",
+				"missing_flatpak": "Konnte nicht mit Flatpak starten, da keine Instanz gefunden wurde.",
+				"missing_flatpak_steam": "Konnte nicht mit der Flatpak version von Steam starten, da keine Instanz gefunden wurde.",
+				"missing_launch_command": "Es wurde kein Startbefehl angegeben, bitte setze einen fest.",
+				"missing_steam": "Kann nicht direkt über Steam starten, da keine Instanz gefunden wurde.",
 				"no_internet": "Viper funktioniert möglicherweise nicht korrekt",
 				"unknown_error": "Ein unbekannter Fehler ist aufgetreten für mehr details drücken! Es wird empfohlen einen Screenshot von der detalierten Fehlernachricht zu machen wenn ein Bug-Report erstellt wird!"
 			},
 			"title": {
 				"duped": "Duplizierter Ordner name!",
 				"failed": "Fehler beim Installieren des Mods!",
+				"failed_launch_command": "Ausführungsfehler vom Startbefehl!",
 				"installed": "Mod installiert!",
 				"malformed": "Fehlerhafte Ordnerstruktur!",
+				"missing_flatpak": "Flatpak fehlt!",
+				"missing_flatpak_steam": "Flatpak Steam fehlt!",
+				"missing_launch_command": "Fehlender Startbefehl!",
+				"missing_steam": "Steam fehlt!",
 				"no_internet": "Kein Internet",
 				"unknown_error": "Unbekannter Fehler!"
 			}
