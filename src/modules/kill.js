@@ -33,6 +33,12 @@ kill.origin = async () => {
 	let origin = await kill("Origin.exe");
 	let eadesktop = await kill("EADesktop.exe");
 
+	// these should be Linux only, and the above shouldn't succeed if
+	// these don't succeed, so we shouldn't have to check whether these
+	// actually succeeded or not
+	await kill("CrBrowserMain");
+	await kill("EABackgroundSer");
+
 	if (origin || eadesktop) {
 		return true;
 	}

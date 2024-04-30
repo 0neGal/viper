@@ -53,7 +53,9 @@ is_running.game = () => {
 is_running.origin = () => {
 	return check_processes([
 		"Origin.exe",
-		"EADesktop.exe"
+		"EADesktop.exe",
+		"CrBrowserMain",
+		"EABackgroundSer"
 	])
 }
 
