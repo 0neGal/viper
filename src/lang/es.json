@@ -150,6 +150,25 @@
 				"desc": "Cuando \"Detectar automáticamente el idioma\" está deshabilitado, ésta opción decidirá el lenguaje. Se necesita reiniciar para que surja efecto.",
 				"title": "Idioma"
 			},
+			"linux_launch_cmd_ns": {
+				"desc": "Este es el comando que será usado cuando seleccione \"Comando personalizado\" como el metodo de ejecución al lanzar Northstar. Las opciones de ejecución seran añadidas al final de dicho comando y en una variable de entorno llamada $TF_ARGS",
+				"title": "Comando de lanzamiento para Northstar"
+			},
+			"linux_launch_cmd_vanilla": {
+				"desc": "Este es el comando que será usado cuando seleccione \"Comando personalizado\" como el metodo de ejecución al lanzar la versión \"Vanilla\" del juego. Las opciones de ejecución seran añadidas al final de dicho comando y en una variable de entorno llamada $TF_ARGS",
+				"title": "Comando de ejecución para \"Vanilla\""
+			},
+			"linux_launch_method": {
+				"desc": "El método a usarse cuando ejecute el juego en Linux",
+				"methods": {
+					"command": "Comando personalizado",
+					"steam_auto": "Steam (Automático)",
+					"steam_executable": "Steam (Ejecutable)",
+					"steam_flatpak": "Steam (Flatpak)",
+					"steam_protocol": "Steam (Protocolo)"
+				},
+				"title": "Modo de ejecución en Linux"
+			},
 			"miscbuttons": {
 				"buttons": {
 					"change_gamepath": "Cambiar ruta del juego",
@@ -179,6 +198,7 @@
 			"save": "Guardar",
 			"title": {
 				"language": "Idioma",
+				"linux": "Linux",
 				"misc": "Misceláneos",
 				"ns": "Northstar",
 				"updates": "Actualizaciones"
@@ -205,8 +225,10 @@
 			"title": {
 				"duped": "tiene varias carpetas de la modificación con el mismo nombre, lo que genera carpetas duplicadas. Si eres el desarrollador, deberías arreglar esto.",
 				"failed": "¡Falló al instalar!",
+				"failed_launch_command": "Error al ejecutar el comando de lanzamiento",
 				"installed": "¡Modificación instalada!",
 				"malformed": "¡Estructura de las carpetas incorrecta!",
+				"missing_launch_command": "El comando de lanzamiento no fue asignado o no se encuentra",
 				"no_internet": "Sin Internet",
 				"unknown_error": "¡Error desconocido!"
 			}
