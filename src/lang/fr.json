@@ -150,6 +150,25 @@
 				"desc": "Lorsque \"Auto-détection de la langue\" est désactivée, cette option permet de sélectionner la langue (requiert un redémarrage).",
 				"title": "Langue"
 			},
+			"linux_launch_cmd_ns": {
+				"desc": "Commande qui sera utilisée lorsque vous sélectionnez \"Commande personnalisée\" comme méthode de lancement de Northstar ; les arguments de démarrage sont ajoutés à la fin de cette commande et dans une variable d'environnement nommée $TF_ARGS",
+				"title": "Commande de lancement de Northstar"
+			},
+			"linux_launch_cmd_vanilla": {
+				"desc": "Commande qui sera utilisée lorsque vous sélectionnez \"Commande personnalisée\" comme méthode de lancement vanilla ; les arguments de démarrage sont ajoutés à la fin de cette commande et dans une variable d'environnement nommée $TF_ARGS",
+				"title": "Commande de lancement vanilla"
+			},
+			"linux_launch_method": {
+				"desc": "La façon de lancer le jeu sur Linux",
+				"methods": {
+					"command": "Commande personnalisée",
+					"steam_auto": "Steam (auto)",
+					"steam_executable": "Steam (exécutable)",
+					"steam_flatpak": "Steam (Flatpak)",
+					"steam_protocol": "Steam (protocole)"
+				},
+				"title": "Méthode de lancement sur Linux"
+			},
 			"miscbuttons": {
 				"buttons": {
 					"change_gamepath": "Changer le dossier du jeu",
@@ -179,6 +198,7 @@
 			"save": "Sauvegarder",
 			"title": {
 				"language": "Langue",
+				"linux": "Linux",
 				"misc": "Divers",
 				"ns": "Northstar",
 				"updates": "Mises à jour"
@@ -197,16 +217,26 @@
 			"desc": {
 				"duped": "contient plusieurs dossiers ayant le même nom ; si vous êtes le développer, vous devriez réparer ceci.",
 				"failed": "Une erreur inconnue est survenue lors de l'installation du mod. Cela peut être du ressort de l'auteur du mod ou de Viper.",
+				"failed_launch_command": "Quelque chose s'est mal passé lors de l'exécution de la commande",
 				"installed": "a été installé avec succès !",
 				"malformed": "a une structure de dossier incorrecte ; si vous êtes son développeur, vous devriez réparer ça.",
+				"missing_flatpak": "Lancement via Flatpak impossible (ne semble pas être installé)",
+				"missing_flatpak_steam": "Lancement via Flatpak Steam impossible (ne semble pas être installé)",
+				"missing_launch_command": "Il n'y a actuellement pas d'argument de lancement configuré, il en faut au moins un pour lancer le jeu",
+				"missing_steam": "Lancement via Steam impossible (ne semble pas être installé)",
 				"no_internet": "Viper ne fonctionnera pas correctement tant que la connexion n'est pas rétablie.",
 				"unknown_error": "Une erreur inconnue est survenue, cliquez pour plus de détails. Vous devriez prendre une capture d'écran de l'erreur si vous comptez créer un ticket."
 			},
 			"title": {
 				"duped": "Nom de dossier dupliqué !",
 				"failed": "L'installation a échoué",
+				"failed_launch_command": "Echec du lancement de la commande",
 				"installed": "Mod installé !",
 				"malformed": "La structure du dossier du mod est incorrecte.",
+				"missing_flatpak": "Flatpak manquant",
+				"missing_flatpak_steam": "Flatpak Steam manquant",
+				"missing_launch_command": "Commande de lancement manquante",
+				"missing_steam": "Steam manquant",
 				"no_internet": "Pas de connexion Internet",
 				"unknown_error": "Erreur inconnue"
 			}
