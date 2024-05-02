@@ -151,11 +151,11 @@
 				"title": "Idioma"
 			},
 			"linux_launch_cmd_ns": {
-				"desc": "Este es el comando que será usado cuando seleccione \"Comando personalizado\" como el metodo de ejecución al lanzar Northstar. Las opciones de ejecución seran añadidas al final de dicho comando y en una variable de entorno llamada $TF_ARGS",
+				"desc": "Este es el comando que será usado cuando seleccione \"Comando personalizado\" como el método de ejecución al lanzar Northstar. Las opciones de ejecución seran añadidas al final de dicho comando y en una variable de entorno llamada $TF_ARGS",
 				"title": "Comando de lanzamiento para Northstar"
 			},
 			"linux_launch_cmd_vanilla": {
-				"desc": "Este es el comando que será usado cuando seleccione \"Comando personalizado\" como el metodo de ejecución al lanzar la versión \"Vanilla\" del juego. Las opciones de ejecución seran añadidas al final de dicho comando y en una variable de entorno llamada $TF_ARGS",
+				"desc": "Este es el comando que será usado cuando seleccione \"Comando personalizado\" como el método de ejecución al lanzar la versión \"Vanilla\" del juego. Las opciones de ejecución seran añadidas al final de dicho comando y en una variable de entorno llamada $TF_ARGS",
 				"title": "Comando de ejecución para \"Vanilla\""
 			},
 			"linux_launch_method": {
