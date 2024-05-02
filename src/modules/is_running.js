@@ -25,7 +25,7 @@ async function check_processes(processes) {
 		// thing. And it's not much more clunky.
 		let cmd = (() => {
 			switch (process.platform) {
-				case "linux": return "ps a";
+				case "linux": return "ps aux";
 				case "win32": return "tasklist";
 			}
 		})();
@@ -53,7 +53,9 @@ is_running.game = () => {
 is_running.origin = () => {
 	return check_processes([
 		"Origin.exe",
-		"EADesktop.exe"
+		"EADesktop.exe",
+		"CrBrowserMain",
+		"EABackgroundSer"
 	])
 }
 
