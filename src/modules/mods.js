@@ -350,6 +350,10 @@ mods.modfile.get = (mod) => {
 	// read enabledmods.json
 	let data = json(mods.modfile.file);
 
+	if (! data || typeof data !== "object") {
+		return true;
+	}
+
 	if (data[mod]) { // enabled
 		return true;
 	} else if (data[mod] === false) { // disabled
