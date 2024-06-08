@@ -29,7 +29,7 @@ mods.load = (mods_obj) => {
 			name = mod.package.package_name;
 		}
 
-		let normalized_name = "mod-list-" + normalize(name);
+		let normalized_name = "mod-list-" + mods.normalize(name);
 
 		normalized_names.push(normalized_name);
 
@@ -302,6 +302,23 @@ mods.is_installed = (modname) => {
 	return false;
 }
 
+mods.normalize = (items) => {
+	let main = (string) => {
+		return string.replaceAll(" ", "")
+			.replaceAll(".", "").replaceAll("-", "")
+			.replaceAll("_", "").toLowerCase();
+	}
+	if (typeof items == "string") {
+		return main(items);
+	} else {
+		let newArray = [];
+		for (let i = 0; i < items.length; i++) {
+			newArray.push(main(items[i]));
+		}
+
+		return newArray;
+	}
+}
 
 // updates the installed mods
 ipcRenderer.on("mods", (event, mods_obj) => {

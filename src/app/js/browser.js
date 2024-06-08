@@ -111,7 +111,7 @@ var Browser = {
 	add_pkg_properties: () => {
 		for (let i = 0; i < packages.length; i++) {
 			let properties = packages[i];
-			let normalized = normalize(packages[i].name);
+			let normalized = mods.normalize(packages[i].name);
 
 			let has_update = false;
 			let local_name = false;
@@ -123,7 +123,7 @@ var Browser = {
 				for (let ii = 0; ii < mods.list().all.length; ii++) {
 					let mod = mods.list().all[ii];
 
-					if (normalize(mod.name) !== normalized && (
+					if (mods.normalize(mod.name) !== normalized && (
 						! mod.package ||
 						mod.package.author + "-" + mod.package.package_name !==
 						packages[i].full_name
@@ -266,7 +266,7 @@ var Browser = {
 		}
 	},
 	setbutton: (mod, string, icon) => {
-		mod = normalize(mod);
+		mod = mods.normalize(mod);
 		if (browserEntries.querySelector(`#mod-${mod}`)) {
 			let elems = browserEntries.querySelectorAll(`.el#mod-${mod}`);
 
@@ -289,13 +289,13 @@ var Browser = {
 
 			setTimeout(() => {
 				for (let i = 0; i < mods.list().all.length; i++) {
-					let modname = normalize(mods.list().all[i].name);
-					let modfolder = normalize(mods.list().all[i].folder_name);
+					let modname = mods.normalize(mods.list().all[i].name);
+					let modfolder = mods.normalize(mods.list().all[i].folder_name);
 
 					if (mod.includes(modname)) {
 						if (! make(modname)) {
 							if (mods.list().all[i].manifest_name) {
-								make(normalize(mods.list().all[i].manifest_name));
+								make(mods.normalize(mods.list().all[i].manifest_name));
 							}
 						}
 					}
@@ -406,7 +406,7 @@ function BrowserEl(properties) {
 	let normalized_mods = [];
 
 	for (let i = 0; i < mods.list().all; i++) {
-		normalized_mods.push(normalize(mods_list[i].name));
+		normalized_mods.push(mods.normalize(mods_list[i].name));
 	}
 
 	if (properties.pkg.local_version) {
@@ -421,7 +421,7 @@ function BrowserEl(properties) {
 
 	let entry = document.createElement("div");
 	entry.classList.add("el");
-	entry.id = `mod-${normalize(properties.title)}`;
+	entry.id = `mod-${mods.normalize(properties.title)}`;
 
 	entry.innerHTML = `
 		<div class="image">
@@ -544,24 +544,6 @@ ipcRenderer.on("installed-mod", (event, mod) => {
 		mods.install_queue.shift();
 	}
 })
-
-function normalize(items) {
-	let main = (string) => {
-		return string.replaceAll(" ", "")
-			.replaceAll(".", "").replaceAll("-", "")
-			.replaceAll("_", "").toLowerCase();
-	}
-	if (typeof items == "string") {
-		return main(items);
-	} else {
-		let newArray = [];
-		for (let i = 0; i < items.length; i++) {
-			newArray.push(main(items[i]));
-		}
-
-		return newArray;
-	}
-}
 
 let searchtimeout;
 let searchstr = "";
