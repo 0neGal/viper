@@ -1,12 +1,10 @@
 const exec = require("child_process").exec;
 const ipcMain = require("electron").ipcMain;
 
-ipcMain.on("kill-game", () => {
-	kill.game();
-})
-
-ipcMain.on("kill-origin", () => {
-	kill.origin();
+ipcMain.on("kill", (function_name) => {
+	if (typeof kill[function_name] == "function") {
+		kill[function_name]();
+	}
 })
 
 // a simple function to kill processes with a certain name

@@ -98,7 +98,7 @@ var Browser = {
 		}
 	},
 	install: (package_obj, clear_queue = false) => {
-		return installFromURL(
+		return mods.install_from_url(
 			package_obj.download || package_obj.versions[0].download_url,
 			package_obj.dependencies || package_obj.versions[0].dependencies,
 			clear_queue,
@@ -119,9 +119,9 @@ var Browser = {
 			let remote_version = packages[i].versions[0].version_number;
 			remote_version = version.format(remote_version);
 
-			if (modsobj) {
-				for (let ii = 0; ii < modsobj.all.length; ii++) {
-					let mod = modsobj.all[ii];
+			if (mods.list()) {
+				for (let ii = 0; ii < mods.list().all.length; ii++) {
+					let mod = mods.list().all[ii];
 
 					if (normalize(mod.name) !== normalized && (
 						! mod.package ||
@@ -288,14 +288,14 @@ var Browser = {
 			}
 
 			setTimeout(() => {
-				for (let i = 0; i < modsobj.all.length; i++) {
-					let modname = normalize(modsobj.all[i].name);
-					let modfolder = normalize(modsobj.all[i].folder_name);
+				for (let i = 0; i < mods.list().all.length; i++) {
+					let modname = normalize(mods.list().all[i].name);
+					let modfolder = normalize(mods.list().all[i].folder_name);
 
 					if (mod.includes(modname)) {
 						if (! make(modname)) {
-							if (modsobj.all[i].manifest_name) {
-								make(normalize(modsobj.all[i].manifest_name));
+							if (mods.list().all[i].manifest_name) {
+								make(normalize(mods.list().all[i].manifest_name));
 							}
 						}
 					}
@@ -405,7 +405,7 @@ function BrowserEl(properties) {
 	let installstr = lang("gui.browser.install");
 	let normalized_mods = [];
 
-	for (let i = 0; i < modsobj.all; i++) {
+	for (let i = 0; i < mods.list().all; i++) {
 		normalized_mods.push(normalize(mods_list[i].name));
 	}
 
@@ -467,7 +467,7 @@ function add_recent_toast(name, timeout = 3000) {
 }
 
 ipcRenderer.on("removed-mod", (event, mod) => {
-	setButtons(true);
+	set_buttons(true);
 	Browser.setbutton(mod.name, lang("gui.browser.install"), "downloads");
 
 	if (mod.manifest_name) {
@@ -479,7 +479,7 @@ ipcRenderer.on("failed-mod", (event, modname) => {
 	if (recent_toasts["failed" + modname]) {return}
 	add_recent_toast("failed" + modname);
 
-	setButtons(true);
+	set_buttons(true);
 	new Toast({
 		timeout: 10000,
 		scheme: "error",
@@ -492,7 +492,7 @@ ipcRenderer.on("legacy-duped-mod", (event, modname) => {
 	if (recent_toasts["duped" + modname]) {return}
 	add_recent_toast("duped" + modname);
 
-	setButtons(true);
+	set_buttons(true);
 	new Toast({
 		timeout: 10000,
 		scheme: "warning",
@@ -502,7 +502,7 @@ ipcRenderer.on("legacy-duped-mod", (event, modname) => {
 })
 
 ipcRenderer.on("no-internet", (event, modname) => {
-	setButtons(true);
+	set_buttons(true);
 	new Toast({
 		timeout: 10000,
 		scheme: "error",
@@ -517,7 +517,7 @@ ipcRenderer.on("installed-mod", (event, mod) => {
 
 	let name = mod.fancy_name || mod.name;
 
-	setButtons(true);
+	set_buttons(true);
 	Browser.setbutton(name, lang("gui.browser.reinstall"), "redo");
 
 	if (mod.malformed) {
@@ -535,13 +535,13 @@ ipcRenderer.on("installed-mod", (event, mod) => {
 		description: name + " " + lang("gui.toast.desc.installed")
 	})
 
-	if (installqueue.length != 0) {
-		installFromURL(
-			"https://thunderstore.io/package/download/" + installqueue[0].pkg,
-			false, false, installqueue[0].author, installqueue[0].package_name, installqueue[0].version
+	if (mods.install_queue.length != 0) {
+		mods.install_from_url(
+			"https://thunderstore.io/package/download/" + mods.install_queue[0].pkg,
+			false, false, mods.install_queue[0].author, mods.install_queue[0].package_name, mods.install_queue[0].version
 		)
 
-		installqueue.shift();
+		mods.install_queue.shift();
 	}
 })
 

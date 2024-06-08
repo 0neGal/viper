@@ -4,8 +4,7 @@ var servercount;
 var playercount;
 var masterserver;
 
-// Changes the main page
-// This is the tabs in the sidebar
+// changes the main page, this is the tabs in the sidebar
 function page(page) {
 	let btns = document.querySelectorAll(".gamesContainer button");
 	let pages = document.querySelectorAll(".mainContainer .contentContainer");
@@ -71,7 +70,7 @@ let set_error_content = (div, lang_key) => {
 		"</div>";
 }
 
-// Updates the Viper release notes
+// updates the Viper release notes
 ipcRenderer.on("vp-notes", (event, response) => {
 	if (! response) {
 		return set_error_content(
@@ -83,7 +82,7 @@ ipcRenderer.on("vp-notes", (event, response) => {
 	vpReleaseNotes.innerHTML = formatRelease(response);
 });
 
-// Updates the Northstar release notes
+// updates the Northstar release notes
 ipcRenderer.on("ns-notes", (event, response) => {
 	if (! response) {
 		return set_error_content(
@@ -208,7 +207,7 @@ async function loadServers() {
 	}
 }; loadServers()
 
-// Refreshes every 5 minutes
+// refreshes every 5 minutes
 setInterval(() => {
 	loadServers();
 }, 300000)

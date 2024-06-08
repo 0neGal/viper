@@ -1,4 +1,15 @@
-var mods = {};
+let mods = {};
+
+let mods_list = {
+	all: [],
+	enabled: [],
+	disabled: []
+}
+
+// returns the list of mods
+mods.list = () => {
+	return mods_list;
+}
 
 mods.load = (mods_obj) => {
 	modcount.innerHTML = `${lang("gui.mods.count")} ${mods_obj.all.length}`;
@@ -210,3 +221,85 @@ mods.toggle = (mod) => {
 
 	ipcRenderer.send("toggle-mod", mod);
 }
+
+mods.install_queue = [];
+
+// tells the main process to install a mod through the file selector
+mods.install_prompt = () => {
+	set_buttons(false);
+	ipcRenderer.send("install-mod");
+}
+
+// tells the main process to directly install a mod from this path
+mods.install_from_path = (path) => {
+	set_buttons(false);
+	ipcRenderer.send("install-from-path", path);
+}
+
+// tells the main process to install a mod from a URL
+mods.install_from_url = (url, dependencies, clearqueue, author, package_name, version) => {
+	if (clearqueue) {mods.install_queue = []};
+
+	let prettydepends = [];
+
+	if (dependencies) {
+		let newdepends = [];
+		for (let i = 0; i < dependencies.length; i++) {
+			let depend = dependencies[i].toLowerCase();
+			if (! depend.match(/northstar-northstar-.*/)) {
+				depend = dependencies[i].replaceAll("-", "/");
+				let pkg = depend.split("/");
+				if (! mods.is_installed(pkg[1])) {
+					newdepends.push({
+						pkg: depend,
+						author: pkg[0],
+						version: pkg[2],
+						package_name: pkg[1]
+					});
+
+					prettydepends.push(`${pkg[1]} v${pkg[2]} - ${lang("gui.browser.made_by")} ${pkg[0]}`);
+				}
+			}
+		}
+
+		dependencies = newdepends;
+	} 
+
+	if (dependencies && dependencies.length != 0) {
+		let confirminstall = confirm(lang("gui.mods.confirm_dependencies") + prettydepends.join("\n"));
+		if (! confirminstall) {
+			return;
+		}
+	}
+
+	set_buttons(false);
+	ipcRenderer.send("install-from-url", url, author, package_name, version);
+
+	if (dependencies) {
+		mods.install_queue = dependencies;
+	}
+}
+
+mods.is_installed = (modname) => {
+	for (let i = 0; i < mods.list().all.length; i++) {
+		let mod = mods.list().all[i];
+		if (mod.manifest_name) {
+			if (mod.manifest_name.match(modname)) {
+				return true;
+			}
+		} else if (mod.name.match(modname)) {
+			return true;
+		}
+	}
+
+	return false;
+}
+
+
+// updates the installed mods
+ipcRenderer.on("mods", (event, mods_obj) => {
+	mods_list = mods_obj;
+	if (! mods_obj) {return}
+
+	mods.load(mods_obj);
+})
