@@ -230,17 +230,17 @@
 		</div>
 		
 		<nav class="gamesContainer">
-			<button id="vpBtn" tooltip="%%tooltip.pages.viper%%" tooltip-position="horizontal" onclick="page(0)"></button>
-			<button id="nsBtn" tooltip="%%tooltip.pages.northstar%%" tooltip-position="horizontal" onclick="page(1)"></button>
-			<button id="tfBtn" tooltip="%%tooltip.pages.titanfall%%" tooltip-position="horizontal" onclick="page(2)"></button>
+			<button id="vpBtn" tooltip="%%tooltip.pages.viper%%" tooltip-position="horizontal" onclick="launcher.change_page(0)"></button>
+			<button id="nsBtn" tooltip="%%tooltip.pages.northstar%%" tooltip-position="horizontal" onclick="launcher.change_page(1)"></button>
+			<button id="tfBtn" tooltip="%%tooltip.pages.titanfall%%" tooltip-position="horizontal" onclick="launcher.change_page(2)"></button>
 		</nav>
 
 		<div class="mainContainer">
 			<div id="vpContent" class="contentContainer">
 				<ul class="contentMenu">
-					<li id="vpMainBtn" active onclick="showVpSection('main')">%%viper.menu.main%%</li>
-					<li id="vpReleaseBtn" onclick="showVpSection('release')">%%viper.menu.release%%</li>
-					<li id="vpInfoBtn" onclick="showVpSection('info')">%%viper.menu.info%%</li>
+					<li id="vpMainBtn" active onclick="launcher.show_vp('main')">%%viper.menu.main%%</li>
+					<li id="vpReleaseBtn" onclick="launcher.show_vp('release')">%%viper.menu.release%%</li>
+					<li id="vpInfoBtn" onclick="launcher.show_vp('info')">%%viper.menu.info%%</li>
 				</ul>
 				<div class="contentBody">
 					<div id="vpMain" class="section">
@@ -269,9 +269,9 @@
 
 			<div id="nsContent" class="contentContainer">
 				<ul class="contentMenu">
-					<li id="nsMainBtn" active onclick="showNsSection('main')">%%ns.menu.main%%</li>
-					<li id="nsModsBtn" onclick="showNsSection('mods')">%%ns.menu.mods%%</li>
-					<li id="nsReleaseBtn" onclick="showNsSection('release')">%%ns.menu.release%%</li>
+					<li id="nsMainBtn" active onclick="launcher.show_ns('main')">%%ns.menu.main%%</li>
+					<li id="nsModsBtn" onclick="launcher.show_ns('mods')">%%ns.menu.mods%%</li>
+					<li id="nsReleaseBtn" onclick="launcher.show_ns('release')">%%ns.menu.release%%</li>
 				</ul>
 				<div class="contentBody">
 					<div id="nsMain" class="section">
@@ -336,6 +336,5 @@
 		<script src="js/popups.js"></script>
 		<script src="js/tooltip.js"></script>
 		<script src="js/browser.js"></script>
-		<script src="js/launcher.js"></script>
 	</body>
 </html>

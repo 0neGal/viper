@@ -2,6 +2,7 @@ const ipcRenderer = require("electron").ipcRenderer;
 
 const lang = require("../../lang");
 const process = require("./process");
+const launcher = require("./launcher");
 const settings = require("./settings");
 
 // frontend part of settings a new game path
@@ -16,7 +17,7 @@ ipcRenderer.on("newpath", (_, newpath) => {
 
 // a previously valid gamepath no longer exists, and is therefore lost
 ipcRenderer.on("gamepath-lost", () => {
-	page(0);
+	launcher.change_page(0);
 	set_buttons(false, true);
 	alert(lang("gui.gamepath.lost"));
 })

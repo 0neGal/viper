@@ -37,6 +37,7 @@ const request = require("./js/request");
 const process = require("./js/process");
 const settings = require("./js/settings");
 const gamepath = require("./js/gamepath");
+const launcher = require("./js/launcher");
 const is_running = require("./js/is_running");
 const set_buttons = require("./js/set_buttons");
 
