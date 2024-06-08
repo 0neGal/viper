@@ -1,4 +1,6 @@
-function format_string(string) {
+// localizes `string`, removing instances of `%%string%%` with
+// `lang("string")` and so forth
+function localize_string(string) {
 	let parts = string.split("%%");
 
 	// basic checks to make sure `string` has lang strings
@@ -29,8 +31,8 @@ function format_string(string) {
 	return parts.join("");
 }
 
-// runs `format_string()` on `el`'s attributes, text nodes and children
-function replace_in_el(el) {
+// runs `localize_string()` on `el`'s attributes, text nodes and children
+function localize_el(el) {
 	// we don't want to mess with script tags
 	if (el.tagName == "SCRIPT") {return}
 
@@ -46,22 +48,22 @@ function replace_in_el(el) {
 		// the node is a text node, so we set its `.textContent` by
 		// running `format_string()` on it
 		el.childNodes[i].textContent =
-			format_string(el.childNodes[i].textContent)
+			localize_string(el.childNodes[i].textContent)
 	}
 
 	// run through attributes and run `format_string()` on their values
 	for (let i = 0; i < attributes.length; i++) {
 		let attr = el.getAttribute(attributes[i]);
-		el.setAttribute(attributes[i], format_string(attr))
+		el.setAttribute(attributes[i], localize_string(attr))
 	}
 
 	// run `replace_in_el()` on `el`'s children
 	for (let i = 0; i < el.children.length; i++) {
-		replace_in_el(el.children[i]);
+		localize_el(el.children[i]);
 	}
 }
 
-// replaces lang strings on (almost) all the elements inside `<body>`
+// localizes lang strings on (almost) all the elements inside `<body>`
 module.exports = () => {
-	replace_in_el(document.body);
+	localize_el(document.body);
 }

@@ -45,4 +45,4 @@ const is_running = require("./js/is_running");
 const set_buttons = require("./js/set_buttons");
 
 require("./js/dom_events");
-require("./js/set_dom_strings")();
+require("./js/localize")();
