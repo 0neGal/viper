@@ -27,7 +27,7 @@ document.addEventListener("drop", (e) => {
 
 document.body.addEventListener("keyup", (e) => {
 	if (e.key == "Escape") {
-		Browser.toggle(false);
+		browser.toggle(false);
 		settings.popup.toggle(false);
 	}
 })

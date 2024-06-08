@@ -151,8 +151,8 @@ mods.load = (mods_obj) => {
 		let image_el = image_container.querySelector("img")
 		let image_blur_el = image_container.querySelector("img.blur")
 
-		if (mod_versions[mod]) {
-			image_el.src = mod_versions[mod].package.versions[0].icon;
+		if (browser.mod_versions[mod]) {
+			image_el.src = browser.mod_versions[mod].package.versions[0].icon;
 		}
 
 		if (image_el.getAttribute("src") &&
@@ -166,13 +166,13 @@ mods.load = (mods_obj) => {
 			image_container.parentElement.classList.add("has-icon");
 		}
 
-		if (mod_versions[mod]
-			&& mod_versions[mod].has_update) {
+		if (browser.mod_versions[mod]
+			&& browser.mod_versions[mod].has_update) {
 
 			mod_els[i].querySelector(".update").style.display = null;
 
 			mod_els[i].querySelector(".update").setAttribute(
-				"onclick", `mod_versions["${mod}"].install()`
+				"onclick", `browser.mod_versions["${mod}"].install()`
 			)
 
 			if (mod_update_els.includes(mod_els[i].id)) {
@@ -188,8 +188,8 @@ mods.load = (mods_obj) => {
 			mod_el.classList.add("no-animation");
 
 			mod_el.querySelector(".switch").addEventListener("click", () => {
-				if (mod_versions[mod].local_name) {
-					mods.toggle(mod_versions[mod].local_name);
+				if (browser.mod_versions[mod].local_name) {
+					mods.toggle(browser.mod_versions[mod].local_name);
 				}
 			})
 

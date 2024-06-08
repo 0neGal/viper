@@ -205,10 +205,10 @@
 
 			<div class="misc">
 				<input class="search" placeholder="%%gui.search%%">
-				<button id="filter" onclick="Browser.filters.toggle()">
+				<button id="filter" onclick="browser.filters.toggle()">
 					<img src="icons/filter.png">
 				</button>
-				<button id="close" onclick="Browser.toggle(false)">
+				<button id="close" onclick="browser.toggle(false)">
 					<img src="icons/close.png">
 				</button>
 			</div>
@@ -218,7 +218,7 @@
 		</div>
 		<div class="popup small blur" id="preview">
 			<div class="misc fixed vertical">
-				<button id="close" onclick="Preview.hide()">
+				<button id="close" onclick="browser.preview.hide()">
 					<img src="icons/close.png">
 				</button>
 				<button id="external" onclick="">
@@ -302,7 +302,7 @@
 										<img src="icons/downloads.png">
 										%%gui.mods.install%%
 									</button>
-									<button id="findmod" class="bg-blue2" onclick="Browser.toggle(true)">
+									<button id="findmod" class="bg-blue2" onclick="browser.toggle(true)">
 										<img src="icons/search.png">
 										%%gui.mods.find%%
 									</button>
@@ -333,7 +333,5 @@
 		</div>
 
 		<script src="main.js"></script>
-		<script src="js/popups.js"></script>
-		<script src="js/browser.js"></script>
 	</body>
 </html>
