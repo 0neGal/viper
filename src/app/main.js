@@ -30,6 +30,7 @@ const kill = require("./js/kill");
 const update = require("./js/update");
 const events = require("./js/events");
 const launch = require("./js/launch");
+const version = require("./js/version");
 const request = require("./js/request");
 const process = require("./js/process");
 const settings = require("./js/settings");
