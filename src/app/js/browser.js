@@ -480,7 +480,7 @@ ipcRenderer.on("failed-mod", (event, modname) => {
 	add_recent_toast("failed" + modname);
 
 	set_buttons(true);
-	new Toast({
+	toasts.show({
 		timeout: 10000,
 		scheme: "error",
 		title: lang("gui.toast.title.failed"),
@@ -493,7 +493,7 @@ ipcRenderer.on("legacy-duped-mod", (event, modname) => {
 	add_recent_toast("duped" + modname);
 
 	set_buttons(true);
-	new Toast({
+	toasts.show({
 		timeout: 10000,
 		scheme: "warning",
 		title: lang("gui.toast.title.duped"),
@@ -503,7 +503,7 @@ ipcRenderer.on("legacy-duped-mod", (event, modname) => {
 
 ipcRenderer.on("no-internet", (event, modname) => {
 	set_buttons(true);
-	new Toast({
+	toasts.show({
 		timeout: 10000,
 		scheme: "error",
 		title: lang("gui.toast.title.no_internet"),
@@ -521,7 +521,7 @@ ipcRenderer.on("installed-mod", (event, mod) => {
 	Browser.setbutton(name, lang("gui.browser.reinstall"), "redo");
 
 	if (mod.malformed) {
-		new Toast({
+		toasts.show({
 			timeout: 8000,
 			scheme: "warning",
 			title: lang("gui.toast.title.malformed"),
@@ -529,7 +529,7 @@ ipcRenderer.on("installed-mod", (event, mod) => {
 		})
 	}
 
-	new Toast({
+	toasts.show({
 		scheme: "success",
 		title: lang("gui.toast.title.installed"),
 		description: name + " " + lang("gui.toast.desc.installed")

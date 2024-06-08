@@ -6,13 +6,13 @@ const { app, ipcRenderer, shell } = require("electron");
 const lang = require("../lang");
 
 ipcRenderer.on("unknown-error", (event, err) => {
-	new Toast({
+	toasts.show({
 		timeout: 10000,
 		scheme: "error",
 		title: lang("gui.toast.title.unknown_error"),
 		description: lang("gui.toast.desc.unknown_error"),
 		callback: () => {
-			new Toast({
+			toasts.show({
 				timeout: 15000,
 				scheme: "error",
 				title: "",
@@ -28,6 +28,7 @@ const json = require("../modules/json");
 
 const kill = require("./js/kill");
 const mods = require("./js/mods");
+const toasts = require("./js/toasts");
 const update = require("./js/update");
 const events = require("./js/events");
 const launch = require("./js/launch");
