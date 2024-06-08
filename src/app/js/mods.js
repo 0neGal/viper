@@ -1,3 +1,10 @@
+const ipcRenderer = require("electron").ipcRenderer;
+
+const lang = require("../../lang");
+
+const version = require("./version");
+const set_buttons = require("./set_buttons");
+
 let mods = {};
 
 let mods_list = {
@@ -15,7 +22,7 @@ mods.load = (mods_obj) => {
 	modcount.innerHTML = `${lang("gui.mods.count")} ${mods_obj.all.length}`;
 
 	let normalized_names = [];
-	
+
 	let set_mod = (mod) => {
 		let name = mod.name;
 		if (mod.package) {
@@ -185,7 +192,7 @@ mods.load = (mods_obj) => {
 					mods.toggle(mod_versions[mod].local_name);
 				}
 			})
-			
+
 			mod_els[i].remove();
 			modsdiv.querySelector(".line").after(mod_el);
 		} else {
@@ -303,3 +310,5 @@ ipcRenderer.on("mods", (event, mods_obj) => {
 
 	mods.load(mods_obj);
 })
+
+module.exports = mods;

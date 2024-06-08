@@ -27,6 +27,7 @@ ipcRenderer.on("unknown-error", (event, err) => {
 const json = require("../modules/json");
 
 const kill = require("./js/kill");
+const mods = require("./js/mods");
 const update = require("./js/update");
 const events = require("./js/events");
 const launch = require("./js/launch");
