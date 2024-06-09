@@ -595,8 +595,8 @@ mouse_events.forEach((event) => {
 
 view.addEventListener("dom-ready", () => {
 	let css = [
-		fs.readFileSync(__dirname + "/css/theming.css", "utf8"),
-		fs.readFileSync(__dirname + "/css/webview.css", "utf8")
+		fs.readFileSync(__dirname + "/../css/theming.css", "utf8"),
+		fs.readFileSync(__dirname + "/../css/webview.css", "utf8")
 	]
 
 	view.insertCSS(css.join(" "));
