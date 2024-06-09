@@ -1,4 +1,6 @@
-function Toast(properties) {
+let toasts = {};
+
+toasts.show = (properties) => {
 	let toast = {
 		timeout: 3000,
 		fg: "#FFFFFF",
@@ -36,7 +38,7 @@ function Toast(properties) {
 
 	el.id = id;
 	el.addEventListener("click", () => {
-		dismissToast(id);
+		toasts.dismiss(id);
 		toast.callback();
 	})
 
@@ -53,15 +55,17 @@ function Toast(properties) {
 		el.querySelector(".description").remove();
 	}
 
-	toasts.appendChild(el);
+	document.getElementById("toasts").appendChild(el);
 
 	setTimeout(() => {
-		dismissToast(id);
+		toasts.dismiss(id);
 	}, toast.timeout)
 }
 
-function dismissToast(id) {
+// dismissed/closes toasts with `id` as their ID
+toasts.dismiss = (id) => {
 	id = document.getElementById(id);
+
 	if (id) {
 		id.classList.add("hidden");
 		setTimeout(() => {
@@ -73,3 +77,5 @@ function dismissToast(id) {
 ipcRenderer.on("toast", (_, properties) => {
 	Toast(properties);
 })
+
+module.exports = toasts;

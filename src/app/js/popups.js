@@ -43,7 +43,7 @@ popups.list = () => {
 	return document.querySelectorAll(".popup");
 }
 
-popups.set_all = (state, exclude_popup) => {
+popups.set_all = (state = false, exclude_popup) => {
 	let popups_list = document.querySelectorAll(".popup.shown");
 
 	for (let i = 0; i < popups_list.length; i++) {
@@ -51,6 +51,8 @@ popups.set_all = (state, exclude_popup) => {
 			continue;
 		}
 
-		popups.set(popups_list[i], false, false);
+		popups.set(popups_list[i], state, false);
 	}
 }
+
+module.exports = popups;

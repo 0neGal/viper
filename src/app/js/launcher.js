@@ -1,12 +1,13 @@
 const markdown = require("marked").parse;
 
+let launcher = {};
+
 var servercount;
 var playercount;
 var masterserver;
 
-// Changes the main page
-// This is the tabs in the sidebar
-function page(page) {
+// changes the main page, this is the tabs in the sidebar
+launcher.change_page = (page) => {
 	let btns = document.querySelectorAll(".gamesContainer button");
 	let pages = document.querySelectorAll(".mainContainer .contentContainer");
 
@@ -21,9 +22,9 @@ function page(page) {
 	pages[page].classList.remove("hidden");
 	btns[page].classList.remove("inactive");
 	bgHolder.setAttribute("bg", page);
-}; page(1)
+}; launcher.change_page(1)
 
-function formatRelease(notes) {
+launcher.format_release = (notes) => {
 	if (! notes) {return ""}
 
 	let content = "";
@@ -62,7 +63,7 @@ function formatRelease(notes) {
 
 // sets content of `div` to a single release block with centered text
 // inside it, the text being `lang(lang_key)`
-let set_error_content = (div, lang_key) => {
+launcher.error = (div, lang_key) => {
 	div.innerHTML =
 		"<div class='release-block'>" +
 			"<p><center>" +
@@ -71,42 +72,42 @@ let set_error_content = (div, lang_key) => {
 		"</div>";
 }
 
-// Updates the Viper release notes
+// updates the Viper release notes
 ipcRenderer.on("vp-notes", (event, response) => {
 	if (! response) {
-		return set_error_content(
+		return launcher.error(
 			vpReleaseNotes,
 			"request.no_vp_release_notes"
 		)
 	}
 
-	vpReleaseNotes.innerHTML = formatRelease(response);
+	vpReleaseNotes.innerHTML = launcher.format_release(response);
 });
 
-// Updates the Northstar release notes
+// updates the Northstar release notes
 ipcRenderer.on("ns-notes", (event, response) => {
 	if (! response) {
-		return set_error_content(
+		return launcher.error(
 			nsRelease,
 			"request.no_ns_release_notes"
 		)
 	}
 
-	nsRelease.innerHTML = formatRelease(response);
+	nsRelease.innerHTML = launcher.format_release(response);
 });
 
-async function loadVpReleases() {
+launcher.load_vp_notes = async () => {
 	ipcRenderer.send("get-vp-notes");	
-}; loadVpReleases();
+}; launcher.load_vp_notes();
 
-async function loadNsReleases() {
+launcher.load_ns_notes = async () => {
 	ipcRenderer.send("get-ns-notes");
-}; loadNsReleases();
+}; launcher.load_ns_notes();
 
 // TODO: We gotta make this more automatic instead of switch statements
 // it's both not pretty, but adding more sections requires way too much
 // effort, compared to how it should be.
-function showVpSection(section) {
+launcher.show_vp = (section) => {
 	if (!["main", "release", "info", "credits"].includes(section)) throw new Error("unknown vp section");
 	vpMainBtn.removeAttribute("active");
 	vpReleaseBtn.removeAttribute("active");
@@ -132,8 +133,8 @@ function showVpSection(section) {
 	}
 }
 
-function showNsSection(section) {
-	if (!["main", "release", "mods"].includes(section)) {
+launcher.show_ns = (section) => {
+	if (! ["main", "release", "mods"].includes(section)) {
 		throw new Error("unknown ns section");
 	}
 
@@ -162,7 +163,7 @@ function showNsSection(section) {
 	}
 }
 
-async function loadServers() {
+launcher.check_servers = async () => {
 	serverstatus.classList.add("checking");
 
 	try {
@@ -206,9 +207,11 @@ async function loadServers() {
 		serverstatus.innerHTML = lang("gui.server.offline");
 
 	}
-}; loadServers()
+}; launcher.check_servers()
 
-// Refreshes every 5 minutes
+// refreshes every 5 minutes
 setInterval(() => {
-	loadServers();
+	launcher.check_servers();
 }, 300000)
+
+module.exports = launcher;
