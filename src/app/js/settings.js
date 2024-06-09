@@ -79,7 +79,7 @@ if (fs.existsSync("viper.json")) {
 
 		// make sure config isn't empty
 		if (Object.keys(config).length !== 0) {
-			// add `config` to `settings`
+			// add `config` to `settings_data`
 			settings.set(config);
 			parse_settings();
 
@@ -206,17 +206,17 @@ settings.popup.load = () => {
 			continue;
 		}
 
-		if (settings[optName] != undefined) {
-			switch(typeof settings[optName]) {
+		if (settings_data[optName] != undefined) {
+			switch(typeof settings_data[optName]) {
 				case "string":
-					options[i].querySelector(".actions input").value = settings[optName];
+					options[i].querySelector(".actions input").value = settings_data[optName];
 					break
 				case "object":
-					options[i].querySelector(".actions input").value = settings[optName].join(" ");
+					options[i].querySelector(".actions input").value = settings_data[optName].join(" ");
 					break
 				case "boolean":
 					let switchDiv = options[i].querySelector(".actions .switch");
-					if (settings[optName]) {
+					if (settings_data[optName]) {
 						switchDiv.classList.add("on");
 						switchDiv.classList.remove("off");
 					} else {
