@@ -60,6 +60,9 @@ ipcRenderer.on("ns-update-event", (event, options) => {
 				delay = 500 - (now - update.ns.last_checked);
 			}
 
+			// request up-to-date version numbers
+			ipcRenderer.send("get-version");
+
 			// wait `delay`ms
 			setTimeout(() => {
 				// set buttons accordingly
