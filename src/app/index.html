@@ -12,7 +12,7 @@
 		<div id="toasts"></div>
 
 		<div id="winbtns">
-			<div id="settings" tooltip="%%tooltip.settings%%" tooltip-position="horizontal" onclick="Settings.toggle()">
+			<div id="settings" tooltip="%%tooltip.settings%%" tooltip-position="horizontal" onclick="settings.popup.toggle()">
 				<img src="icons/settings.png">
 			</div>
 			<div id="minimize" tooltip="%%tooltip.minimize%%" tooltip-position="horizontal" onclick="ipcRenderer.send('minimize')">
@@ -34,11 +34,11 @@
 		<div class="popup" id="options">
 			<div class="misc">
 				<input class="search" placeholder="%%gui.search%%">
-				<button id="apply" onclick="Settings.apply();Settings.toggle(false)">
+				<button id="apply" onclick="settings.popup.apply();settings.popup.toggle(false)">
 					<img src="icons/apply.png">
 					%%gui.settings.save%%
 				</button>
-				<button id="close" onclick="Settings.toggle(false);Settings.load()">
+				<button id="close" onclick="settings.popup.toggle(false);settings.popup.load()">
 					<img src="icons/close.png">
 					%%gui.settings.discard%%
 				</button>
@@ -91,7 +91,7 @@
 							</div>
 						</div>
 						<div class="actions">
-							<select onchange="Settings.switch(document.querySelector(`.option[name='autolang'] button`), false)">
+							<select onchange="settings.popup.switch(document.querySelector(`.option[name='autolang'] button`), false)">
 								<option></option>
 							</select>
 						</div>
@@ -147,9 +147,9 @@
 							</div>
 						</div>
 						<div class="actions">
-							<button onclick="delete_request_cache()">%%gui.settings.updatebuttons.buttons.reset_cached_api_requests%%</button>
-							<button onclick="force_update_ns()" class="disable-when-installing">%%gui.settings.updatebuttons.buttons.force_northstar_reinstall%%</button>
-							<button onclick="delete_install_cache()" class="disable-when-installing">%%gui.settings.updatebuttons.buttons.force_delete_install_cache%%</button>
+							<button onclick="request.delete_cache()">%%gui.settings.updatebuttons.buttons.reset_cached_api_requests%%</button>
+							<button onclick="update.ns(true)" class="disable-when-installing">%%gui.settings.updatebuttons.buttons.force_northstar_reinstall%%</button>
+							<button onclick="update.delete_cache()" class="disable-when-installing">%%gui.settings.updatebuttons.buttons.force_delete_install_cache%%</button>
 						</div>
 					</div>
 				</details>
@@ -181,12 +181,12 @@
 							</div>
 						</div>
 						<div class="actions">
-							<button onclick="relaunch()">%%gui.settings.miscbuttons.buttons.restart_viper%%</button>
-							<button onclick="reset_config()">%%gui.settings.miscbuttons.buttons.reset_config%%</button>
-							<button onclick="open_gamepath()">%%gui.settings.miscbuttons.buttons.open_gamepath%%</button>
-							<button onclick="kill_game()">%%gui.settings.miscbuttons.buttons.force_quit_game%%</button>
-							<button onclick="kill_origin()">%%gui.settings.miscbuttons.buttons.force_quit_origin%%</button>
-							<button onclick="setpath()" class="disable-when-installing">%%gui.settings.miscbuttons.buttons.change_gamepath%%</button>
+							<button onclick="process.relaunch()">%%gui.settings.miscbuttons.buttons.restart_viper%%</button>
+							<button onclick="settings.reset()">%%gui.settings.miscbuttons.buttons.reset_config%%</button>
+							<button onclick="gamepath.open()">%%gui.settings.miscbuttons.buttons.open_gamepath%%</button>
+							<button onclick="kill('game')">%%gui.settings.miscbuttons.buttons.force_quit_game%%</button>
+							<button onclick="kill('origin')">%%gui.settings.miscbuttons.buttons.force_quit_origin%%</button>
+							<button onclick="gamepath.set()" class="disable-when-installing">%%gui.settings.miscbuttons.buttons.change_gamepath%%</button>
 						</div>
 					</div>
 				</details>
@@ -205,10 +205,10 @@
 
 			<div class="misc">
 				<input class="search" placeholder="%%gui.search%%">
-				<button id="filter" onclick="Browser.filters.toggle()">
+				<button id="filter" onclick="browser.filters.toggle()">
 					<img src="icons/filter.png">
 				</button>
-				<button id="close" onclick="Browser.toggle(false)">
+				<button id="close" onclick="browser.toggle(false)">
 					<img src="icons/close.png">
 				</button>
 			</div>
@@ -218,7 +218,7 @@
 		</div>
 		<div class="popup small blur" id="preview">
 			<div class="misc fixed vertical">
-				<button id="close" onclick="Preview.hide()">
+				<button id="close" onclick="browser.preview.hide()">
 					<img src="icons/close.png">
 				</button>
 				<button id="external" onclick="">
@@ -230,24 +230,24 @@
 		</div>
 		
 		<nav class="gamesContainer">
-			<button id="vpBtn" tooltip="%%tooltip.pages.viper%%" tooltip-position="horizontal" onclick="page(0)"></button>
-			<button id="nsBtn" tooltip="%%tooltip.pages.northstar%%" tooltip-position="horizontal" onclick="page(1)"></button>
-			<button id="tfBtn" tooltip="%%tooltip.pages.titanfall%%" tooltip-position="horizontal" onclick="page(2)"></button>
+			<button id="vpBtn" tooltip="%%tooltip.pages.viper%%" tooltip-position="horizontal" onclick="launcher.change_page(0)"></button>
+			<button id="nsBtn" tooltip="%%tooltip.pages.northstar%%" tooltip-position="horizontal" onclick="launcher.change_page(1)"></button>
+			<button id="tfBtn" tooltip="%%tooltip.pages.titanfall%%" tooltip-position="horizontal" onclick="launcher.change_page(2)"></button>
 		</nav>
 
 		<div class="mainContainer">
 			<div id="vpContent" class="contentContainer">
 				<ul class="contentMenu">
-					<li id="vpMainBtn" active onclick="showVpSection('main')">%%viper.menu.main%%</li>
-					<li id="vpReleaseBtn" onclick="showVpSection('release')">%%viper.menu.release%%</li>
-					<li id="vpInfoBtn" onclick="showVpSection('info')">%%viper.menu.info%%</li>
+					<li id="vpMainBtn" active onclick="launcher.show_vp('main')">%%viper.menu.main%%</li>
+					<li id="vpReleaseBtn" onclick="launcher.show_vp('release')">%%viper.menu.release%%</li>
+					<li id="vpInfoBtn" onclick="launcher.show_vp('info')">%%viper.menu.info%%</li>
 				</ul>
 				<div class="contentBody">
 					<div id="vpMain" class="section">
 						<img src="icons/viper.png"/>
 						<div class="inline" style="margin-top: 20px;">
 							<div id="vpversion"></div> |
-							<a id="setpath" href="#" onclick="setpath()" class="disable-when-installing">%%gui.setpath%%</a>
+							<a id="setpath" href="#" onclick="gamepath.set()" class="disable-when-installing">%%gui.setpath%%</a>
 						</div>
 					</div>
 					<div id="vpReleaseNotes" class="hidden section"></div>
@@ -269,18 +269,18 @@
 
 			<div id="nsContent" class="contentContainer">
 				<ul class="contentMenu">
-					<li id="nsMainBtn" active onclick="showNsSection('main')">%%ns.menu.main%%</li>
-					<li id="nsModsBtn" onclick="showNsSection('mods')">%%ns.menu.mods%%</li>
-					<li id="nsReleaseBtn" onclick="showNsSection('release')">%%ns.menu.release%%</li>
+					<li id="nsMainBtn" active onclick="launcher.show_ns('main')">%%ns.menu.main%%</li>
+					<li id="nsModsBtn" onclick="launcher.show_ns('mods')">%%ns.menu.mods%%</li>
+					<li id="nsReleaseBtn" onclick="launcher.show_ns('release')">%%ns.menu.release%%</li>
 				</ul>
 				<div class="contentBody">
 					<div id="nsMain" class="section">
 						<div class="img"><img src="../assets/ns.png"></div>
 						<div class="playBtnContainer">
-							<button id="playNsBtn" class="playBtn" onclick="launch()">%%gui.launch%%</button>
+							<button id="playNsBtn" class="playBtn" onclick="launch('northstar')">%%gui.launch%%</button>
 							<div class="inline">
 								<div id="nsversion"></div>
-								<a id="update" href="#" onclick="updateNorthstar()" class="disable-when-installing">(%%gui.update.check%%)</a>
+								<a id="update" href="#" onclick="update.ns()" class="disable-when-installing">(%%gui.update.check%%)</a>
 								<div id="serverstatus" class="checking"></div>
 							</div>
 						</div>
@@ -298,11 +298,11 @@
 										<img src="icons/toggles.png">
 										%%gui.mods.toggle_all%%
 									</button>
-									<button id="installmod" class="bg-blue" onclick="installmod()">
+									<button id="installmod" class="bg-blue" onclick="mods.install_prompt()">
 										<img src="icons/downloads.png">
 										%%gui.mods.install%%
 									</button>
-									<button id="findmod" class="bg-blue2" onclick="Browser.toggle(true)">
+									<button id="findmod" class="bg-blue2" onclick="browser.toggle(true)">
 										<img src="icons/search.png">
 										%%gui.mods.find%%
 									</button>
@@ -320,10 +320,11 @@
 					<div class="section">
 						<div class="img"><img src="../assets/vanilla.png"></div>
 						<div class="playBtnContainer">
-							<button class="playBtn" onclick="launchVanilla()">%%gui.launch%%</button>
+							<button class="playBtn" onclick="launch('vanilla')">%%gui.launch%%</button>
 							<div class="inline">
 								<div id="tf2Version"></div>
-								<a id="tfquit" style="display: none" href="#" onclick="kill_game()">(%%ns.menu.force_quit%%)</a>
+								<a id="tfquit" style="display: none"
+									href="#" onclick="kill('game')">(%%ns.menu.force_quit%%)</a>
 							</div>
 						</div>
 					</div>
@@ -331,16 +332,6 @@
 			</div>
 		</div>
 
-		<script src="lang.js"></script>
 		<script src="main.js"></script>
-		<script src="js/misc.js"></script>
-		<script src="js/mods.js"></script>
-		<script src="js/toast.js"></script>
-		<script src="js/events.js"></script>
-		<script src="js/popups.js"></script>
-		<script src="js/tooltip.js"></script>
-		<script src="js/browser.js"></script>
-		<script src="js/settings.js"></script>
-		<script src="js/launcher.js"></script>
 	</body>
 </html>

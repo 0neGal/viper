@@ -9,9 +9,8 @@ const settings = require("./settings");
 
 console = require("./console");
 
-ipcMain.on("launch-ns", launch);
-ipcMain.on("launch-vanilla", () => {
-	launch("vanilla");
+ipcMain.on("launch", (_, game_version) => {
+	launch(game_version)
 })
 
 // launches the game

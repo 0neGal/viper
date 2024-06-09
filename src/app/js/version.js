@@ -1,4 +1,4 @@
-version = {
+module.exports = {
 	is_newer: (version1, version2) => {
 		version1 = version.format(version1, true).split(".");
 		version2 = version.format(version2, true).split(".");

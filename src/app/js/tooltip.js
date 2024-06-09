@@ -128,3 +128,5 @@ document.addEventListener("mousedown", tooltip_event);
 document.addEventListener("mousemove", tooltip_event);
 document.addEventListener("mouseenter", tooltip_event);
 document.addEventListener("mouseleave", tooltip_event);
+
+module.exports = tooltip;
