@@ -6,6 +6,8 @@
 		<meta charset="utf-8">
 	</head>
 	<body>
+		<div id="selection"></div>
+
 		<div id="tooltip">Test</div>
 
 		<div id="bgHolder"></div>
@@ -33,7 +35,7 @@
 		<div id="overlay" onclick="popups.set_all(false)"></div>
 		<div class="popup" id="options">
 			<div class="misc">
-				<input class="search" placeholder="%%gui.search%%">
+				<input class="search default-selection" placeholder="%%gui.search%%">
 				<button id="apply" onclick="settings.popup.apply();settings.popup.toggle(false)">
 					<img src="icons/apply.png">
 					%%gui.settings.save%%
@@ -204,7 +206,7 @@
 			</div>
 
 			<div class="misc">
-				<input class="search" placeholder="%%gui.search%%">
+				<input class="search default-selection" placeholder="%%gui.search%%">
 				<button id="filter" onclick="browser.filters.toggle()">
 					<img src="icons/filter.png">
 				</button>
@@ -217,7 +219,7 @@
 			</div>
 		</div>
 		<div class="popup small blur" id="preview">
-			<div class="misc fixed vertical">
+			<div class="misc fixed vertical default-selection">
 				<button id="close" onclick="browser.preview.hide()">
 					<img src="icons/close.png">
 				</button>

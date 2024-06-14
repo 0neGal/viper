@@ -111,7 +111,8 @@
 .contentMenu li:last-child {margin-right: 0px}
 .contentMenu li:first-child {margin-left: 0px}
 
-.contentMenu li:hover {opacity: 0.7}
+.contentMenu li:hover,
+.contentMenu li.active-selection {opacity: 0.7}
 
 .contentMenu li[active] {
 	opacity: 1.0;
@@ -305,7 +306,8 @@ button:has(img):has(span) img {
 	transition: opacity 0.2s ease-in-out;
 }
 
-button:has(img):has(span):hover img {
+button:has(img):has(span):hover img,
+button:has(img):has(span).active-selection img {
 	opacity: 1.0;
 }
 
@@ -315,7 +317,8 @@ button:has(img):has(span) span {
 	transition: right 0.2s ease-in-out;
 }
 
-button:has(img):has(span):hover span {
+button:has(img):has(span):hover span,
+button:has(img):has(span).active-selection span {
 	right: 0.1em;
 }
 
