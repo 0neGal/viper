@@ -30,6 +30,11 @@ module.exports = async () => {
 	function readvdf(data) {
 		data = vdf.parse(data); // parse read_data
 
+		// verify VDF was parsed correctly
+		if (! data || typeof data !== "object") {
+			return;
+		}
+
 		// list of folders where the game could possibly be installed at
 		let values = Object.values(data["libraryfolders"]);
 
