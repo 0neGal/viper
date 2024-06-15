@@ -195,7 +195,7 @@ setInterval(() => {
 
 			// add delay to this direction, to prevent it from being
 			// triggered immediately again
-			delay_press[i] = 3;
+			delay_press[i] = 5;
 		}
 	}
 
