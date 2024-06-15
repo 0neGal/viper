@@ -1,4 +1,5 @@
 const popups = require("./popups");
+const launcher = require("./launcher");
 const navigate = require("./navigate");
 
 window.addEventListener("gamepadconnected", (e) => {
@@ -151,16 +152,20 @@ setInterval(() => {
 			// interpret `ii` as a specific button/action, using the
 			// standard IDs: https://w3c.github.io/gamepad/#remapping
 			switch(ii) {
-				case 4: // switch tab (prev)
-				case 5: // switch tab (next)
+				// change active section
+				case 4: launcher.relative_section("left"); break;
+				case 5: launcher.relative_section("right"); break;
 
+				// navigate selection
 				case 12: navigate.move("up"); break;
 				case 13: navigate.move("down"); break;
 				case 14: navigate.move("left"); break;
 				case 15: navigate.move("right"); break;
 
+				// click selected element
 				case buttons.accept: navigate.select(); break;
 
+				// close last opened popup
 				case buttons.cancel: popups.hide_last(); break;
 			}
 		}
@@ -293,6 +298,9 @@ window.addEventListener("keyup", (e) => {
 
 	// perform the relevant action for the key that was pressed
 	switch(e.code) {
+		case "KeyQ": launcher.relative_section("left"); break;
+		case "KeyE": launcher.relative_section("right"); break;
+
 		case "Space": return selection_el
 				.classList.remove("keyboard-selecting");
 
