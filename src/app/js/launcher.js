@@ -163,6 +163,62 @@ launcher.show_ns = (section) => {
 	}
 }
 
+// changes the active section on the currently active
+// `.contentContainer` in the direction specified
+//
+// `direction` can be: left or right
+launcher.relative_section = (direction) => {
+	// the `.contentMenu` in the currently active tab
+	let active_menu = document.querySelector(
+		".contentContainer:not(.hidden) .contentMenu"
+	)
+
+	// get the currently active section
+	let active_section = active_menu.querySelector("[active]");
+
+	// no need to do anything, if there's somehow no active section
+	if (! active_section) {return}
+
+	// these will be filled out
+	let prev_section, next_section;
+
+	// get list of all the sections
+	let sections = active_menu.querySelectorAll("li");
+
+	for (let i = 0; i < sections.length; i++) {
+		if (sections[i] != active_section) {
+			continue;
+		}
+
+		// make `next_section` be the next element in `sections`
+		next_section = sections[i + 1];
+
+		// if we're at the first iteration, use the last element in
+		// `sections` as the previous section, otherwise make it the
+		// element before this iteration
+		if (i == 0) {
+			prev_section = sections[sections.length - 1];
+		} else {
+			prev_section = sections[i - 1];
+		}
+	}
+
+	// if we're going left, and a previous section was found, click it
+	if (direction == "left" && prev_section) {
+		prev_section.click();
+	} else if (direction == "right") {
+		// click the next section, if one was found, otherwise just
+		// assume that the first section is the next section, as the
+		// active section is likely just the last section, so we wrap
+		// around instead
+		if (next_section) {
+			next_section.click();
+		} else if (sections[0]) {
+			sections[0].click();
+		}
+	}
+}
+
 launcher.check_servers = async () => {
 	serverstatus.classList.add("checking");
 
