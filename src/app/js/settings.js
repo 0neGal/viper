@@ -251,6 +251,15 @@ settings.popup.load = () => {
 }
 
 settings.popup.switch = (el, state) => {
+	if (! el) {return}
+
+	// prevent switches from being switched when disabled
+	if (el.getAttribute("disabled") != null
+		|| el.classList.contains("disabled")) {
+
+		return;
+	}
+
 	if (state) {
 		return el.classList.add("on");
 	} else if (state === false) {
