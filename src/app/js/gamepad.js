@@ -1,3 +1,4 @@
+const popups = require("./popups");
 const navigate = require("./navigate");
 
 window.addEventListener("gamepadconnected", (e) => {
@@ -160,7 +161,7 @@ setInterval(() => {
 
 				case buttons.accept: navigate.select(); break;
 
-				case buttons.cancel: popups.set_all(false); break;
+				case buttons.cancel: popups.hide_last(); break;
 			}
 		}
 	}
