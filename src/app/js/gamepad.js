@@ -20,6 +20,8 @@ window.addEventListener("gamepaddisconnected", (e) => {
 // be pressed again
 let delay_press = {};
 
+let held_buttons = {};
+
 setInterval(() => {
 	let gamepads = navigator.getGamepads();
 
@@ -87,6 +89,7 @@ setInterval(() => {
 
 		for (let ii = 0; ii < gamepads[i].buttons.length; ii++) {
 			if (! gamepads[i].buttons[ii].pressed) {
+				held_buttons[ii] = false;
 				continue;
 			}
 
@@ -148,6 +151,12 @@ setInterval(() => {
 			// add delay to this button, so it doesn't get clicked
 			// immediately again after this
 			delay_press[ii] = 3;
+
+			if (held_buttons[ii]) {
+				continue;
+			}
+
+			held_buttons[ii] = true;
 
 			// interpret `ii` as a specific button/action, using the
 			// standard IDs: https://w3c.github.io/gamepad/#remapping
