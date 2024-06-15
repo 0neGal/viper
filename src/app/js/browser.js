@@ -358,10 +358,10 @@ if (navigator.onLine) {
 var view = document.querySelector(".popup#preview webview");
 browser.preview = {
 	show: () => {
-		preview.classList.add("shown");
+		popups.show(preview, false);
 	},
 	hide: () => {
-		preview.classList.remove("shown");
+		popups.hide(preview, false);
 	},
 	set: (url, autoshow) => {
 		if (autoshow != false) {browser.preview.show()}

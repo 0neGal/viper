@@ -1,3 +1,4 @@
+const popups = require("./popups");
 const settings = require("./settings");
 
 let drag_timer;
@@ -27,8 +28,7 @@ document.addEventListener("drop", (e) => {
 
 document.body.addEventListener("keyup", (e) => {
 	if (e.key == "Escape") {
-		browser.toggle(false);
-		settings.popup.toggle(false);
+		popups.hide_last();
 	}
 })
 
