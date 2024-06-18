@@ -25,6 +25,11 @@ alert = async (msg) => {
 	})
 }
 
+// sends an toast to the renderer
+toast = (properties) => {
+	win.send("toast", properties);
+}
+
 // this increments for every confirm alert that's created, the ID is
 // used to keep track of popups being opened or closed.
 let confirm_id = 0;
@@ -48,9 +53,10 @@ confirm = async (msg) => {
 let win = {
 	send: () => {},
 
-    log: log,
-    alert: alert,
-    confirm: confirm
+	log: log,
+	toast: toast,
+	alert: alert,
+	confirm: confirm
 }
 
 let func = () => {
@@ -60,9 +66,10 @@ let func = () => {
 func.set = (main_window) => {
 	win = main_window;
 
-    win.log = log;
-    win.alert = alert;
-    win.confirm = confirm;
+	win.log = log;
+	win.toast = toast;
+	win.alert = alert;
+	win.confirm = confirm;
 }
 
 module.exports = func;

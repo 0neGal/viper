@@ -47,6 +47,10 @@ var settings = {
 	nsargs: "-multiple",
 	zip: "/northstar.zip",
 
+	linux_launch_cmd_ns: "",
+	linux_launch_cmd_vanilla: "",
+	linux_launch_method: "steam_auto",
+
 	// these files won't be overwritten when installing/updating
 	// Northstar, useful for config files
 	excludes: [
