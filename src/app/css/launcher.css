@@ -34,9 +34,9 @@
 	transition: 0.3s ease-in-out;
 	background-color: transparent;
 
-
 	margin: 20px;
 	position: relative;
+	border-radius: 0px;
 	box-sizing: border-box;
 	flex-basis: calc(100% - 10px);
 }
