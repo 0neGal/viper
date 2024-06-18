@@ -1,4 +1,5 @@
 const popups = require("./popups");
+const settings = require("./settings");
 const launcher = require("./launcher");
 const navigate = require("./navigate");
 
@@ -161,11 +162,15 @@ setInterval(() => {
 			// interpret `ii` as a specific button/action, using the
 			// standard IDs: https://w3c.github.io/gamepad/#remapping
 			switch(ii) {
-				// change active section
+				// settings popup (center cluster buttons)
+				case 8: settings.popup.toggle(); break;
+				case 9: settings.popup.toggle(); break;
+
+				// change active section (top bumpers)
 				case 4: launcher.relative_section("left"); break;
 				case 5: launcher.relative_section("right"); break;
 
-				// navigate selection
+				// navigate selection (dpad)
 				case 12: navigate.move("up"); break;
 				case 13: navigate.move("down"); break;
 				case 14: navigate.move("left"); break;
