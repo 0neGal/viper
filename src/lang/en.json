@@ -134,6 +134,7 @@
 
 			"title": {
 				"ns": "Northstar",
+				"linux": "Linux",
 				"language": "Language",
 				"updates": "Updates",
 				"misc": "Miscellaneous"
@@ -198,6 +199,26 @@
 
 				"open_gamepath_alert": "No valid gamepath is selected, so there's no gamepath to open, please select a valid gamepath first!",
 				"reset_config_alert": "Please confirm that you want to reset the config file, after confirming Viper will delete the config file, and then restart."
+			},
+
+			"linux_launch_method": {
+				"title": "Linux launch method",
+				"desc": "The method to use when launching the game on Linux",
+				"methods": {
+					"steam_auto": "Steam (Auto)",
+					"steam_executable": "Steam (Executable)",
+					"steam_flatpak": "Steam (Flatpak)",
+					"steam_protocol": "Steam (Protocol)",
+					"command": "Custom command"
+				}
+			},
+			"linux_launch_cmd_ns": {
+				"title": "Northstar launch command",
+				"desc": "This is the command that will be used when you use \"Custom command\" as the launch method and you're launching Northstar, launch options are appended at the end of the command and in an environment variable named $TF_ARGS"
+			},
+			"linux_launch_cmd_vanilla": {
+				"title": "Vanilla launch command",
+				"desc": "This is the command that will be used when you use \"Custom command\" as the launch method and you're launching the vanilla game, launch options are appended at the end of the command and in an environment variable named $TF_ARGS"
 			}
 		},
 
@@ -234,7 +255,12 @@
 				"failed": "Failed to install",
 				"malformed": "Incorrect folder structure!",
 				"unknown_error": "Unknown Error!",
-				"no_internet": "No Internet"
+				"no_internet": "No Internet",
+				"failed_launch_command": "Failed running launch command",
+				"missing_launch_command": "Missing launch command",
+				"missing_steam": "Missing Steam",
+				"missing_flatpak": "Missing Flatpak",
+				"missing_flatpak_steam": "Missing Flatpak Steam"
 			},
 
 			"desc": {
@@ -243,7 +269,12 @@
 				"failed": "An unknown error occurred while trying to install the mod. This may be the author's fault, and it may also be Viper's fault.",
 				"duped": "has multiple mod folders in it, with the same name, causing duplicate folders, if you're the developer, you should fix this.",
 				"unknown_error": "An unknown error occurred, click for more details. You may want to take a screenshot of the detailed error when filing a bug report.",
-				"no_internet": "Viper may not work properly."
+				"no_internet": "Viper may not work properly.",
+				"failed_launch_command": "Something went wrong whilst running the custom launch command",
+				"missing_launch_command": "There's currently no custom launch command set, one has to be configured to launch",
+				"missing_steam": "Can't launch with Steam directly, as it doesn't seem to be installed",
+				"missing_flatpak": "Can't launch with Flatpak, as it doesn't seem to be installed",
+				"missing_flatpak_steam": "Can't launch with the Flatpak version of Steam, as it doesn't seem to be installed"
 			}
 		}
 	},

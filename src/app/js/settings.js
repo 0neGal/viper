@@ -106,6 +106,8 @@ ipcRenderer.on("changed-settings", (e, new_settings) => {
 })
 
 let settings = {
+	default: {...settings_data},
+
 	data: () => {return settings_data},
 
 	// asks the main process to reset the config/settings file
@@ -138,7 +140,7 @@ settings.popup.toggle = (state) => {
 }
 
 settings.popup.apply = () => {
-	settings = {...settings, ...settings.popup.get()};
+	settings.set(settings.popup.get());
 	ipcRenderer.send("save-settings", settings.popup.get());
 }
 
@@ -174,11 +176,25 @@ settings.popup.load = () => {
 	let categories = document.querySelectorAll("#options details");
 	for (let i = 0; i < categories.length; i++) {
 		categories[i].setAttribute("open", true);
+
+		// hide categories that aren't for the current platform
+		let for_platform = categories[i].getAttribute("platform");
+		if (for_platform && process.platform != for_platform) {
+			categories[i].style.display = "none";
+			categories[i].setAttribute("perma-hidden", true);
+		}
 	}
 
 	let options = document.querySelectorAll(".option");
 
 	for (let i = 0; i < options.length; i++) {
+		// hide options that aren't for the current platform
+		let for_platform = options[i].getAttribute("platform");
+		if (for_platform && process.platform != for_platform) {
+			options[i].style.display = "none";
+			options[i].setAttribute("perma-hidden", true);
+		}
+
 		let optName = options[i].getAttribute("name");
 		if (optName == "forcedlang") {
 			let div = options[i].querySelector("select");
@@ -207,6 +223,25 @@ settings.popup.load = () => {
 		}
 
 		if (settings_data[optName] != undefined) {
+			// check if setting has a `<select>`
+			let select_el = options[i].querySelector(".actions select");
+			if (select_el) {
+				// get `<option>` for settings value, if it exists
+				let option = select_el.querySelector(
+					`option[value="${settings_data[optName]}"]`
+				)
+
+				// check if it exists
+				if (option) {
+					// set the `<select>` to the settings value
+					select_el.value = settings_data[optName];
+				} else { // use the default value
+					select_el.value = settings.default[optName];
+				}
+
+				continue;
+			}
+
 			switch(typeof settings_data[optName]) {
 				case "string":
 					options[i].querySelector(".actions input").value = settings_data[optName];
