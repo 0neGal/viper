@@ -295,6 +295,9 @@ window.addEventListener("keydown", (e) => {
 		case "Space": return select();
 		case "Enter": return select();
 
+		// close popup
+		case "Escape": return popups.hide_last();
+
 		// move selection
 		case "KeyK": case "ArrowUp": return navigate.move("up")
 		case "KeyJ": case "ArrowDown": return navigate.move("down")
