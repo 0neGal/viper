@@ -296,10 +296,10 @@ window.addEventListener("keydown", (e) => {
 		case "Enter": return select();
 
 		// move selection
-		case "ArrowUp": return navigate.move("up")
-		case "ArrowDown": return navigate.move("down")
-		case "ArrowLeft": return navigate.move("left")
-		case "ArrowRight": return navigate.move("right")
+		case "KeyK": case "ArrowUp": return navigate.move("up")
+		case "KeyJ": case "ArrowDown": return navigate.move("down")
+		case "KeyH": case "ArrowLeft": return navigate.move("left")
+		case "KeyL": case "ArrowRight": return navigate.move("right")
 	}
 })
 
