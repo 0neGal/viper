@@ -1,3 +1,4 @@
+const popups = require("./popups");
 const markdown = require("marked").parse;
 
 let launcher = {};
@@ -168,6 +169,11 @@ launcher.show_ns = (section) => {
 //
 // `direction` can be: left or right
 launcher.relative_section = (direction) => {
+	// prevent switching section if a popup is open
+	if (popups.open_list().length) {
+		return;
+	}
+
 	// the `.contentMenu` in the currently active tab
 	let active_menu = document.querySelector(
 		".contentContainer:not(.hidden) .contentMenu"
