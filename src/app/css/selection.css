@@ -3,7 +3,7 @@
 
 	transition: 0.15s ease-in-out;
 	transition-property:
-		opacity, border-radius,
+		opacity, border-radius, background,
 		transform, width, height, top, left;
 
 	position: fixed;
@@ -11,6 +11,10 @@
 	transform: scale(1.0);
 	background: rgba(255, 255, 255, 0.3);
 	border-radius: calc(var(--padding) / 2);
+}
+
+:has(.active-selection.scroll-selection) #selection {
+	background: rgba(255, 255, 255, 0.2);
 }
 
 #selection.keyboard-selecting,

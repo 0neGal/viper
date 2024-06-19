@@ -115,7 +115,8 @@ navigate.get_els = (div) => {
 		"button",
 		"select",
 		"textarea",
-		"[onclick]"
+		"[onclick]",
+		".scroll-selection"
 	])]
 
 	// this'll contain a filtered list of `els`
@@ -129,13 +130,31 @@ navigate.get_els = (div) => {
 			"#overlay",
 			".no-navigate",
 			"button.visual",
+			".scroll-selection",
 			".popup:not(.shown)"
+		]
+
+		// ignore, even if `.closest()` matches, if its just matching on
+		// itself instead of a different element
+		let ignore_closest_self = [
+			".scroll-selection"
 		]
 
 		// check if `els[i].closest()` matches on any of the elements
 		// inside of `ignore_closest`
 		for (let ii = 0; ii < ignore_closest.length; ii++) {
-			if (els[i].closest(ignore_closest[ii])) {
+			let closest = els[i].closest(ignore_closest[ii]);
+
+			// check if `.closest()` matches, but not on itself
+			if (closest) {
+				// ignore if `closest` is just `els[i]` and the selector
+				// is inside `ignore_closest_self`
+				if (closest == els[i] &&
+					ignore_closest_self.includes(ignore_closest[ii])) {
+
+					continue;
+				}
+
 				// it matches
 				continue filter;
 			}
@@ -221,7 +240,7 @@ navigate.default_selection = () => {
 
 // this navigates `#selection` in the direction of `direction`
 // this can be: up, down, left and right
-navigate.move = (direction) => {
+navigate.move = async (direction) => {
 	// get the `.active-selection` if there is one
 	let active = document.querySelector(".active-selection");
 
@@ -235,6 +254,91 @@ navigate.move = (direction) => {
 		// if there is somehow still no active selection we stop here
 		if (! active) {
 			return;
+		}
+	}
+
+	// is the active selection one that should be scrollable?
+	if (active.classList.contains("scroll-selection")) {
+		// scroll the respective `direction` if `active` has any more
+		// scroll left in that direction
+
+		// short hand to easily scroll in `direction` by `amount` with
+		// smooth scrolling enabled
+		let scroll = (direction, amount) => {
+			// update the `#selection` element
+			navigate.selection();
+
+			// scroll inside `<webview>` if the active selection is one
+			if (active.tagName == "WEBVIEW") {
+				active.executeJavaScript(`
+					document.scrollingElement.scrollBy({
+						behavior: "smooth",
+						${direction}: ${amount}
+					})
+				`)
+
+				return;
+			}
+
+			active.scrollBy({
+				behavior: "smooth",
+				[direction]: amount
+			})
+		}
+
+		// get values needed for determining if we should scroll the
+		// active selection, and by how much
+		let scroll_el = {
+			top: active.scrollTop,
+			left: active.scrollLeft,
+			width: active.scrollWidth,
+			height: active.scrollHeight,
+			bounds: {
+				width: active.clientWidth,
+				height: active.clientWidth
+			}
+		}
+
+		// get `scroll_el` from inside a `<webview>` if the active
+		// selection is one
+		if (active.tagName == "WEBVIEW") {
+			scroll_el = await active.executeJavaScript(`(() => {
+				return {
+					top: document.scrollingElement.scrollTop,
+					left: document.scrollingElement.scrollLeft,
+					width: document.scrollingElement.scrollWidth,
+					height: document.scrollingElement.scrollHeight,
+					bounds: {
+						width: document.scrollingElement.clientWidth,
+						height: document.scrollingElement.clientHeight
+					}
+				}
+			})()`)
+		}
+
+		// decrease to increase scroll length, and in reverse
+		let scroll_scale = 2;
+
+		if (direction == "up" && scroll_el.top > 0) {
+			return scroll("top", -scroll_el.bounds.height / scroll_scale);
+		}
+
+		if (direction == "down" &&
+			scroll_el.top <= scroll_el.height &&
+			scroll_el.height != scroll_el.bounds.height) {
+
+			return scroll("top", scroll_el.bounds.height / scroll_scale);
+		}
+
+		if (direction == "left" && scroll_el.left > 0) {
+			return scroll("left", -width / scroll_scale);
+		}
+
+		if (direction == "right" &&
+			scroll_el.left <= scroll_el.width &&
+			scroll_el.width != scroll_el.bounds.width) {
+
+			return scroll("left", scroll_el.bounds.width / scroll_scale);
 		}
 	}
 
@@ -269,7 +373,7 @@ navigate.move = (direction) => {
 	// these elements cant be scrolled
 	let no_scroll_parents = [
 		".el .text",
-		".gamesContainer"
+		".gamesContainer",
 	]
 
 	// run through unscrollable parent elements
