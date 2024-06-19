@@ -842,4 +842,23 @@ events.on("popup-changed", (e) => {
 	}, 300)
 })
 
+// automatically deselect a selection if its no longer visible
+setInterval(() => {
+	// get the active selection
+	let active_el = document.querySelector(".active-selection");
+
+	if (! active_el) {return}
+
+	let visible = active_el.checkVisibility({
+		checkOpacity: true,
+		visibilityProperty: true,
+		checkVisibilityCSS: true,
+		contentVisibilityAuto: true
+	})
+
+	if (! visible) {
+		navigate.default_selection();
+	}
+}, 500)
+
 module.exports = navigate;
