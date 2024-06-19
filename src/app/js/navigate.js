@@ -7,7 +7,20 @@ let navigate = {};
 // sets `#selection` to the correct position, size and border radius,
 // according to what is currently the `.active-selection`, if none is
 // found, it'll instead be hidden
-navigate.selection = () => {
+navigate.selection = (new_selection) => {
+	if (new_selection) {
+		let selected = document.querySelectorAll(".active-selection");
+
+		// make sure just `new_selection` has `.active-selection`
+		for (let i = 0; i < selected.length; i++) {
+			if (selected[i] != new_selection) {
+				selected[i].classList.remove("active-selection");
+			}
+		}
+
+		new_selection.classList.add("active-selection");
+	}
+
 	// shorthands
 	let selection_el = document.getElementById("selection");
 	let active_el = document.querySelector(".active-selection");
@@ -765,15 +778,55 @@ navigate.get_relative_el = (relative_el, direction) => {
 	}
 }
 
+// contains a list of the last selections we had before a popup was
+// opened, letting us go back to those selections when they're closed
+let last_popup_selections = [];
+
 // attempt to reselect the default selection when a popup is either
 // closed or opened
-events.on("popup-changed", () => {
+events.on("popup-changed", (e) => {
 	// get the active selection
 	let active_el = document.querySelector(".active-selection");
 
 	// make sure there is a selection
 	if (! active_el) {
 		return;
+	}
+
+	// add `active_el` to `last_popup_selections` if we opened a popup
+	if (e.new_state) {
+		last_popup_selections.push({
+			el: active_el,
+			popup: e.popup
+		})
+	} else { // we're closing a popup
+		// this may contain the element we had opened before the popup
+		// we're closing was opened
+		let last_selection;
+
+		// remove selections that are for this popup
+		last_popup_selections = last_popup_selections.filter((item) => {
+			// is this selection for this popup?
+			let is_popup = item.popup == e.popup;
+
+			// set `last_selection` to `.el` if its this popup we're
+			// closing, thereby getting the last selection made before
+			// we opened this popup
+			if (is_popup) {
+				last_selection = item.el;
+			}
+
+			return ! is_popup;
+		})
+
+		// select `last_selection` if one was found
+		if (last_selection) {
+			setTimeout(() => {
+				navigate.selection(last_selection);
+			}, 150) // needed due to popup animation
+
+			return;
+		}
 	}
 
 	// remove the currently active selection
