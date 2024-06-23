@@ -31,7 +31,7 @@ module.exports = async () => {
 		data = vdf.parse(data); // parse read_data
 
 		// verify VDF was parsed correctly
-		if (! data || typeof data !== "object") {
+		if (! data || typeof data !== "object" || ! data.libraryfolders) {
 			return;
 		}
 
