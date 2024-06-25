@@ -32,10 +32,8 @@ navigate.selection = (new_selection) => {
 		return;
 	}
 
-
 	// this adds space between the `selection_el` and ``
 	let padding = 8;
-
 
 	// attempt to get the border radius of `active_el`
 	let radius = getComputedStyle(active_el).borderRadius;
@@ -65,6 +63,46 @@ navigate.selection = (new_selection) => {
 	selection_el.style.height =
 		active_bounds.height + (padding * 2) + "px";
 }
+
+// data from the last iterations of the interval below
+let last_sel = {
+	el: false,
+	bounds: false
+}
+
+// auto update `#selection` if `.active-selection` changes bounds, but
+// not element by itself
+setInterval(() => {
+	// get active selection
+	let selected = document.querySelector(".active-selection");
+
+	// if there's no active selection, reset `last_sel`
+	if (! selected) {
+		last_sel.el = false;
+		last_sel.bounds = false;
+
+		return;
+	}
+
+	// get stringified bounds
+	let bounds = JSON.stringify(selected.getBoundingClientRect());
+
+	// if `last_sel.el` is not `selected` the selected element was
+	// changed, so we just set `last_el` and nothing more
+	if (last_sel.el != selected) {
+		last_sel.el = selected;
+		last_sel.bounds = bounds;
+
+		return;
+	}
+
+	// if stringified bounds changed we update `#selection`
+	if (bounds != last_sel.bounds) {
+		navigate.selection();
+		last_sel.el = selected;
+		last_sel.bounds = bounds;
+	}
+}, 50)
 
 // these events cause the `#selection` element to reposition itself
 window.addEventListener("resize", () => {navigate.selection()}, true);
