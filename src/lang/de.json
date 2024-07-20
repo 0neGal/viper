@@ -72,6 +72,7 @@
 				"server": "Server-seitig",
 				"skins": "Skins"
 			},
+			"guide": "Anleitung",
 			"info": "Info",
 			"install": "Installieren",
 			"load_more": "Lade mehr...",
