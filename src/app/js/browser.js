@@ -1,5 +1,5 @@
 const Fuse = require("fuse.js");
-const ipcRenderer = require("electron").ipcRenderer;
+const { ipcRenderer, shell } = require("electron");
 
 const lang = require("../../lang");
 
@@ -426,7 +426,7 @@ browser.mod_el = (properties) => {
 		installstr = lang("gui.browser.guide");
 
 		installcallback = () => {
-			browser.preview.set(nondefault_install[normalized_title])
+			shell.openExternal(nondefault_install[normalized_title])
 		}
 	}
 	else if (properties.pkg.local_version) {
