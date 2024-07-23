@@ -50,7 +50,7 @@
 	},
 	"homepage": "https://github.com/0neGal/viper#readme",
 	"dependencies": {
-		"electron-updater": "^4.6.1",
+		"electron-updater": "^6.3.0",
 		"enquirer": "^2.4.1",
 		"flattenizer": "^1.1.3",
 		"follow-redirects": "^1.15.6",
