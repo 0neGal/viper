@@ -1,5 +1,5 @@
 const Fuse = require("fuse.js");
-const ipcRenderer = require("electron").ipcRenderer;
+const { ipcRenderer, shell } = require("electron");
 
 const lang = require("../../lang");
 
@@ -414,13 +414,22 @@ browser.mod_el = (properties) => {
 
 	let installicon = "downloads";
 	let installstr = lang("gui.browser.install");
-	let normalized_mods = [];
+	let installcallback = () => {};
+	let normalized_title = mods.normalize(properties.title)
 
-	for (let i = 0; i < mods.list().all; i++) {
-		normalized_mods.push(mods.normalize(mods_list[i].name));
+	let nondefault_install = {
+		"vanillaplus": "https://github.com/Zayveeo5e/NP.VanillaPlus/blob/main/README.md"
 	}
 
-	if (properties.pkg.local_version) {
+	if (normalized_title in nondefault_install) {
+		installicon = "open";
+		installstr = lang("gui.browser.guide");
+
+		installcallback = () => {
+			shell.openExternal(nondefault_install[normalized_title])
+		}
+	}
+	else if (properties.pkg.local_version) {
 		installicon = "redo";
 		installstr = lang("gui.browser.reinstall");
 
@@ -428,11 +437,15 @@ browser.mod_el = (properties) => {
 			installicon = "downloads";
 			installstr = lang("gui.browser.update");
 		}
+
+		installcallback = () => {
+			browser.install(properties);
+		}
 	}
 
 	let entry = document.createElement("div");
 	entry.classList.add("el");
-	entry.id = `mod-${mods.normalize(properties.title)}`;
+	entry.id = `mod-${normalized_title}`;
 
 	entry.innerHTML = `
 		<div class="image">
@@ -459,9 +472,7 @@ browser.mod_el = (properties) => {
 		</div>
 	`
 
-	entry.querySelector("button.install").addEventListener("click", () => {
-		browser.install(properties);
-	})
+	entry.querySelector("button.install").addEventListener("click", installcallback)
 
 	browserEntries.appendChild(entry);
 }
