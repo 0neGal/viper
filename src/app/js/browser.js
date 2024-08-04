@@ -414,8 +414,10 @@ browser.mod_el = (properties) => {
 
 	let installicon = "downloads";
 	let installstr = lang("gui.browser.install");
-	let installcallback = () => {};
 	let normalized_title = mods.normalize(properties.title)
+	let installcallback = () => {
+		browser.install(properties);
+	}
 
 	let nondefault_install = {
 		"vanillaplus": "https://github.com/Zayveeo5e/NP.VanillaPlus/blob/main/README.md"
@@ -436,10 +438,6 @@ browser.mod_el = (properties) => {
 		if (properties.pkg.has_update) {
 			installicon = "downloads";
 			installstr = lang("gui.browser.update");
-		}
-
-		installcallback = () => {
-			browser.install(properties);
 		}
 	}
 
