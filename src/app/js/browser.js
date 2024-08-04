@@ -524,7 +524,6 @@ ipcRenderer.on("legacy-duped-mod", (_, modname) => {
 })
 
 ipcRenderer.on("no-internet", () => {
-	set_buttons(true);
 	toasts.show({
 		timeout: 10000,
 		scheme: "error",
