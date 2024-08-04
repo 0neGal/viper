@@ -15,6 +15,7 @@ const mods = require("./modules/mods");
 const update = require("./modules/update");
 const version = require("./modules/version");
 const settings = require("./modules/settings");
+const protocol = require("./modules/protocol");
 
 // loads `ipcMain` events that dont fit in any of the modules directly
 require("./modules/ipc");
@@ -88,6 +89,7 @@ function start() {
 
 	// load list of mods on initial load
 	win.webContents.on("dom-ready", () => {
+		protocol();
 		send("mods", mods.list());
 	})
 
@@ -103,6 +105,7 @@ function start() {
 	}
 }
 
+
 // starts the GUI or CLI
 if (cli.hasArgs()) {
 	if (cli.hasParam("update-viper")) {
@@ -112,9 +115,10 @@ if (cli.hasArgs()) {
 		cli.init();
 	}
 } else {
+	app.setAsDefaultProtocolClient("ror2mm");
+
 	// start the window/GUI
 	app.on("ready", () => {
-
 		start();
 	})
 }
