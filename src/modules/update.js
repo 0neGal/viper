@@ -401,9 +401,36 @@ update.northstar = async (force_install) => {
 
 			console.ok(lang("cli.update.download_done"));
 
+			let destination = unzip.Extract({path: settings().gamepath});
+
+			// If we receive multiple errors of the same type we ignore them
+			let received_errors = [];
+			destination.on("error", (err) => {
+				if (received_errors.indexOf(err.code) >= 0)
+					return;
+
+				received_errors.push(err.code);
+				extract.close();
+				update.northstar.updating = false;
+
+				let description = lang("gui.toast.desc.unknown_error") + " (" + err.code + ")";
+
+				if (err.code == "EACCES") {
+					description = lang("gui.toast.desc.permission_denied");
+				}
+
+				win().toast({
+					scheme: "error",
+					title: lang("gui.toast.title.failed"),
+					description: description
+				})
+
+				win().send("ns-update-event", "cli.update.failed");
+			})
+
 			// extracts the zip, this is the part where we're actually
 			// installing Northstar.
-			extract.pipe(unzip.Extract({path: settings().gamepath}))
+			extract.pipe(destination)
 
 			let extracted = 0;
 			let size = received;
