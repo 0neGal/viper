@@ -45,11 +45,13 @@ ipcMain.on("wrong-path", () => {
 })
 
 ipcMain.on("found-missing-perms", async (e, selected_gamepath) => {
+	gamepath.setting = true;
 	await win().alert(lang("gui.gamepath.found_missing_perms") + selected_gamepath);
 	ipcMain.emit("setpath", null, false, true);
 })
 
 ipcMain.on("missing-perms", async (e, selected_gamepath) => {
+	gamepath.setting = true;
 	await win().alert(lang("gui.gamepath.missing_perms") + selected_gamepath);
 	ipcMain.emit("setpath");
 })
