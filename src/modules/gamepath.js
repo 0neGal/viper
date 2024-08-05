@@ -80,18 +80,18 @@ gamepath.exists = (folder) => {
 // returns false if the user doesn't have read/write permissions to the
 // selected gamepath, if no gamepath is set, then this will always
 // return `false`, handle that correctly!
-gamepath.has_perms = (folder) => {
+gamepath.has_perms = (folder = settings().gamepath) => {
 	if (! gamepath.exists(folder)) {
 		return false;
 	}
 
 	try {
 		fs.accessSync(
-			folder || settings().gamepath,
+			folder,
 			fs.constants.R_OK | fs.constants.W_OK
 		)
 
-		let test_file_path = path.join(folder || settings().gamepath, ".viper_test");
+		let test_file_path = path.join(folder, ".viper_test");
 		fs.writeFileSync(test_file_path, "");
 		fs.unlinkSync(test_file_path);
 
