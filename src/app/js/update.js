@@ -41,14 +41,16 @@ ipcRenderer.on("ns-update-event", (event, options) => {
 			.innerText = `(${lang(key)})`;
 	}
 
+	let delay, now;
+
 	switch(key) {
 		case "cli.update.uptodate_short":
 		case "cli.update.no_internet":
 			// initial value
-			let delay = 0;
+			delay = 0;
 
 			// get current time
-			let now = new Date().getTime();
+			now = new Date().getTime();
 
 			// check if `update.ns.last_checked` was less than 500ms
 			// since now, this variable is set when `update.ns()` is
@@ -73,6 +75,32 @@ ipcRenderer.on("ns-update-event", (event, options) => {
 			}, delay)
 
 			break;
+		case "cli.update.failed":
+			// initial value
+			delay = 0;
+
+			// get current time
+			now = new Date().getTime();
+
+			// check if `update.ns.last_checked` was less than 500ms
+			// since now, this variable is set when `update.ns()` is
+			// called
+			if (now - update.ns.last_checked < 500) {
+				// if less than 500ms has passed, set `delay` to the
+				// amount of milliseconds missing until we've hit that
+				// 500ms threshold
+				delay = 500 - (now - update.ns.last_checked);
+			}
+
+			// Request version number
+			// this will also handle the play button label for us
+			ipcRenderer.send("get-version");
+
+			setTimeout(() => {
+				update_btn();
+				set_buttons(true);
+				update.ns.progress(false);
+			}, delay)
 		default:
 			update_btn();
 
