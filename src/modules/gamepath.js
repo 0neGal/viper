@@ -91,6 +91,10 @@ gamepath.has_perms = (folder) => {
 			fs.constants.R_OK | fs.constants.W_OK
 		)
 
+		let test_file_path = path.join(folder || settings().gamepath, ".viper_test");
+		fs.writeFileSync(test_file_path, "");
+		fs.unlinkSync(test_file_path);
+
 		return true;
 	} catch (err) {
 		return false;
