@@ -55,8 +55,8 @@ ipcMain.on("missing-perms", async (e, selected_gamepath) => {
 })
 
 ipcMain.on("gamepath-lost-perms", async (e, selected_gamepath) => {
-	if (! gamepath.setting) {
-		gamepath.setting = true;
+	if (! gamepath.setting && gamepath.lost_perms != selected_gamepath) {
+		gamepath.lost_perms = selected_gamepath;
 		await win().alert(lang("gui.gamepath.lost_perms") + selected_gamepath);
 		ipcMain.emit("setpath");
 	}
@@ -166,6 +166,8 @@ gamepath.set = async (win, force_dialog) => {
 				ipcMain.emit("newpath", null, false);
 				return gamepath.setting = false;
 			}
+
+			delete gamepath.lost_perms;
 
 			if (! fs.existsSync(path.join(res.filePaths[0], "Titanfall2.exe"))) {
 				ipcMain.emit("wrong-path");
