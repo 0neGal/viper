@@ -276,8 +276,7 @@
 				"missing_launch_command": "There's currently no custom launch command set, one has to be configured to launch",
 				"missing_steam": "Can't launch with Steam directly, as it doesn't seem to be installed",
 				"missing_flatpak": "Can't launch with Flatpak, as it doesn't seem to be installed",
-				"missing_flatpak_steam": "Can't launch with the Flatpak version of Steam, as it doesn't seem to be installed",
-				"permission_denied": "Unable to extract Northstar to your game directory"
+				"missing_flatpak_steam": "Can't launch with the Flatpak version of Steam, as it doesn't seem to be installed"
 			}
 		}
 	},

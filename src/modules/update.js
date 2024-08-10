@@ -415,10 +415,6 @@ update.northstar = async (force_install) => {
 
 				let description = lang("gui.toast.desc.unknown_error") + " (" + err.code + ")";
 
-				if (err.code == "EACCES") {
-					description = lang("gui.toast.desc.permission_denied");
-				}
-
 				win().toast({
 					scheme: "error",
 					title: lang("gui.toast.title.failed"),
