@@ -43,7 +43,8 @@
 			"current": "Jetzige Version:",
 			"download_done": "Herunterladen abgeschlossen! Extrahiere...",
 			"downloading": "Wird heruntergeladen...",
-			"finished": "Installation/Aktualisierung abeschlossen!",
+			"failed": "Installation/Aktualisierung fehlgeschlagen!",
+			"finished": "Installation/Aktualisierung abgeschlossen!",
 			"no_internet": "Keine Internetverbindung",
 			"uptodate": "Installation ist bereits auf dem neusten Stand (%s), aktualisieren wird übersprungen.",
 			"uptodate_short": "Auf dem neusten stand"
