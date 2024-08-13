@@ -1,12 +1,33 @@
 const { app, ipcMain } = require("electron");
 
+const win = require("../win");
 const requests = require("./requests");
 const version = require("./version");
 
+var packages = undefined;
 async function install_mod(domain, author, package_name, version) {
-	let package_data = JSON.parse(await requests.get(
-		domain, `/api/experimental/package/${author}/${package_name}/${version}/`
-	));
+	if (packages == undefined)
+	{
+		ipcMain.once("packages-reply", (event, packages_string) => {
+			packages = JSON.parse(packages_string);
+			install_mod(domain, author, package_name, version);
+		});
+
+		win().send("packages");
+		return;
+	}
+
+	const package = packages.find((package) => { return package.owner == author && package.name == package_name; })
+	if (!package) {
+		console.error("Couldn't find package")
+		return;
+	}
+
+	const package_data = package.versions.find((package_version) => { return package_version.version_number == version; })
+	if (!package_data) {
+		console.error("Couldn't find package_version")
+		return;
+	}
 
 	for (const dep of package_data.dependencies) {
 		let fragments = dep.split("-");

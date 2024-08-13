@@ -328,4 +328,10 @@ ipcRenderer.on("mods", (event, mods_obj) => {
 	mods.load(mods_obj);
 })
 
+ipcRenderer.on("packages", (event) => {
+	// Its not possible to send over the package object directly, so we serialize it
+	const packages = JSON.stringify(browser.packages());
+	event.sender.send("packages-reply", [packages]);
+})
+
 module.exports = mods;
