@@ -328,10 +328,37 @@ ipcRenderer.on("mods", (event, mods_obj) => {
 	mods.load(mods_obj);
 })
 
-ipcRenderer.on("packages", (event) => {
-	// Its not possible to send over the package object directly, so we serialize it
-	const packages = JSON.stringify(browser.packages());
-	event.sender.send("packages-reply", [packages]);
+ipcRenderer.on("protocol-install-mod", async (event, data) => {
+	const domain = data[0];
+	const author = data[1];
+	const package_name = data[2];
+	const version = data[3];
+
+	const packages = await browser.packages();
+
+	const package = packages.find((package) => { return package.owner == author && package.name == package_name; })
+	if (!package) {
+		console.error("Couldn't find package")
+		return;
+	}
+
+	const package_obj = package.versions.find((package_version) => { return package_version.version_number == version; })
+	if (!package_obj) {
+		console.error("Couldn't find package_version")
+		return;
+	}
+
+	console.log(package_obj);
+
+	mods.install_from_url(
+		package_obj.download_url,
+		package_obj.dependencies,
+		false,
+
+		author,
+		package_name,
+		version
+	);
 })
 
 module.exports = mods;
