@@ -31,13 +31,8 @@ module.exports = async (argv) => {
 			if (domain != "thunderstore.io")
 				continue;
 
-			try {
-				if (term == "install") {
-					win().send("protocol-install-mod", [domain, author, package_name, version]);
-				}
-			}catch(err) {
-				console.error(err);
-				continue;
+			if (term == "install") {
+				win().send("protocol-install-mod", [domain, author, package_name, version]);
 			}
 		}
 	}
