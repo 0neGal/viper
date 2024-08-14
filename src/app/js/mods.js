@@ -1,3 +1,4 @@
+const util = require('util');
 const ipcRenderer = require("electron").ipcRenderer;
 
 const lang = require("../../lang");
@@ -338,13 +339,13 @@ ipcRenderer.on("protocol-install-mod", async (event, data) => {
 
 	const package = packages.find((package) => { return package.owner == author && package.name == package_name; })
 	if (!package) {
-		console.error("Couldn't find package")
+		alert(util.format(lang("gui.mods.cant_find_specific"), author, package_name));
 		return;
 	}
 
 	const package_obj = package.versions.find((package_version) => { return package_version.version_number == version; })
 	if (!package_obj) {
-		console.error("Couldn't find package_version")
+		alert(util.format(lang("gui.mods.cant_find_version"), version, author, package_name))
 		return;
 	}
 
