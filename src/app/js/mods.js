@@ -4,6 +4,7 @@ const ipcRenderer = require("electron").ipcRenderer;
 const lang = require("../../lang");
 
 const version = require("./version");
+const toasts = require("./toasts");
 const set_buttons = require("./set_buttons");
 
 let mods = {};
@@ -349,7 +350,12 @@ ipcRenderer.on("protocol-install-mod", async (event, data) => {
 		return;
 	}
 
-	console.log(package_obj);
+	toasts.show({
+		timeout: 3000,
+		scheme: "info",
+		title: lang("gui.mods.installing"),
+		description: lang("gui.toast.desc.installing") + " " + package_obj.full_name
+	})
 
 	mods.install_from_url(
 		package_obj.download_url,

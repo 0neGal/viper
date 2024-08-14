@@ -268,6 +268,7 @@
 
 			"desc": {
 				"installed": "has been installed successfully!",
+				"installing": "Installing",
 				"malformed": "has an incorrect folder structure, if you're the developer, you should fix this.",
 				"failed": "An unknown error occurred while trying to install the mod. This may be the author's fault, and it may also be Viper's fault.",
 				"duped": "has multiple mod folders in it, with the same name, causing duplicate folders, if you're the developer, you should fix this.",
