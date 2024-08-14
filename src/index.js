@@ -117,6 +117,13 @@ if (cli.hasArgs()) {
 } else {
 	app.setAsDefaultProtocolClient("ror2mm");
 
+	const app_lock = app.requestSingleInstanceLock()
+
+	if (!app_lock) {
+		// Viper is already running
+		app.quit();
+	}
+
 	// start the window/GUI
 	app.on("ready", () => {
 		start();
