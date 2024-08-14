@@ -128,4 +128,9 @@ if (cli.hasArgs()) {
 	app.on("ready", () => {
 		start();
 	})
+
+	app.on('second-instance', (event, commandLine, workingDirectory, additionalData) => {
+		protocol(commandLine);
+	})
+
 }

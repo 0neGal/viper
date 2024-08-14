@@ -3,11 +3,11 @@ const { app } = require("electron");
 const win = require("../win");
 const version = require("./version");
 
-module.exports = async () => {
+module.exports = async (argv) => {
 	if (version.northstar() == "unknown")
 		return;
 
-	const args = process.argv.slice(app.isPackaged ? 1 : 2);
+	const args = argv || process.argv;
 
 	for (const key of args) {
 		if (key.startsWith("ror2mm://")) {
