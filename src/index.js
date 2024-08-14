@@ -1,5 +1,5 @@
 const path = require("path");
-const { app, BrowserWindow } = require("electron");
+const { app, BrowserWindow, dialog } = require("electron");
 
 // makes it so Electron cache doesn't get stored in your system's config
 // folder, and instead changing it over to using the system's cache
@@ -10,6 +10,7 @@ app.setPath("userData", path.join(app.getPath("cache"), app.name));
 process.chdir(app.getPath("appData"));
 
 const cli = require("./cli");
+const lang = require("./lang");
 
 const mods = require("./modules/mods");
 const update = require("./modules/update");
@@ -119,13 +120,20 @@ if (cli.hasArgs()) {
 
 	const app_lock = app.requestSingleInstanceLock()
 
-	if (!app_lock) {
-		// Viper is already running
-		app.quit();
-	}
-
 	// start the window/GUI
 	app.on("ready", () => {
+		if (!app_lock) {
+			// Viper is already running
+			if (process.argv.length <= (app.isPackaged ? 1 : 2))
+			{
+				dialog.showMessageBoxSync({
+					title: lang("viper.menu.main"),
+					message: lang("viper.already_running")
+				});
+			}
+			app.quit();
+		}
+
 		start();
 	})
 

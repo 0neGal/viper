@@ -281,6 +281,8 @@
 	},
 
 	"viper": {
+		"already_running": "Viper is already running",
+
 		"menu": {
 			"main": "Viper",
 			"release": "Release Notes",
