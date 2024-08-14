@@ -16,7 +16,6 @@ var packages = {};
 
 // lets renderer install packages
 ipcMain.on("install-from-url", (event, url, author, package_name, version) => {
-	console.log(url);
 	packages.install(url, author, package_name, version);
 })
 
