@@ -315,8 +315,14 @@ window.addEventListener("keyup", (e) => {
 
 	// perform the relevant action for the key that was pressed
 	switch(e.code) {
-		case "KeyQ": launcher.relative_section("left"); break;
-		case "KeyE": launcher.relative_section("right"); break;
+		// the second and third cases here are for SteamDeck bumper
+		// button support whilst inside the desktop layout
+		case "KeyQ":
+		case "ControlLeft": case "ControlRight":
+			launcher.relative_section("left"); break;
+		case "KeyE":
+		case "AltLeft": case "AltRight":
+			launcher.relative_section("right"); break;
 
 		case "Space": return selection_el
 				.classList.remove("keyboard-selecting");
