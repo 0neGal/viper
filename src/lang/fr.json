@@ -43,6 +43,7 @@
 			"current": "Version actuelle :",
 			"download_done": "Téléchargement terminé ! Extraction des fichiers...",
 			"downloading": "Téléchargement en cours...",
+			"failed": "Mise à jour échoué !",
 			"finished": "Mise à jour terminée !",
 			"no_internet": "Pas de connexion Internet",
 			"uptodate": "La dernière version (%s) est déjà installée.",
