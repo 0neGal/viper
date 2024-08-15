@@ -354,7 +354,7 @@ ipcRenderer.on("protocol-install-mod", async (event, data) => {
 		timeout: 3000,
 		scheme: "info",
 		title: lang("gui.mods.installing"),
-		description: lang("gui.toast.desc.installing") + " " + package_obj.full_name
+		description: package_obj.full_name
 	})
 
 	mods.install_from_url(
