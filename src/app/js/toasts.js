@@ -24,6 +24,10 @@ toasts.show = (properties) => {
 			toast.fg = "#FFFFFF";
 			toast.bg = "#FF9B85";
 			break
+		case "info":
+			toast.fg = "#FFFFFF";
+			toast.bg = "rgb(var(--blue))";
+			break
 	}
 
 

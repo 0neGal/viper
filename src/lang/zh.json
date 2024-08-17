@@ -95,6 +95,8 @@
 		"install": "安装",
 		"launch": "启动",
 		"mods": {
+			"cant_find_specific": "无法找到模组%s-%s！",
+			"cant_find_version": "无法找到%s版的模组%s-%s！",
 			"confirm_dependencies": "此包含有依赖项, 以下展示, 点击 \"Ok\" 将会安装此包和它的依赖项.\n\n",
 			"confirm_plugins": {
 				"description": "Native插件比普通的模组拥有更多对系统的访问权限, 如果安装了恶意插件可能会导致您的计算机受到损害. 如果这个插件是来自于一位信任的开发者或您知道自己在干什么, 那么请忽略这条信息.",
@@ -283,6 +285,7 @@
 		"settings": "设置"
 	},
 	"viper": {
+		"already_running": "Viper已在运行中",
 		"info": {
 			"credits": "鸣谢",
 			"discord": "加入Discord:",

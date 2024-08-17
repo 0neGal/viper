@@ -1,5 +1,5 @@
 const path = require("path");
-const { app, BrowserWindow } = require("electron");
+const { app, BrowserWindow, dialog } = require("electron");
 
 // makes it so Electron cache doesn't get stored in your system's config
 // folder, and instead changing it over to using the system's cache
@@ -10,11 +10,13 @@ app.setPath("userData", path.join(app.getPath("cache"), app.name));
 process.chdir(app.getPath("appData"));
 
 const cli = require("./cli");
+const lang = require("./lang");
 
 const mods = require("./modules/mods");
 const update = require("./modules/update");
 const version = require("./modules/version");
 const settings = require("./modules/settings");
+const protocol = require("./modules/protocol");
 
 // loads `ipcMain` events that dont fit in any of the modules directly
 require("./modules/ipc");
@@ -88,6 +90,7 @@ function start() {
 
 	// load list of mods on initial load
 	win.webContents.on("dom-ready", () => {
+		protocol();
 		send("mods", mods.list());
 	})
 
@@ -103,6 +106,7 @@ function start() {
 	}
 }
 
+
 // starts the GUI or CLI
 if (cli.hasArgs()) {
 	if (cli.hasParam("update-viper")) {
@@ -112,9 +116,29 @@ if (cli.hasArgs()) {
 		cli.init();
 	}
 } else {
+	app.setAsDefaultProtocolClient("ror2mm");
+
+	const app_lock = app.requestSingleInstanceLock()
+
 	// start the window/GUI
 	app.on("ready", () => {
+		if (!app_lock) {
+			// Viper is already running
+			if (process.argv.length <= (app.isPackaged ? 1 : 2))
+			{
+				dialog.showMessageBoxSync({
+					title: lang("viper.menu.main"),
+					message: lang("viper.already_running")
+				});
+			}
+			app.quit();
+		}
 
 		start();
 	})
+
+	app.on('second-instance', (event, commandLine, workingDirectory, additionalData) => {
+		protocol(commandLine);
+	})
+
 }

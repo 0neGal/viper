@@ -475,6 +475,11 @@ browser.mod_el = (properties) => {
 	browserEntries.appendChild(entry);
 }
 
+browser.packages = async () => {
+	await browser.loadfront();
+	return packages;
+}
+
 let recent_toasts = {};
 function add_recent_toast(name, timeout = 3000) {
 	if (recent_toasts[name]) {return}
