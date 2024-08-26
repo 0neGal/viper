@@ -45,18 +45,20 @@ ipcMain.on("wrong-path", () => {
 })
 
 ipcMain.on("found-missing-perms", async (e, selected_gamepath) => {
+	gamepath.setting = true;
 	await win().alert(lang("gui.gamepath.found_missing_perms") + selected_gamepath);
 	ipcMain.emit("setpath", null, false, true);
 })
 
 ipcMain.on("missing-perms", async (e, selected_gamepath) => {
+	gamepath.setting = true;
 	await win().alert(lang("gui.gamepath.missing_perms") + selected_gamepath);
 	ipcMain.emit("setpath");
 })
 
 ipcMain.on("gamepath-lost-perms", async (e, selected_gamepath) => {
-	if (! gamepath.setting) {
-		gamepath.setting = true;
+	if (! gamepath.setting && gamepath.lost_perms != selected_gamepath) {
+		gamepath.lost_perms = selected_gamepath;
 		await win().alert(lang("gui.gamepath.lost_perms") + selected_gamepath);
 		ipcMain.emit("setpath");
 	}
@@ -80,16 +82,20 @@ gamepath.exists = (folder) => {
 // returns false if the user doesn't have read/write permissions to the
 // selected gamepath, if no gamepath is set, then this will always
 // return `false`, handle that correctly!
-gamepath.has_perms = (folder) => {
+gamepath.has_perms = (folder = settings().gamepath) => {
 	if (! gamepath.exists(folder)) {
 		return false;
 	}
 
 	try {
 		fs.accessSync(
-			folder || settings().gamepath,
+			folder,
 			fs.constants.R_OK | fs.constants.W_OK
 		)
+
+		let test_file_path = path.join(folder, ".viper_test");
+		fs.writeFileSync(test_file_path, "");
+		fs.unlinkSync(test_file_path);
 
 		return true;
 	} catch (err) {
@@ -162,6 +168,8 @@ gamepath.set = async (win, force_dialog) => {
 				ipcMain.emit("newpath", null, false);
 				return gamepath.setting = false;
 			}
+
+			delete gamepath.lost_perms;
 
 			if (! fs.existsSync(path.join(res.filePaths[0], "Titanfall2.exe"))) {
 				ipcMain.emit("wrong-path");

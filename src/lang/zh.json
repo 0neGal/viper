@@ -43,6 +43,7 @@
 			"current": "当前版本:",
 			"download_done": "下载完毕！解压中...",
 			"downloading": "下载中...",
+			"failed": "安装/更新 失败！",
 			"finished": "安装/更新 完成！",
 			"no_internet": "无互联网连接",
 			"uptodate": "最新版本 (%s) 已安装, 跳过更新.",
