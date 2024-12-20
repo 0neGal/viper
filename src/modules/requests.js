@@ -25,6 +25,15 @@ ipcMain.handle("request", async (e, ...args) => {
 	return res;
 })
 
+ipcMain.handle("request-check", async (_, ...args) => {
+	let res = false;
+
+	try {
+		res = await requests.check(...args);
+	}catch(err) {}
+
+	return res;
+})
 
 // updates `cache_dir` and `cache_file`
 function set_paths() {
@@ -242,6 +251,45 @@ requests.get = (host, path, cache_key, ignore_max_time_when_offline = true, max_
 			reject(false);
 		})
 	})
+}
+
+// checks whether a list of `endpoints` can be contacted
+requests.check = async (endpoints) => {
+	// turn `endpoints` into an array, if it isn't already
+	if (typeof endpoints == "string") {
+		endpoints = [endpoints];
+	}
+
+	// list of what failed and succeeded, will be returned later
+	let res = {
+		failed: [],
+		succeeded: []
+	}
+
+	// run through all the endpoints
+	for (let endpoint of endpoints) {
+		let req;
+
+		// attempt to do a request
+		try {
+			req = await fetch(endpoint);
+		} catch(err) { // something went wrong!
+			res.failed.push(endpoint);
+			continue;
+		}
+
+		// if we're within the `200-299` response code range, we
+		// consider it a success
+		if (req.status < 300 && req.status >= 200) {
+			res.succeeded.push(endpoint);
+			continue;
+		}
+
+		// we failed!
+		res.failed.push(endpoint);
+	}
+
+	return res;
 }
 
 module.exports = requests;
