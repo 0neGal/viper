@@ -77,6 +77,24 @@
 	width: var(--height) !important;
 }
 
+.popup .misc button.long {
+	width: max-content !important;
+	padding-right: var(--spacing) !important;
+}
+
+.popup .misc button select {
+	color: white;
+	border: none;
+	opacity: 0.6;
+	outline: none;
+	background: transparent;
+}
+
+.popup .misc button select option {
+	color: white;
+	background: var(--selbg);
+}
+
 .popup .misc button img {
 	margin: 0px;
 	opacity: 0.6;

@@ -124,6 +124,13 @@
 			"no_results": "No results...",
 			"guide": "Guide",
 
+			"sort": {
+				"newest": "Newest",
+				"last_updated": "Last Updated",
+				"highest_rating": "Highest Rated",
+				"most_downloads": "Most Downloaded"
+			},
+
 			"filter": {
 				"mods": "Mods",
 				"skins": "Skins",
