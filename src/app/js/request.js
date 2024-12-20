@@ -33,6 +33,8 @@ let state_action = (is_online) => {
 			true, false,
 			document.querySelectorAll(".requires-internet")
 		)
+
+		serverstatus.style.opacity = "1.0";
 	} else {
 		// show toast
 		if (! sent_error_toast) {
@@ -48,6 +50,8 @@ let state_action = (is_online) => {
 			false, false,
 			document.querySelectorAll(".requires-internet")
 		)
+
+		serverstatus.style.opacity = "0.0";
 
 		// close mod browser
 		try {
