@@ -107,7 +107,15 @@ var browser = {
 			browser.filters.toggle(false);
 		}
 	},
-	install: (package_obj, clear_queue = false) => {
+	install: async (package_obj, clear_queue = false) => {
+		let can_connect = await request.check_with_toasts(
+			"Thunderstore", "https://thunderstore.io"
+		)
+
+		if (! can_connect) {
+			return;
+		}
+
 		return mods.install_from_url(
 			package_obj.download || package_obj.versions[0].download_url,
 			package_obj.dependencies || package_obj.versions[0].dependencies,

@@ -1,3 +1,5 @@
+const lang = require("../../lang");
+const toasts = require("./toasts");
 const launcher = require("./launcher");
 const set_buttons = require("./set_buttons");
 const ipcRenderer = require("electron").ipcRenderer;
@@ -16,6 +18,27 @@ request.check = async (...args) => {
 
 request.delete_cache = () => {
 	ipcRenderer.send("delete-request-cache");
+}
+
+// does `request.check(...args)` and shows toast if the check failed,
+// using `name` inside the toast message
+request.check_with_toasts = async (name, ...args) => {
+	// perform check
+	let can_connect = (
+		await request.check(...args)
+	).succeeded.length;
+
+	// show toast, as the check failed
+	if (! can_connect) {
+		toasts.show({
+			timeout: 10000,
+			scheme: "error",
+			title: lang("gui.toast.title.failed_to_connect"),
+			description: lang("gui.toast.desc.failed_to_connect").replaceAll("%s", name)
+		})
+	}
+
+	return can_connect;
 }
 
 // keeps track of whether we've already sent a toast since we last went
