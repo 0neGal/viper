@@ -1,15 +1,15 @@
 const ipcRenderer = require("electron").ipcRenderer;
 
-const updateOnlineStatus = () => {
+let update_status = () => {
 	// show a toast message if no Internet connection has been detected.
-	if (!navigator.onLine) {
+	if (! navigator.onLine) {
 		ipcRenderer.send("no-internet");
 	}
 }
 
-window.addEventListener('online', updateOnlineStatus);
-window.addEventListener('offline', updateOnlineStatus);
-updateOnlineStatus();
+window.addEventListener("online", update_status);
+window.addEventListener("offline", update_status);
+update_status();
 
 // invokes `requests.get()` from `src/modules/requests.js` through the
 // main process, and returns the output
