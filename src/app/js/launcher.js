@@ -275,9 +275,11 @@ launcher.check_servers = async () => {
 
 	if (masterserver) {
 		serverstatus.classList.add("up");
+		serverstatus.classList.remove("down");
 		serverstatus.innerHTML = `${servercount} ${lang("gui.server.servers")} - ${playercount} ${playerstr}`;
 	} else {
 		serverstatus.classList.add("down");
+		serverstatus.classList.remove("up");
 		serverstatus.innerHTML = lang("gui.server.offline");
 
 	}
