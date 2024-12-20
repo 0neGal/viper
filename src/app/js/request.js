@@ -1,3 +1,4 @@
+const set_buttons = require("./set_buttons");
 const ipcRenderer = require("electron").ipcRenderer;
 
 // invokes `requests.get()` from `src/modules/requests.js` through the
@@ -26,6 +27,12 @@ let state_action = (is_online) => {
 		// hide offline icon
 		sent_error_toast = false;
 		offline.classList.add("hidden");
+
+		// re-enable buttons that require internet
+		set_buttons(
+			true, false,
+			document.querySelectorAll(".requires-internet")
+		)
 	} else {
 		// show toast
 		if (! sent_error_toast) {
@@ -35,10 +42,21 @@ let state_action = (is_online) => {
 
 		// show offline icon
 		offline.classList.remove("hidden");
+
+		// disable buttons that require internet
+		set_buttons(
+			false, false,
+			document.querySelectorAll(".requires-internet")
+		)
+
+		// close mod browser
+		try {
+			require("./browser").toggle(false);
+		} catch(err) {}
 	}
 }
 
-state_action(navigator.onLine);
+setTimeout(() => state_action(navigator.onLine), 100);
 window.addEventListener("online", () => state_action(navigator.onLine));
 window.addEventListener("offline", () => state_action(navigator.onLine));
 
@@ -60,7 +78,10 @@ let check_endpoints = async () => {
 
 	// handle result of check
 	state_action(!! status.succeeded.length);
-}; check_endpoints();
+}
+
+// check endpoints on startup
+setTimeout(check_endpoints, 100);
 
 // check endpoints every 30 seconds
 setInterval(check_endpoints, 30000);

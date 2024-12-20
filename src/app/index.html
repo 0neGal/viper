@@ -38,7 +38,7 @@
 		<div id="overlay" onclick="popups.set_all(false)"></div>
 		<div class="popup" id="options">
 			<div class="misc">
-				<input class="search default-selection" placeholder="%%gui.search%%">
+				<input class="search default-selection requires-internet" placeholder="%%gui.search%%">
 				<button id="apply" onclick="settings.popup.apply();settings.popup.toggle(false)">
 					<img src="icons/apply.png">
 					%%gui.settings.save%%
@@ -341,7 +341,7 @@
 							<button id="playNsBtn" class="playBtn" onclick="launch('northstar')">%%gui.launch%%</button>
 							<div class="inline">
 								<div id="nsversion"></div>
-								<a id="update" href="#" onclick="update.ns()" class="disable-when-installing">(%%gui.update.check%%)</a>
+								<a id="update" href="#" onclick="update.ns()" class="disable-when-installing requires-internet">(%%gui.update.check%%)</a>
 								<div id="serverstatus" class="checking"></div>
 							</div>
 						</div>
@@ -363,7 +363,7 @@
 										<img src="icons/downloads.png">
 										%%gui.mods.install%%
 									</button>
-									<button id="findmod" class="bg-blue2" onclick="browser.toggle(true)">
+									<button id="findmod" class="requires-internet bg-blue2" onclick="browser.toggle(true)">
 										<img src="icons/search.png">
 										%%gui.mods.find%%
 									</button>

@@ -489,11 +489,11 @@ browser.mod_el = (properties) => {
 		<div class="text">
 			<div class="title">${properties.title}</div>
 			<div class="description">${properties.description}</div>
-			<button class="install bg-blue" onclick=''>
+			<button class="install bg-blue requires-internet" onclick=''>
 				<img src="icons/${installicon}.png">
 				<span>${installstr}</span>
 			</button>
-			<button class="info" onclick="browser.preview.set('${properties.url}')">
+			<button class="info requires-internet" onclick="browser.preview.set('${properties.url}')">
 				<img src="icons/open.png">
 				<span>${lang('gui.browser.view')}</span>
 			</button>
