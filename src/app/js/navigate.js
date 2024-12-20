@@ -483,8 +483,8 @@ navigate.move = async (direction) => {
 		}
 	}
 
-	if (scroll_el.closest("#modsdiv .el")) {
-		return;
+	if (scroll_el.closest(".grid .el")) {
+		scroll_el = scroll_el.closest(".grid .el");
 	}
 
 	// scroll `scroll_el` smoothly into view, centered
