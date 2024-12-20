@@ -42,7 +42,7 @@ a.disabled:not("[onclick='kill('game')']") {
 	pointer-events: none;
 }
 
-a:hover {
+a:hover, a.active-selection {
 	filter: brightness(80%) !important;
 }
 

@@ -44,5 +44,8 @@ const launcher = require("./js/launcher");
 const is_running = require("./js/is_running");
 const set_buttons = require("./js/set_buttons");
 
+const navigate = require("./js/navigate");
+const gamepad = require("./js/gamepad");
+
 require("./js/dom_events");
 require("./js/localize")();
