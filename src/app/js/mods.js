@@ -203,6 +203,43 @@ mods.load = (mods_obj) => {
 	}
 }
 
+// attempts to filter `#modsdiv` with `query`
+mods.search = (query) => {
+	// if no `query` is given, use the search input's value
+	if (! query) {
+		query = mods.search.el.value;
+	}
+
+	// normalizes `string`
+	let normalize = (string) => {
+		return string
+			.trim().toLowerCase()
+			.replaceAll(" ", "").replaceAll(".", "");
+	}
+
+	// normalize `query`
+	query = normalize(query);
+
+	// get all mod elements
+	let mod_els = document.querySelectorAll("#modsdiv .el");
+
+	// run through all the mod elements
+	for (let mod_el of mod_els) {
+		// get the normalized name of the mod
+		let name = normalize(mod_el.querySelector(".title").innerText);
+
+		// if the name has `query` in it, show it
+		if (name.match(query)) {
+			mod_el.style.display = null;
+		} else { // hide if it doesn't match
+			mod_el.style.display = "none";
+		}
+	}
+}
+
+mods.search.el = document.getElementById("mods-search");
+mods.search.el.addEventListener("keyup", () => {mods.search()})
+
 mods.remove = (mod) => {
 	if (mod.toLowerCase().match(/^northstar\./)) {
 		if (! confirm(lang("gui.mods.required_confirm"))) {

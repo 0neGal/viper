@@ -1,6 +1,6 @@
 @import "theming.css";
 
-.grid .el, .popup .misc, .popup .loading {
+.grid, .grid .el, .popup .misc, .popup .loading {
 	--spacing: calc(var(--padding) / 2);
 	--height: calc(var(--padding) * 3.5);
 	--mischeight: calc(var(--padding) * 1.5);
@@ -22,7 +22,7 @@
 	animation-name: none;
 }
 
-.grid .el, .popup .search,
+.grid .el, input.search,
 .popup #close, .popup .misc button,
 .option .actions select, .option .actions input {
 	color: white;
@@ -36,7 +36,7 @@
 	width: calc(50% - var(--spacing) * 4);
 }
 
-.popup .misc, .popup .search, .option .actions input {
+.popup .misc, input.search, .option .actions input {
 	--height: var(--mischeight);
 }
 
@@ -53,7 +53,7 @@
 	position: fixed;
 }
 
-.popup .search,
+input.search,
 .option .actions input,
 .option .actions select {
 	border: none;
@@ -62,7 +62,7 @@
 	width: calc(100% - var(--spacing) * 2);
 }
 
-.popup .search:focus, 
+input.search:focus, 
 .option .actions input:focus,
 .option .actions button:active {
 	filter: brightness(1.5);
@@ -136,6 +136,11 @@
 	transition: opacity 0.2s;
 	margin-right: var(--spacing);
 	border-radius: var(--spacing);
+}
+
+.grid input {
+	margin: 0;
+	width: 100%;
 }
 
 #modsdiv .el:has(.switch:not(.on)) .image img {
