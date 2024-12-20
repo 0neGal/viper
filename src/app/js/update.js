@@ -125,7 +125,15 @@ let update = {
 
 	// updates Northstar, `force_update` forcefully updates Northstar,
 	// causing it to update, even if its already up-to-date
-	ns: (force_update) => {
+	ns: async (force_update) => {
+		let can_connect = await request.check_with_toasts(
+			"GitHub", "https://github.com"
+		)
+
+		if (! can_connect) {
+			return;
+		}
+
 		update.ns.last_checked = new Date().getTime();
 		ipcRenderer.send("update-northstar", force_update);
 		update.ns.should_install = false;

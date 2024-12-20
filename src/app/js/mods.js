@@ -74,7 +74,7 @@ mods.load = (mods_obj) => {
 				<div class="title">${mod_details.name}</div>
 				<div class="description">${mod_details.description}</div>
 				<button class="switch on orange"></button>
-				<button class="update bg-blue">
+				<button class="update bg-blue requires-internet">
 					<img src="icons/downloads.png">
 					<span>${lang("gui.browser.update")}</span>
 				</button>

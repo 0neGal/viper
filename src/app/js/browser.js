@@ -107,7 +107,15 @@ var browser = {
 			browser.filters.toggle(false);
 		}
 	},
-	install: (package_obj, clear_queue = false) => {
+	install: async (package_obj, clear_queue = false) => {
+		let can_connect = await request.check_with_toasts(
+			"Thunderstore", "https://thunderstore.io"
+		)
+
+		if (! can_connect) {
+			return;
+		}
+
 		return mods.install_from_url(
 			package_obj.download || package_obj.versions[0].download_url,
 			package_obj.dependencies || package_obj.versions[0].dependencies,
@@ -489,11 +497,11 @@ browser.mod_el = (properties) => {
 		<div class="text">
 			<div class="title">${properties.title}</div>
 			<div class="description">${properties.description}</div>
-			<button class="install bg-blue" onclick=''>
+			<button class="install bg-blue requires-internet" onclick=''>
 				<img src="icons/${installicon}.png">
 				<span>${installstr}</span>
 			</button>
-			<button class="info" onclick="browser.preview.set('${properties.url}')">
+			<button class="info requires-internet" onclick="browser.preview.set('${properties.url}')">
 				<img src="icons/open.png">
 				<span>${lang('gui.browser.view')}</span>
 			</button>
@@ -563,7 +571,6 @@ ipcRenderer.on("legacy-duped-mod", (_, modname) => {
 })
 
 ipcRenderer.on("no-internet", () => {
-	set_buttons(true);
 	toasts.show({
 		timeout: 10000,
 		scheme: "error",

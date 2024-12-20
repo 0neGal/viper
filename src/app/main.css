@@ -59,8 +59,14 @@ button:active {filter: brightness(90%)}
 	margin-right: calc(var(--padding) / 2);
 }
 
+#winbtns div.hidden {
+	width: 0px;
+	opacity: 0.0;
+	margin-right: 0px;
+	pointer-events: none;
+}
+
 #winbtns div img {
-	width: 100%;
 	height: 100%;
 	transition: transform 0.25s ease-in-out;
 }
