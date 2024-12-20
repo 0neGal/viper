@@ -361,10 +361,18 @@ let check = (logging = true) => {
 
 // run `check()` if `--check()` is set
 if (args["check"]) {
-	let problems = check();
+	let has_problems = false;
+
+	// check localizations, and set `has_problems` depending on whether
+	// any localization files have problems
+	Object.values(check()).forEach((item) => {
+		if (item.length) {
+			has_problems = true;
+		}
+	});
 
 	// exit with the correct exit code
-	if (problems.length) {
+	if (has_problems) {
 		process.exit(1);
 	} else {
 		process.exit();

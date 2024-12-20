@@ -26,7 +26,7 @@ REMOTEVERSION="$(curl --silent "https://api.github.com/repos/0neGal/viper/releas
 }
 
 
-node scripts/langs.js || {
+node scripts/langs.js --check || {
 	echo "Please fix localization errors before publishing..."
 	exit 1
 }
