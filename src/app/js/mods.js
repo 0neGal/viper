@@ -218,8 +218,22 @@ mods.remove = (mod) => {
 }
 
 mods.toggle = (mod) => {
+	// is this a core mod?
 	if (mod.toLowerCase().match(/^northstar\./)) {
-		if (! confirm(lang("gui.mods.required_confirm"))) {
+		// keep track of whether this mod is disabled
+		let is_disabled = false;
+
+		// run through disabled mods
+		for (let mod_obj of mods_list.disabled) {
+			// if `mod` is `mod_obj`, update `is_disabled`
+			if (mod_obj.name.toLowerCase() == mod.toLowerCase()) {
+				is_disabled = true;
+				break;
+			}
+		}
+
+		// show prompt if the mod is enabled
+		if (! is_disabled && ! confirm(lang("gui.mods.required_confirm"))) {
 			return;
 		}
 	} else if (mod == "allmods") {
