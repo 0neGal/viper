@@ -28,6 +28,7 @@
 			"checking": "Checking for updates...",
 			"download_done": "Download done! Extracting...",
 			"finished": "Installation/Update finished!",
+			"failed": "Installation/Update failed!",
 			"uptodate": "Latest version (%s) is already installed, skipping update.",
 			"uptodate_short": "Up-to-date",
 			"no_internet": "No Internet connection"

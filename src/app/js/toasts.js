@@ -75,7 +75,7 @@ toasts.dismiss = (id) => {
 }
 
 ipcRenderer.on("toast", (_, properties) => {
-	Toast(properties);
+	toasts.show(properties);
 })
 
 module.exports = toasts;
