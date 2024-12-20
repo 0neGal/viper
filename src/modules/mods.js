@@ -729,9 +729,17 @@ mods.toggle = (mod, fork) => {
 	}
 
 	// toggles all mods, thereby inverting the current enabled states
+	//
+	// this skips core mods, as there's generally little use to have
+	// this affect them
 	if (mod == "allmods") {
 		let modlist = mods.list().all; // get list of all mods
 		for (let i = 0; i < modlist.length; i++) { // run through list
+			// skip core mods
+			if (modlist[i].name.toLowerCase().match(/^northstar\./)) {
+				continue;
+			}
+
 			mods.toggle(modlist[i].name, true); // enable mod
 		}
 
