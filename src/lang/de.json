@@ -96,6 +96,8 @@
 		"install": "Installieren",
 		"launch": "Starten",
 		"mods": {
+			"cant_find_specific": "Mod %s-%s kann nicht gefunden werden!",
+			"cant_find_version": "Version %s von Mod %s-%s kann nicht gefunden werden!",
 			"confirm_dependencies": "Dieser Mod benötigt weitere Mods, diese werden unter dieser Nachricht angezeigt. Beim drücken auf \"Ok\" stimmst du zu da diese Installiert werden.\n\n",
 			"confirm_plugins": {
 				"description": "Native plugins haben sehr viel mehr Rechte als reguläre Mods, da durch ist das nutzen dieser um einiges unsicherer denn es ist einfacher ihnen zuschaden! Bitte installieren sie nur native plugins von vertrauten Entwicklern oder ähnliches, falls dir bewusst ist was du machst kannst du diese Nachricht ignorieren.",
@@ -284,6 +286,7 @@
 		"settings": "Einstellungen"
 	},
 	"viper": {
+		"already_running": "Viper läuft bereits",
 		"info": {
 			"credits": "Credits",
 			"discord": "Tritt dem Discord bei:",

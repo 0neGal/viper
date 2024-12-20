@@ -1,8 +1,10 @@
+const util = require('util');
 const ipcRenderer = require("electron").ipcRenderer;
 
 const lang = require("../../lang");
 
 const version = require("./version");
+const toasts = require("./toasts");
 const set_buttons = require("./set_buttons");
 
 let mods = {};
@@ -326,6 +328,44 @@ ipcRenderer.on("mods", (event, mods_obj) => {
 	if (! mods_obj) {return}
 
 	mods.load(mods_obj);
+})
+
+ipcRenderer.on("protocol-install-mod", async (event, data) => {
+	const domain = data[0];
+	const author = data[1];
+	const package_name = data[2];
+	const version = data[3];
+
+	const packages = await browser.packages();
+
+	const package = packages.find((package) => { return package.owner == author && package.name == package_name; })
+	if (!package) {
+		alert(util.format(lang("gui.mods.cant_find_specific"), author, package_name));
+		return;
+	}
+
+	const package_obj = package.versions.find((package_version) => { return package_version.version_number == version; })
+	if (!package_obj) {
+		alert(util.format(lang("gui.mods.cant_find_version"), version, author, package_name))
+		return;
+	}
+
+	toasts.show({
+		timeout: 3000,
+		scheme: "info",
+		title: lang("gui.mods.installing"),
+		description: package_obj.full_name
+	})
+
+	mods.install_from_url(
+		package_obj.download_url,
+		package_obj.dependencies,
+		false,
+
+		author,
+		package_name,
+		version
+	);
 })
 
 module.exports = mods;
