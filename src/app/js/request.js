@@ -1,3 +1,4 @@
+const launcher = require("./launcher");
 const set_buttons = require("./set_buttons");
 const ipcRenderer = require("electron").ipcRenderer;
 
@@ -22,7 +23,7 @@ request.delete_cache = () => {
 let sent_error_toast = false;
 
 // shows or hides offline icon, and shows toast depending on `is_online`
-let state_action = (is_online) => {
+let state_action = async (is_online) => {
 	if (is_online) {
 		// hide offline icon
 		sent_error_toast = false;
@@ -34,6 +35,7 @@ let state_action = (is_online) => {
 			document.querySelectorAll(".requires-internet")
 		)
 
+		await launcher.check_servers();
 		serverstatus.style.opacity = "1.0";
 	} else {
 		// show toast
