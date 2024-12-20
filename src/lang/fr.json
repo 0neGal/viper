@@ -43,6 +43,7 @@
 			"current": "Version actuelle :",
 			"download_done": "Téléchargement terminé ! Extraction des fichiers...",
 			"downloading": "Téléchargement en cours...",
+			"failed": "Échec de la mise à jour !",
 			"finished": "Mise à jour terminée !",
 			"no_internet": "Pas de connexion Internet",
 			"uptodate": "La dernière version (%s) est déjà installée.",
@@ -95,6 +96,8 @@
 		"install": "Installer",
 		"launch": "Jouer",
 		"mods": {
+			"cant_find_specific": "Incapable de trouver le mod %s-%s!",
+			"cant_find_version": "Incapable de trouver la version %s du mod %s-%s!",
 			"confirm_dependencies": "Ce mod a des dépendances (affichées ci-dessous), cliquer \"Ok\" les installera en même temps que le mod.\n\n",
 			"confirm_plugins": {
 				"description": "Les plugins ont des accès à votre système, comparés aux mods classiques, et sont de fait plus dangereux à l'installation, comme pourrait l'être un plugin contenant un malware. Si ce plugin provient d'un tiers de confiance ou si vous savez ce que vous faites, ne tenez pas compte de ce message.",
@@ -283,6 +286,7 @@
 		"settings": "Paramètres"
 	},
 	"viper": {
+		"already_running": "Viper est déjà en cours d'éxecution",
 		"info": {
 			"credits": "Remerciements",
 			"discord": "Rejoingnez le serveur Discord :",

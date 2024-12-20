@@ -5,6 +5,7 @@
 @import "css/tooltip.css";
 @import "css/theming.css";
 @import "css/launcher.css";
+@import "css/selection.css";
 
 body {
 	margin: 0;

@@ -1,3 +1,4 @@
+const popups = require("./popups");
 const markdown = require("marked").parse;
 
 let launcher = {};
@@ -168,6 +169,11 @@ launcher.show_ns = (section) => {
 //
 // `direction` can be: left or right
 launcher.relative_section = (direction) => {
+	// prevent switching section if a popup is open
+	if (popups.open_list().length) {
+		return;
+	}
+
 	// the `.contentMenu` in the currently active tab
 	let active_menu = document.querySelector(
 		".contentContainer:not(.hidden) .contentMenu"
@@ -203,18 +209,30 @@ launcher.relative_section = (direction) => {
 		}
 	}
 
+	let new_section;
+
 	// if we're going left, and a previous section was found, click it
 	if (direction == "left" && prev_section) {
-		prev_section.click();
+		new_section = prev_section;
 	} else if (direction == "right") {
 		// click the next section, if one was found, otherwise just
 		// assume that the first section is the next section, as the
 		// active section is likely just the last section, so we wrap
 		// around instead
 		if (next_section) {
-			next_section.click();
+			new_section = next_section;
 		} else if (sections[0]) {
-			sections[0].click();
+			new_section = sections[0];
+		}
+	}
+
+	if (new_section) {
+		new_section.click();
+
+		// if there's an active selection, we select the new section, as
+		// that selection may be in a section that's now hidden
+		if (document.querySelector(".active-selection")) {
+			navigate.selection(new_section);
 		}
 	}
 }

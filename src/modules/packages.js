@@ -194,6 +194,7 @@ packages.install = async (url, author, package_name, version) => {
 		return false;
 	}
 
+
 	let name = packages.format_name(author, package_name, version);
 
 	// removes zip's and folders

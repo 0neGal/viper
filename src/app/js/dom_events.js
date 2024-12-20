@@ -26,12 +26,6 @@ document.addEventListener("drop", (e) => {
 	mods.install_from_path(e.dataTransfer.files[0].path);
 })
 
-document.body.addEventListener("keyup", (e) => {
-	if (e.key == "Escape") {
-		popups.hide_last();
-	}
-})
-
 document.body.addEventListener("click", (e) => {
 	if (e.target.tagName.toLowerCase() === "a"
 		&& e.target.protocol != "file:") {

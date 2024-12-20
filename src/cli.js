@@ -115,9 +115,9 @@ async function init() {
 	}
 
 	// Mod related args, --installmod, --removemod, --togglemod
-	if (cli.hasSwitch("installmod") && gamepathExists()) {ipcMain.emit("installmod")}
-	if (cli.hasSwitch("removemod") && gamepathExists()) {ipcMain.emit("removemod", "", cli.getSwitchValue("removemod"))}
-	if (cli.hasSwitch("togglemod") && gamepathExists()) {ipcMain.emit("togglemod", "", cli.getSwitchValue("togglemod"))}
+	if (cli.hasSwitch("installmod") && gamepathExists()) {ipcMain.emit("install-mod")}
+	if (cli.hasSwitch("removemod") && gamepathExists()) {ipcMain.emit("remove-mod", "", cli.getSwitchValue("removemod"))}
+	if (cli.hasSwitch("togglemod") && gamepathExists()) {ipcMain.emit("toggle-mod", "", cli.getSwitchValue("togglemod"))}
 
 	// Prints out the list of mods
 	if (cli.hasSwitch("mods") && gamepathExists()) {ipcMain.emit("getmods")}

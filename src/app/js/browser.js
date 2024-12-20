@@ -153,9 +153,18 @@ var browser = {
 				return browser.install({...properties});
 			}
 
+			packages[i].unix_created = new Date(packages[i].date_created).getTime();
+			packages[i].unix_updated = new Date(packages[i].date_updated).getTime();
+
 			packages[i].install = install;
 			packages[i].has_update = has_update;
 			packages[i].local_version = local_version;
+
+			packages[i].downloads = 0;
+
+			for (let version of packages[i].versions) {
+				packages[i].downloads += version.downloads || 0;
+			}
 
 			if (local_version) {
 				browser.mod_versions[normalized] = {
@@ -168,6 +177,28 @@ var browser = {
 				}
 			}
 		}
+	},
+	// sorts `pkgs` based on `property` in package object
+	sort: (pkgs, property) => {
+		// get property from sort selector, if not specified
+		if (! property) {
+			property = sort.querySelector("select").value;
+
+			// if we somehow still don't have a property, just return
+			if (! property) {
+				return pkgs;
+			}
+		}
+
+		// if `property` doesn't even exist, just return
+		if (typeof pkgs[0][property] == "undefined") {
+			return pkgs;
+		}
+
+		// sort in descending order
+		return pkgs.sort((a, b) => {
+			return b[property] - a[property];
+		})
 	},
 	loadfront: async () => {
 		browser.loading();
@@ -198,7 +229,8 @@ var browser = {
 			})
 		}
 		
-		let pkgs = browser.filters.getpkgs();
+		let pkgs = browser.sort(browser.filters.getpkgs());
+
 		for (let i in pkgs) {
 			if (packagecount >= browser.maxentries) {
 				browser.endoflist();
@@ -349,6 +381,10 @@ var browser = {
 	}
 }
 
+sort.querySelector("select").addEventListener("change", () => {
+	browser.loadfront();
+})
+
 setInterval(browser.add_pkg_properties, 1500);
 
 if (navigator.onLine) {
@@ -414,8 +450,10 @@ browser.mod_el = (properties) => {
 
 	let installicon = "downloads";
 	let installstr = lang("gui.browser.install");
-	let installcallback = () => {};
 	let normalized_title = mods.normalize(properties.title)
+	let installcallback = () => {
+		browser.install(properties);
+	}
 
 	let nondefault_install = {
 		"vanillaplus": "https://github.com/Zayveeo5e/NP.VanillaPlus/blob/main/README.md"
@@ -436,10 +474,6 @@ browser.mod_el = (properties) => {
 		if (properties.pkg.has_update) {
 			installicon = "downloads";
 			installstr = lang("gui.browser.update");
-		}
-
-		installcallback = () => {
-			browser.install(properties);
 		}
 	}
 
@@ -475,6 +509,11 @@ browser.mod_el = (properties) => {
 	entry.querySelector("button.install").addEventListener("click", installcallback)
 
 	browserEntries.appendChild(entry);
+}
+
+browser.packages = async () => {
+	await browser.loadfront();
+	return packages;
 }
 
 let recent_toasts = {};

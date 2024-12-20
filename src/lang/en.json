@@ -28,6 +28,7 @@
 			"checking": "Checking for updates...",
 			"download_done": "Download done! Extracting...",
 			"finished": "Installation/Update finished!",
+			"failed": "Installation/Update failed!",
 			"uptodate": "Latest version (%s) is already installed, skipping update.",
 			"uptodate_short": "Up-to-date",
 			"no_internet": "No Internet connection"
@@ -101,6 +102,8 @@
 			"installed_mod": "Installed mod!",
 			"drag_n_drop": "Drag and drop a mod to install",
 			"confirm_dependencies": "This package has dependencies, shown below, clicking \"Ok\" will install the package and the dependencies.\n\n",
+			"cant_find_specific": "Can't find mod %s-%s!",
+			"cant_find_version": "Can't find version %s of mod %s-%s!",
 
 			"confirm_plugins": {
 				"title": "The following package has native plugins:",
@@ -120,6 +123,13 @@
 			"end_of_list": "All packages have been loaded.",
 			"no_results": "No results...",
 			"guide": "Guide",
+
+			"sort": {
+				"newest": "Newest",
+				"last_updated": "Last Updated",
+				"highest_rating": "Highest Rated",
+				"most_downloads": "Most Downloaded"
+			},
 
 			"filter": {
 				"mods": "Mods",
@@ -281,6 +291,8 @@
 	},
 
 	"viper": {
+		"already_running": "Viper is already running",
+
 		"menu": {
 			"main": "Viper",
 			"release": "Release Notes",

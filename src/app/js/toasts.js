@@ -24,6 +24,10 @@ toasts.show = (properties) => {
 			toast.fg = "#FFFFFF";
 			toast.bg = "#FF9B85";
 			break
+		case "info":
+			toast.fg = "#FFFFFF";
+			toast.bg = "rgb(var(--blue))";
+			break
 	}
 
 
@@ -75,7 +79,7 @@ toasts.dismiss = (id) => {
 }
 
 ipcRenderer.on("toast", (_, properties) => {
-	Toast(properties);
+	toasts.show(properties);
 })
 
 module.exports = toasts;
