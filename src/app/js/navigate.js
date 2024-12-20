@@ -523,18 +523,23 @@ navigate.select = () => {
 		// focused, which isn't great
 		//
 		// so we make the main process send a fake Enter key press
-		if (active.closest("select")) {
-			active = active.closest("select");
+		if (active.closest("select") || active.querySelector("select")) {
+			// make sure this element doesn't get unselected
+			navigate.dont_unselect = active;
+
+			active = active.closest("select") || active.querySelector("select");
 
 			// make sure `<select>` is focused
 			active.focus();
 			active.click();
 
-			// make sure this element doesn't get unselected
-			navigate.dont_unselect = active;
-
 			// send fake Enter key to open selection menu
 			ipcRenderer.send("send-enter-key");
+
+			// make sure element is unselected
+			active.addEventListener("change", () => {
+				active.blur();
+			}, { once: true })
 
 			return;
 		}
