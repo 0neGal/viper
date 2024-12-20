@@ -478,6 +478,7 @@ navigate.select = () => {
 		// if `active` is a switch, use `settings.popup.switch()` on it,
 		// to be able to toggle it
 		if (active.closest(".switch")) {
+			active.closest(".switch").click();
 			settings.popup.switch(active.closest(".switch"));
 			return;
 		}
