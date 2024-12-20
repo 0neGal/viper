@@ -10,6 +10,17 @@ let navigate = {
 // according to what is currently the `.active-selection`, if none is
 // found, it'll instead be hidden
 navigate.selection = (new_selection) => {
+	// if we're not allowed to unselect an element, then make sure that
+	// element is still unselected, and then clear
+	// `navigate.dont_unselect`
+	if (navigate.dont_unselect
+		&& navigate.dont_unselect != new_selection) {
+
+		navigate.dont_unselect.classList.add("active-selection");
+		navigate.dont_unselect = false;
+		return;
+	}
+
 	if (new_selection) {
 		let selected = document.querySelectorAll(".active-selection");
 
@@ -505,9 +516,32 @@ navigate.select = () => {
 			return;
 		}
 
+		// correctly open a `<select>`
+		//
+		// they require special handling, as unless the Enter key is
+		// pressed, then the menu won't open, and instead the element is
+		// focused, which isn't great
+		//
+		// so we make the main process send a fake Enter key press
+		if (active.closest("select")) {
+			active = active.closest("select");
+
+			// make sure `<select>` is focused
+			active.focus();
+			active.click();
+
+			// make sure this element doesn't get unselected
+			navigate.dont_unselect = active;
+
+			// send fake Enter key to open selection menu
+			ipcRenderer.send("send-enter-key");
+
+			return;
+		}
+
 		// click and focus `active`
-		active.click();
 		active.focus();
+		active.click();
 	}, 150)
 }
 
@@ -851,6 +885,11 @@ events.on("popup-changed", (e) => {
 
 	// make sure there is a selection
 	if (! active_el) {
+		return;
+	}
+
+	// ignore if `active_el` is a `<select>`
+	if (active_el.closest("select")) {
 		return;
 	}
 

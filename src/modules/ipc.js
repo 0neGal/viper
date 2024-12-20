@@ -30,3 +30,10 @@ ipcMain.on("relaunch", () => {
 
 	app.exit(0);
 })
+
+ipcMain.on("send-enter-key", (e, coords) => {
+	e.sender.sendInputEvent({
+		type: "char",
+		keyCode: "enter"
+	})
+})

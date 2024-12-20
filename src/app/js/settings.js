@@ -264,6 +264,13 @@ settings.popup.load = () => {
 		}
 	}
 
+	let selects = document.querySelectorAll("#options select");
+	for (let el of selects) {
+		el.addEventListener("change", () => {
+			el.blur();
+		})
+	}
+
 	// create Fuse based on options from `get_search_arr()`
 	settings_fuse = new Fuse(get_search_arr(), {
 		keys: ["text"],
