@@ -2,7 +2,9 @@ const events = require("./events");
 const popups = require("./popups");
 const settings = require("./settings");
 
-let navigate = {};
+let navigate = {
+	using: false
+}
 
 // sets `#selection` to the correct position, size and border radius,
 // according to what is currently the `.active-selection`, if none is
@@ -116,6 +118,9 @@ window.addEventListener("click", (e) => {
 	if (! e.isTrusted) {
 		return;
 	}
+
+	// we're no longer using navigation functions
+	navigate.using = false;
 
 	// get the `.active-selection`
 	let active_el = document.querySelector(".active-selection");
@@ -237,6 +242,13 @@ navigate.get_els = (div) => {
 // if not inside a popup we'll just use the currently selected tab in
 // the `.gamesContainer` sidebar
 navigate.default_selection = () => {
+	// if we're not currently using any navigation functions, this
+	// function shouldn't do anything, as it'll cause a selection to be
+	// made, when it shouldn't be
+	if (! navigate.using) {
+		return;
+	}
+
 	// the spread operator is to convert from a `NodeList` to an
 	// `Array`, and then we need to reverse this to get the ones
 	// that are layered on top first.
@@ -292,6 +304,9 @@ navigate.default_selection = () => {
 // this navigates `#selection` in the direction of `direction`
 // this can be: up, down, left and right
 navigate.move = async (direction) => {
+	// make sure we note down that we're using navigation functions
+	navigate.using = true;
+
 	// get the `.active-selection` if there is one
 	let active = document.querySelector(".active-selection");
 
@@ -471,6 +486,9 @@ navigate.move = async (direction) => {
 
 // selects the currently selected element, by clicking or focusing it
 navigate.select = () => {
+	// make sure we note down that we're using navigation functions
+	navigate.using = true;
+
 	// get the current selection
 	let active = document.querySelector(".active-selection");
 
