@@ -342,6 +342,7 @@
 		"close": "Close Viper",
 		"minimize": "Minimize Viper",
 		"settings": "Settings",
+		"offline": "Internet Offline",
 		"pages": {
 			"viper": "Viper",
 			"northstar": "Northstar",

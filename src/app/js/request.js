@@ -1,9 +1,12 @@
 const ipcRenderer = require("electron").ipcRenderer;
 
 let update_status = () => {
-	// show a toast message if no Internet connection has been detected.
+	// if offline, show toast and offline icon
 	if (! navigator.onLine) {
 		ipcRenderer.send("no-internet");
+		offline.classList.remove("hidden");
+	} else { // remove offline icon
+		offline.classList.add("hidden");
 	}
 }
 
