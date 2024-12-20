@@ -457,6 +457,10 @@ navigate.move = async (direction) => {
 		}
 	}
 
+	if (scroll_el.closest("#modsdiv .el")) {
+		return;
+	}
+
 	// scroll `scroll_el` smoothly into view, centered
 	scroll_el.scrollIntoView({
 		block: "center",
