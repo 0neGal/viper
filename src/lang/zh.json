@@ -81,6 +81,12 @@
 			"made_by": "来自",
 			"no_results": "没有相关结果...",
 			"reinstall": "重新安装",
+			"sort": {
+				"highest_rating": "最高评分",
+				"last_updated": "最近更新",
+				"most_downloads": "最多下载",
+				"newest": "最新"
+			},
 			"update": "更新",
 			"view": "查看"
 		},
@@ -222,6 +228,7 @@
 				"duped": "存在多个同名的模组文件夹, 如果你是它的开发者, 你应该修复这个问题.",
 				"failed": "在尝试安装该时发生了未知错误, 这可能是作者的问题, 也可能是Viper的问题",
 				"failed_launch_command": "在运行自定义启动命令时发生了一些错误",
+				"failed_to_connect": "无法连接至%s，请检查您的网络、防火墙或当前%s不可用",
 				"installed": "已成功安装!",
 				"malformed": "拥有错误的文件夹结构, 如果您是它的开发者, 您应该修复这个问题.",
 				"missing_flatpak": "无法以Flatpak的方式启动，看起来它并没有被安装",
@@ -235,6 +242,7 @@
 				"duped": "重复的文件夹名字!",
 				"failed": "安装失败",
 				"failed_launch_command": "运行启动命令失败",
+				"failed_to_connect": "连接失败",
 				"installed": "模组安装成功!",
 				"malformed": "错误的文件夹结构!",
 				"missing_flatpak": "缺少Flatpak",
@@ -278,6 +286,7 @@
 	"tooltip": {
 		"close": "关闭Viper",
 		"minimize": "最小化Viper",
+		"offline": "离线",
 		"pages": {
 			"northstar": "Northstar",
 			"titanfall": "泰坦陨落2",
