@@ -1,17 +1,17 @@
 {
 	"cli": {
 		"auto_updates": {
-			"available": "Une mise à jour de Northstar est disponible !",
-			"checking": "Vérifications des mises à jour de Northstar...",
-			"no_update": "Pas de mise à jour de Northstar disponible.",
+			"available": "Mise à jour Northstar disponible !",
+			"checking": "Vérification des mises à jour pour Northstar...",
+			"no_update": "Pas de mise à jour Northstar disponible.",
 			"updating_ns": "Lancement de la mise à jour..."
 		},
 		"gamepath": {
-			"lost": "Dossier de jeu non trouvé, veuillez vérifier qu'il est bien accessible !"
+			"lost": "Chemin du jeu non trouvé, vérifiez qu'il est bien accessible !"
 		},
 		"help": {
-			"cli": "force l'activation de la CLI",
-			"devtools": "affiche les outils de développement",
+			"cli": "Force l'activation de la CLI",
+			"devtools": "Ouvre les outils de développement/débugging",
 			"help": "affiche ce message d'aide",
 			"install_mod": "Installe un mod, dossier ou zip",
 			"no_vp_updates": "écrase viper.json et désactive les mises à jour de Viper",
@@ -81,6 +81,12 @@
 			"made_by": "par",
 			"no_results": "Pas de résultat",
 			"reinstall": "Réinstaller",
+			"sort": {
+				"highest_rating": "Mieux noté",
+				"last_updated": "Récemment mis à jour",
+				"most_downloads": "Plus téléchargé",
+				"newest": "Nouveau"
+			},
 			"update": "Mise à jour",
 			"view": "Voir"
 		},
@@ -222,6 +228,7 @@
 				"duped": "contient plusieurs dossiers ayant le même nom ; si vous êtes le développer, vous devriez réparer ceci.",
 				"failed": "Une erreur inconnue est survenue lors de l'installation du mod. Cela peut être du ressort de l'auteur du mod ou de Viper.",
 				"failed_launch_command": "Quelque chose s'est mal passé lors de l'exécution de la commande",
+				"failed_to_connect": "Connexion à %s impossible, vérifiez votre connexion Internet, votre pare-feu ou vérifiez si %s est actuellement hors-ligne",
 				"installed": "a été installé avec succès !",
 				"malformed": "a une structure de dossier incorrecte ; si vous êtes son développeur, vous devriez réparer ça.",
 				"missing_flatpak": "Lancement via Flatpak impossible (ne semble pas être installé)",
@@ -235,6 +242,7 @@
 				"duped": "Nom de dossier dupliqué !",
 				"failed": "L'installation a échoué",
 				"failed_launch_command": "Echec du lancement de la commande",
+				"failed_to_connect": "Echec de la connexion",
 				"installed": "Mod installé !",
 				"malformed": "La structure du dossier du mod est incorrecte.",
 				"missing_flatpak": "Flatpak manquant",
@@ -278,6 +286,7 @@
 	"tooltip": {
 		"close": "Fermer Viper",
 		"minimize": "Réduire Viper",
+		"offline": "Internet déconnecté",
 		"pages": {
 			"northstar": "Northstar",
 			"titanfall": "Titanfall 2",
