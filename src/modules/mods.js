@@ -21,8 +21,8 @@ var mods = {
 	dupe_msg_sent: false,
 }
 
-ipcMain.on("remove-mod", (_, mod) => {
-	mods.remove(mod);
+ipcMain.on("remove-mod", (_, mod, mod_version) => {
+	mods.remove(mod, mod_version);
 })
 
 ipcMain.on("toggle-mod", (_, mod, mod_version) => {
@@ -153,12 +153,16 @@ mods.list = () => {
 			}
 
 			if (obj.package) {
-				packaged_mods.push(obj.name);
+				packaged_mods.push({
+					name: obj.name,
+					version: obj.version
+				})
+
 				obj.author = obj.package.author;
 				obj.version = obj.package.version;
 			}
 
-			obj.disabled = ! mods.modfile.get(obj.name);
+			obj.disabled = ! mods.modfile.get(obj.name, obj.version);
 
 			// add manifest data from manifest.json, if it exists
 			let manifest_file = path.join(dir, file, "manifest.json");
@@ -193,7 +197,8 @@ mods.list = () => {
 		let add_packaged_mods = (mods_array) => {
 			for (let i = 0; i < mods_array.length; i++) {
 				if (mods_array[i].package.package_name !==
-					package_obj.package_name) {
+					package_obj.package_name
+					|| mods_array[i].version != package_obj.version) {
 
 					continue;
 				}
@@ -734,7 +739,7 @@ mods.installFromURL = (url, author) => {
 //
 // takes in the names of the mod then removes it, no confirmation,
 // that'd be up to the GUI.
-mods.remove = (mod) => {
+mods.remove = (mod, mod_version) => {
 	update_path();
 
 	// make sure Northstar is actually installed
@@ -759,7 +764,7 @@ mods.remove = (mod) => {
 		return
 	}
 
-	let mod_data = mods.get(mod);
+	let mod_data = mods.get(mod, mod_version);
 	let mod_name = mod_data.folder_name;
 
 	if (! mod_name) {
@@ -811,7 +816,7 @@ mods.remove = (mod) => {
 // it's disabled. You could have a direct .disable() function if you
 // checked for if a mod is already disable and if not run the function.
 // However we currently have no need for that.
-mods.toggle = (mod, fork) => {
+mods.toggle = (mod, mod_version, fork) => {
 	update_path();
 
 	// make sure Northstar is actually installed
@@ -839,7 +844,7 @@ mods.toggle = (mod, fork) => {
 				continue;
 			}
 
-			mods.toggle(modlist[i].name, true); // enable mod
+			mods.toggle(modlist[i].name, mod_version, true); // enable mod
 		}
 
 		console.ok(lang("cli.mods.toggled_all"));
@@ -848,7 +853,7 @@ mods.toggle = (mod, fork) => {
 	}
 
 	// toggle specific mod
-	mods.modfile.toggle(mod);
+	mods.modfile.toggle(mod, mod_version);
 
 	if (! fork) {
 		console.ok(lang("cli.mods.toggled"));
