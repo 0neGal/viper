@@ -264,6 +264,10 @@ mods.toggle = (mod) => {
 		for (let mod_obj of mods_list.disabled) {
 			// if `mod` is `mod_obj`, update `is_disabled`
 			if (mod_obj.name.toLowerCase() == mod.toLowerCase()) {
+				if (version && mod_obj.version != version) {
+					continue;
+				}
+
 				is_disabled = true;
 				break;
 			}
@@ -279,7 +283,7 @@ mods.toggle = (mod) => {
 		}
 	}
 
-	ipcRenderer.send("toggle-mod", mod);
+	ipcRenderer.send("toggle-mod", mod, version);
 }
 
 mods.install_queue = [];
