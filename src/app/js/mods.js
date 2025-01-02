@@ -196,7 +196,7 @@ mods.load = (mods_obj) => {
 			})
 
 			mod_els[i].remove();
-			modsdiv.querySelector(".line").after(mod_el);
+			modsdiv.querySelector(".line:has(.search)").after(mod_el);
 		} else {
 			mod_els[i].querySelector(".update").style.display = "none";
 		}
