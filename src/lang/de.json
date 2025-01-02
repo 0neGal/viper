@@ -81,6 +81,12 @@
 			"made_by": "von",
 			"no_results": "Keine Ergebnisse...",
 			"reinstall": "Neuinstallieren",
+			"sort": {
+				"highest_rating": "Meist Bewertet",
+				"last_updated": "Zuletzt Aktualisiert",
+				"most_downloads": "Meist Heruntergeladen",
+				"newest": "Neuste"
+			},
 			"update": "Aktualisieren",
 			"view": "Anschauen"
 		},
@@ -222,6 +228,7 @@
 				"duped": "hat mehrere Ordner in sich mit dem selben Namen, wodurch ein duplizierter Ordner ensteht! Falls du der Entwickler bist solltest du dies beheben!",
 				"failed": "Ein unbekannter Fehler ist aufgetaucht beim Installieren, die Schuld kann beim Autor liegen oder bei Viper selbst!",
 				"failed_launch_command": "Es gab einen Fehler beim ausführen vom Startbefehl.",
+				"failed_to_connect": "Eine Verbindung mit %s konnte nicht hergestellt werden, überprüfe deine Internetverbindung, Firewall oder ob %s nicht erreichbar ist.",
 				"installed": "wurde installiert!",
 				"malformed": "hat eine fehlerhafte Ordnerstruktur, falls du der Entwickler bist, solltest du dies beheben.",
 				"missing_flatpak": "Konnte nicht mit Flatpak starten, da keine Instanz gefunden wurde.",
@@ -235,6 +242,7 @@
 				"duped": "Duplizierter Ordner name!",
 				"failed": "Fehler beim Installieren des Mods!",
 				"failed_launch_command": "Ausführungsfehler vom Startbefehl!",
+				"failed_to_connect": "Verbindung fehlgeschlagen",
 				"installed": "Mod installiert!",
 				"malformed": "Fehlerhafte Ordnerstruktur!",
 				"missing_flatpak": "Flatpak fehlt!",
@@ -278,6 +286,7 @@
 	"tooltip": {
 		"close": "Schließen",
 		"minimize": "Minimieren",
+		"offline": "Internetverbindung nicht Verfügbar",
 		"pages": {
 			"northstar": "Northstar",
 			"titanfall": "Titanfall 2",
