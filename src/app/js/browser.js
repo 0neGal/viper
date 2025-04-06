@@ -464,7 +464,7 @@ browser.mod_el = (properties) => {
 	}
 
 	let nondefault_install = {
-		"vanillaplus": "https://github.com/Zayveeo5e/NP.VanillaPlus/blob/main/README.md"
+		"vanillaplus": "https://github.com/NachosChipeados/NP.VanillaPlus/blob/main/README.md"
 	}
 
 	if (normalized_title in nondefault_install) {
