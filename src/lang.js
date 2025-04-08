@@ -3,7 +3,7 @@ const fs = require("fs");
 const flat = require("flattenizer");
 const json = require("./modules/json");
 
-const enLang = json(__dirname + "/lang/en.json");
+const enLang = flat.flatten(json(__dirname + "/lang/en.json"));
 let lang = "";
 var langObj = {};
 
