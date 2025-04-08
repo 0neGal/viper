@@ -31,7 +31,8 @@ mods.load = (mods_obj) => {
 			name = mod.package.package_name;
 		}
 
-		let normalized_name = "mod-list-" + mods.normalize(name);
+		let normalized_name =
+			mod.version + "-mod-list-" + mods.normalize(name)
 
 		normalized_names.push(normalized_name);
 
@@ -97,11 +98,14 @@ mods.load = (mods_obj) => {
 
 		div.querySelector(".remove").onclick = () => {
 			if (! mod.package) {
-				return mods.remove(mod.name);
+				return mods.remove(mod.name, mod.version);
 			}
 
-			for (let i = 0; i < mod.packaged_mods.length; i++) {
-				mods.remove(mod.packaged_mods[i]);
+			for (let i in mod.packaged_mods) {
+				mods.remove(
+					mod.packaged_mods[i].name,
+					mod.packaged_mods[i].version
+				)
 			}
 		}
 
@@ -111,11 +115,14 @@ mods.load = (mods_obj) => {
 
 		div.querySelector(".switch").addEventListener("click", () => {
 			if (! mod.package) {
-				return mods.toggle(mod.name);
+				return mods.toggle(mod.name, mod.version);
 			}
 
-			for (let i = 0; i < mod.packaged_mods.length; i++) {
-				mods.toggle(mod.packaged_mods[i]);
+			for (let i in mod.packaged_mods) {
+				mods.toggle(
+					mod.packaged_mods[i].name,
+					mod.packaged_mods[i].version
+				)
 			}
 		})
 
@@ -142,7 +149,7 @@ mods.load = (mods_obj) => {
 	}
 
 	for (let i = 0; i < mod_els.length; i++) {
-		let mod = mod_els[i].id.replace(/^mod-list-/, "");
+		let mod = mod_els[i].id.replace(/.*mod-list-/, "");
 
 		if (! normalized_names.includes(mod_els[i].id)) {
 			mod_els[i].remove();
@@ -254,7 +261,7 @@ mods.remove = (mod) => {
 	ipcRenderer.send("remove-mod", mod);
 }
 
-mods.toggle = (mod) => {
+mods.toggle = (mod, version) => {
 	// is this a core mod?
 	if (mod.toLowerCase().match(/^northstar\./)) {
 		// keep track of whether this mod is disabled
@@ -264,6 +271,10 @@ mods.toggle = (mod) => {
 		for (let mod_obj of mods_list.disabled) {
 			// if `mod` is `mod_obj`, update `is_disabled`
 			if (mod_obj.name.toLowerCase() == mod.toLowerCase()) {
+				if (version && mod_obj.version != version) {
+					continue;
+				}
+
 				is_disabled = true;
 				break;
 			}
@@ -279,7 +290,7 @@ mods.toggle = (mod) => {
 		}
 	}
 
-	ipcRenderer.send("toggle-mod", mod);
+	ipcRenderer.send("toggle-mod", mod, version);
 }
 
 mods.install_queue = [];

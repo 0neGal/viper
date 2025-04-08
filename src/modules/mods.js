@@ -21,16 +21,16 @@ var mods = {
 	dupe_msg_sent: false,
 }
 
-ipcMain.on("remove-mod", (event, mod) => {
-	mods.remove(mod);
+ipcMain.on("remove-mod", (_, mod, mod_version) => {
+	mods.remove(mod, mod_version);
 })
 
-ipcMain.on("toggle-mod", (event, mod) => {
-	mods.toggle(mod);
+ipcMain.on("toggle-mod", (_, mod, mod_version) => {
+	mods.toggle(mod, mod_version);
 })
 
 // lets renderer install mods from a path
-ipcMain.on("install-from-path", (event, path) => {
+ipcMain.on("install-from-path", (_, path) => {
 	mods.install(path);
 })
 
@@ -153,12 +153,16 @@ mods.list = () => {
 			}
 
 			if (obj.package) {
-				packaged_mods.push(obj.name);
+				packaged_mods.push({
+					name: obj.name,
+					version: obj.version
+				})
+
 				obj.author = obj.package.author;
 				obj.version = obj.package.version;
 			}
 
-			obj.disabled = ! mods.modfile.get(obj.name);
+			obj.disabled = ! mods.modfile.get(obj.name, obj.version);
 
 			// add manifest data from manifest.json, if it exists
 			let manifest_file = path.join(dir, file, "manifest.json");
@@ -193,7 +197,8 @@ mods.list = () => {
 		let add_packaged_mods = (mods_array) => {
 			for (let i = 0; i < mods_array.length; i++) {
 				if (mods_array[i].package.package_name !==
-					package_obj.package_name) {
+					package_obj.package_name
+					|| mods_array[i].version != package_obj.version) {
 
 					continue;
 				}
@@ -240,7 +245,7 @@ mods.list = () => {
 // in mind if the mod developer didn't format their JSON file the
 // absolute basics will be provided and we can't know the version or
 // similar.
-mods.get = (mod) => {
+mods.get = (mod, mod_version) => {
 	update_path();
 
 	// make sure Northstar is actually installed
@@ -262,6 +267,13 @@ mods.get = (mod) => {
 	// search for mod in list
 	for (let i = 0; i < list.length; i++) {
 		if (list[i].name == mod) {
+			// make sure `version` is correct, if specified
+			if (mod_version
+				&& list[i].version != mod_version) {
+
+				continue;
+			}
+
 			// found mod, return data
 			return list[i];
 		} else {continue}
@@ -309,42 +321,105 @@ mods.modfile.gen = () => {
 }
 
 // enable/disable a mod inside enabledmods.json
-mods.modfile.set = (mod, state) => {
+mods.modfile.set = (mod, mod_version, state) => {
 	modfile_pre();
 
 	let data = json(mods.modfile.file); // get current data
-	data[mod] = state; // set mod state
+
+	// if `mod_version` is specified, attempt to find it
+	if (! mod_version) {
+		let mod_obj = mods.get(mod);
+
+		if (mod_obj) {
+			mod_version = mod_obj.version;
+		}
+	}
+
+	// set mod state
+	if (mod_version) { // set using object format
+		if (typeof data[mod] != "object") {
+			data[mod] = {};
+		}
+
+		data[mod][mod_version] = state;
+	} else { // set using legacy method
+		data[mod] = state;
+	}
+
+	// write new data
+	fs.writeFileSync(mods.modfile.file, JSON.stringify(data));
+
+	mods.modfile.cleanup();
+}
+
+// disable a mod inside enabledmods.json
+mods.modfile.disable = (mod, mod_version) => {
+	mods.modfile.set(mod, mod_version, false);
+}
+
+// enable a mod inside enabledmods.json
+mods.modfile.enable = (mod, mod_version) => {
+	mods.modfile.set(mod, mod_version, true);
+}
+
+// toggle a mod inside enabledmods.json
+mods.modfile.toggle = (mod, mod_version) => {
+	modfile_pre();
+
+	let is_enabled = mods.modfile.get(mod, mod_version);
+	if (is_enabled) {
+		mods.modfile.disable(mod, mod_version);
+	} else {
+		mods.modfile.enable(mod, mod_version);
+	}
+}
+
+// runs through `enabledmods.json` and finds mods that are installed,
+// but have version entries that aren't installed, and optionally
+// upgrades the version entry
+mods.modfile.cleanup = () => {
+	// read enabledmods.json
+	let data = json(mods.modfile.file);
+
+	for (let mod in data) {
+		// don't do anything if we're not dealing with the object format
+		if (typeof data[mod] != "object") {
+			continue;
+		}
+
+		// run through all mods
+		for (let mod_version in data[mod]) {
+			// get data with the specified version
+			let mod_data = mods.get(mod, mod_version);
+
+			// does no mod exists with the specified version?
+			if (! mod_data) {
+				// attempt to get without version
+				mod_data = mods.get(mod);
+
+				// if the mod exists, but just not with the correct
+				// version, and the correct version doesn't exist, we
+				// copy the state of the incorrect version to the
+				// correct version, this is useful for package updates
+				if (mod_data
+					&& ! data[mod][mod_data.version]) {
+
+					data[mod][mod_data.version] =
+						data[mod][mod_version]
+				}
+
+				// delete orphan version
+				delete data[mod][mod_version];
+			}
+		}
+	}
 
 	// write new data
 	fs.writeFileSync(mods.modfile.file, JSON.stringify(data));
 }
 
-// disable a mod inside enabledmods.json
-mods.modfile.disable = (mod) => {
-	return mods.modfile.set(mod, false);
-}
-
-// enable a mod inside enabledmods.json
-mods.modfile.enable = (mod) => {
-	return mods.modfile.set(mod, true);
-}
-
-// toggle a mod inside enabledmods.json
-mods.modfile.toggle = (mod) => {
-	modfile_pre();
-
-	let data = json(mods.modfile.file);
-	if (data[mod] != undefined) {
-		data[mod] = ! data[mod];
-	} else {
-		data[mod] = false;
-	}
-
-	fs.writeFileSync(mods.modfile.file, JSON.stringify(data));
-}
-
 // return whether a mod is disabled or enabled
-mods.modfile.get = (mod) => {
+mods.modfile.get = (mod, mod_version) => {
 	modfile_pre();
 
 	// read enabledmods.json
@@ -352,6 +427,31 @@ mods.modfile.get = (mod) => {
 
 	if (! data || typeof data !== "object") {
 		return true;
+	}
+
+	// get state from object format
+	if (typeof data[mod] == "object") {
+		// if mod and version is found directly, return it's state
+		if (mod_version && data[mod][mod_version]) {
+			return data[mod][mod_version];
+		}
+
+		// if version isn't specified, use the first one that's found
+		if (! mod_version) {
+			for (let mod_version in data[mod]) {
+				// found disabled
+				if (data[mod][mod_version] === false) {
+					return false;
+				}
+
+				// found enabled
+				if (data[mod][mod_version]) {
+					return true;
+				}
+			}
+		}
+
+		return false;
 	}
 
 	if (data[mod]) { // enabled
@@ -402,6 +502,7 @@ mods.install = (mod, opts) => {
 	let notamod = () => {
 		win().log(lang("gui.mods.not_a_mod"));
 		console.error(lang("cli.mods.not_a_mod"));
+		mods.modfile.cleanup();
 		cli.exit(1);
 		return false;
 	}
@@ -426,6 +527,9 @@ mods.install = (mod, opts) => {
 		})
 
 		win().send("mods", mods.list());
+
+		mods.modfile.cleanup();
+
 		return true;
 	}
 
@@ -635,7 +739,7 @@ mods.installFromURL = (url, author) => {
 //
 // takes in the names of the mod then removes it, no confirmation,
 // that'd be up to the GUI.
-mods.remove = (mod) => {
+mods.remove = (mod, mod_version) => {
 	update_path();
 
 	// make sure Northstar is actually installed
@@ -660,7 +764,7 @@ mods.remove = (mod) => {
 		return
 	}
 
-	let mod_data = mods.get(mod);
+	let mod_data = mods.get(mod, mod_version);
 	let mod_name = mod_data.folder_name;
 
 	if (! mod_name) {
@@ -712,7 +816,7 @@ mods.remove = (mod) => {
 // it's disabled. You could have a direct .disable() function if you
 // checked for if a mod is already disable and if not run the function.
 // However we currently have no need for that.
-mods.toggle = (mod, fork) => {
+mods.toggle = (mod, mod_version, fork) => {
 	update_path();
 
 	// make sure Northstar is actually installed
@@ -740,7 +844,7 @@ mods.toggle = (mod, fork) => {
 				continue;
 			}
 
-			mods.toggle(modlist[i].name, true); // enable mod
+			mods.toggle(modlist[i].name, mod_version, true); // enable mod
 		}
 
 		console.ok(lang("cli.mods.toggled_all"));
@@ -749,7 +853,7 @@ mods.toggle = (mod, fork) => {
 	}
 
 	// toggle specific mod
-	mods.modfile.toggle(mod);
+	mods.modfile.toggle(mod, mod_version);
 
 	if (! fork) {
 		console.ok(lang("cli.mods.toggled"));
