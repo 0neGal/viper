@@ -64,7 +64,7 @@
 		"unzip-stream": "^0.3.2"
 	},
 	"devDependencies": {
-		"electron": "^33.2.1",
+		"electron": "^35.7.5",
 		"electron-builder": "^24.13.3"
 	}
 }
